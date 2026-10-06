@@ -12,6 +12,11 @@
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
 		if(candidate.mind in ruleset.selected_minds)
 			return FALSE
+	// BANDASTATION EDIT - Match Dynamic candidacy to a genuinely available final profile.
+	if(isnewplayer(candidate))
+		var/mob/dead/new_player/player = candidate
+		if(!player.has_eligible_crew_preference(src))
+			return FALSE
 	return ..()
 
 /// Helpful proc - to use if your ruleset forces a job - which ensures a candidate can play the passed job typepath
@@ -115,10 +120,7 @@
 	if (!..())
 		return FALSE
 
-	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = GLOB.species_prototypes[species_type]
-
-	return !(TRAIT_NOBLOOD in species.inherent_traits)
+	return TRUE // BANDASTATION EDIT - Base candidate check inspects the effective job profile via accepts_job_character.
 
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
 	if (!CAN_HAVE_BLOOD(candidate.current))

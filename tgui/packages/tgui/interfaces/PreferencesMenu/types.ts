@@ -192,6 +192,25 @@ export type PreferencesMenuData = {
   >;
   job_preferences: JobPreference[];
 
+  // BANDASTATION ADDITION START: per-character cosmetic variants and current server restrictions.
+  donor_jobs?: Record<
+    string,
+    {
+      title: string | null;
+      selected: string | null;
+      variants: { id: string; name: string }[];
+    }
+  >;
+  donor_edit_slot: number;
+  donor_entry_locked: BooleanLike;
+  job_lock_reasons?: Record<string, string>;
+  job_character_profiles?: Record<
+    string,
+    { slot: number | null; randomized: BooleanLike; title: string | null }
+  >;
+  pref_job_slots: Record<string, number>;
+  // BANDASTATION ADDITION END
+
   keybindings: Record<string, string[]>;
   overflow_role: string;
   default_quirk_balance: number;

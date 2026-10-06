@@ -220,6 +220,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	. = ..()
 	if (.)
 		return
+	// BANDASTATION EDIT START: freeze the selected character during job admission.
+	if(donor_entry_locked)
+		return FALSE
+	// BANDASTATION EDIT END
 
 	switch (action)
 		if ("change_slot")
@@ -269,6 +273,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return FALSE
 
 			var/default_value = read_preference(requested_preference.type)
+			var/editing_slot = default_slot // BANDASTATION EDIT: modal replies belong to the original character.
 
 			// Yielding
 			var/new_color = tgui_color_picker(
@@ -280,6 +285,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if (!new_color)
 				return FALSE
+			// BANDASTATION EDIT START: the picker yields while admission or another slot can open.
+			if(donor_entry_locked || editing_slot != default_slot || ui.user.client != parent)
+				return FALSE
+			// BANDASTATION EDIT END
 
 			if (!update_preference(requested_preference, new_color))
 				return FALSE

@@ -5,19 +5,29 @@
 	)
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
+	// BANDASTATION EDIT START: authority stays on the server, including direct middleware calls.
+	if(user.client?.prefs != preferences || preferences.donor_entry_locked || params["edit_slot"] != preferences.default_slot)
+		return FALSE
+	// BANDASTATION EDIT END
 	var/job_title = params["job"]
 	var/level = params["level"]
+	if(!istext(job_title)) // BANDASTATION EDIT: external canonical title.
+		return FALSE
 
 	if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
 		return FALSE
 
 	var/datum/job/job = SSjob.get_job(job_title)
 
-	if (isnull(job))
+	if (isnull(job) || job.title != job_title) // BANDASTATION EDIT: only canonical titles.
 		return FALSE
 
 	if (job.faction != FACTION_STATION)
 		return FALSE
+	// BANDASTATION EDIT START: keep saved choices when entitlement expires; clearing remains allowed.
+	if(!isnull(level) && job.donor_lock_reason(user.client))
+		return FALSE
+	// BANDASTATION EDIT END
 
 	if (!preferences.set_job_preference_level(job, level))
 		return FALSE
@@ -27,12 +37,27 @@
 	return TRUE
 
 /datum/preference_middleware/jobs/proc/set_job_to_profile(list/params, mob/user)
+	// BANDASTATION EDIT START: validate external slot assignments before saving.
+	if(user.client?.prefs != preferences || preferences.donor_entry_locked || params["edit_slot"] != preferences.default_slot)
+		return FALSE
+	if(!istext(params["job"]))
+		return FALSE
+	var/datum/job/job = SSjob.get_job(params["job"])
+	if(!job || job.title != params["job"] || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
+		return FALSE
+	// BANDASTATION EDIT END
 	var/job_title = params["job"]
 	var/profile_slot = params["profile"]
 
-	if (!isnum(profile_slot) || profile_slot == -1)
+	if (profile_slot == -1)
 		LAZYREMOVE(preferences.job_assigned_profiles, job_title)
 		return TRUE
+	// BANDASTATION EDIT START
+	if(!isnum(profile_slot) || profile_slot != round(profile_slot) || profile_slot < 1 || profile_slot > preferences.max_save_slots)
+		return FALSE
+	if(profile_slot != preferences.default_slot && !preferences.savefile.get_entry("character[profile_slot]")?["real_name"])
+		return FALSE
+	// BANDASTATION EDIT END
 
 	LAZYSET(preferences.job_assigned_profiles, job_title, profile_slot)
 	return TRUE

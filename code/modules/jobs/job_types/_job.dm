@@ -183,6 +183,7 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	apply_donor_spawn_context(spawned) // BANDASTATION EDIT - Initial kit and public title
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
 /// Return the outfit to use
@@ -231,7 +232,7 @@
 
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, client/player_client, consistent = FALSE)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
-	equip_outfit_and_loadout(equipping.get_outfit(consistent), player_client?.prefs, visual_only)
+	equip_outfit_and_loadout(equipping.donor_outfit_for(src, player_client?.prefs, visual_only, consistent), player_client?.prefs, visual_only) // BANDASTATION EDIT - Variant before loadout
 
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(human)
@@ -518,12 +519,20 @@
 
 /// Spawns the mob to be played as, taking into account preferences and the desired spawn point.
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)
+	// BANDASTATION EDIT - AI initialization may take the client before preferences run.
+	var/mob/dead/new_player/requester = isnewplayer(player_client.mob) ? player_client.mob : null
+	var/datum/job_entry_guard/entry_guard = player_client.job_entry_guard
 	var/mob/living/spawn_instance
 	if(ispath(spawn_type, /mob/living/silicon/ai))
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), player_client.mob, null, null, TRUE)
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
+	// BANDASTATION EDIT START - Retain ownership before callbacks which may fail
+	if(entry_guard)
+		entry_guard.created_body = spawn_instance
+	requester?.attach_donor_spawn_context(spawn_instance)
+	// BANDASTATION EDIT END
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		qdel(spawn_instance)
@@ -565,7 +574,8 @@
 
 	src.job = job.title
 
-	var/randomise_job_slot = player_client.prefs.set_assigned_slot(job.title, player_client.mob?.mind?.late_joiner) // BANDASTATION ADDITION - Pref Job Slots
+	var/mob/dead/new_player/requester = isnewplayer(player_client.mob) ? player_client.mob : null // BANDASTATION EDIT - One committed profile
+	var/randomise_job_slot = requester?.assigned_character?.randomized // BANDASTATION EDIT - One committed profile
 	if(fully_randomize || randomise_job_slot)  // BANDASTATION EDIT - Pref Job Slots - OLD: if(fully_randomize)
 		player_client.prefs.apply_prefs_to(src)
 

@@ -257,7 +257,12 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+					// BANDASTATION EDIT START - Preserve donor kit/loadout overflow without enlarging storage
+					var/obj/item/item = SSwardrobe.provide_type(path, user)
+					if(!user.equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = !preserve_backpack_overflow) && preserve_backpack_overflow)
+						if(!user.put_in_hands(item))
+							item.forceMove(user.drop_location())
+					// BANDASTATION EDIT END
 
 		if(belt_contents)
 			for(var/path in belt_contents)

@@ -1,4 +1,3 @@
-import { toMerged } from 'es-toolkit';
 import { Color } from 'tgui-core/color';
 import {
   Box,
@@ -23,17 +22,19 @@ import { JOB2ICON } from './common/JobToIcon';
 type Job = {
   unavailable_reason: string | null;
   command: BooleanLike;
-  open_slots: number;
+  open_slots: number | string;
   used_slots: number;
   prioritized: BooleanLike;
   description: string;
   jobIcon: string;
+  public_title: string; // BANDASTATION ADDITION: display identity differs from the canonical job key.
+  character_profile: string; // BANDASTATION ADDITION
 };
 
 type Department = {
   color: string;
   jobs: Record<string, Job>;
-  open_slots: number;
+  open_slots: number | string;
 };
 
 type Data = {
@@ -44,6 +45,8 @@ type Data = {
   disable_jobs_for_non_observers: BooleanLike;
   priority: BooleanLike;
   round_duration: string;
+  edit_slot: number; // BANDASTATION ADDITION
+  entry_locked: BooleanLike; // BANDASTATION ADDITION
 };
 
 type JobEntryProps = {
@@ -55,6 +58,7 @@ type JobEntryProps = {
 };
 
 function JobEntry(props: JobEntryProps) {
+  const { data } = useBackend<Data>();
   const { jobName, job, department, onClick } = props;
 
   const jobIcon = JOB2ICON[ReverseJobsRu(jobName)] || null;
@@ -62,6 +66,7 @@ function JobEntry(props: JobEntryProps) {
   return (
     <Button
       fluid
+      disabled={!!data.entry_locked}
       style={{
         // Try not to think too hard about this one.
         backgroundColor: job.unavailable_reason
@@ -76,17 +81,15 @@ function JobEntry(props: JobEntryProps) {
         cursor: job.unavailable_reason ? 'initial' : 'pointer',
       }}
       tooltip={
-        job.unavailable_reason ||
-        (job.prioritized ? (
-          <>
-            <p style={{ marginTop: '0px' }}>
-              <b>The HoP wants more people in this job!</b>
-            </p>
-            {job.description}
-          </>
-        ) : (
-          job.description
-        ))
+        <>
+          {job.prioritized && !job.unavailable_reason && (
+            <Box bold>The HoP wants more people in this job!</Box>
+          )}
+          <Box>{job.unavailable_reason || job.description}</Box>
+          <Box mt={0.5} italic>
+            {job.character_profile}
+          </Box>
+        </>
       }
       tooltipPosition="top"
       onClick={() => {
@@ -101,9 +104,9 @@ function JobEntry(props: JobEntryProps) {
         )}
         <Stack.Item grow>
           {job.command ? (
-            <b>{JOBS_RU[jobName] || jobName}</b>
+            <b>{job.public_title || JOBS_RU[jobName] || jobName}</b>
           ) : (
-            JOBS_RU[jobName] || jobName
+            job.public_title || JOBS_RU[jobName] || jobName
           )}
         </Stack.Item>
         <Stack.Item>
@@ -127,7 +130,7 @@ type DepartmentEntryProps = {
 
 function DepartmentEntry(props: DepartmentEntryProps) {
   const { name, department } = props;
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
 
   return (
     <Box minWidth="30%">
@@ -172,7 +175,7 @@ function DepartmentEntry(props: DepartmentEntryProps) {
                 jobIcon={job.jobIcon}
                 department={department}
                 onClick={() => {
-                  act('select_job', { job: name });
+                  act('select_job', { job: name, edit_slot: data.edit_slot });
                 }}
               />
             </Stack.Item>
@@ -189,9 +192,24 @@ export function JobSelection(props) {
     return null; // Stop TGUI whitescreens with TGUI-dev!
   }
 
-  const departments: Record<string, Department> = toMerged(
-    data.departments,
-    data.departments_static,
+  // BANDASTATION EDIT: static metadata must not resurrect jobs hidden by current availability.
+  const departments: Record<string, Department> = Object.fromEntries(
+    Object.entries(data.departments).map(([name, department]) => [
+      name,
+      {
+        ...data.departments_static[name],
+        ...department,
+        jobs: Object.fromEntries(
+          Object.entries(department.jobs).map(([jobName, job]) => [
+            jobName,
+            {
+              ...data.departments_static[name]?.jobs[jobName],
+              ...job,
+            },
+          ]),
+        ),
+      },
+    ]),
   );
 
   const { shuttle_status, round_duration } = data;
@@ -202,7 +220,10 @@ export function JobSelection(props) {
         <Section
           buttons={
             <Button
-              onClick={() => act('select_job', { job: 'Random' })}
+              disabled={!!data.entry_locked}
+              onClick={() =>
+                act('select_job', { job: 'Random', edit_slot: data.edit_slot })
+              }
               tooltip="Случайно выбрать профессию. Вы можете повторно выбирать случайную профессию или отказаться от этого."
             >
               Случайная профессия!
