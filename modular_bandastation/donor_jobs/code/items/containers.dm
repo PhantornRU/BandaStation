@@ -1,3 +1,13 @@
+/obj/item/storage/box/survival/engineer/donor/PopulateContents()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		internal_type = /obj/item/tank/internals/emergency_oxygen/double
+	. = ..()
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		new /obj/item/flashlight/donor_emergency_glowstick(src)
+
+/obj/item/storage/box/survival/engineer/donor/mining
+	mask_type = /obj/item/clothing/mask/gas/explorer/folded
+
 /obj/item/storage/bag/garment/chaplain
 	name = "chaplain's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the chaplain."

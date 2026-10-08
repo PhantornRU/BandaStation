@@ -9,10 +9,11 @@
 	head = /obj/item/clothing/head/hats/tophat
 	l_hand = /obj/item/cane
 	l_pocket = /obj/item/melee/baton/telescopic
+	box = /obj/item/storage/box/survival/engineer/donor
 	donor_kit = list(
 		/obj/item/stack/spacecash/c1000 = 2,
 		/obj/item/implanter/death_alarm = 1,
-		/obj/item/lighter = 1,
+		/obj/item/lighter/donor_zippo/engraved = 1,
 		/obj/item/cigarette/cigar/havana = 6,
 	)
 	implants = list(/obj/item/implant/mindshield, /obj/item/implant/death_alarm)

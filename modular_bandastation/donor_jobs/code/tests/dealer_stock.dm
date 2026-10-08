@@ -28,12 +28,11 @@
 
 	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
 	var/turf/floor = get_turf(body)
-	var/obj/item/storage/box/donor_stock/box = allocate(/obj/item/storage/box/donor_stock)
 	var/list/before = floor.contents.Copy()
-	TEST_ASSERT_EQUAL(length(box.contents), 0, "Dealer preview/preload generated live loot")
-	box.attack_self(body)
+	var/obj/item/storage/box/donor_stock/box = allocate(/obj/item/storage/box/donor_stock)
+	before += box
 	var/list/loot = (floor.contents - before) + box.contents
-	TEST_ASSERT_EQUAL(length(loot), 30, "Opening the Dealer box did not issue all 30 items")
+	TEST_ASSERT_EQUAL(length(loot), 30, "Creating the Dealer box did not issue all 30 items")
 	for(var/obj/item/item as anything in loot)
 		TEST_ASSERT(!QDELETED(item), "Dealer issued an already deleted item")
 		TEST_ASSERT(isitem(item), "Dealer issued a random spawner instead of its real item")

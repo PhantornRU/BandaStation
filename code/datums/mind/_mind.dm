@@ -523,7 +523,7 @@
 	if(assigned_role != new_role)
 		return
 
-	var/intro_message = new_role.get_spawn_message()
+	var/intro_message = new_role.get_spawn_message(current) // BANDASTATION EDIT - Selected outfit instructions
 	if(incoming_client && intro_message)
 		to_chat(incoming_client, intro_message)
 

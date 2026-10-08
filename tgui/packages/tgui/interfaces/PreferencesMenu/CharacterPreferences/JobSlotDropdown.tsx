@@ -65,9 +65,12 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
   const entryName = entryProfile?.slot
     ? data.character_profiles[entryProfile.slot - 1]
     : null;
-  const entryDescription = entryName
-    ? `В начале раунда: ${entryProfile?.slot}. ${entryName}${entryProfile?.randomized ? ', случайная внешность' : ''}${entryProfile?.title ? `, ${entryProfile.title}` : ''}`
-    : 'Профиль для входа недоступен';
+  const profileTitle = data.donor_jobs?.[name]?.profile_title;
+  const entryDescription = entryProfile?.error
+    ? entryProfile.error
+    : entryName
+      ? `В начале раунда: ${entryProfile?.slot}. ${entryName}${entryProfile?.randomized ? ', случайная внешность' : ''}${profileTitle ? `, ${profileTitle}` : ''}`
+      : 'Профиль для входа недоступен';
 
   return (
     <Tooltip
@@ -78,7 +81,6 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
         <Dropdown
           noChevron
           iconOnly
-          disabled={!!data.donor_entry_locked}
           icon={
             currentSlotNumber === -1
               ? 'dice'

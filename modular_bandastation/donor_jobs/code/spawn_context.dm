@@ -6,22 +6,26 @@
 	var/outfit_type
 	var/public_title
 	var/variant_id
-	var/crime_key
 	var/kit_issued = FALSE
 	var/identity_applied = FALSE
 	var/record_registered = FALSE
 
-/datum/donor_spawn_context/New(datum/job/job, datum/job_character_selection/selection)
+/datum/donor_spawn_context/New(datum/job/job, variant_choice)
 	job_type = job.type
-	var/datum/job_variant/variant = job.resolve_donor_variant(selection.variant_id)
+	var/datum/job_variant/variant = job.resolve_donor_variant(variant_choice)
 	variant_id = variant?.id
 	outfit_type = variant?.outfit_type || job.get_outfit(FALSE)
 	public_title = variant?.public_title || job.title
-	if(istype(job, /datum/job/prisoner))
-		crime_key = selection.prisoner_crime
-		if(!GLOB.prisoner_crimes[crime_key])
-			crime_key = pick(assoc_to_keys(GLOB.prisoner_crimes))
 	return ..()
+
+/// Capture only the chosen variant before appearance callbacks or the job greeting.
+/datum/job/proc/prepare_donor_character(mob/living/spawned, datum/preferences/preferences)
+	if(!length(donor_variant_specs) || !ishuman(spawned) || !length(get_donor_variants()))
+		return
+	var/mob/living/carbon/human/body = spawned
+	var/list/variants = preferences.read_preference(/datum/preference/job_outfit_variants)
+	body.donor_spawn_context = new(src, variants?[title])
+	body.donor_spawn_context.RegisterSignal(body, COMSIG_HUMAN_INITIAL_CREW_RECORD, TYPE_PROC_REF(/datum/donor_spawn_context, register_crew_record))
 
 /datum/donor_spawn_context/proc/belongs_to(datum/job/job)
 	return job && job.type == job_type
@@ -89,36 +93,15 @@
 	var/datum/donor_spawn_context/context = body.donor_spawn_context
 	if(!context?.belongs_to(src))
 		return
-	// Floor stacks can merge into another player's items, so issue kits only after ownership commits.
-	if(!body.job_entry_guard || body.job_entry_guard.handover_complete)
-		context.issue_kit(body)
+	context.issue_kit(body)
 	context.apply_identity(body)
 	for(var/language_type in donor_languages)
 		body.grant_language(language_type, ALL, "donor-job")
 
-/datum/job/proc/on_initial_crew_record(mob/living/carbon/human/body, datum/record/crew/record)
-	var/datum/donor_spawn_context/context = body.donor_spawn_context
-	if(!context || context.record_registered || !context.belongs_to(src))
+/datum/donor_spawn_context/proc/register_crew_record(mob/living/carbon/human/body, datum/job/job, datum/record/crew/record)
+	SIGNAL_HANDLER
+	if(record_registered || !belongs_to(job))
 		return FALSE
-	context.record_registered = TRUE
-	record.rank = context.public_title
-	return TRUE
-
-/datum/job/prisoner/on_initial_crew_record(mob/living/carbon/human/body, datum/record/crew/record)
-	if(!..())
-		return FALSE
-	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[body.donor_spawn_context.crime_key]
-	if(!crime)
-		CRASH("Prisoner context has no valid crime")
-	record.crimes += new /datum/crime(crime.name, crime.desc, "Central Command", "Indefinite.")
-	body.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = body.donor_spawn_context.crime_key)
-	var/list/limbs = body.get_bodyparts()
-	for(var/i in 1 to crime.tattoos)
-		if(!length(limbs) || !length(SSpersistence.prison_tattoos_to_use))
-			break
-		var/obj/item/bodypart/limb = pick_n_take(limbs)
-		var/list/tattoo = pick_n_take(SSpersistence.prison_tattoos_to_use)
-		limb.AddComponent(/datum/component/tattoo, tattoo["story"])
-	record.recreate_manifest_photos(add_height_chart = TRUE)
-	to_chat(body, span_warning("Вы отбываете наказание за: [crime.name]."))
+	record_registered = TRUE
+	record.rank = public_title
 	return TRUE

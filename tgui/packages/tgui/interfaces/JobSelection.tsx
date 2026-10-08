@@ -46,7 +46,6 @@ type Data = {
   priority: BooleanLike;
   round_duration: string;
   edit_slot: number; // BANDASTATION ADDITION
-  entry_locked: BooleanLike; // BANDASTATION ADDITION
 };
 
 type JobEntryProps = {
@@ -58,7 +57,6 @@ type JobEntryProps = {
 };
 
 function JobEntry(props: JobEntryProps) {
-  const { data } = useBackend<Data>();
   const { jobName, job, department, onClick } = props;
 
   const jobIcon = JOB2ICON[ReverseJobsRu(jobName)] || null;
@@ -66,7 +64,6 @@ function JobEntry(props: JobEntryProps) {
   return (
     <Button
       fluid
-      disabled={!!data.entry_locked}
       style={{
         // Try not to think too hard about this one.
         backgroundColor: job.unavailable_reason
@@ -220,7 +217,6 @@ export function JobSelection(props) {
         <Section
           buttons={
             <Button
-              disabled={!!data.entry_locked}
               onClick={() =>
                 act('select_job', { job: 'Random', edit_slot: data.edit_slot })
               }

@@ -26,6 +26,7 @@ Local paths are relative to this file. Number ranges indicate each individual fi
 | icons_obj_custom_items.dmi | icons/obj/custom_items.dmi |
 | id_cards.dmi | icons/obj/card.dmi |
 | id_skins.dmi | modular_ss220/objects/icons/id_skins.dmi |
+| keyring.dmi | icons/obj/device.dmi |
 | lighters.dmi | icons/obj/lighter.dmi |
 | modular_ss220_aesthetics_zippo_icons_items_lefthand.dmi | modular_ss220/aesthetics/zippo/icons/items_lefthand.dmi |
 | modular_ss220_aesthetics_zippo_icons_items_righthand.dmi | modular_ss220/aesthetics/zippo/icons/items_righthand.dmi |

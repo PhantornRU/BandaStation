@@ -59,3 +59,4 @@
 #include "code/job_types/explorer/trim.dm"
 
 #include "code/job_types/job_staffing_priority.dm"
+#include "code/job_types/prisoner/record.dm"

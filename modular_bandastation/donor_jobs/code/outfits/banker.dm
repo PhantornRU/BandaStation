@@ -13,10 +13,11 @@
 	l_hand = /obj/item/cane
 	l_pocket = /obj/item/melee/baton/telescopic
 	ears = /obj/item/radio/headset/headset_srv
+	box = /obj/item/storage/box/survival/engineer/donor
 	donor_kit = list(
 		/obj/item/stack/spacecash/c1000 = 5,
 		/obj/item/implanter/death_alarm = 1,
-		/obj/item/lighter = 1,
+		/obj/item/lighter/donor_zippo/engraved = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/black = 1,
 		/obj/item/cigarette/cigar/havana = 6,
 	)

@@ -297,10 +297,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// This will, for instance, update the character preference view.
 /// Performs sanity checks.
 /datum/preferences/proc/update_preference(datum/preference/preference, preference_value)
-	// BANDASTATION EDIT START: also reject delayed middleware/modal updates during admission.
-	if(donor_entry_locked)
-		return FALSE
-	// BANDASTATION EDIT END
 	if (!preference.is_accessible(src))
 		return FALSE
 

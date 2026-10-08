@@ -250,22 +250,17 @@ SUBSYSTEM_DEF(job)
 	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE, latejoin = latejoin) != JOB_AVAILABLE)) // BANDASTATION EDIT - Final profile admission
 		return FALSE
 
-	// BANDASTATION EDIT START - Donor jobs final assignment, including prechecked callers
-	if(QDELETED(player) || !player.client || !player.mind || job.donor_lock_reason(player.client))
+	// BANDASTATION EDIT START - Entitlement and capacity also apply to prechecked callers.
+	var/client/requester = GET_CLIENT(player)
+	if(QDELETED(player) || !requester || !player.mind || job.donor_lock_reason(requester))
 		return FALSE
-	var/datum/job_character_selection/selection = player.resolve_assigned_job_character(job, latejoin)
-	if(selection.character_error(job, player.client, latejoin) || selection.queued_antagonist_error(player.mind))
-		QDEL_NULL(player.assigned_character)
+	var/datum/job_character_selection/selection = requester.prefs.select_job_character(job, latejoin)
+	if(selection.character_error(job, requester, latejoin) || (latejoin && player.IsJobSlotUnavailable(job)))
+		qdel(selection)
 		return FALSE
-	var/datum/job_entry_guard/guard = latejoin ? player.client.job_entry_guard : null
-	if(guard)
-		guard.error = guard.commit_error(job)
-		if(guard.error)
-			return FALSE
+	QDEL_NULL(player.assigned_character)
+	player.assigned_character = selection
 	job.current_positions++
-	guard?.note_assignment(job)
-	player.entry_preferences = player.client.prefs
-	player.entry_preferences.donor_entry_locked = guard ? guard : player
 	// BANDASTATION EDIT END
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
@@ -343,7 +338,6 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		// BANDASTATION EDIT - Discard selections from a cancelled assignment pass.
 		QDEL_NULL(player.assigned_character)
-		player.release_character_entry()
 		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))
@@ -969,12 +963,13 @@ SUBSYSTEM_DEF(job)
  * * add_job_to_log - If TRUE, appends the job type to the log entry. If FALSE, does not. Set to FALSE when check is part of iterating over players for a specific job, set to TRUE when check is part of iterating over jobs for a specific player and you don't want extra log entry spam.
  */
 /datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE) // BANDASTATION EDIT - Selected character eligibility
-	if(!player?.mind || !possible_job || !player.client)
+	var/client/player_client = player ? GET_CLIENT(player) : null
+	if(!player?.mind || !possible_job || !player_client)
 		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
 	// BANDASTATION EDIT - Server entitlement; cosmetic preferences are not authorization.
-	if(possible_job.donor_lock_reason(player.client))
+	if(possible_job.donor_lock_reason(player_client))
 		return JOB_UNAVAILABLE_DONOR
 
 	if(possible_job.title in LAZYACCESS(prevented_occupations, player.mind))
@@ -996,18 +991,19 @@ SUBSYSTEM_DEF(job)
 		return JOB_UNAVAILABLE_BANNED
 
 	// Need to recheck the player exists after is_banned_from since it can query the DB which may sleep.
-	if(QDELETED(player) || !player.client)
+	if(QDELETED(player) || GET_CLIENT(player) != player_client)
 		job_debug("[debug_prefix]: Player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
-	// BANDASTATION EDIT START - Inspect the final profile, without changing the active slot
-	var/datum/job_character_selection/selection = player.assigned_character
-	var/temporary = !selection || selection.job_type != possible_job.type
-	if(temporary)
-		selection = player.client.prefs.select_job_character(possible_job, latejoin)
-	var/profile_error = selection.character_error(possible_job, player.client, latejoin) || selection.queued_antagonist_error(player.mind)
-	if(temporary)
-		qdel(selection)
+	// BANDASTATION EDIT START - The assigned slot owns age and species checks.
+	if(possible_job.donor_lock_reason(player_client))
+		return JOB_UNAVAILABLE_DONOR
+	var/datum/job_character_selection/selection = player_client.prefs.select_job_character(possible_job, latejoin)
+	var/too_young = isnum(possible_job.required_character_age) && selection.age < possible_job.required_character_age
+	var/profile_error = selection.character_error(possible_job, player_client, latejoin)
+	qdel(selection)
+	if(too_young)
+		return JOB_UNAVAILABLE_AGE
 	if(profile_error)
 		return JOB_UNAVAILABLE_CHARACTER_PROFILE
 	// BANDASTATION EDIT END

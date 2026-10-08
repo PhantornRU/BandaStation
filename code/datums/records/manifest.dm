@@ -158,7 +158,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		minor_disabilities_desc = person.get_quirk_string(TRUE, CAT_QUIRK_MINOR_DISABILITY),
 		quirk_notes = person.get_quirk_string(TRUE, CAT_QUIRK_NOTES),
 	)
-	if(initial_spawn) // BANDASTATION EDIT - Do not restore donor identity for later in-game changes
+	if(initial_spawn) // BANDASTATION EDIT - Initial record callbacks do not run for identity changes.
 		person.mind.assigned_role.on_initial_crew_record(person, new_record)
 
 /// Edits the rank and trim of the found record.

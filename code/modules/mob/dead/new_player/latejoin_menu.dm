@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
 	// BANDASTATION EDIT START: both menus show the same restrictions and use the same admission path.
 	var/client/requester = user.client
-	if(!requester || requester.interviewee || requester.prefs.donor_entry_locked)
+	if(!requester || requester.interviewee)
 		return
 	var/editing_slot = requester.prefs.default_slot
 	var/list/jobs = list()
@@ -31,7 +31,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 	if(!input_contents || QDELETED(user) || user.client != requester || requester.mob != user)
 		return
-	if(requester.prefs.default_slot != editing_slot || requester.prefs.donor_entry_locked)
+	if(requester.prefs.default_slot != editing_slot)
 		return
 
 	user.AttemptLateSpawn(jobs[input_contents])
@@ -43,15 +43,17 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		return list("public_title" = job_title_ru(job.title))
 	var/datum/preferences/preferences = user.client.prefs
 	var/datum/job_character_selection/character = preferences.select_job_character(job, TRUE)
-	var/datum/job_variant/variant = job.resolve_donor_variant(character.variant_id)
-	var/profile_name = character.slot == preferences.default_slot \
-		? preferences.read_preference(/datum/preference/name/real_name) \
-		: preferences.savefile.get_entry("character[character.slot]")?["real_name"]
+	var/public_title = job_title_ru(job.title)
+	if(length(job.donor_variant_specs))
+		var/list/variants = character.read_preference(/datum/preference/job_outfit_variants)
+		var/datum/job_variant/variant = job.resolve_donor_variant(variants?[job.title])
+		public_title = variant?.public_title || public_title
+	var/profile_name = character.read_preference(/datum/preference/name/real_name)
 	var/profile_description = character.error ? "Недоступный профиль" : "Профиль [character.slot]: [profile_name]"
 	if(character.randomized)
 		profile_description += ", случайные имя и внешность"
 	var/list/data = list(
-		"public_title" = variant?.public_title || job_title_ru(job.title),
+		"public_title" = public_title,
 		"character_profile" = profile_description,
 	)
 	qdel(character)
@@ -61,14 +63,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	if(availability == JOB_AVAILABLE)
 		return null
 	if(availability == JOB_UNAVAILABLE_DONOR)
-		return job.donor_lock_reason(user.client)
-	if(availability == JOB_UNAVAILABLE_CHARACTER_PROFILE)
-		if(user.client)
-			var/datum/job_character_selection/character = user.client.prefs.select_job_character(job, TRUE)
-			var/error = character.character_error(job, user.client, TRUE)
-			qdel(character)
-			if(error)
-				return error
+		return job.donor_lock_reason(user.client) || get_job_unavailable_error_message(availability, job.title)
 	return get_job_unavailable_error_message(availability, job.title)
 // BANDASTATION ADDITION END
 
@@ -104,7 +99,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
 		"edit_slot" = owner.client.prefs.default_slot, // BANDASTATION ADDITION
-		"entry_locked" = !isnull(owner.client.prefs.donor_entry_locked), // BANDASTATION ADDITION
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -208,7 +202,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			// BANDASTATION EDIT START: stale selections must not change a different character.
 			var/client/requester = owner.client
 			var/editing_slot = requester.prefs.default_slot
-			if(requester.prefs.donor_entry_locked || params["edit_slot"] != editing_slot)
+			if(params["edit_slot"] != editing_slot)
 				return TRUE
 			// BANDASTATION EDIT END
 			if(params["job"] == "Random")
@@ -221,7 +215,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			// BANDASTATION EDIT START: random-job confirmation yields; final checks belong to AttemptLateSpawn.
 			if(QDELETED(owner) || owner.client != requester || requester.mob != owner)
 				return TRUE
-			if(requester.prefs.donor_entry_locked || requester.prefs.default_slot != editing_slot)
+			if(requester.prefs.default_slot != editing_slot)
 				return TRUE
 			// BANDASTATION EDIT END
 			owner.AttemptLateSpawn(params["job"])
@@ -282,7 +276,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		// BANDASTATION ADDITION START: do not use a reply from a departed or changed player.
 		if(QDELETED(owner) || owner.client != requester || requester.mob != owner)
 			return
-		if(requester.prefs.default_slot != editing_slot || requester.prefs.donor_entry_locked)
+		if(requester.prefs.default_slot != editing_slot)
 			return
 		// BANDASTATION ADDITION END
 

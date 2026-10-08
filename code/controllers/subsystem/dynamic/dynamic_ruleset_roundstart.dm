@@ -12,10 +12,10 @@
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
 		if(candidate.mind in ruleset.selected_minds)
 			return FALSE
-	// BANDASTATION EDIT - Match Dynamic candidacy to a genuinely available final profile.
+	// BANDASTATION EDIT - A crew antagonist needs an eligible, non-blacklisted job.
 	if(isnewplayer(candidate))
 		var/mob/dead/new_player/player = candidate
-		if(!player.has_eligible_crew_preference(src))
+		if(!(ruleset_flags & RULESET_INVADER) && !player.has_eligible_crew_preference(get_blacklisted_roles()))
 			return FALSE
 	return ..()
 
@@ -120,7 +120,25 @@
 	if (!..())
 		return FALSE
 
-	return TRUE // BANDASTATION EDIT - Base candidate check inspects the effective job profile via accepts_job_character.
+	// BANDASTATION EDIT START - Inspect the effective job profile, without switching slots.
+	if(isnewplayer(candidate))
+		var/mob/dead/new_player/player = candidate
+		return player.has_eligible_crew_preference(get_blacklisted_roles(), require_blood = TRUE)
+	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+	return !(TRAIT_NOBLOOD in species.inherent_traits)
+	// BANDASTATION EDIT END
+
+/datum/dynamic_ruleset/roundstart/blood_worm/prepare_for_role(datum/mind/candidate)
+	..()
+	// Prevent assignment to another enabled job's bloodless profile after candidacy.
+	var/client/player = candidate.current.client
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		var/datum/job_character_selection/selection = player.prefs.select_job_character(job)
+		var/datum/species/species = GLOB.species_prototypes[selection.species]
+		qdel(selection)
+		if(!species || (TRAIT_NOBLOOD in species.inherent_traits))
+			LAZYADDASSOC(SSjob.prevented_occupations, candidate, job.title)
 
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
 	if (!CAN_HAVE_BLOOD(candidate.current))

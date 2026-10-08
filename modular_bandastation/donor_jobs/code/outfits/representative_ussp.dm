@@ -12,9 +12,10 @@
 	l_pocket = /obj/item/melee/baton/telescopic
 	r_pocket = /obj/item/modular_computer/pda/crew/donor
 	pda_slot = ITEM_SLOT_RPOCKET
+	box = /obj/item/storage/box/survival/engineer/donor/mining
 	donor_kit = list(
 		/obj/item/implanter/death_alarm = 1,
-		/obj/item/lighter = 1,
+		/obj/item/lighter/donor_zippo/engraved = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 1,
 		/obj/item/clothing/under/shorts/red = 1,
 		/obj/item/clothing/head/costume/ushanka = 1,

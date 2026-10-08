@@ -210,6 +210,10 @@
 	name = "white beret"
 	greyscale_colors = "#FFFFFF"
 
+/obj/item/clothing/head/beret/donor_purple
+	name = "purple beret"
+	greyscale_colors = "#9557C5"
+
 /obj/item/clothing/suit/donor
 	abstract_type = /obj/item/clothing/suit/donor
 	icon = 'modular_bandastation/donor_jobs/icons/clothing/suits.dmi'

@@ -1,5 +1,5 @@
 import { sortBy } from 'es-toolkit';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Color } from 'tgui-core/color';
 import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
@@ -95,11 +95,10 @@ type PriorityButtonsProps = {
   isOverflow: boolean;
   priority: JobPriority | null;
   restricted: boolean;
-  locked: boolean;
 };
 
 function PriorityButtons(props: PriorityButtonsProps) {
-  const { createSetPriority, isOverflow, priority, restricted, locked } = props;
+  const { createSetPriority, isOverflow, priority, restricted } = props;
 
   return (
     <Stack className="PreferencesMenu__Priority">
@@ -110,7 +109,6 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="off"
             position={1}
             selected={!priority}
-            disabled={locked}
             onClick={createSetPriority(null)}
           />
 
@@ -119,7 +117,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="high"
             position={0}
             selected={!!priority}
-            disabled={locked || restricted}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.High)}
           />
         </>
@@ -130,7 +128,6 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="off"
             position={3}
             selected={!priority}
-            disabled={locked}
             onClick={createSetPriority(null)}
           />
 
@@ -139,7 +136,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="low"
             position={2}
             selected={priority === JobPriority.Low}
-            disabled={locked || restricted}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.Low)}
           />
 
@@ -148,7 +145,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="mid"
             position={1}
             selected={priority === JobPriority.Medium}
-            disabled={locked || restricted}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.Medium)}
           />
 
@@ -157,7 +154,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="high"
             position={0}
             selected={priority === JobPriority.High}
-            disabled={locked || restricted}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.High)}
           />
         </>
@@ -181,39 +178,70 @@ function JobRow(props: JobRowProps) {
   const isOverflow = data.overflow_role === name;
   const createSetPriority = createCreateSetPriorityFromName(name);
 
-  const lockReason = data.job_lock_reasons?.[name]; // BANDASTATION EDIT: restrictions depend on the final character profile.
+  let rightSide: ReactNode;
+  const experienceNeeded = data.job_required_experience?.[name];
+  const daysLeft = data.job_days_left?.[name] ?? 0;
+
+  if (experienceNeeded) {
+    const { experience_type, required_playtime } = experienceNeeded;
+    const hoursNeeded = Math.ceil(required_playtime / 60);
+
+    rightSide = (
+      <Stack.Item className="restricted">
+        <b>{hoursNeeded}ч.</b> как{' '}
+        <Tooltip content={experience_type}>
+          <span>{experience_type}</span>
+        </Tooltip>
+      </Stack.Item>
+    );
+  } else if (daysLeft > 0) {
+    rightSide = (
+      <Stack.Item className="restricted">
+        Нужно еще дней: <b>{daysLeft}</b>
+      </Stack.Item>
+    );
+  } else if (data.job_bans?.includes(name)) {
+    rightSide = <Stack.Item className="restricted ban">Забанен</Stack.Item>;
+  }
+
+  const donorJob = data.donor_jobs?.[name];
+  const additionalReason =
+    donorJob?.lock_reason || data.job_character_profiles?.[name]?.error;
+  const hasVariants = (donorJob?.variants.length ?? 0) > 1;
 
   return (
     <Stack.Item className={className}>
-      <Stack vertical>
-        <Stack.Item>
-          <Stack fill align="center">
-            <Tooltip content={job.description} position="bottom-start">
-              <Stack.Item grow className="job-name">
-                {data.donor_jobs?.[name]?.title || JOBS_RU[name] || name}
+      <Stack fill align="center">
+        <Tooltip content={job.description} position="bottom-start">
+          <Stack.Item grow className="job-name">
+            {donorJob?.title || JOBS_RU[name] || name}
+          </Stack.Item>
+        </Tooltip>
+        <Stack.Item className="options">
+          {rightSide}
+          {!!additionalReason && (
+            <Tooltip content={additionalReason}>
+              <Stack.Item className="restricted">
+                {donorJob?.lock_reason
+                  ? `Тир ${donorJob.required_tier}`
+                  : 'Профиль недоступен'}
               </Stack.Item>
             </Tooltip>
-            <Stack.Item className="options">
-              <PriorityButtons
-                createSetPriority={createSetPriority}
-                isOverflow={isOverflow}
-                priority={priority}
-                restricted={!!lockReason}
-                locked={!!data.donor_entry_locked}
-              />
-              <JobSlotDropdown name={name} />
-            </Stack.Item>
-          </Stack>
+          )}
+          <PriorityButtons
+            createSetPriority={createSetPriority}
+            isOverflow={isOverflow}
+            priority={priority}
+            restricted={!!rightSide || !!additionalReason}
+          />
+          <JobSlotDropdown name={name} />
         </Stack.Item>
-        <Stack.Item>
-          <JobVariantSelector jobName={name} />
-        </Stack.Item>
-        {!!lockReason && (
-          <Stack.Item className="restricted">
-            <Box color="label">{lockReason}</Box>
-          </Stack.Item>
-        )}
       </Stack>
+      {hasVariants && (
+        <Box mt={0.5}>
+          <JobVariantSelector jobName={name} />
+        </Box>
+      )}
     </Stack.Item>
   );
 }

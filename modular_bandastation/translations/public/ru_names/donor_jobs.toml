@@ -1,3 +1,12 @@
+["purple beret"]
+nominative = "фиолетовый берет"
+genitive = "фиолетового берета"
+dative = "фиолетовому берету"
+accusative = "фиолетовый берет"
+instrumental = "фиолетовым беретом"
+prepositional = "фиолетовом берете"
+gender = "male"
+
 ["barber's uniform"]
 nominative = "униформа парикмахера"
 genitive = "униформы парикмахера"
@@ -637,13 +646,13 @@ instrumental = "автоматическим покрасчиком"
 prepositional = "автоматическом покрасчике"
 gender = "male"
 
-["service command headset"]
-nominative = "руководящая гарнитура сервиса"
-genitive = "руководящей гарнитуры сервиса"
-dative = "руководящей гарнитуре сервиса"
-accusative = "руководящую гарнитуру сервиса"
-instrumental = "руководящей гарнитурой сервиса"
-prepositional = "руководящей гарнитуре сервиса"
+["adjutant's bowman headset"]
+nominative = "защищённая гарнитура адъютанта"
+genitive = "защищённой гарнитуры адъютанта"
+dative = "защищённой гарнитуре адъютанта"
+accusative = "защищённую гарнитуру адъютанта"
+instrumental = "защищённой гарнитурой адъютанта"
+prepositional = "защищённой гарнитуре адъютанта"
 gender = "female"
 
 ["security clown headset"]

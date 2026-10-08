@@ -21,6 +21,8 @@
 		/obj/item/clothing/under/rank/civilian/lawyer/blue = 1,
 	)
 	implants = list(/obj/item/implant/mindshield)
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
 
 /datum/outfit/job/donor/adjutant/pre_equip(mob/living/carbon/human/human, visuals_only = FALSE)
 	. = ..()

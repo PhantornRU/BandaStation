@@ -227,7 +227,6 @@
 	if(ispath(quirk_item))
 		quirk_item = new quirk_item(get_turf(quirk_holder))
 
-	quirk_holder.job_entry_guard?.track_item(quirk_item) // BANDASTATION EDIT - A failed entry also removes this quirk's floor overflow.
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, indirect_action = TRUE) || default_location

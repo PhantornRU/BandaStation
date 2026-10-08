@@ -30,7 +30,6 @@
 	if(!client)
 		return FALSE
 
-	client.note_job_character_handover(src) // BANDASTATION EDIT - Ownership is committed before HUD creation can yield.
 	canon_client = client
 	client.persistent_client.set_mob(src)
 

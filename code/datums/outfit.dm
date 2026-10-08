@@ -14,6 +14,8 @@
  * that can be restored at a later date
  */
 /datum/outfit
+	/// Preserve mandatory backpack contents on overflow; ordinary outfits retain deletion.
+	var/preserve_backpack_overflow = FALSE
 	///Name of the outfit (shows up in the equip admin verb)
 	var/name = "Naked"
 
@@ -164,10 +166,8 @@
 	return
 
 #define EQUIP_OUTFIT_ITEM(item_path, slot_name) if(##item_path) { \
-	var/obj/item/outfit_item = SSwardrobe.provide_type(##item_path, user); \
-	user.job_entry_guard?.track_item(outfit_item); /* BANDASTATION EDIT - Rollback owns only newly issued equipment. */ \
-	user.equip_to_slot_or_del(outfit_item, ##slot_name, TRUE, indirect_action = TRUE); \
-	outfit_item = user.get_item_by_slot(##slot_name); \
+	user.equip_to_slot_or_del(SSwardrobe.provide_type(##item_path, user), ##slot_name, TRUE, indirect_action = TRUE); \
+	var/obj/item/outfit_item = user.get_item_by_slot(##slot_name); \
 	if (outfit_item && outfit_item.type == ##item_path) { \
 		outfit_item.on_outfit_equip(user, visuals_only, ##slot_name); \
 	} \
@@ -241,17 +241,9 @@
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
-		// BANDASTATION EDIT START - Hand equipment can overflow before client handover.
-		var/obj/item/item = SSwardrobe.provide_type(l_hand, user)
-		user.job_entry_guard?.track_item(item)
-		user.put_in_l_hand(item, visuals_only = visuals_only)
-		// BANDASTATION EDIT END
+		user.put_in_l_hand(SSwardrobe.provide_type(l_hand, user), visuals_only = visuals_only)
 	if(r_hand)
-		// BANDASTATION EDIT START - Hand equipment can overflow before client handover.
-		var/obj/item/item = SSwardrobe.provide_type(r_hand, user)
-		user.job_entry_guard?.track_item(item)
-		user.put_in_r_hand(item, visuals_only = visuals_only)
-		// BANDASTATION EDIT END
+		user.put_in_r_hand(SSwardrobe.provide_type(r_hand, user), visuals_only = visuals_only)
 
 	if(!visuals_only) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
@@ -271,9 +263,8 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					// BANDASTATION EDIT START - Preserve donor kit/loadout overflow without enlarging storage
+					// BANDASTATION EDIT START - Optional overflow preserves contents without enlarging storage
 					var/obj/item/item = SSwardrobe.provide_type(path, preserve_backpack_overflow ? null : user)
-					user.job_entry_guard?.track_item(item)
 					if(!user.equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = !preserve_backpack_overflow) && preserve_backpack_overflow)
 						if(!user.put_in_hands(item))
 							item.forceMove(user.drop_location())

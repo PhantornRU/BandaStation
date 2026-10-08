@@ -51,10 +51,7 @@
 	body.mind_initialize()
 	body.mind.set_assigned_role(job)
 	body.job = job.title
-	var/datum/job_character_selection/selection = allocate(/datum/job_character_selection)
-	selection.variant_id = variant.id
-	selection.prisoner_crime = /datum/prisoner_crime/negligence::name
-	body.donor_spawn_context = allocate(/datum/donor_spawn_context, job, selection)
+	job.prepare_donor_character(body, player.prefs)
 	body.dress_up_as_job(job, player_client = player, consistent = TRUE)
 	check_equipped_slots(body, outfit_path)
 	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)
@@ -130,9 +127,7 @@
 	body.mind_initialize()
 	body.mind.set_assigned_role(job)
 	body.job = job.title
-	var/datum/job_character_selection/selection = allocate(/datum/job_character_selection)
-	selection.variant_id = "default"
-	body.donor_spawn_context = allocate(/datum/donor_spawn_context, job, selection)
+	body.donor_spawn_context = allocate(/datum/donor_spawn_context, job, "default")
 	body.dress_up_as_job(job, consistent = TRUE)
 	var/obj/item/storage/backpack/backpack = body.back
 	TEST_ASSERT_NOTNULL(backpack, "Barber did not receive a normal backpack")
@@ -168,13 +163,11 @@
 	player.prefs = allocate(/datum/preferences, player)
 	var/datum/job/job = allocate(/datum/job/donor/actor)
 	var/datum/job_variant/artist = job.resolve_donor_variant("title_e639ea25de")
-	var/datum/job_character_selection/selection = allocate(/datum/job_character_selection)
-	selection.variant_id = artist.id
 	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/loadout], list(/obj/item/clothing/head/beanie = list(), /obj/item/toy/plush/beeplushie = list())), "Could not save the native personal loadout")
 	var/mob/living/carbon/human/female = allocate(/mob/living/carbon/human/consistent)
 	female.gender = FEMALE
 	female.job = job.title
-	female.donor_spawn_context = allocate(/datum/donor_spawn_context, job, selection)
+	female.donor_spawn_context = allocate(/datum/donor_spawn_context, job, artist.id)
 	female.dress_up_as_job(job, player_client = player, consistent = TRUE)
 	TEST_ASSERT(istype(female.w_uniform, /obj/item/clothing/under/donor/victorian_dress/red), "Artist did not choose the female uniform before loadout")
 	TEST_ASSERT(istype(female.head, /obj/item/clothing/head/beanie), "Personal headwear was overwritten by the artist outfit")
@@ -184,7 +177,7 @@
 	var/mob/living/carbon/human/male = allocate(/mob/living/carbon/human/consistent)
 	male.gender = MALE
 	male.job = job.title
-	male.donor_spawn_context = allocate(/datum/donor_spawn_context, job, selection)
+	male.donor_spawn_context = allocate(/datum/donor_spawn_context, job, artist.id)
 	male.dress_up_as_job(job, player_client = player, consistent = TRUE)
 	TEST_ASSERT(istype(male.w_uniform, /obj/item/clothing/under/donor/victorian/red), "The live artist variant was replaced by editor state or the previous female outfit")
 	TEST_ASSERT(istype(male.head, /obj/item/clothing/head/beanie), "Personal headwear was lost on the second character")
@@ -192,7 +185,7 @@
 	var/mob/living/carbon/human/plasmaman = allocate(/mob/living/carbon/human/consistent)
 	plasmaman.job = job.title
 	plasmaman.set_species(/datum/species/plasmaman)
-	plasmaman.donor_spawn_context = allocate(/datum/donor_spawn_context, job, selection)
+	plasmaman.donor_spawn_context = allocate(/datum/donor_spawn_context, job, artist.id)
 	plasmaman.dress_up_as_job(job, player_client = player, consistent = TRUE)
 	TEST_ASSERT(istype(plasmaman.w_uniform, /obj/item/clothing/under/plasmaman), "Donor equipment replaced the species pressure suit")
 	TEST_ASSERT(istype(plasmaman.head, /obj/item/clothing/head/helmet/space/plasmaman), "Personal headwear replaced the species pressure helmet")
@@ -203,33 +196,39 @@
 	player.prefs = allocate(/datum/preferences, player)
 	player.prefs.all_quirks = list(/datum/quirk/item_quirk/food_allergic::name)
 	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/food_allergy], "Молочные продукты"), "Could not save the customized allergy")
-	var/mob/dead/new_player/lobby = allocate(/mob/dead/new_player)
-	player.mob = lobby
-	var/datum/mind/player_mind = allocate(/datum/mind)
-	player_mind.set_current(lobby)
-	lobby.mind = player_mind
-	lobby.entry_mind = player_mind
-	lobby.entry_preferences = player.prefs
-	player.prefs.donor_entry_locked = lobby
 	var/datum/job/job = allocate(/datum/job/donor/barber)
-	player_mind.set_assigned_role(job)
 	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
-	player_mind.transfer_to(body)
-	body.job = job.title
-	body.dress_up_as_job(job, player_client = player, consistent = TRUE)
+	body.mind_initialize()
+	body.mind.set_assigned_role(job)
+	job.prepare_donor_character(body, player.prefs)
+	SSjob.equip_rank(body, job, null)
 	SSquirks.AssignQuirks(body, player)
 	var/datum/quirk/item_quirk/food_allergic/allergy = locate() in body.quirks
-	TEST_ASSERT_NOTNULL(allergy, "Native pre-handover quirks did not add the selected allergy")
-	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Native pre-handover quirks lost the customized allergy")
-	TEST_ASSERT_NOTNULL(locate(/obj/item/clothing/accessory/dogtag/allergy) in body.get_all_contents(), "Native pre-handover quirks lost their actual equipment")
-	var/mob/living/carbon/human/other_body = allocate(/mob/living/carbon/human/consistent)
-	other_body.mind_initialize()
-	TEST_ASSERT(!lobby.note_character_handover(other_body), "Another character's Login committed this entry")
-	TEST_ASSERT(lobby.note_character_handover(body), "The original mind did not commit its character")
-	var/obj/item/uniform_before = body.w_uniform
-	// No live client remains: the native creation failure path must retain committed ownership.
-	TEST_ASSERT_EQUAL(lobby.create_roundstart_character(null), body, "A lost client or constructor exception deleted the handed-over character")
-	TEST_ASSERT(!QDELETED(body), "The handed-over character was deleted")
-	TEST_ASSERT_EQUAL(body.w_uniform, uniform_before, "The handed-over character lost equipment during cleanup")
-	lobby.release_character_entry()
-	TEST_ASSERT_NULL(player.prefs.donor_entry_locked, "Completed handover retained the character editor lock")
+	TEST_ASSERT_NOTNULL(allergy, "Native post-equipment quirks did not add the selected allergy")
+	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Native quirks lost the customized allergy")
+	TEST_ASSERT_NOTNULL(locate(/obj/item/clothing/accessory/dogtag/allergy) in body.get_all_contents(), "Native quirks lost their actual equipment")
+	TEST_ASSERT(body.donor_spawn_context.kit_issued, "Initial native equipment did not issue the donor kit")
+	var/list/items_before = run_loc_floor_bottom_left.get_all_contents_type(/obj/item)
+	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)
+	card.assignment = "Reassigned employee"
+	job.after_spawn(body, null)
+	TEST_ASSERT_EQUAL(length(run_loc_floor_bottom_left.get_all_contents_type(/obj/item) - items_before), 0, "A repeated spawn callback issued additional equipment")
+	TEST_ASSERT_EQUAL(card.assignment, "Reassigned employee", "A repeated callback restored the old public title")
+	TEST_ASSERT_NULL(body.client, "Reward issuance required a Login or reconnect")
+
+/datum/unit_test/donor_emergency_glowstick/Run()
+	var/obj/item/flashlight/donor_emergency_glowstick/glowstick = allocate(/obj/item/flashlight/donor_emergency_glowstick)
+	TEST_ASSERT(!glowstick.light_on, "The emergency glowstick started burning before activation")
+	TEST_ASSERT_NULL(glowstick.reagents, "The emergency glowstick acquired extractable chemical fuel")
+	TEST_ASSERT(glowstick.seconds_remaining >= 60 && glowstick.seconds_remaining <= 180, "The emergency glowstick lost its historical one-to-three-minute lifetime")
+	TEST_ASSERT(glowstick.toggle_light(), "The emergency glowstick could not be activated")
+	TEST_ASSERT(!glowstick.toggle_light(), "The burning emergency glowstick could be switched off or restarted")
+	glowstick.process(glowstick.seconds_remaining - 1)
+	TEST_ASSERT(glowstick.light_on, "The emergency glowstick stopped before its fuel ran out")
+	TEST_ASSERT_EQUAL(glowstick.light_range, 4, "The emergency glowstick's light faded before expiry")
+	TEST_ASSERT_EQUAL(glowstick.light_power, 1, "The emergency glowstick changed its historical light strength")
+	TEST_ASSERT_EQUAL(glowstick.light_color, LIGHT_COLOR_BLUE, "The emergency glowstick changed its historical blue light")
+	TEST_ASSERT_EQUAL(glowstick.process(1), PROCESS_KILL, "The spent emergency glowstick kept processing")
+	TEST_ASSERT(!glowstick.light_on, "The spent emergency glowstick retained its light")
+	TEST_ASSERT_EQUAL(glowstick.icon_state, "glowstick-empty", "The spent emergency glowstick did not preserve its empty item")
+	TEST_ASSERT(!glowstick.toggle_light(), "The spent emergency glowstick could be reignited")

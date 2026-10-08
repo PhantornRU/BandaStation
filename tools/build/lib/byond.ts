@@ -232,8 +232,8 @@ export async function DreamDaemon(
 ): Promise<Juke.ExecReturn> {
   const dmPath = await getDmPath(options.namedDmVersion);
   const baseDir = path.dirname(dmPath);
-  // BANDASTATION EDIT: Use the Windows console launcher for reliable exit codes.
-  const ddExeName = process.platform === 'win32' ? 'dd.exe' : 'DreamDaemon';
+  const ddExeName =
+    process.platform === 'win32' ? 'dreamdaemon.exe' : 'DreamDaemon';
   const ddExePath = baseDir === '.' ? ddExeName : path.join(baseDir, ddExeName);
 
   return Juke.exec(ddExePath, [options.dmbFile, ...args]);

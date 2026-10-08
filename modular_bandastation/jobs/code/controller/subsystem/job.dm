@@ -45,3 +45,24 @@
 		return list()
 
 	return sortTim(shuffle(jobs), GLOBAL_PROC_REF(cmp_job_staffing_priority))
+
+/// Dynamic and normal occupation selection share native eligibility and canonical preferences.
+/mob/dead/new_player/proc/has_eligible_crew_preference(list/blacklisted_roles, require_blood = FALSE)
+	if(!client)
+		return FALSE
+	var/random_fallback = client.prefs.read_preference(/datum/preference/choiced/jobless_role) != RETURNTOLOBBY
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if((job.title in blacklisted_roles) || !job.spawn_positions || (job.job_flags & JOB_LATEJOIN_ONLY))
+			continue
+		if(!client.prefs.job_preferences[job.title] && (!random_fallback || job.requires_explicit_preference()))
+			continue
+		if(SSjob.check_job_eligibility(src, job, "Candidate admission") != JOB_AVAILABLE)
+			continue
+		if(!require_blood)
+			return TRUE
+		var/datum/job_character_selection/selection = client.prefs.select_job_character(job)
+		var/datum/species/species = GLOB.species_prototypes[selection.species]
+		qdel(selection)
+		if(species && !(TRAIT_NOBLOOD in species.inherent_traits))
+			return TRUE
+	return FALSE

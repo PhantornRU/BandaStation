@@ -6,7 +6,7 @@
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
 	// BANDASTATION EDIT START: authority stays on the server, including direct middleware calls.
-	if(user.client?.prefs != preferences || preferences.donor_entry_locked || params["edit_slot"] != preferences.default_slot)
+	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 	// BANDASTATION EDIT END
 	var/job_title = params["job"]
@@ -24,7 +24,7 @@
 
 	if (job.faction != FACTION_STATION)
 		return FALSE
-	// BANDASTATION EDIT START: keep saved choices when entitlement expires; clearing remains allowed.
+	// BANDASTATION EDIT START: clearing remains available when entitlement expires.
 	if(!isnull(level) && job.donor_lock_reason(user.client))
 		return FALSE
 	// BANDASTATION EDIT END
@@ -38,7 +38,7 @@
 
 /datum/preference_middleware/jobs/proc/set_job_to_profile(list/params, mob/user)
 	// BANDASTATION EDIT START: validate external slot assignments before saving.
-	if(user.client?.prefs != preferences || preferences.donor_entry_locked || params["edit_slot"] != preferences.default_slot)
+	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 	if(!istext(params["job"]))
 		return FALSE

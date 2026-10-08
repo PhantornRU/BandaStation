@@ -165,34 +165,38 @@
 
 /obj/item/storage/box/donor_stock
 	name = "коробка всячины"
-	desc = "Коробка с легальными вещами или фальшивками. Распакуйте её в руке; крупные вещи окажутся рядом."
+	desc = "Коробка с легальными вещами или фальшивками. Крупные вещи и то, что не помещается в коробку, окажутся рядом."
 	icon = 'modular_bandastation/donor_jobs/icons/boxes.dmi'
 	icon_state = "thief_box"
 	illustration = null
 	var/loot_amount = 30
-	var/unpacked = FALSE
+	var/contents_distributed = FALSE
 
 /obj/item/storage/box/donor_stock/PopulateContents()
-	return
-
-/obj/item/storage/box/donor_stock/attack_self(mob/user)
-	if(unpacked)
-		return ..()
-	var/turf/drop_turf = get_turf(user)
-	if(!drop_turf)
-		return
-	unpacked = TRUE
 	for(var/index in 1 to loot_amount)
 		var/loot_type = donor_loot_type(pick(get_donor_dealer_stock()))
-		var/obj/item/loot
 		if(ispath(loot_type, /obj/item/stack))
 			var/obj/item/stack/stack_type = loot_type
-			loot = new stack_type(drop_turf, initial(stack_type.amount), FALSE)
+			new stack_type(src, initial(stack_type.amount), FALSE)
 		else
-			loot = new loot_type(drop_turf)
-		atom_storage.attempt_insert(loot, user, messages = FALSE)
-	balloon_alert(user, "распаковано: [loot_amount]")
-	atom_storage.show_contents(user)
+			new loot_type(src)
+	distribute_contents()
+
+/obj/item/storage/box/donor_stock/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	distribute_contents()
+
+/obj/item/storage/box/donor_stock/proc/distribute_contents()
+	var/turf/drop_turf = get_turf(src)
+	if(contents_distributed || !drop_turf || !length(contents))
+		return
+	contents_distributed = TRUE
+	var/list/stock = contents.Copy()
+	// Constructors may start in nullspace; apply finite storage only after placement.
+	for(var/obj/item/loot as anything in stock)
+		loot.forceMove(drop_turf)
+	for(var/obj/item/loot as anything in stock)
+		atom_storage.attempt_insert(loot, messages = FALSE)
 
 /obj/item/storage/box/donor_stock/amount_1
 	loot_amount = 1

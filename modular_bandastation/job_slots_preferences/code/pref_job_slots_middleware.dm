@@ -9,11 +9,23 @@
 
 	data["pref_job_slots"] = preferences.pref_job_slots
 	data["profile_index"] = preferences.get_slot_options()
+	var/list/job_profiles = list()
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if(job.job_flags & JOB_LATEJOIN_ONLY)
+			continue
+		var/datum/job_character_selection/character = preferences.select_job_character(job)
+		job_profiles[job.title] = list(
+			"slot" = isnum(character.slot) ? character.slot : null,
+			"randomized" = character.randomized,
+			"error" = character.character_error(job, user.client, FALSE),
+		)
+		qdel(character)
+	data["job_character_profiles"] = job_profiles
 
 	return data
 
 /datum/preference_middleware/pref_job_slots/proc/set_job_slot(list/params, mob/user)
-	if(user.client?.prefs != preferences || preferences.donor_entry_locked || params["edit_slot"] != preferences.default_slot)
+	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 
 	var/job_title = params["job"]
@@ -36,7 +48,7 @@
 	return TRUE
 
 /datum/preference_middleware/pref_job_slots/proc/reset_job_slots(list/params, mob/user)
-	if(user.client?.prefs != preferences || preferences.donor_entry_locked || params["edit_slot"] != preferences.default_slot)
+	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 	preferences.reset_job_slots()
 	return TRUE

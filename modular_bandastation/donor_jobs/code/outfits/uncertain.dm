@@ -11,6 +11,8 @@
 	mask = /obj/item/cigarette/pipe/cobpipe
 	l_pocket = /obj/item/modular_computer/pda/crew/curator/donor
 	pda_slot = ITEM_SLOT_LPOCKET
+	backpack = /obj/item/storage/backpack/explorer
+	satchel = /obj/item/storage/backpack/satchel/explorer
 	donor_kit = list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_random = 2,

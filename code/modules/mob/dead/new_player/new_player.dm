@@ -40,8 +40,6 @@
 	GLOB.new_player_list -= src
 	// BANDASTATION EDIT START - Transient selection belongs to the lobby mob
 	QDEL_NULL(assigned_character)
-	QDEL_NULL(pending_donor_context)
-	release_character_entry()
 	// BANDASTATION EDIT END
 
 	return ..()
@@ -178,64 +176,47 @@
 			return TRUE
 	return FALSE
 
-/mob/dead/new_player/proc/perform_late_spawn(rank, datum/job_entry_guard/guard) // BANDASTATION EDIT - Public entry guard owns rollback
-	var/datum/job/job = SSjob.get_job(rank)
-	resolve_assigned_job_character(job, TRUE)
+/mob/dead/new_player/proc/AttemptLateSpawn(rank)
+	// BANDASTATION EDIT START - Native attempt state protects both menus, including yielding checks.
+	if(spawning || !client || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
+		return FALSE
+	spawning = TRUE
+	var/client/requester = client
 	var/error = IsJobUnavailable(rank, latejoin = TRUE)
 	if(error != JOB_AVAILABLE)
-		guard.error = get_job_unavailable_error_message(error, rank)
-		return FALSE
-
+		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
 	if(SSshuttle.arrivals)
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			guard.error = "В данный момент шаттл прибытия сломан. Вы не сможете присоединиться."
-			return FALSE
-
+			return reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
 			SSshuttle.arrivals.RequireUndocked(src)
-
+	if(QDELETED(src) || !requester || client != requester || requester.mob != src)
+		return reject_late_spawn()
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
+	if(!requester.holder && length(SSticker.queued_players) && SSticker.queued_players[1] != src)
+		return reject_late_spawn("Дождитесь своей очереди на вход.")
+	error = IsJobUnavailable(rank, latejoin = TRUE)
+	if(error != JOB_AVAILABLE || QDELETED(src) || !requester || client != requester)
+		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
+	var/datum/job/job = SSjob.get_job(rank)
 	if(!SSjob.assign_role(src, job, TRUE))
-		if(!guard.error)
-			guard.error = "Назначение отменено; проверьте доступность профессии."
-		return FALSE
-
-	var/latejoin_period = CEILING(STATION_TIME_PASSED() / (5 MINUTES), 5)
-	SSblackbox.record_feedback("tally", "latejoin_time", 1, latejoin_period)
+		return reject_late_spawn("Профессия больше недоступна; выберите её повторно.")
 	mind.late_joiner = TRUE
-	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
-	if(!destination)
-		guard.error = "На карте нет допустимой точки появления."
-		return FALSE
-	var/mob/living/character = create_character(destination) // BANDASTATION EDIT - Use the committed profile
+	var/atom/destination = job.get_latejoin_spawn_point()
+	var/mob/living/character = destination ? create_character(destination) : null
 	if(!character)
-		if(!guard.error)
-			guard.error = "Персонаж не был создан."
-		return FALSE
-	// BANDASTATION EDIT START - Use the live profile owner for outfit and quirk customization.
-	var/client/requesting_client = guard.owner
-	var/mob/living/carbon/human/humanc
-	if(ishuman(character))
-		humanc = character
-	if(QDELETED(character) || (!guard.handover_complete && (!requesting_client || guard.error)))
-		return FALSE
-	SSjob.equip_rank(character, job, requesting_client)
-	if(QDELETED(character) || (!guard.handover_complete && (!requesting_client || guard.error)))
-		return FALSE
-	if(humanc)
-		if(job.job_flags & JOB_ASSIGN_QUIRKS)
-			if(CONFIG_GET(flag/roundstart_traits))
-				SSquirks.AssignQuirks(humanc, requesting_client)
-		else
-			humanc.clear_personalities()
-	if(QDELETED(character) || (!guard.handover_complete && (!requesting_client || guard.error)))
-		return FALSE
+		cancel_character_spawn()
+		return reject_late_spawn("Персонаж не был создан; место профессии освобождено.")
 	if(!transfer_character())
-		guard.error = "Передача персонажа не состоялась."
-		return FALSE
-	// Failed admission keeps the player's queue position.
+		cancel_character_spawn()
+		return reject_late_spawn("Передача персонажа не состоялась; место профессии освобождено.")
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
+	var/latejoin_period = CEILING(STATION_TIME_PASSED() / (5 MINUTES), 5)
+	SSblackbox.record_feedback("tally", "latejoin_time", 1, latejoin_period)
 	// BANDASTATION EDIT END
+	SSjob.equip_rank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
 	#define IS_NOT_CAPTAIN 0
@@ -258,7 +239,10 @@
 	#undef IS_FULL_CAPTAIN
 
 	SSticker.minds += character.mind
-	character.client?.init_verbs() // BANDASTATION EDIT - Handover remains valid after disconnect.
+	character.client.init_verbs() // BANDASTATION EDIT - Disconnect after handover keeps the body // init verbs for the late join
+	var/mob/living/carbon/human/humanc
+	if(ishuman(character))
+		humanc = character //Let's retypecast the var to be human,
 
 	if(humanc) //These procs all expect humans
 		if(SSshuttle.arrivals)
@@ -278,14 +262,23 @@
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && !EMERGENCY_PAST_POINT_OF_NO_RETURN && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		SSdynamic.on_latejoin(humanc)
 
+	if(humanc)
+		if(job.job_flags & JOB_ASSIGN_QUIRKS)
+			if(CONFIG_GET(flag/roundstart_traits))
+				SSquirks.AssignQuirks(humanc, humanc.client)
+		else // clear any personalities the prefs added since our job clearly does not want them
+			humanc.clear_personalities()
+
 	if(humanc) // Quirks may change manifest datapoints, so inject only after assigning quirks
-		GLOB.manifest.inject(humanc, initial_spawn = TRUE) // BANDASTATION EDIT - Initial identity and Prisoner record
+		GLOB.manifest.inject(humanc, initial_spawn = TRUE) // BANDASTATION EDIT - Initial record callback
 		SEND_SIGNAL(humanc, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
 	var/area/station/arrivals = GLOB.areas_by_type[/area/station/hallway/secondary/entry]
 	if(humanc && arrivals && !arrivals.power_environ) //arrivals depowered
 		humanc.put_in_hands(new /obj/item/crowbar/large/emergency(get_turf(humanc))) //if hands full then just drops on the floor
 	log_manifest(character.mind.key, character.mind, character, latejoin = TRUE)
-	return TRUE // BANDASTATION EDIT - Entry guard result
+
+
+	return TRUE
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -303,74 +296,72 @@
  */
 /mob/dead/new_player/proc/create_character(atom/destination, forced_slot)
 	spawning = TRUE
-
-	// BANDASTATION EDIT START - One profile governs admission, appearance and variant
-	var/client/requesting_client = client
-	var/datum/persistent_client/requesting_persistent_client = requesting_client.persistent_client
-	var/datum/job_entry_guard/entry_guard = requesting_client.job_entry_guard
+	// BANDASTATION EDIT START - Resolve one profile before construction, leaving AI handover native.
+	if(!client || !destination || !mind?.assigned_role)
+		return null
 	var/datum/job/assigned_job = mind.assigned_role
 	var/datum/job_character_selection/selection = resolve_assigned_job_character(assigned_job, mind.late_joiner, forced_slot)
-	var/profile_error = selection.character_error(assigned_job, client, mind.late_joiner) || assigned_job.donor_lock_reason(client)
-	if(profile_error || !load_assigned_job_character())
-		if(client?.job_entry_guard)
-			client.job_entry_guard.error = profile_error || "Назначенный профиль не удалось загрузить."
+	if(selection.character_error(assigned_job, client, mind.late_joiner) || assigned_job.donor_lock_reason(client) || !load_assigned_job_character())
 		return null
 	// BANDASTATION EDIT END
-
-	entry_mind = mind // BANDASTATION EDIT - Login can occur inside get_spawn_mob's AI constructor.
-	entry_mind.active = FALSE //we wish to transfer the key manually
-	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
-	if(QDELETED(src) || QDELETED(spawning_mob)) // BANDASTATION EDIT - Recheck after native spawn callbacks.
-		return
-
-	// BANDASTATION EDIT - A committed AI handover survives loss of the captured client.
-	if(!requesting_client && !character_handover_complete)
-		return
-	// BANDASTATION EDIT START - Native randomization can change admission constraints
-	profile_error = selection.actual_body_error(assigned_job, spawning_mob, entry_mind)
-	if(profile_error)
-		entry_guard?.error = profile_error
+	mind.active = FALSE //we wish to transfer the key manually
+	var/mob/living/spawning_mob = assigned_job.get_spawn_mob(client, destination)
+	if(QDELETED(src) || QDELETED(spawning_mob))
 		return null
-	// BANDASTATION EDIT END
-
-	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
-		// transfer_to sets mind to null
-		var/datum/mind/preserved_mind = entry_mind // BANDASTATION EDIT - Captured before any constructor handover.
-		preserved_mind.original_character_slot_index = selection.slot
-		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
+	var/client/player_client = src.client || spawning_mob.client // An AI constructor can take the client.
+	if(!player_client)
+		qdel(spawning_mob)
+		return null
+	if(assigned_job.donor_lock_reason(player_client) || selection.actual_body_error(assigned_job, spawning_mob)) // BANDASTATION EDIT - Recheck admission after the yielding appearance lookup.
+		qdel(spawning_mob)
+		return null
+	if(!isAI(spawning_mob))
+		var/datum/mind/preserved_mind = mind
+		preserved_mind.original_character_slot_index = selection.slot // BANDASTATION EDIT - The committed profile, not the previously active slot.
+		preserved_mind.transfer_to(spawning_mob)
 		preserved_mind.set_original_character(spawning_mob)
-
-	entry_guard?.note_slot_history(selection.slot) // BANDASTATION EDIT - Roll back only this attempt's history
-	LAZYADD(requesting_persistent_client.joined_as_slots, "[selection.slot]") // BANDASTATION EDIT - History follows the final profile
-	requesting_client?.init_verbs()
+	player_client.init_verbs()
 	. = spawning_mob
 	new_character = .
 
-
 /mob/dead/new_player/proc/transfer_character()
-	var/mob/living/character = new_character // BANDASTATION EDIT - Login may yield while ownership changes.
-	if(QDELETED(character))
-		return null
-	// BANDASTATION EDIT START - Login commits ownership before its first yielding callback.
-	if(!character_handover_complete)
-		if(!client)
-			return null
-		SStitle.hide_title_screen_from(client) // BANDASTATION ADDITION - HTML Title Screen
-		if(!client || QDELETED(character))
-			return null
-		character.PossessByPlayer(key) //Manually transfer the key to log them in,
-		if(!character_handover_complete)
-			return null
-	release_character_entry()
-	// BANDASTATION EDIT END
-	character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	var/area/joined_area = get_area(character.loc)
+	. = new_character
+	if(!.)
+		return
+	SStitle.hide_title_screen_from(client) // BANDASTATION ADDITION - HTML Title Screen
+	var/datum/persistent_client/connection = persistent_client || new_character.persistent_client // BANDASTATION EDIT - Preserve offline handover.
+	new_character.PossessByPlayer(key) //Manually transfer the key to log them in,
+	if(connection && assigned_character) // BANDASTATION EDIT - History follows the final profile after handover.
+		LAZYADD(connection.joined_as_slots, "[assigned_character.slot]")
+	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
-		joined_area.on_joining_game(character)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, character.mind.assigned_role.title)
+		joined_area.on_joining_game(new_character)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, new_character, new_character.mind.assigned_role.title)
 	new_character = null
 	qdel(src)
-	return character
+
+// BANDASTATION ADDITION - Fail before equipment; the only disposable body belongs to this lobby mob.
+/mob/dead/new_player/proc/cancel_character_spawn()
+	if(new_character && !new_character.key)
+		new_character.mind?.transfer_to(src)
+		QDEL_NULL(new_character)
+	var/datum/job/assigned_job = mind?.assigned_role || SSjob.get_job_type(assigned_character?.job_type)
+	if(assigned_character && assigned_job && !is_unassigned_job(assigned_job))
+		SSjob.free_job_position(assigned_job.title)
+	if(mind)
+		mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
+	QDEL_NULL(assigned_character)
+	ready = PLAYER_NOT_READY
+	spawning = FALSE
+
+/mob/dead/new_player/proc/reject_late_spawn(message)
+	if(message && client)
+		to_chat(src, span_warning(message))
+	spawning = FALSE
+	if(!client && !QDELETED(src))
+		qdel(src)
+	return FALSE
 
 /mob/dead/new_player/proc/ViewManifest()
 	if(!client)

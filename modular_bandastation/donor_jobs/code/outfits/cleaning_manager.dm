@@ -14,8 +14,8 @@
 	l_pocket = /obj/item/modular_computer/pda/crew/janitor/donor
 	pda_slot = ITEM_SLOT_LPOCKET
 	donor_kit = list(
-		/obj/item/clothing/head/beret = 1,
-		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
+		/obj/item/clothing/head/beret/donor_purple = 1,
+		/obj/item/clothing/suit/toggle/lawyer/purple = 1,
 		/obj/item/clipboard = 1,
 	)
 

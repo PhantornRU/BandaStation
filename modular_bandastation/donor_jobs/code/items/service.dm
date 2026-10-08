@@ -16,8 +16,13 @@
 /obj/item/door_remote/donor_janitor
 	name = "janitor's keyring"
 	desc = "Связка ключей от входов в отделы и помещений сервиса. Подбор нужного ключа требует времени."
+	icon = 'modular_bandastation/donor_jobs/icons/keyring.dmi'
+	icon_state = "keyring"
 	var/busy = FALSE
 	COOLDOWN_DECLARE(jangle_cooldown)
+
+/obj/item/door_remote/donor_janitor/update_icon_state()
+	icon_state = "keyring"
 
 /obj/item/door_remote/donor_janitor/LateInitialize()
 	. = ..()
@@ -27,7 +32,7 @@
 	if(!COOLDOWN_FINISHED(src, jangle_cooldown))
 		return
 	playsound(src, 'modular_bandastation/donor_jobs/sound/keyring_shake.ogg', 50, TRUE)
-	COOLDOWN_START(src, jangle_cooldown, 3 SECONDS)
+	COOLDOWN_START(src, jangle_cooldown, 10 SECONDS)
 
 /obj/item/door_remote/donor_janitor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	return FALSE

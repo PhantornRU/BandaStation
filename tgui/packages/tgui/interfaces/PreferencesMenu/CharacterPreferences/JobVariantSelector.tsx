@@ -16,7 +16,6 @@ export function JobVariantSelector(props: { jobName: string }) {
       <div>
         <Dropdown
           width="100%"
-          disabled={!!data.donor_entry_locked}
           selected={selected?.name}
           options={job.variants.map((variant) => ({
             value: variant.id,
@@ -25,7 +24,7 @@ export function JobVariantSelector(props: { jobName: string }) {
           onSelected={(variant: string) =>
             act('set_donor_job_variant', {
               job: props.jobName,
-              slot: data.donor_edit_slot,
+              slot: data.active_slot,
               variant,
             })
           }

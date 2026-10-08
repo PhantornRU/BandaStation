@@ -1,3 +1,7 @@
+/datum/id_trim/job
+	/// These templates require the native CentCom authorization rather than donor entitlement.
+	var/centcom_template = FALSE
+
 /datum/id_trim/job/donor_barber
 	assignment = "Barber"
 	job = /datum/job/donor/barber

@@ -524,7 +524,7 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
-	if(istype(trim, /datum/id_trim/job) && id_card.registered_account) // BANDASTATION EDIT - Templates also apply to blank CentCom-issued IDs.
+	if(istype(trim, /datum/id_trim/job))
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
 		id_card.registered_account.account_job = job_trim.job
 

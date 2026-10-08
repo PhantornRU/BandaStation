@@ -192,21 +192,21 @@ export type PreferencesMenuData = {
   >;
   job_preferences: JobPreference[];
 
-  // BANDASTATION ADDITION START: per-character cosmetic variants and current server restrictions.
+  // BANDASTATION ADDITION START: per-character variants, donor requirements and neutral profiles.
   donor_jobs?: Record<
     string,
     {
       title: string | null;
+      profile_title: string | null;
       selected: string | null;
       variants: { id: string; name: string }[];
+      required_tier: number;
+      lock_reason: string | null;
     }
   >;
-  donor_edit_slot: number;
-  donor_entry_locked: BooleanLike;
-  job_lock_reasons?: Record<string, string>;
   job_character_profiles?: Record<
     string,
-    { slot: number | null; randomized: BooleanLike; title: string | null }
+    { slot: number | null; randomized: BooleanLike; error: string | null }
   >;
   pref_job_slots: Record<string, number>;
   // BANDASTATION ADDITION END
