@@ -5,14 +5,6 @@ GLOBAL_LIST_EMPTY(donor_prisoner_starts)
 	. = ..()
 	GLOB.donor_prisoner_starts |= get_turf(src)
 
-/obj/effect/landmark/donor_prisoner_start
-	name = "Prisoner safe spawn"
-
-/obj/effect/landmark/donor_prisoner_start/Initialize(mapload)
-	. = ..()
-	GLOB.donor_prisoner_starts |= get_turf(src)
-	return INITIALIZE_HINT_QDEL
-
 /datum/job/prisoner/proc/get_safe_prisoner_turfs()
 	var/list/candidates = GLOB.donor_prisoner_starts.Copy()
 	for(var/atom/override_spawn as anything in GLOB.jobspawn_overrides[title])

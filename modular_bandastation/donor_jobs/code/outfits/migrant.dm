@@ -7,15 +7,4 @@
 	suit = /obj/item/clothing/suit/costume/poncho
 	head = /obj/item/clothing/head/costume/sombrero
 	mask = /obj/item/clothing/mask/fakemoustache
-	belt = /obj/item/storage/belt/fannypack/orange
-	l_pocket = /obj/item/modular_computer/pda/crew/donor
-	pda_slot = ITEM_SLOT_LPOCKET
-	donor_kit = list(
-		/obj/item/reagent_containers/cup/glass/bottle/tequila = 1,
-		/obj/item/food/taco = 6,
-		/obj/item/food/nachos = 3,
-		/obj/item/food/cheesynachos = 3,
-		/obj/item/food/cubannachos = 3,
-		/obj/item/clothing/suit/costume/poncho/red = 1,
-		/obj/item/clothing/suit/costume/poncho/green = 1,
-	)
+	ears = /obj/item/radio/headset

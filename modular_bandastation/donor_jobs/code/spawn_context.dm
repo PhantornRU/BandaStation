@@ -6,7 +6,6 @@
 	var/outfit_type
 	var/public_title
 	var/variant_id
-	var/kit_issued = FALSE
 	var/identity_applied = FALSE
 	var/record_registered = FALSE
 
@@ -39,30 +38,6 @@
 	var/datum/job_variant/variant = resolve_donor_variant(selections?[title])
 	return variant?.outfit_type || get_outfit(consistent)
 
-/datum/donor_spawn_context/proc/issue_kit(mob/living/carbon/human/body)
-	if(kit_issued)
-		return
-	// DM creates list initializers on instances, not on typepaths.
-	var/datum/outfit/job/outfit = new outfit_type
-	var/list/items = outfit.donor_kit
-	qdel(outfit)
-	for(var/item_type in items)
-		var/count = items[item_type]
-		if(!ispath(item_type, /obj/item) || !isnum(count) || count < 1 || round(count) != count)
-			CRASH("Invalid job kit entry [job_type]: [item_type] x[count]")
-	kit_issued = TRUE
-	for(var/item_type in items)
-		for(var/i in 1 to items[item_type])
-			// Construct outside the mob: stacks may merge and delete themselves on movement.
-			var/obj/item/item = SSwardrobe.provide_type(item_type, null)
-			if(QDELETED(item))
-				CRASH("Job kit construction failed: [job_type]/[item_type]")
-			if(body.equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = FALSE))
-				continue
-			if(!body.put_in_hands(item))
-				item.forceMove(body.drop_location())
-			to_chat(body, span_notice("[item.name] не поместился в сумку и выдан в руки или рядом с вами."))
-
 /datum/donor_spawn_context/proc/apply_identity(mob/living/carbon/human/body)
 	if(identity_applied)
 		return
@@ -93,10 +68,7 @@
 	var/datum/donor_spawn_context/context = body.donor_spawn_context
 	if(!context?.belongs_to(src))
 		return
-	context.issue_kit(body)
 	context.apply_identity(body)
-	for(var/language_type in donor_languages)
-		body.grant_language(language_type, ALL, "donor-job")
 
 /datum/donor_spawn_context/proc/register_crew_record(mob/living/carbon/human/body, datum/job/job, datum/record/crew/record)
 	SIGNAL_HANDLER

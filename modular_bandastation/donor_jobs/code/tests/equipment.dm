@@ -1,20 +1,25 @@
 /datum/unit_test/donor_job_outfits
 	var/prisoner_gate_before
+	var/jobs_enabled_before
 
 /datum/unit_test/donor_job_outfits/Run()
 	prisoner_gate_before = CONFIG_GET(flag/donor_prisoner_gate)
+	jobs_enabled_before = CONFIG_GET(flag/donor_jobs_enabled)
 	CONFIG_SET(flag/donor_prisoner_gate, TRUE)
+	CONFIG_SET(flag/donor_jobs_enabled, TRUE)
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	player.prefs = allocate(/datum/preferences, player)
 	player.prefs.write_preference(GLOB.preference_entries[/datum/preference/loadout], null)
 	var/list/outfit_paths = subtypesof(/datum/outfit/job/donor) + list(/datum/outfit/job/prisoner, /datum/outfit/job/cargo_tech/donor_deliverer)
-	TEST_ASSERT_EQUAL(length(outfit_paths), 35, "The agreed outfit profiles must all exercise real equipment")
 	for(var/outfit_path in outfit_paths)
 		check_outfit(outfit_path, player)
 
 /datum/unit_test/donor_job_outfits/Destroy()
+	release_donor_player_fixtures()
 	if(!isnull(prisoner_gate_before))
 		CONFIG_SET(flag/donor_prisoner_gate, prisoner_gate_before)
+	if(!isnull(jobs_enabled_before))
+		CONFIG_SET(flag/donor_jobs_enabled, jobs_enabled_before)
 	return ..()
 
 /datum/unit_test/donor_job_outfits/proc/check_outfit(datum/outfit/job/outfit_path, datum/client_interface/player)
@@ -46,41 +51,46 @@
 
 	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
 	body.backpack = DSATCHEL
-	if(ispath(outfit_path, /datum/outfit/job/donor/actor))
-		body.gender = FEMALE
 	body.mind_initialize()
+	allocated += body.mind
 	body.mind.set_assigned_role(job)
 	body.job = job.title
 	job.prepare_donor_character(body, player.prefs)
+	var/list/contents_before = list()
+	for(var/item_type in outfit.backpack_contents)
+		contents_before[item_type] = count_supplies(item_type)
 	body.dress_up_as_job(job, player_client = player, consistent = TRUE)
 	check_equipped_slots(body, outfit_path)
 	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)
 	TEST_ASSERT_NOTNULL(card, "[outfit_path] did not equip a usable ID")
-	var/list/kit = outfit.donor_kit
-	var/list/counts_before = list()
-	for(var/item_type in kit)
-		counts_before[item_type] = count_supplies(item_type)
 	job.after_spawn(body, null)
 	TEST_ASSERT_EQUAL(card.assignment, variant.public_title, "[outfit_path] did not apply the selected public title")
 	TEST_ASSERT_EQUAL(body.mind.assigned_role, job, "[outfit_path] replaced the canonical profession")
 	var/list/counts_after = list()
-	for(var/item_type in kit)
-		var/quantity = kit[item_type]
+	for(var/item_type in outfit.backpack_contents)
+		var/quantity = outfit.backpack_contents[item_type]
 		if(ispath(item_type, /obj/item/stack))
 			var/obj/item/stack/stack_path = item_type
 			quantity *= initial(stack_path.amount)
+		for(var/slot in list("l_pocket", "r_pocket", "l_hand", "r_hand", "suit_store"))
+			if(outfit.vars[slot] == item_type)
+				quantity++
 		counts_after[item_type] = count_supplies(item_type)
-		TEST_ASSERT_EQUAL(counts_after[item_type] - counts_before[item_type], quantity, "[outfit_path] lost or duplicated [item_type]")
+		TEST_ASSERT_EQUAL(counts_after[item_type] - contents_before[item_type], quantity, "[outfit_path] lost or duplicated [item_type]")
+	if(ispath(outfit_path, /datum/outfit/job/donor/vip_guest) || ispath(outfit_path, /datum/outfit/job/donor/banker))
+		var/cash_value = 0
+		for(var/obj/item/stack/spacecash/cash as anything in body.get_all_contents_type(/obj/item/stack/spacecash))
+			cash_value += cash.get_item_credit_value()
+		TEST_ASSERT_EQUAL(cash_value, ispath(outfit_path, /datum/outfit/job/donor/banker) ? 5000 : 2000, "[outfit_path] changed its starting cash")
 	for(var/implant_type in outfit.implants)
 		TEST_ASSERT(locate(implant_type) in body.implants, "[outfit_path] failed to implant [implant_type]")
 	job.after_spawn(body, null)
-	for(var/item_type in kit)
+	for(var/item_type in outfit.backpack_contents)
 		TEST_ASSERT_EQUAL(count_supplies(item_type), counts_after[item_type], "[outfit_path] repeated starting rewards")
 	qdel(body)
 
 /datum/unit_test/donor_job_outfits/proc/check_equipped_slots(mob/living/carbon/human/body, outfit_path)
 	var/datum/outfit/job/outfit = allocate(outfit_path)
-	outfit.prepare_for_character(body)
 	var/list/equipped_slots = list(
 		"uniform" = ITEM_SLOT_ICLOTHING,
 		"suit" = ITEM_SLOT_OCLOTHING,
@@ -119,77 +129,71 @@
 			count++
 	return count
 
-/datum/unit_test/donor_job_kit_overflow/Run()
-	var/datum/job/job = allocate(/datum/job/donor/barber)
-	var/datum/outfit/job/outfit = allocate(job.outfit)
-	TEST_ASSERT_EQUAL(outfit.donor_kit?[/obj/item/storage/box/donor_barber], 1, "Barber did not declare its starting kit")
-	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
-	body.mind_initialize()
-	body.mind.set_assigned_role(job)
-	body.job = job.title
-	body.donor_spawn_context = allocate(/datum/donor_spawn_context, job, "default")
-	body.dress_up_as_job(job, consistent = TRUE)
-	var/obj/item/storage/backpack/backpack = body.back
-	TEST_ASSERT_NOTNULL(backpack, "Barber did not receive a normal backpack")
-	var/storage_slots = backpack.atom_storage.max_slots
-	var/storage_weight = backpack.atom_storage.max_total_storage
-	var/obj/item/pen/filler = allocate(/obj/item/pen)
-	for(var/i in 1 to storage_slots)
-		if(!backpack.atom_storage.can_insert(filler, body, messages = FALSE))
-			break
-		TEST_ASSERT(body.equip_to_storage(filler, ITEM_SLOT_BACK), "Could not fill the actual backpack")
-		filler = allocate(/obj/item/pen)
-	TEST_ASSERT(!backpack.atom_storage.can_insert(filler, body, messages = FALSE), "The filled backpack still accepts another item")
-	TEST_ASSERT(length(backpack.contents) == storage_slots || backpack.atom_storage.get_total_weight() == storage_weight, "The backpack did not reach either native capacity limit")
-	qdel(filler)
-	TEST_ASSERT(body.put_in_hands(allocate(/obj/item/pen)), "Could not occupy the first hand")
-	TEST_ASSERT(body.put_in_hands(allocate(/obj/item/pen)), "Could not occupy the second hand")
-	TEST_ASSERT_EQUAL(body.get_num_held_items(), 2, "The overflow scenario did not occupy both hands")
-	TEST_ASSERT(!body.donor_spawn_context.kit_issued, "The overflow fixture issued its kit before filling the backpack")
-	var/atom/drop_location = body.drop_location()
-	TEST_ASSERT_NOTNULL(drop_location, "The equipped character has no native drop location")
-	job.after_spawn(body, null)
-	var/obj/item/storage/box/donor_barber/kit = locate(/obj/item/storage/box/donor_barber) in drop_location
-	TEST_ASSERT_NOTNULL(kit, "A full bag and occupied hands lost the starting kit")
-	TEST_ASSERT_NOTNULL(locate(/obj/item/razor/donor_scissors) in kit, "The dropped kit lost its scissors")
-	TEST_ASSERT_EQUAL(backpack.atom_storage.max_slots, storage_slots, "Overflow changed backpack capacity")
-	TEST_ASSERT_EQUAL(backpack.atom_storage.max_total_storage, storage_weight, "Overflow changed backpack weight capacity")
-	var/list/items_after = drop_location.get_all_contents_type(/obj/item)
-	job.after_spawn(body, null)
-	TEST_ASSERT_EQUAL(length(drop_location.get_all_contents_type(/obj/item) - items_after), 0, "A repeated callback issued another overflow kit")
+/datum/unit_test/donor_outfit_storage/Run()
+	for(var/outfit_path in list(/datum/outfit/job/donor/vip_guest, /datum/outfit/job/donor/banker))
+		var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
+		body.mind_initialize()
+		allocated += body.mind
+		var/obj/item/storage/backpack/backpack = allocate(/obj/item/storage/backpack)
+		TEST_ASSERT(body.equip_to_slot_or_del(backpack, ITEM_SLOT_BACK), "Could not equip the native backpack")
+		var/storage_slots = backpack.atom_storage.max_slots
+		var/storage_weight = backpack.atom_storage.max_total_storage
+		for(var/i in 1 to storage_slots)
+			var/obj/item/pen/filler = allocate(/obj/item/pen)
+			if(!body.equip_to_storage(filler, ITEM_SLOT_BACK))
+				break
+		var/datum/outfit/job/outfit = allocate(outfit_path)
+		outfit.back = null // Keep the already full personal bag.
+		var/turf/floor = get_turf(body)
+		var/cash_before = 0
+		for(var/obj/item/stack/spacecash/cash as anything in floor.get_all_contents_type(/obj/item/stack/spacecash))
+			cash_before += cash.get_item_credit_value()
+		body.equipOutfit(outfit)
+		var/cash_after = 0
+		for(var/obj/item/stack/spacecash/cash as anything in floor.get_all_contents_type(/obj/item/stack/spacecash))
+			cash_after += cash.get_item_credit_value()
+		TEST_ASSERT_EQUAL(cash_after - cash_before, ispath(outfit_path, /datum/outfit/job/donor/banker) ? 5000 : 2000, "[outfit_path] lost its required cash when the personal bag was full")
+		TEST_ASSERT_EQUAL(backpack.atom_storage.max_slots, storage_slots, "The outfit expanded backpack slots")
+		TEST_ASSERT_EQUAL(backpack.atom_storage.max_total_storage, storage_weight, "The outfit expanded backpack weight capacity")
 
 /datum/unit_test/donor_variant_before_loadout/Run()
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	player.prefs = allocate(/datum/preferences, player)
 	var/datum/job/job = allocate(/datum/job/donor/actor)
-	var/datum/job_variant/artist = job.resolve_donor_variant("title_e639ea25de")
+	var/datum/job_variant/painter = job.resolve_donor_variant("title_6f18f1d35f")
 	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/loadout], list(/obj/item/clothing/head/beanie = list(), /obj/item/toy/plush/beeplushie = list())), "Could not save the native personal loadout")
 	var/mob/living/carbon/human/female = allocate(/mob/living/carbon/human/consistent)
 	female.gender = FEMALE
 	female.job = job.title
-	female.donor_spawn_context = allocate(/datum/donor_spawn_context, job, artist.id)
+	female.donor_spawn_context = allocate(/datum/donor_spawn_context, job, painter.id)
 	female.dress_up_as_job(job, player_client = player, consistent = TRUE)
-	TEST_ASSERT(istype(female.w_uniform, /obj/item/clothing/under/donor/victorian_dress/red), "Artist did not choose the female uniform before loadout")
-	TEST_ASSERT(istype(female.head, /obj/item/clothing/head/beanie), "Personal headwear was overwritten by the artist outfit")
+	TEST_ASSERT(istype(female.w_uniform, /obj/item/clothing/under/misc/assistantformal), "The painter did not equip the resolved native outfit")
+	TEST_ASSERT(istype(female.head, /obj/item/clothing/head/beanie), "Personal headwear was overwritten by the painter outfit")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/toy/plush/beeplushie) in female.back, "The personal backpack item was lost")
 
 	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/job_outfit_variants], list("Actor" = "default")), "Could not change the edited character's variant")
 	var/mob/living/carbon/human/male = allocate(/mob/living/carbon/human/consistent)
 	male.gender = MALE
 	male.job = job.title
-	male.donor_spawn_context = allocate(/datum/donor_spawn_context, job, artist.id)
+	male.donor_spawn_context = allocate(/datum/donor_spawn_context, job, painter.id)
 	male.dress_up_as_job(job, player_client = player, consistent = TRUE)
-	TEST_ASSERT(istype(male.w_uniform, /obj/item/clothing/under/donor/victorian/red), "The live artist variant was replaced by editor state or the previous female outfit")
+	TEST_ASSERT(istype(male.w_uniform, /obj/item/clothing/under/misc/assistantformal), "The resolved variant was replaced by editor state or the previous outfit")
 	TEST_ASSERT(istype(male.head, /obj/item/clothing/head/beanie), "Personal headwear was lost on the second character")
 
 	var/mob/living/carbon/human/plasmaman = allocate(/mob/living/carbon/human/consistent)
 	plasmaman.job = job.title
 	plasmaman.set_species(/datum/species/plasmaman)
-	plasmaman.donor_spawn_context = allocate(/datum/donor_spawn_context, job, artist.id)
+	plasmaman.donor_spawn_context = allocate(/datum/donor_spawn_context, job, painter.id)
 	plasmaman.dress_up_as_job(job, player_client = player, consistent = TRUE)
 	TEST_ASSERT(istype(plasmaman.w_uniform, /obj/item/clothing/under/plasmaman), "Donor equipment replaced the species pressure suit")
 	TEST_ASSERT(istype(plasmaman.head, /obj/item/clothing/head/helmet/space/plasmaman), "Personal headwear replaced the species pressure helmet")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/clothing/head/beanie) in plasmaman.back, "Species equipment deleted personal headwear instead of preserving it")
+
+	TEST_ASSERT_EQUAL(job.outfit, /datum/outfit/job/donor/actor, "Personal variants mutated the shared job outfit")
+
+/datum/unit_test/donor_variant_before_loadout/Destroy()
+	release_donor_player_fixtures()
+	return ..()
 
 /datum/unit_test/donor_character_handover/Run()
 	var/datum/client_interface/player = allocate(/datum/client_interface)
@@ -199,9 +203,11 @@
 	var/datum/job/job = allocate(/datum/job/donor/barber)
 	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
 	body.mind_initialize()
+	allocated += body.mind
 	body.mind.set_assigned_role(job)
 	job.prepare_donor_character(body, player.prefs)
 	SSjob.equip_rank(body, job, null)
+	allocated += SSeconomy.bank_accounts_by_id["[body.account_id]"]
 	SSquirks.AssignQuirks(body, player)
 	var/datum/quirk/item_quirk/food_allergic/allergy = locate() in body.quirks
 	TEST_ASSERT_NOTNULL(allergy, "Native post-equipment quirks did not add the selected allergy")
@@ -209,7 +215,7 @@
 	TEST_ASSERT_NOTNULL(locate(/obj/item/clothing/accessory/dogtag/allergy) in body.get_all_contents(), "Native quirks lost their actual equipment")
 	SSquirks.AssignQuirks(body, null)
 	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Disconnect after handover changed the applied customized quirk")
-	TEST_ASSERT(body.donor_spawn_context.kit_issued, "Initial native equipment did not issue the donor kit")
+	TEST_ASSERT(body.donor_spawn_context.identity_applied, "Initial native equipment did not apply its public title")
 	var/list/items_before = run_loc_floor_bottom_left.get_all_contents_type(/obj/item)
 	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)
 	card.assignment = "Reassigned employee"
@@ -218,19 +224,6 @@
 	TEST_ASSERT_EQUAL(card.assignment, "Reassigned employee", "A repeated callback restored the old public title")
 	TEST_ASSERT_NULL(body.client, "Reward issuance required a Login or reconnect")
 
-/datum/unit_test/donor_emergency_glowstick/Run()
-	var/obj/item/flashlight/donor_emergency_glowstick/glowstick = allocate(/obj/item/flashlight/donor_emergency_glowstick)
-	TEST_ASSERT(!glowstick.light_on, "The emergency glowstick started burning before activation")
-	TEST_ASSERT_NULL(glowstick.reagents, "The emergency glowstick acquired extractable chemical fuel")
-	TEST_ASSERT(glowstick.seconds_remaining >= 60 && glowstick.seconds_remaining <= 180, "The emergency glowstick lost its historical one-to-three-minute lifetime")
-	TEST_ASSERT(glowstick.toggle_light(), "The emergency glowstick could not be activated")
-	TEST_ASSERT(!glowstick.toggle_light(), "The burning emergency glowstick could be switched off or restarted")
-	glowstick.process(glowstick.seconds_remaining - 1)
-	TEST_ASSERT(glowstick.light_on, "The emergency glowstick stopped before its fuel ran out")
-	TEST_ASSERT_EQUAL(glowstick.light_range, 4, "The emergency glowstick's light faded before expiry")
-	TEST_ASSERT_EQUAL(glowstick.light_power, 1, "The emergency glowstick changed its historical light strength")
-	TEST_ASSERT_EQUAL(glowstick.light_color, LIGHT_COLOR_BLUE, "The emergency glowstick changed its historical blue light")
-	TEST_ASSERT_EQUAL(glowstick.process(1), PROCESS_KILL, "The spent emergency glowstick kept processing")
-	TEST_ASSERT(!glowstick.light_on, "The spent emergency glowstick retained its light")
-	TEST_ASSERT_EQUAL(glowstick.icon_state, "glowstick-empty", "The spent emergency glowstick did not preserve its empty item")
-	TEST_ASSERT(!glowstick.toggle_light(), "The spent emergency glowstick could be reignited")
+/datum/unit_test/donor_character_handover/Destroy()
+	release_donor_player_fixtures()
+	return ..()

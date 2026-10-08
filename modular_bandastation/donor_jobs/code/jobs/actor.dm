@@ -1,10 +1,7 @@
 /datum/job/donor/actor
-	important_information = "Вы АКТЕР. Данная роль нацелена на ваше актерское мастерство. Сами вы им стали или ваши родители вас на это \
-		натолкнули,  но вы связаны со сценой. Устройте шоу, пригласите гостей! Попробуйте устроить совместное \
-		представление с другими актерами, клоуном и мимом."
+	important_information = "Устраивайте сценические представления, приглашайте гостей и выступайте вместе с другими артистами."
 	variant_information = list(
-		/datum/outfit/job/donor/actor/painter = "Вы ХУДОЖНИК. Данная роль нацелена на демонстрацию вашей тонкой натуры. Найдите себе красильщик полов, создайте \
-			искусство!  Возможно вы захотите наложить инсталляцию посреди мостика?",
+		/datum/outfit/job/donor/actor/painter = "Создавайте картины, рисунки и инсталляции штатными художественными инструментами. Согласовывайте размещение работ с владельцами помещений.",
 	)
 	title = "Actor"
 	description = "Шоу, сцена и совместные представления с другими артистами."
@@ -20,10 +17,10 @@
 	donor_variant_specs = list(
 		"default" = list("Актёр", /datum/outfit/job/donor/actor),
 		"title_980bd5882d" = list("Актер", /datum/outfit/job/donor/actor),
-		"title_e639ea25de" = list("Артист", /datum/outfit/job/donor/actor/artist),
+		"title_e639ea25de" = list("Артист", /datum/outfit/job/donor/actor),
 		"title_666e779ffe" = list("Стендапер", /datum/outfit/job/donor/actor),
 		"title_402e7e66c9" = list("Комедиант", /datum/outfit/job/donor/actor/comedian),
-		"title_b7d6ec5648" = list("Эстрадный Артист", /datum/outfit/job/donor/actor/stage),
+		"title_b7d6ec5648" = list("Эстрадный Артист", /datum/outfit/job/donor/actor),
 		"title_6f18f1d35f" = list("Художник", /datum/outfit/job/donor/actor/painter),
 		"title_3e555ea0d3" = list("Творец", /datum/outfit/job/donor/actor/painter),
 		"title_2e5c5324c9" = list("Искусствовед", /datum/outfit/job/donor/actor/painter),

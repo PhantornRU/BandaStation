@@ -2,20 +2,10 @@
 	name = "Representative TSF"
 	jobtype = /datum/job/donor/representative_tsf
 	id_trim = /datum/id_trim/job/donor_representative_tsf
-	uniform = /obj/item/clothing/under/donor/tsf/representative
+	uniform = /obj/item/clothing/under/suit/navy
 	shoes = /obj/item/clothing/shoes/laceup
-	head = /obj/item/clothing/head/donor/tsf_beret
-	belt = /obj/item/storage/belt/fannypack/black
+	head = /obj/item/clothing/head/beret
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/white
 	l_pocket = /obj/item/melee/baton/telescopic
-	r_pocket = /obj/item/modular_computer/pda/crew/donor
-	pda_slot = ITEM_SLOT_RPOCKET
-	box = /obj/item/storage/box/survival/engineer/donor/mining
-	donor_kit = list(
-		/obj/item/implanter/death_alarm = 1,
-		/obj/item/lighter/donor_zippo/blue = 1,
-		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 1,
-		/obj/item/clothing/under/shorts/blue = 1,
-	)
 	implants = list(/obj/item/implant/mindshield, /obj/item/implant/death_alarm)

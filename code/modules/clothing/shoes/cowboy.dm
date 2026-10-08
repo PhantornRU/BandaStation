@@ -8,7 +8,6 @@
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 
 	var/max_occupants = 4
-	var/snake_spawn_chance = 2 // BANDASTATION EDIT - Visual previews suppress live occupants.
 	/// Do these boots have spur sounds?
 	var/has_spurs = FALSE
 	/// The jingle jangle jingle of our spurs
@@ -20,7 +19,7 @@
 /obj/item/clothing/shoes/cowboy/Initialize(mapload)
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/shoes)
-	if(prob(snake_spawn_chance)) // BANDASTATION EDIT - There's a snake in my boot
+	if(prob(2)) //There's a snake in my boot
 		new /mob/living/basic/snake(src)
 	if(has_spurs)
 		LoadComponent(/datum/component/squeak, spur_sound, 50, falloff_exponent = 20)

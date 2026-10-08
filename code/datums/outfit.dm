@@ -14,8 +14,6 @@
  * that can be restored at a later date
  */
 /datum/outfit
-	/// Preserve mandatory backpack contents on overflow; ordinary outfits retain deletion.
-	var/preserve_backpack_overflow = FALSE
 	///Name of the outfit (shows up in the equip admin verb)
 	var/name = "Naked"
 
@@ -47,6 +45,10 @@
 	  * Format of this list should be: list(path=count,otherpath=count)
 	  */
 	var/list/backpack_contents = null
+	// BANDASTATION EDIT START: Optional preservation of required starting supplies.
+	/// Leave supplies beside the wearer if their backpack cannot hold them.
+	var/preserve_backpack_overflow = FALSE
+	// BANDASTATION EDIT END
 
 	/// Type path of item to go in belt slot
 	var/obj/item/belt = null
@@ -144,10 +146,6 @@
  */
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	//to be overridden for customization depending on client prefs,species etc
-	return
-
-/// BANDASTATION EDIT - Personal outfit defaults must be resolved before loadout overrides.
-/datum/outfit/proc/prepare_for_character(mob/living/carbon/human/user, visuals_only = FALSE)
 	return
 
 /**
@@ -263,11 +261,14 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					// BANDASTATION EDIT START - Optional overflow preserves contents without enlarging storage
-					var/obj/item/item = SSwardrobe.provide_type(path, preserve_backpack_overflow ? null : user)
-					if(!user.equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = !preserve_backpack_overflow) && preserve_backpack_overflow)
-						if(!user.put_in_hands(item))
-							item.forceMove(user.drop_location())
+					// BANDASTATION EDIT START: Optional preservation of required starting supplies.
+					if(!preserve_backpack_overflow)
+						user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+						continue
+					var/obj/item/supply = SSwardrobe.provide_type(path, user.drop_location())
+					// Native stacks may already have merged with supplies on the floor.
+					if(!QDELETED(supply) && !user.equip_to_storage(supply, ITEM_SLOT_BACK, indirect_action = TRUE))
+						to_chat(user, span_notice("[supply] не помещается в сумку и оставлен рядом с вами."))
 					// BANDASTATION EDIT END
 
 		if(belt_contents)

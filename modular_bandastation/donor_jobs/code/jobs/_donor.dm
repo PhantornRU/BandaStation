@@ -1,6 +1,5 @@
 /datum/job
 	var/donor_tier = 0
-	var/list/donor_languages
 
 /proc/donor_job_tier_allows(actual, required)
 	if(!isnum(required) || required < 0 || required > MAX_DONATOR_LEVEL || round(required) != required)

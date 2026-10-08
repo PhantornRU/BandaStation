@@ -1,5 +1,5 @@
 /datum/job/donor/musican
-	important_information = "Вы МУЗЫКАНТ. Данная роль нацелена на создание музыкальной атмосферы. Приласкайте уши экипажа."
+	important_information = "Играйте музыку, устраивайте концерты и выступайте вместе с другими артистами."
 	title = "Musician"
 	description = "Музыкальная атмосфера."
 	donor_tier = 2

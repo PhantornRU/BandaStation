@@ -1,6 +1,5 @@
 /datum/job/cargo_technician
-	important_information = "Вы ДОСТАВЩИК. Данная роль нацелена на доставку товаров от одного отдела до другого. Ваше призвание - доставлять \
-		ресурсы от отдела до отдела или еду от самого ШЕФа."
+	important_information = "Доставляйте товары, ресурсы и еду между отделами. Вы сотрудник снабжения и подчиняетесь квартирмейстеру."
 	donor_variant_specs = list(
 		"default" = list(JOB_CARGO_TECHNICIAN_RU, /datum/outfit/job/cargo_tech),
 		"title_c3e626e8a5" = list("Deliverer", /datum/outfit/job/cargo_tech/donor_deliverer),

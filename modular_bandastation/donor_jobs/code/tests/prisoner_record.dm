@@ -8,6 +8,7 @@
 	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
 	body.fully_replace_character_name(body.real_name, "Donor Record Test")
 	body.mind_initialize()
+	allocated += body.mind
 	body.mind.set_assigned_role(job)
 	body.job = job.title
 	var/datum/client_interface/player = allocate(/datum/client_interface)
@@ -70,6 +71,7 @@
 	TEST_ASSERT_EQUAL(length(regenerated.crimes), 0, "Normal record regeneration recreated the old starting sentence")
 
 /datum/unit_test/donor_prisoner_initial_record/Destroy()
+	release_donor_player_fixtures()
 	if(!isnull(prisoner_gate_before))
 		CONFIG_SET(flag/donor_prisoner_gate, prisoner_gate_before)
 	for(var/datum/record/crew/record in allocated)
@@ -107,6 +109,7 @@
 		allocated += body
 		TEST_ASSERT_NULL(body.donor_spawn_context, "Disabled donor flags left native Prisoner dependent on a donor context")
 		body.mind_initialize()
+		allocated += body.mind
 		body.mind.set_assigned_role(job)
 		body.dress_up_as_job(job, consistent = TRUE)
 		var/datum/prisoner_crime/selected_crime = GLOB.prisoner_crimes[body.prisoner_crime]

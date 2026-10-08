@@ -353,7 +353,6 @@
 	if(!O)
 		return 0
 
-	O.prepare_for_character(src, visuals_only) // BANDASTATION EDIT - Direct outfits share preparation with loadout.
 	return O.equip(src, visuals_only)
 
 

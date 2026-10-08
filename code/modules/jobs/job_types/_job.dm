@@ -183,7 +183,7 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-	apply_donor_spawn_context(spawned) // BANDASTATION EDIT - Initial kit and public title
+	apply_donor_spawn_context(spawned) // BANDASTATION EDIT - Initial public title
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
 /// Return the outfit to use

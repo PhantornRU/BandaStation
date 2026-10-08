@@ -1,6 +1,6 @@
 /datum/modpack/donor_jobs
 	name = "Donor jobs"
-	desc = "Профессии и варианты Paradise SS220 на нативных jobs BandaStation."
+	desc = "Нативные профессии для подписчиков и варианты штатных профессий."
 	author = "PhantornRU"
 
 /datum/modpack/donor_jobs/initialize()

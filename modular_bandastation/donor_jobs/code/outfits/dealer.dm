@@ -2,38 +2,18 @@
 	name = "Dealer"
 	jobtype = /datum/job/donor/dealer
 	id_trim = /datum/id_trim/job/donor_dealer
-	back = /obj/item/storage/backpack/duffelbag
 	uniform = /obj/item/clothing/under/suit/black
-	shoes = /obj/item/clothing/shoes/cowboy/black/laced
-	suit = /obj/item/clothing/suit/pirate_black
-	belt = /obj/item/melee/baton
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/toggle/lawyer/black
 	head = /obj/item/clothing/head/fedora
-	l_hand = /obj/item/cane
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	gloves = /obj/item/clothing/gloves/color/black
-	ears = /obj/item/radio/headset/headset_srv
-	l_pocket = /obj/item/modular_computer/pda/crew/curator/donor
-	pda_slot = ITEM_SLOT_LPOCKET
-	donor_kit = list(
-		/obj/item/donor_payment_terminal = 1,
-		/obj/item/hand_labeler = 1,
-		/obj/item/hand_labeler_refill = 1,
-		/obj/item/storage/box/donor_stock = 1,
+	belt = /obj/item/modular_computer/pda/crew/curator
+	l_pocket = /obj/item/hand_labeler
+	backpack_contents = list(
+		/obj/item/pen/fourcolor = 2,
+		/obj/item/flashlight = 1,
+		/obj/item/storage/crayons = 1,
+		/obj/item/clothing/glasses/sunglasses = 1,
+		/obj/item/lighter = 1,
 	)
-
-/datum/outfit/job/donor/dealer/pre_equip(mob/living/carbon/human/human, visuals_only = FALSE)
-	. = ..()
-	if(!visuals_only)
-		return
-	if(shoes == /obj/item/clothing/shoes/cowboy/black/laced)
-		shoes = /obj/item/clothing/shoes/cowboy/black/laced/donor_preview
-	else if(shoes == /obj/item/clothing/shoes/cowboy/laced)
-		shoes = /obj/item/clothing/shoes/cowboy/laced/donor_preview
-
-/datum/outfit/job/donor/dealer/brown
-	name = "Dealer (brown)"
-	uniform = /obj/item/clothing/under/color/brown
-	shoes = /obj/item/clothing/shoes/cowboy/laced
-	suit = /obj/item/clothing/suit/pirate_black/brown
-	head = /obj/item/clothing/head/cowboy/grey
-	gloves = /obj/item/clothing/gloves/color/brown
