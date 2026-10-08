@@ -46,6 +46,22 @@
 
 	return sortTim(shuffle(jobs), GLOBAL_PROC_REF(cmp_job_staffing_priority))
 
+/// An assigned lobby character occupies capacity until native handover makes it a living player.
+/datum/controller/subsystem/job/proc/is_latejoin_population_full()
+	var/hard_cap = CONFIG_GET(number/hard_popcap)
+	var/extreme_cap = CONFIG_GET(number/extreme_popcap)
+	var/popcap = hard_cap && extreme_cap ? min(hard_cap, extreme_cap) : max(hard_cap, extreme_cap)
+	if(!popcap)
+		return FALSE
+	var/occupants = living_player_count()
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		if(!player.spawning || !player.assigned_character || isliving(player.client?.mob) || player.new_character?.client)
+			continue
+		var/datum/job/assigned_job = player.mind?.assigned_role || player.new_character?.mind?.assigned_role
+		if(assigned_job && !is_unassigned_job(assigned_job))
+			occupants++
+	return occupants >= popcap
+
 /// Dynamic and normal occupation selection share native eligibility and canonical preferences.
 /mob/dead/new_player/proc/has_eligible_crew_preference(list/blacklisted_roles, require_blood = FALSE)
 	if(!client)

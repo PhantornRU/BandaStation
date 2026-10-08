@@ -207,6 +207,8 @@
 	TEST_ASSERT_NOTNULL(allergy, "Native post-equipment quirks did not add the selected allergy")
 	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Native quirks lost the customized allergy")
 	TEST_ASSERT_NOTNULL(locate(/obj/item/clothing/accessory/dogtag/allergy) in body.get_all_contents(), "Native quirks lost their actual equipment")
+	SSquirks.AssignQuirks(body, null)
+	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Disconnect after handover changed the applied customized quirk")
 	TEST_ASSERT(body.donor_spawn_context.kit_issued, "Initial native equipment did not issue the donor kit")
 	var/list/items_before = run_loc_floor_bottom_left.get_all_contents_type(/obj/item)
 	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)

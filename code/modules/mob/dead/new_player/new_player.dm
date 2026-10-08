@@ -196,6 +196,8 @@
 		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
 	if(!requester.holder && length(SSticker.queued_players) && SSticker.queued_players[1] != src)
 		return reject_late_spawn("Дождитесь своей очереди на вход.")
+	if(!(ckey(key) in GLOB.admin_datums) && SSjob.is_latejoin_population_full())
+		return reject_late_spawn("Достигнут лимит живых игроков.")
 	error = IsJobUnavailable(rank, latejoin = TRUE)
 	if(error != JOB_AVAILABLE || QDELETED(src) || !requester || client != requester)
 		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
@@ -239,7 +241,7 @@
 	#undef IS_FULL_CAPTAIN
 
 	SSticker.minds += character.mind
-	character.client.init_verbs() // BANDASTATION EDIT - Disconnect after handover keeps the body // init verbs for the late join
+	character.client?.init_verbs() // BANDASTATION EDIT - Disconnect after handover keeps the body // init verbs for the late join
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character //Let's retypecast the var to be human,

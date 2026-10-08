@@ -255,7 +255,7 @@ SUBSYSTEM_DEF(job)
 	if(QDELETED(player) || !requester || !player.mind || job.donor_lock_reason(requester))
 		return FALSE
 	var/datum/job_character_selection/selection = requester.prefs.select_job_character(job, latejoin)
-	if(selection.character_error(job, requester, latejoin) || (latejoin && player.IsJobSlotUnavailable(job)))
+	if(selection.character_error(job, requester, latejoin) || (latejoin && (player.IsJobSlotUnavailable(job) || (!(ckey(player.key) in GLOB.admin_datums) && is_latejoin_population_full()))))
 		qdel(selection)
 		return FALSE
 	QDEL_NULL(player.assigned_character)

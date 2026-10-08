@@ -534,6 +534,8 @@
 		prepare_donor_character(spawn_instance, player_client.prefs) // BANDASTATION EDIT - Live variant before greeting and equipment
 		spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client || (requester?.assigned_character && player_client.prefs.default_slot != requester.assigned_character.slot)) // BANDASTATION EDIT - A yielding ban check must not spawn a different profile.
+		if(isAI(spawn_instance) && !QDELETED(requester)) // BANDASTATION EDIT - Return the native mind before discarding an unfinished AI.
+			spawn_instance.mind?.transfer_to(requester)
 		qdel(spawn_instance)
 		return // Disconnected while checking for the appearance ban.
 	return spawn_instance
@@ -613,6 +615,8 @@
 		fully_replace_character_name(real_name, GLOB.current_anonymous_theme.anonymous_ai_name(TRUE))
 		return
 	apply_pref_name(/datum/preference/name/ai, player_client) // This proc already checks if the player is appearance banned.
+	if(!player_client) // BANDASTATION EDIT - The ban lookup may yield while the client disconnects.
+		return
 	set_core_display_icon(null, player_client)
 	apply_pref_emote_display(player_client)
 	apply_pref_hologram_display(player_client)
@@ -658,7 +662,7 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
-	spawning.client.show_spawn_text_overlay() // BANDASTATION EDIT - The handed-over character survives a Login disconnect.
+	spawning.client?.show_spawn_text_overlay() // BANDASTATION EDIT - The handed-over character survives a Login disconnect.
 
 /// Called when a mob that has this job is admin respawned
 /datum/job/proc/on_respawn(mob/new_character)
