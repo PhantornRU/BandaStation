@@ -381,6 +381,9 @@
 #include "find_reference_sanity.dm"
 #endif
 
+// BANDASTATION EDIT - Donor jobs tests share the native assertion macros.
+#include "../../../modular_bandastation/donor_jobs/code/tests/_tests.dm"
+
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

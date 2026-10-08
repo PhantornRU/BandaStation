@@ -1,9 +1,44 @@
 /datum/preferences
-	var/donor_entry_locked = FALSE
+	/// The lobby mob or latejoin attempt which owns the transient character lock.
+	var/datum/donor_entry_locked
 
 /mob/dead/new_player
 	var/datum/job_character_selection/assigned_character
 	var/datum/donor_spawn_context/pending_donor_context
+	var/datum/preferences/entry_preferences
+	var/datum/mind/entry_mind
+	var/character_handover_complete = FALSE
+
+/mob/dead/new_player/proc/release_character_entry()
+	if(entry_preferences?.donor_entry_locked == src)
+		entry_preferences.donor_entry_locked = null
+	entry_preferences = null
+	entry_mind = null
+
+/// Login observes actual ownership, including AI constructors which transfer before returning.
+/client/proc/note_job_character_handover(mob/body)
+	if(!isliving(body))
+		return
+	var/mob/dead/new_player/requester = job_entry_guard?.player
+	if(!requester && isnewplayer(prefs?.donor_entry_locked))
+		requester = prefs.donor_entry_locked
+	requester?.note_character_handover(body)
+
+/mob/dead/new_player/proc/note_character_handover(mob/living/body)
+	if(!entry_mind || body.mind != entry_mind || (new_character && new_character != body))
+		return FALSE
+	var/datum/job_entry_guard/guard
+	if(istype(entry_preferences?.donor_entry_locked, /datum/job_entry_guard))
+		guard = entry_preferences.donor_entry_locked
+		if(!guard.entered || guard.player != src)
+			return FALSE
+	new_character = body
+	character_handover_complete = TRUE
+	guard?.note_handover(body)
+	if(ishuman(body))
+		var/mob/living/carbon/human/human_body = body
+		human_body.donor_spawn_context?.issue_kit(human_body)
+	return TRUE
 
 /datum/job_character_selection
 	var/job_type
@@ -108,6 +143,7 @@
 		return FALSE
 	if(client.prefs.default_slot != assigned_character.slot)
 		// load_character reports obsolete/missing saves; switch_to_slot would create a replacement.
+		client.prefs.save_character()
 		if(!client.prefs.load_character(assigned_character.slot))
 			return FALSE
 	QDEL_NULL(pending_donor_context)
@@ -117,8 +153,6 @@
 
 /mob/dead/new_player/proc/attach_donor_spawn_context(mob/living/body)
 	new_character = body
-	if(client?.job_entry_guard)
-		client.job_entry_guard.created_body = body
 	if(!ishuman(body))
 		return
 	var/mob/living/carbon/human/human_body = body

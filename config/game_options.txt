@@ -144,6 +144,11 @@ PROTECT_ROLES_FROM_ANTAGONIST
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
+## Donor roles and the Prisoner tier/variant extension are independent startup options.
+## Restart the server after changing these flags; saved variants are retained when disabled.
+#DONOR_JOBS_ENABLED
+#DONOR_PRISONER_GATE
+
 ## Uncomment to prevent the nuclear operative leader from getting the war declaration item
 #DISABLE_WAROPS
 

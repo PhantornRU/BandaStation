@@ -2,7 +2,7 @@
 	name = "VIP Corporate Guest"
 	jobtype = /datum/job/donor/vip_guest
 	id_trim = /datum/id_trim/job/donor_vip_guest
-	uniform = /obj/item/clothing/under/suit/black
+	uniform = /obj/item/clothing/under/suit/black_really
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/black

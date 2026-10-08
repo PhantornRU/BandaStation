@@ -8,7 +8,7 @@
 	belt = /obj/item/storage/belt/fannypack/blue
 	gloves = /obj/item/clothing/gloves/fingerless
 	ears = /obj/item/radio/headset/headset_srv
-	l_pocket = /obj/item/modular_computer/pda/crew
+	l_pocket = /obj/item/modular_computer/pda/crew/curator/donor
 	pda_slot = ITEM_SLOT_LPOCKET
 	donor_kit = list(
 		/obj/item/clothing/gloves/boxing = 1,

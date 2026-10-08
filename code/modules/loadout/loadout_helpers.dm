@@ -27,6 +27,7 @@
 	else
 		CRASH("Invalid outfit passed to equip_outfit_and_loadout ([outfit])")
 
+	equipped_outfit.prepare_for_character(src, visuals_only) // BANDASTATION EDIT - Gender defaults precede loadout.
 	var/list/item_details = preference_source.read_preference(/datum/preference/loadout)
 	var/list/loadout_datums = loadout_list_to_datums(item_details)
 	// Slap our things into the outfit given

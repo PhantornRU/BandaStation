@@ -8,7 +8,7 @@
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/soft
 	r_hand = /obj/item/donor_mail_scanner
-	belt = /obj/item/modular_computer/pda/crew
+	belt = /obj/item/modular_computer/pda/crew/cargo/donor
 	r_pocket = /obj/item/storage/bag/mail/donor
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel

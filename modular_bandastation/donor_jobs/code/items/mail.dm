@@ -40,6 +40,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/bag/mail/donor
+	w_class = WEIGHT_CLASS_TINY
 	storage_type = /datum/storage/bag/mail/donor
 
 /datum/storage/bag/mail/donor/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)

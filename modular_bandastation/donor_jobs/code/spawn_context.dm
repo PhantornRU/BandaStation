@@ -38,8 +38,10 @@
 /datum/donor_spawn_context/proc/issue_kit(mob/living/carbon/human/body)
 	if(kit_issued)
 		return
-	var/datum/outfit/job/outfit_path = outfit_type
-	var/list/items = initial(outfit_path.donor_kit)
+	// DM creates list initializers on instances, not on typepaths.
+	var/datum/outfit/job/outfit = new outfit_type
+	var/list/items = outfit.donor_kit
+	qdel(outfit)
 	for(var/item_type in items)
 		var/count = items[item_type]
 		if(!ispath(item_type, /obj/item) || !isnum(count) || count < 1 || round(count) != count)
@@ -47,7 +49,8 @@
 	kit_issued = TRUE
 	for(var/item_type in items)
 		for(var/i in 1 to items[item_type])
-			var/obj/item/item = SSwardrobe.provide_type(item_type, body)
+			// Construct outside the mob: stacks may merge and delete themselves on movement.
+			var/obj/item/item = SSwardrobe.provide_type(item_type, null)
 			if(QDELETED(item))
 				CRASH("Job kit construction failed: [job_type]/[item_type]")
 			if(body.equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = FALSE))
@@ -86,7 +89,9 @@
 	var/datum/donor_spawn_context/context = body.donor_spawn_context
 	if(!context?.belongs_to(src))
 		return
-	context.issue_kit(body)
+	// Floor stacks can merge into another player's items, so issue kits only after ownership commits.
+	if(!body.job_entry_guard || body.job_entry_guard.handover_complete)
+		context.issue_kit(body)
 	context.apply_identity(body)
 	for(var/language_type in donor_languages)
 		body.grant_language(language_type, ALL, "donor-job")

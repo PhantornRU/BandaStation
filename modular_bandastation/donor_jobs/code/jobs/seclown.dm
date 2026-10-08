@@ -21,3 +21,10 @@
 		"title_2384147c33" = list("Хонкектив", /datum/outfit/job/donor/seclown/detective),
 		"title_410a1ecab5" = list("Клоун Кадет", /datum/outfit/job/donor/seclown/cadet),
 	)
+
+/datum/job/donor/seclown/after_spawn(mob/living/spawned, client/player_client)
+	if(ishuman(spawned))
+		var/mob/living/carbon/human/human = spawned
+		if(!human.donor_spawn_context?.identity_applied)
+			human.apply_pref_name(/datum/preference/name/clown, player_client)
+	return ..()

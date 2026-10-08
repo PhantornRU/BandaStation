@@ -207,11 +207,12 @@
 "# Total Positions" = 2
 
 [PRISONER]
+# DONOR_PRISONER_GATE uses 3 roundstart / 5 total positions unless explicitly overridden.
 "# Playtime Requirements" = 0
 "# Required Account Age" = 0
 "# Required Character Age" = 0
-"# Spawn Positions" = 3
-"# Total Positions" = 5
+"# Spawn Positions" = 4
+"# Total Positions" = 0
 
 [PSYCHOLOGIST]
 "# Playtime Requirements" = 0

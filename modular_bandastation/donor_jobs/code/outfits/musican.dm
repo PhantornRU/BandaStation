@@ -3,7 +3,7 @@
 	jobtype = /datum/job/donor/musican
 	id_trim = /datum/id_trim/job/donor_musican
 	uniform = /obj/item/clothing/under/costume/singer/blue
-	shoes = /obj/item/clothing/shoes/laceup
+	shoes = /obj/item/clothing/shoes/singerb
 	gloves = /obj/item/clothing/gloves/color/white
 	glasses = /obj/item/clothing/glasses/regular/hipster
 	ears = /obj/item/radio/headset/headset_srv

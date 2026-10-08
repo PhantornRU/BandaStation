@@ -529,13 +529,23 @@
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	// BANDASTATION EDIT START - Retain ownership before callbacks which may fail
-	if(entry_guard)
-		entry_guard.created_body = spawn_instance
+	if(QDELETED(spawn_instance))
+		return
+	entry_guard?.attach_body(spawn_instance)
 	requester?.attach_donor_spawn_context(spawn_instance)
+	if(!player_client)
+		if(requester?.character_handover_complete)
+			return spawn_instance
+		if(!requester)
+			qdel(spawn_instance)
+		return
 	// BANDASTATION EDIT END
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
-		qdel(spawn_instance)
+		if(requester?.character_handover_complete)
+			return spawn_instance // BANDASTATION EDIT - Early AI handover survives disconnect.
+		if(!requester)
+			qdel(spawn_instance) // BANDASTATION EDIT - Lobby rollback must restore its mind before deleting the body.
 		return // Disconnected while checking for the appearance ban.
 	return spawn_instance
 
@@ -658,7 +668,7 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
-	spawning.client.show_spawn_text_overlay()
+	spawning.client?.show_spawn_text_overlay() // BANDASTATION EDIT - The handed-over character survives a Login disconnect.
 
 /// Called when a mob that has this job is admin respawned
 /datum/job/proc/on_respawn(mob/new_character)

@@ -33,7 +33,7 @@
 			return FALSE
 	return TRUE
 
-/datum/preference/job_outfit_variants/serialize(input)
+/datum/preference/job_outfit_variants/serialize(list/input)
 	return input.Copy()
 
 /datum/preference/job_outfit_variants/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)

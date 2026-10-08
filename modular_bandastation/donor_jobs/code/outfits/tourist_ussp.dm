@@ -9,7 +9,7 @@
 	belt = /obj/item/storage/belt/fannypack/red
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses/big
-	l_pocket = /obj/item/modular_computer/pda/crew
+	l_pocket = /obj/item/modular_computer/pda/crew/donor
 	pda_slot = ITEM_SLOT_LPOCKET
 	donor_kit = list(
 		/obj/item/clothing/under/shorts/red = 1,

@@ -255,6 +255,7 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 	var/datum/job_character_selection/selection = player.resolve_assigned_job_character(job, latejoin)
 	if(selection.character_error(job, player.client, latejoin) || selection.queued_antagonist_error(player.mind))
+		QDEL_NULL(player.assigned_character)
 		return FALSE
 	var/datum/job_entry_guard/guard = latejoin ? player.client.job_entry_guard : null
 	if(guard)
@@ -263,7 +264,8 @@ SUBSYSTEM_DEF(job)
 			return FALSE
 	job.current_positions++
 	guard?.note_assignment(job)
-	player.client.prefs.donor_entry_locked = TRUE
+	player.entry_preferences = player.client.prefs
+	player.entry_preferences.donor_entry_locked = guard ? guard : player
 	// BANDASTATION EDIT END
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
@@ -341,8 +343,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 		// BANDASTATION EDIT - Discard selections from a cancelled assignment pass.
 		QDEL_NULL(player.assigned_character)
-		if(player.client?.prefs)
-			player.client.prefs.donor_entry_locked = FALSE
+		player.release_character_entry()
 		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))

@@ -60,7 +60,7 @@
 		"job_lock_reasons" = job_lock_reasons,
 		"job_character_profiles" = job_character_profiles,
 		"donor_edit_slot" = preferences.default_slot,
-		"donor_entry_locked" = preferences.donor_entry_locked,
+		"donor_entry_locked" = !isnull(preferences.donor_entry_locked),
 	)
 
 /datum/preference_middleware/donor_jobs/proc/get_job_lock_reason(datum/job/job, mob/user, datum/job_character_selection/character)

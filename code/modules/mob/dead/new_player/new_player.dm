@@ -41,6 +41,7 @@
 	// BANDASTATION EDIT START - Transient selection belongs to the lobby mob
 	QDEL_NULL(assigned_character)
 	QDEL_NULL(pending_donor_context)
+	release_character_entry()
 	// BANDASTATION EDIT END
 
 	return ..()
@@ -210,12 +211,31 @@
 		if(!guard.error)
 			guard.error = "Персонаж не был создан."
 		return FALSE
-	// BANDASTATION EDIT - Failed admission keeps the player's queue position.
+	// BANDASTATION EDIT START - Use the live profile owner for outfit and quirk customization.
+	var/client/requesting_client = guard.owner
+	var/mob/living/carbon/human/humanc
+	if(ishuman(character))
+		humanc = character
+	if(QDELETED(character) || (!guard.handover_complete && (!requesting_client || guard.error)))
+		return FALSE
+	SSjob.equip_rank(character, job, requesting_client)
+	if(QDELETED(character) || (!guard.handover_complete && (!requesting_client || guard.error)))
+		return FALSE
+	if(humanc)
+		if(job.job_flags & JOB_ASSIGN_QUIRKS)
+			if(CONFIG_GET(flag/roundstart_traits))
+				SSquirks.AssignQuirks(humanc, requesting_client)
+		else
+			humanc.clear_personalities()
+	if(QDELETED(character) || (!guard.handover_complete && (!requesting_client || guard.error)))
+		return FALSE
+	if(!transfer_character())
+		guard.error = "Передача персонажа не состоялась."
+		return FALSE
+	// Failed admission keeps the player's queue position.
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
-	transfer_character()
-
-	SSjob.equip_rank(character, job, character.client)
+	// BANDASTATION EDIT END
 	job.after_latejoin_spawn(character)
 
 	#define IS_NOT_CAPTAIN 0
@@ -238,10 +258,7 @@
 	#undef IS_FULL_CAPTAIN
 
 	SSticker.minds += character.mind
-	character.client.init_verbs() // init verbs for the late join
-	var/mob/living/carbon/human/humanc
-	if(ishuman(character))
-		humanc = character //Let's retypecast the var to be human,
+	character.client?.init_verbs() // BANDASTATION EDIT - Handover remains valid after disconnect.
 
 	if(humanc) //These procs all expect humans
 		if(SSshuttle.arrivals)
@@ -260,13 +277,6 @@
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && !EMERGENCY_PAST_POINT_OF_NO_RETURN && humanc) //Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		SSdynamic.on_latejoin(humanc)
-
-	if(humanc)
-		if(job.job_flags & JOB_ASSIGN_QUIRKS)
-			if(CONFIG_GET(flag/roundstart_traits))
-				SSquirks.AssignQuirks(humanc, humanc.client)
-		else // clear any personalities the prefs added since our job clearly does not want them
-			humanc.clear_personalities()
 
 	if(humanc) // Quirks may change manifest datapoints, so inject only after assigning quirks
 		GLOB.manifest.inject(humanc, initial_spawn = TRUE) // BANDASTATION EDIT - Initial identity and Prisoner record
@@ -296,6 +306,8 @@
 
 	// BANDASTATION EDIT START - One profile governs admission, appearance and variant
 	var/client/requesting_client = client
+	var/datum/persistent_client/requesting_persistent_client = requesting_client.persistent_client
+	var/datum/job_entry_guard/entry_guard = requesting_client.job_entry_guard
 	var/datum/job/assigned_job = mind.assigned_role
 	var/datum/job_character_selection/selection = resolve_assigned_job_character(assigned_job, mind.late_joiner, forced_slot)
 	var/profile_error = selection.character_error(assigned_job, client, mind.late_joiner) || assigned_job.donor_lock_reason(client)
@@ -305,52 +317,60 @@
 		return null
 	// BANDASTATION EDIT END
 
-	mind.active = FALSE //we wish to transfer the key manually
+	entry_mind = mind // BANDASTATION EDIT - Login can occur inside get_spawn_mob's AI constructor.
+	entry_mind.active = FALSE //we wish to transfer the key manually
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
-	if(QDELETED(src))
+	if(QDELETED(src) || QDELETED(spawning_mob)) // BANDASTATION EDIT - Recheck after native spawn callbacks.
 		return
 
-	// Annoyingly the AI mob yoinks our client on init so we have to check for it here
-	var/client/player_client = src.client || spawning_mob.client
-	if(isnull(player_client))
+	// BANDASTATION EDIT - A committed AI handover survives loss of the captured client.
+	if(!requesting_client && !character_handover_complete)
 		return
 	// BANDASTATION EDIT START - Native randomization can change admission constraints
-	profile_error = selection.actual_body_error(assigned_job, spawning_mob, mind || spawning_mob.mind)
+	profile_error = selection.actual_body_error(assigned_job, spawning_mob, entry_mind)
 	if(profile_error)
-		requesting_client.job_entry_guard?.error = profile_error
-		qdel(spawning_mob)
+		entry_guard?.error = profile_error
 		return null
 	// BANDASTATION EDIT END
 
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
 		// transfer_to sets mind to null
-		var/datum/mind/preserved_mind = mind
-		preserved_mind.original_character_slot_index = player_client.prefs.default_slot
+		var/datum/mind/preserved_mind = entry_mind // BANDASTATION EDIT - Captured before any constructor handover.
+		preserved_mind.original_character_slot_index = selection.slot
 		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
 
-	player_client.job_entry_guard?.note_slot_history(selection.slot) // BANDASTATION EDIT - Roll back only this attempt's history
-	LAZYADD(player_client.persistent_client.joined_as_slots, "[selection.slot]") // BANDASTATION EDIT - History follows the final profile
-	player_client.init_verbs()
+	entry_guard?.note_slot_history(selection.slot) // BANDASTATION EDIT - Roll back only this attempt's history
+	LAZYADD(requesting_persistent_client.joined_as_slots, "[selection.slot]") // BANDASTATION EDIT - History follows the final profile
+	requesting_client?.init_verbs()
 	. = spawning_mob
 	new_character = .
 
 
 /mob/dead/new_player/proc/transfer_character()
-	. = new_character
-	if(!.)
-		return
-	if(client?.prefs)
-		client.prefs.donor_entry_locked = FALSE // BANDASTATION EDIT - Roundstart/profile admission complete
-	SStitle.hide_title_screen_from(client) // BANDASTATION ADDITION - HTML Title Screen
-	new_character.PossessByPlayer(key) //Manually transfer the key to log them in,
-	new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	var/area/joined_area = get_area(new_character.loc)
+	var/mob/living/character = new_character // BANDASTATION EDIT - Login may yield while ownership changes.
+	if(QDELETED(character))
+		return null
+	// BANDASTATION EDIT START - Login commits ownership before its first yielding callback.
+	if(!character_handover_complete)
+		if(!client)
+			return null
+		SStitle.hide_title_screen_from(client) // BANDASTATION ADDITION - HTML Title Screen
+		if(!client || QDELETED(character))
+			return null
+		character.PossessByPlayer(key) //Manually transfer the key to log them in,
+		if(!character_handover_complete)
+			return null
+	release_character_entry()
+	// BANDASTATION EDIT END
+	character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+	var/area/joined_area = get_area(character.loc)
 	if(joined_area)
-		joined_area.on_joining_game(new_character)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, new_character, new_character.mind.assigned_role.title)
+		joined_area.on_joining_game(character)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, character, character.mind.assigned_role.title)
 	new_character = null
 	qdel(src)
+	return character
 
 /mob/dead/new_player/proc/ViewManifest()
 	if(!client)
@@ -368,6 +388,10 @@
 /mob/dead/new_player/proc/check_job_preferences(warn = TRUE)
 	if(!client)
 		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
+	// BANDASTATION EDIT - Selected invaders/forced roles are admitted on their actual job.
+	var/datum/job/forced_job = SSjob.get_job_type(LAZYACCESS(SSjob.forced_occupations, mind))
+	if(forced_job)
+		return SSjob.check_job_eligibility(src, forced_job, "Forced admission") == JOB_AVAILABLE
 	if(client.prefs.read_preference(/datum/preference/choiced/jobless_role) != RETURNTOLOBBY)
 		return TRUE
 	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.

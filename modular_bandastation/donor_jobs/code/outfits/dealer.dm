@@ -12,7 +12,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset/headset_srv
-	l_pocket = /obj/item/modular_computer/pda/crew
+	l_pocket = /obj/item/modular_computer/pda/crew/curator/donor
 	pda_slot = ITEM_SLOT_LPOCKET
 	donor_kit = list(
 		/obj/item/donor_payment_terminal = 1,
@@ -21,10 +21,19 @@
 		/obj/item/storage/box/donor_stock = 1,
 	)
 
+/datum/outfit/job/donor/dealer/pre_equip(mob/living/carbon/human/human, visuals_only = FALSE)
+	. = ..()
+	if(!visuals_only)
+		return
+	if(shoes == /obj/item/clothing/shoes/cowboy/black/laced)
+		shoes = /obj/item/clothing/shoes/cowboy/black/laced/donor_preview
+	else if(shoes == /obj/item/clothing/shoes/cowboy/laced)
+		shoes = /obj/item/clothing/shoes/cowboy/laced/donor_preview
+
 /datum/outfit/job/donor/dealer/brown
 	name = "Dealer (brown)"
 	uniform = /obj/item/clothing/under/color/brown
 	shoes = /obj/item/clothing/shoes/cowboy/laced
-	suit = /obj/item/clothing/suit/costume/pirate
+	suit = /obj/item/clothing/suit/pirate_black/brown
 	head = /obj/item/clothing/head/cowboy/grey
 	gloves = /obj/item/clothing/gloves/color/brown

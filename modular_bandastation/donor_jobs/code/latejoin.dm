@@ -1,6 +1,9 @@
 /client
 	var/datum/job_entry_guard/job_entry_guard
 
+/mob/living
+	var/datum/job_entry_guard/job_entry_guard
+
 /datum/controller/subsystem/job
 	/// Pending public entries count towards global capacity before client handover.
 	var/list/datum/job_entry_guard/latejoin_reservations = list()
@@ -13,6 +16,8 @@
 
 /datum/job_entry_guard
 	var/client/owner
+	var/datum/preferences/preferences
+	var/datum/persistent_client/persistent_client
 	var/mob/dead/new_player/player
 	var/original_slot
 	var/datum/job/reserved_job
@@ -20,24 +25,29 @@
 	var/history_added = FALSE
 	var/history_slot
 	var/entered = FALSE
+	var/handover_complete = FALSE
+	var/list/created_items
 	var/error
 
 /datum/job_entry_guard/New(mob/dead/new_player/new_player)
 	player = new_player
 	owner = player.client
-	original_slot = owner.prefs.default_slot
+	preferences = owner.prefs
+	persistent_client = owner.persistent_client
+	original_slot = preferences.default_slot
 	return ..()
 
 /datum/job_entry_guard/proc/enter()
-	if(owner.job_entry_guard)
+	if(owner.job_entry_guard || preferences.donor_entry_locked)
 		return FALSE
 	owner.job_entry_guard = src
-	owner.prefs.donor_entry_locked = TRUE
+	preferences.donor_entry_locked = src
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_client_disconnect))
 	entered = TRUE
 	return TRUE
 
 /datum/job_entry_guard/proc/lobby_error()
-	if(QDELETED(player) || !owner || player.client != owner || owner.interviewee)
+	if(!entered || QDELETED(player) || !owner || player.client != owner || owner.interviewee)
 		return "Попытка входа больше не действительна."
 	if(!SSticker.IsRoundInProgress())
 		return "Раунд ещё не начался или уже завершён."
@@ -77,31 +87,56 @@
 	reserved_job = job
 	SSjob.latejoin_reservations += src
 
+/datum/job_entry_guard/proc/attach_body(mob/living/body)
+	created_body = body
+	body.job_entry_guard = src
+
+/datum/job_entry_guard/proc/note_handover(mob/living/body)
+	attach_body(body)
+	handover_complete = TRUE
+
+/// Only concrete items created by this entry may be removed on rollback.
+/datum/job_entry_guard/proc/track_item(obj/item/item)
+	if(entered && !handover_complete && !QDELETED(item))
+		LAZYOR(created_items, item)
+
 /datum/job_entry_guard/proc/note_slot_history(slot)
 	history_slot = "[slot]"
-	history_added = !(history_slot in owner.persistent_client.joined_as_slots)
+	history_added = !(history_slot in persistent_client.joined_as_slots)
+
+/datum/job_entry_guard/proc/on_client_disconnect(datum/source)
+	SIGNAL_HANDLER
+	if(!handover_complete)
+		error = "Вход отменён после отключения."
+	// The current native callback must return before its body and equipment are removed.
 
 /datum/job_entry_guard/proc/finish(success)
 	if(!entered)
-		return FALSE
-	var/transferred = created_body?.client || (owner && created_body && owner.mob == created_body)
-	if(!success && !transferred)
+		return handover_complete
+	if(!success && !handover_complete)
+		QDEL_LIST(created_items)
 		if(!QDELETED(created_body))
 			if(!QDELETED(player) && created_body.mind)
 				created_body.mind.transfer_to(player)
 				player.mind.active = TRUE
 			qdel(created_body)
-		if(history_added && owner?.persistent_client)
-			LAZYREMOVE(owner.persistent_client.joined_as_slots, history_slot)
+		if(history_added && persistent_client)
+			LAZYREMOVE(persistent_client.joined_as_slots, history_slot)
 		if(reserved_job)
 			SSjob.free_job_position(reserved_job.title)
 			if(!QDELETED(player) && player.mind)
+				player.mind.active = TRUE
 				player.mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
-		if(owner?.prefs && owner.prefs.default_slot != original_slot)
-			owner.prefs.load_character(original_slot)
+		if(preferences.default_slot != original_slot)
+			preferences.load_character(original_slot)
+	created_items = null
+	if(!QDELETED(created_body))
+		created_body.job_entry_guard = null
 	SSjob.latejoin_reservations -= src
-	if(owner?.prefs)
-		owner.prefs.donor_entry_locked = FALSE
+	if(preferences.donor_entry_locked == src)
+		preferences.donor_entry_locked = null
+	if(owner)
+		UnregisterSignal(owner, COMSIG_QDELETING)
 	if(owner?.job_entry_guard == src)
 		owner.job_entry_guard = null
 	if(!QDELETED(player))
@@ -109,9 +144,11 @@
 		player.new_character = null
 		QDEL_NULL(player.assigned_character)
 		QDEL_NULL(player.pending_donor_context)
+		player.entry_preferences = null
+		player.entry_mind = null
 	reserved_job = null
 	entered = FALSE
-	return success || transferred
+	return success || handover_complete
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!client || !istext(rank))
@@ -123,6 +160,7 @@
 	if(!guard.enter())
 		qdel(guard)
 		return FALSE
+	QDEL_NULL(assigned_character)
 	var/success = FALSE
 	try
 		guard.error = guard.lobby_error()

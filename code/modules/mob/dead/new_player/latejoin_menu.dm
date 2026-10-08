@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
 		"edit_slot" = owner.client.prefs.default_slot, // BANDASTATION ADDITION
-		"entry_locked" = owner.client.prefs.donor_entry_locked, // BANDASTATION ADDITION
+		"entry_locked" = !isnull(owner.client.prefs.donor_entry_locked), // BANDASTATION ADDITION
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)

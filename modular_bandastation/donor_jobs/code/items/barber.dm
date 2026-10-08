@@ -52,7 +52,7 @@
 	icon = 'modular_bandastation/donor_jobs/icons/barber.dmi'
 	icon_state = "hairdyebottle"
 	w_class = WEIGHT_CLASS_TINY
-	var/dye_color = COLOR_WHITE
+	var/selected_dye_color = COLOR_WHITE
 
 /obj/item/donor_hair_dye/Initialize(mapload)
 	. = ..()
@@ -61,14 +61,14 @@
 /obj/item/donor_hair_dye/update_overlays()
 	. = ..()
 	var/mutable_appearance/dye = mutable_appearance(icon, "hairdyebottle-overlay")
-	dye.color = dye_color
+	dye.color = selected_dye_color
 	. += dye
 
 /obj/item/donor_hair_dye/attack_self(mob/living/user)
-	var/new_color = tgui_color_picker(user, "Цвет краски", "Краска", dye_color)
+	var/new_color = tgui_color_picker(user, "Цвет краски", "Краска", selected_dye_color)
 	if(!new_color || QDELETED(src) || !user.is_holding(src))
 		return
-	dye_color = sanitize_hexcolor(new_color)
+	selected_dye_color = sanitize_hexcolor(new_color)
 	update_appearance()
 
 /obj/item/donor_hair_dye/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -83,6 +83,8 @@
 		options += list("Волосы", "Градиент волос")
 	if(head.head_flags & HEAD_FACIAL_HAIR)
 		options += list("Борода", "Градиент бороды")
+	if(HAS_TRAIT(customer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(customer, TRAIT_FIXED_MUTANT_COLORS))
+		options += "Тело"
 	var/area_to_dye = tgui_input_list(user, "Что покрасить?", "Краска", options)
 	if(!area_to_dye || QDELETED(src) || !user.is_holding(src) || !do_after(user, 5 SECONDS, target = customer))
 		return
@@ -90,13 +92,16 @@
 		return
 	switch(area_to_dye)
 		if("Волосы")
-			customer.set_haircolor(dye_color)
+			customer.set_haircolor(selected_dye_color)
 		if("Борода")
-			customer.set_facial_haircolor(dye_color)
+			customer.set_facial_haircolor(selected_dye_color)
 		if("Градиент волос")
-			customer.set_hair_gradient_color(dye_color)
+			customer.set_hair_gradient_color(selected_dye_color)
 		if("Градиент бороды")
-			customer.set_facial_hair_gradient_color(dye_color)
+			customer.set_facial_hair_gradient_color(selected_dye_color)
+		if("Тело")
+			customer.dna.features[FEATURE_MUTANT_COLOR] = selected_dye_color
+			customer.update_body(is_creating = TRUE)
 	customer.dna.update_dna_identity()
 
 /obj/item/reagent_containers/cup/bottle/donor_hairgrowth
