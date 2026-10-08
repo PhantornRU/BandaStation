@@ -20,7 +20,8 @@
 	var/list/variants = job.get_donor_variants()
 	if(!variants[variant_id])
 		return FALSE
-	var/list/selection = preferences.read_preference(/datum/preference/job_outfit_variants).Copy()
+	var/list/saved_selection = preferences.read_preference(/datum/preference/job_outfit_variants)
+	var/list/selection = saved_selection?.Copy() || list()
 	selection[job.title] = variant_id
 	return preferences.update_preference(GLOB.preference_entries[/datum/preference/job_outfit_variants], selection)
 

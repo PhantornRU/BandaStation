@@ -32,7 +32,9 @@
 	if(!isnum(result.slot) || round(result.slot) != result.slot || result.slot < 1 || result.slot > max_save_slots)
 		result.error = "Некорректный слот персонажа."
 		return result
-	result.saved = savefile.get_entry("character[result.slot]")?.Copy()
+	var/list/saved_profile = savefile.get_entry("character[result.slot]")
+	if(islist(saved_profile))
+		result.saved = saved_profile.Copy()
 	if(result.slot == default_slot)
 		// Include unsaved edits, using the same defaults as the native preferences reader.
 		result.age = read_preference(/datum/preference/numeric/age)
@@ -103,9 +105,8 @@
 		player.prefs.save_character()
 		if(!player.prefs.load_character(assigned_character.slot))
 			return FALSE
-		// Old profiles can omit fields with random defaults, such as age. Commit the inspected default.
+		// Invalid saved values can also generate random defaults. Use the values inspected during assignment.
 		for(var/preference_type in assigned_character.values)
 			var/datum/preference/preference = GLOB.preference_entries[preference_type]
-			if(isnull(assigned_character.saved[preference.savefile_key]))
-				player.prefs.write_preference(preference, assigned_character.values[preference_type])
+			player.prefs.write_preference(preference, preference.serialize(assigned_character.values[preference_type]))
 	return TRUE

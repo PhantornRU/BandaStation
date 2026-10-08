@@ -178,10 +178,10 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	// BANDASTATION EDIT START - Native attempt state protects both menus, including yielding checks.
-	if(spawning || !client || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
+	var/client/requester = GET_CLIENT(src)
+	if(spawning || !requester || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
 		return FALSE
 	spawning = TRUE
-	var/client/requester = client
 	var/error = IsJobUnavailable(rank, latejoin = TRUE)
 	if(error != JOB_AVAILABLE)
 		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
@@ -190,7 +190,7 @@
 			return reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
 			SSshuttle.arrivals.RequireUndocked(src)
-	if(QDELETED(src) || !requester || client != requester || requester.mob != src)
+	if(QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)
 		return reject_late_spawn()
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
@@ -199,10 +199,19 @@
 	if(!(ckey(key) in GLOB.admin_datums) && SSjob.is_latejoin_population_full())
 		return reject_late_spawn("Достигнут лимит живых игроков.")
 	error = IsJobUnavailable(rank, latejoin = TRUE)
-	if(error != JOB_AVAILABLE || QDELETED(src) || !requester || client != requester)
+	if(error != JOB_AVAILABLE || QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)
 		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
+	if(SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
+		return reject_late_spawn("Раунд завершён; поздний вход недоступен.")
+	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
+	if(!requester.holder && length(SSticker.queued_players) && SSticker.queued_players[1] != src)
+		return reject_late_spawn("Дождитесь своей очереди на вход.")
+	if(SSshuttle.arrivals?.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
+		return reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
 	var/datum/job/job = SSjob.get_job(rank)
-	if(!SSjob.assign_role(src, job, TRUE))
+	// No yielding eligibility lookup between the final shuttle checks and native vacancy assignment.
+	if(!SSjob.assign_role(src, job, latejoin = TRUE, do_eligibility_checks = FALSE))
 		return reject_late_spawn("Профессия больше недоступна; выберите её повторно.")
 	mind.late_joiner = TRUE
 	var/atom/destination = job.get_latejoin_spawn_point()
@@ -358,10 +367,11 @@
 	spawning = FALSE
 
 /mob/dead/new_player/proc/reject_late_spawn(message)
-	if(message && client)
+	var/client/requester = GET_CLIENT(src)
+	if(message && requester)
 		to_chat(src, span_warning(message))
 	spawning = FALSE
-	if(!client && !QDELETED(src))
+	if(!requester && !QDELETED(src))
 		qdel(src)
 	return FALSE
 
