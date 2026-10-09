@@ -22,7 +22,7 @@
 	if(!isnull(forced_slot))
 		result.slot = forced_slot
 	else if(!use_current)
-		var/requested = get_job_character_slot(job.title)
+		var/requested = pref_job_slots[job.title]
 		if(requested == JOB_SLOT_RANDOMISED_SLOT)
 			result.randomized = TRUE
 		else if(!isnull(requested) && requested != JOB_SLOT_CURRENT_SLOT)

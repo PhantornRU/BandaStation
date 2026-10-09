@@ -42,7 +42,6 @@ export enum JobPriority {
 type JobPreference = {
   job: string;
   priority: JobPriority | null;
-  assigned_profile_slot: number | null;
 };
 
 export type Name = {

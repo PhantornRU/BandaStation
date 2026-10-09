@@ -7,7 +7,7 @@
 /datum/preference_middleware/pref_job_slots/get_ui_data(mob/user)
 	var/list/data = list()
 
-	data["pref_job_slots"] = preferences.get_job_character_slots()
+	data["pref_job_slots"] = preferences.pref_job_slots
 	data["profile_index"] = preferences.get_slot_options()
 	var/list/job_profiles = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
@@ -40,8 +40,10 @@
 	var/datum/job/job = SSjob.get_job(job_title)
 	if(!job || job.title != job_title || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
 		return FALSE
-	if(slot_index > 0 && slot_index != preferences.default_slot && !preferences.savefile.get_entry("character[slot_index]")?["real_name"])
-		return FALSE
+	if(slot_index > 0 && slot_index != preferences.default_slot)
+		var/list/saved_profile = preferences.savefile.get_entry("character[slot_index]")
+		if(!islist(saved_profile) || !saved_profile["real_name"])
+			return FALSE
 
 	preferences.set_job_character_slot(job_title, slot_index)
 	return TRUE

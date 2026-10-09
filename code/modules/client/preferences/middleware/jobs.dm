@@ -1,7 +1,6 @@
 /datum/preference_middleware/jobs
 	action_delegations = list(
 		"set_job_preference" = PROC_REF(set_job_preference),
-		"set_job_to_profile" = PROC_REF(set_job_to_profile),
 	)
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
@@ -34,33 +33,6 @@
 
 	preferences.character_preview_view?.update_body()
 
-	return TRUE
-
-/datum/preference_middleware/jobs/proc/set_job_to_profile(list/params, mob/user)
-	// BANDASTATION EDIT START: validate external slot assignments before saving.
-	var/client/player = GET_CLIENT(user)
-	if(player?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
-		return FALSE
-	if(!istext(params["job"]))
-		return FALSE
-	var/datum/job/job = SSjob.get_job(params["job"])
-	if(!job || job.title != params["job"] || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
-		return FALSE
-	// BANDASTATION EDIT END
-	var/job_title = params["job"]
-	var/profile_slot = params["profile"]
-
-	if (profile_slot == -1)
-		preferences.set_job_character_slot(job_title, null) // BANDASTATION EDIT: clear both assignment formats.
-		return TRUE
-	// BANDASTATION EDIT START
-	if(!isnum(profile_slot) || profile_slot != round(profile_slot) || profile_slot < 1 || profile_slot > preferences.max_save_slots)
-		return FALSE
-	if(profile_slot != preferences.default_slot && !preferences.savefile.get_entry("character[profile_slot]")?["real_name"])
-		return FALSE
-	// BANDASTATION EDIT END
-
-	preferences.set_job_character_slot(job_title, profile_slot) // BANDASTATION EDIT: keep legacy and slot UI writes consistent.
 	return TRUE
 
 /datum/preference_middleware/jobs/get_constant_data()
@@ -106,26 +78,10 @@
 	return data
 
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
-	var/list/data = list()
-	var/list/job_slots = preferences.get_job_character_slots() // BANDASTATION EDIT: match character selection, including legacy saves.
-
-	data["job_preferences"] = list()
-	for(var/job, priority in preferences.job_preferences)
-		var/slot = job_slots[job] // BANDASTATION EDIT
-		data["job_preferences"] += list(list(
-			"job" = job,
-			"priority" = priority,
-			"assigned_profile_slot" = isnum(slot) && slot > 0 ? slot : null, // BANDASTATION EDIT: native UI only represents saved profiles.
-		))
-
-	for(var/job, slot in job_slots - SANITIZE_LIST(preferences.job_preferences)) // BANDASTATION EDIT
-		data["job_preferences"] += list(list(
-			"job" = job,
-			"priority" = null,
-			"assigned_profile_slot" = isnum(slot) && slot > 0 ? slot : null, // BANDASTATION EDIT
-		))
-
-	return data
+	var/list/job_rows = list()
+	for(var/job_title, priority in preferences.job_preferences)
+		job_rows += list(list("job" = job_title, "priority" = priority))
+	return list("job_preferences" = job_rows)
 
 /datum/preference_middleware/jobs/get_ui_static_data(mob/user)
 	var/list/data = list()

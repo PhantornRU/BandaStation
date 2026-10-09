@@ -25,12 +25,7 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
   const { name } = props;
 
   const currentProfileName = data.character_profiles[data.active_slot - 1];
-  const assignedProfileSlot =
-    data.job_preferences.find((pref) => pref.job === name)
-      ?.assigned_profile_slot ?? null;
-  // BANDASTATION EDIT: explicit assignments take precedence over the native legacy map.
-  const currentSlotNumber =
-    data.pref_job_slots?.[name] ?? assignedProfileSlot ?? 0;
+  const currentSlotNumber = data.pref_job_slots[name] ?? 0;
   const currentSlotName =
     currentSlotNumber > 0
       ? data.character_profiles[currentSlotNumber - 1]
