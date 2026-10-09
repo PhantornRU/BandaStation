@@ -22,5 +22,5 @@
 	TEST_ASSERT_EQUAL(length(run_loc_floor_bottom_left.get_all_contents_type(/obj/item) - items_before), 0, "Repeating a spawn callback issued more trade goods")
 
 /datum/unit_test/donor_dealer_stock/Destroy()
-	release_donor_player_fixtures()
+	release_job_player_fixtures()
 	return ..()

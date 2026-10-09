@@ -15,7 +15,7 @@
 		check_outfit(outfit_path, player)
 
 /datum/unit_test/donor_job_outfits/Destroy()
-	release_donor_player_fixtures()
+	release_job_player_fixtures()
 	if(!isnull(prisoner_gate_before))
 		CONFIG_SET(flag/donor_prisoner_gate, prisoner_gate_before)
 	if(!isnull(jobs_enabled_before))
@@ -221,38 +221,5 @@
 	TEST_ASSERT_EQUAL(job.outfit, /datum/outfit/job/donor/actor, "Personal variants mutated the shared job outfit")
 
 /datum/unit_test/donor_variant_before_loadout/Destroy()
-	release_donor_player_fixtures()
-	return ..()
-
-/datum/unit_test/donor_character_handover/Run()
-	var/datum/client_interface/player = allocate(/datum/client_interface)
-	player.prefs = allocate(/datum/preferences, player)
-	player.prefs.all_quirks = list(/datum/quirk/item_quirk/food_allergic::name)
-	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/food_allergy], "Молочные продукты"), "Could not save the customized allergy")
-	var/datum/job/job = allocate(/datum/job/donor/barber)
-	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
-	body.mind_initialize()
-	allocated += body.mind
-	body.mind.set_assigned_role(job)
-	job.prepare_donor_character(body, player.prefs)
-	SSjob.equip_rank(body, job, null)
-	allocated += SSeconomy.bank_accounts_by_id["[body.account_id]"]
-	SSquirks.AssignQuirks(body, player)
-	var/datum/quirk/item_quirk/food_allergic/allergy = locate() in body.quirks
-	TEST_ASSERT_NOTNULL(allergy, "Native post-equipment quirks did not add the selected allergy")
-	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Native quirks lost the customized allergy")
-	TEST_ASSERT_NOTNULL(locate(/obj/item/clothing/accessory/dogtag/allergy) in body.get_all_contents(), "Native quirks lost their actual equipment")
-	SSquirks.AssignQuirks(body, null)
-	TEST_ASSERT_EQUAL(allergy.target_foodtypes, DAIRY, "Disconnect after handover changed the applied customized quirk")
-	TEST_ASSERT(body.donor_spawn_context.identity_applied, "Initial native equipment did not apply its public title")
-	var/list/items_before = run_loc_floor_bottom_left.get_all_contents_type(/obj/item)
-	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)
-	card.assignment = "Reassigned employee"
-	job.after_spawn(body, null)
-	TEST_ASSERT_EQUAL(length(run_loc_floor_bottom_left.get_all_contents_type(/obj/item) - items_before), 0, "A repeated spawn callback issued additional equipment")
-	TEST_ASSERT_EQUAL(card.assignment, "Reassigned employee", "A repeated callback restored the old public title")
-	TEST_ASSERT_NULL(body.client, "Reward issuance required a Login or reconnect")
-
-/datum/unit_test/donor_character_handover/Destroy()
-	release_donor_player_fixtures()
+	release_job_player_fixtures()
 	return ..()

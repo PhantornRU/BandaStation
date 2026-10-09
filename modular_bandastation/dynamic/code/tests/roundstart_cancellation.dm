@@ -32,6 +32,11 @@
 	SSjob.forced_occupations = list()
 	GLOB.new_player_list = list()
 	GLOB.jobspawn_overrides = list()
+	for(var/ruleset_type in list(/datum/dynamic_ruleset, /datum/dynamic_ruleset/midround, /datum/dynamic_ruleset/latejoin))
+		var/datum/dynamic_ruleset/ruleset = allocate(ruleset_type)
+		TEST_ASSERT(!("prepared_job_changes" in ruleset.vars), "[ruleset.type] stores a roundstart-only cancellation receipt")
+	var/datum/dynamic_ruleset/roundstart/roundstart = allocate(/datum/dynamic_ruleset/roundstart/traitor)
+	TEST_ASSERT(!roundstart.set_config_value("prepared_job_changes", list()), "Config can replace pending roundstart occupation changes")
 	for(var/list/scenario as anything in list(
 		list("ruleset" = /datum/dynamic_ruleset/roundstart/traitor, "job" = /datum/job/assistant, "count" = 2),
 		list("ruleset" = /datum/dynamic_ruleset/roundstart/malf_ai, "job" = /datum/job/ai, "count" = 1),
@@ -132,17 +137,5 @@
 		GLOB.jobspawn_overrides = spawns_before
 	for(var/datum/job/job as anything in positions_before)
 		job.current_positions = positions_before[job]
-	for(var/datum/client_interface/player in allocated)
-		player.prefs = null
-		player.mob = null
-	for(var/datum/preferences/preferences in allocated)
-		preferences.parent = null
-		preferences.savefile = null
-	for(var/datum/mind/mind in allocated)
-		mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
-		mind.set_current(null)
-	for(var/mob/mob in allocated)
-		mob.key = null
-		mob.mock_client = null
-		mob.mind = null
+	release_job_player_fixtures()
 	return ..()
