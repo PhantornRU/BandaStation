@@ -465,18 +465,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		SStitle.show_title_screen_to(player.client) // BANDASTATION ADDITION - HTML Title Screen
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
-			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
-			// BANDASTATION EDIT - A failed final profile/map admission must release the native vacancy.
-			var/mob/living/character = destination ? player.create_character(destination) : null
-			// BANDASTATION EDIT - Pending role owners may reject the actual body before equipment.
-			if(character && (SEND_SIGNAL(character.mind, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED, character) & COMPONENT_CANCEL_CHARACTER_SPAWN))
-				character = null
-			if(character)
-				GLOB.joined_player_list += player.ckey
-			else
-				var/datum/mind/candidate = player.mind || player.new_character?.mind
-				SSdynamic.cancel_roundstart_assignment(candidate) // BANDASTATION EDIT - Dynamic owns its pending restrictions.
-				player.cancel_character_spawn()
+			create_initial_job_character(player) // BANDASTATION EDIT: module-owned per-player admission/cancellation.
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()

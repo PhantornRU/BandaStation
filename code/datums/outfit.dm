@@ -45,10 +45,6 @@
 	  * Format of this list should be: list(path=count,otherpath=count)
 	  */
 	var/list/backpack_contents = null
-	// BANDASTATION EDIT START: Optional preservation of required starting supplies.
-	/// Leave supplies beside the wearer if their backpack cannot hold them.
-	var/preserve_backpack_overflow = FALSE
-	// BANDASTATION EDIT END
 
 	/// Type path of item to go in belt slot
 	var/obj/item/belt = null
@@ -261,19 +257,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					// BANDASTATION EDIT START: Optional preservation of required starting supplies.
-					if(!preserve_backpack_overflow)
-						user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
-						continue
-					var/obj/item/supply = SSwardrobe.provide_type(path, user)
-					// Native stacks may already have merged with the wearer's inventory.
-					if(QDELETED(supply))
-						continue
-					if(user.equip_to_storage(supply, ITEM_SLOT_BACK, indirect_action = TRUE) || QDELETED(supply))
-						continue
-					to_chat(user, span_notice("[supply] не помещается в сумку и оставлен рядом с вами."))
-					supply.forceMove(user.drop_location())
-					// BANDASTATION EDIT END
+					equip_backpack_item(user, path) // BANDASTATION EDIT: outfits own this operation.
 
 		if(belt_contents)
 			for(var/path in belt_contents)
@@ -326,6 +310,10 @@
  * essentially calls add_fingerprint to every defined item on the human
  *
  */
+// BANDASTATION ADDITION: outfits can replace one backpack insertion operation.
+/datum/outfit/proc/equip_backpack_item(mob/living/carbon/human/user, item_path)
+	return user.equip_to_storage(SSwardrobe.provide_type(item_path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/user)
 	if(!istype(user))
 		return

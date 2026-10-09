@@ -250,18 +250,11 @@ SUBSYSTEM_DEF(job)
 	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE, latejoin = latejoin) != JOB_AVAILABLE)) // BANDASTATION EDIT - Final profile admission
 		return FALSE
 
-	// BANDASTATION EDIT START - Entitlement and capacity also apply to prechecked callers.
-	var/client/requester = GET_CLIENT(player)
-	if(QDELETED(player) || !requester || !player.mind || job.donor_lock_reason(requester))
+	// BANDASTATION EDIT: final admission also applies to prechecked callers.
+	if(!prepare_job_assignment(player, job, latejoin))
 		return FALSE
-	var/datum/job_character_selection/selection = requester.prefs.select_job_character(job, latejoin)
-	if(selection.character_error(job, requester, latejoin) || (latejoin && (player.IsJobSlotUnavailable(job) || (!(ckey(player.key) in GLOB.admin_datums) && is_latejoin_population_full()))))
-		qdel(selection)
-		return FALSE
-	QDEL_NULL(player.assigned_character)
-	player.assigned_character = selection
+
 	job.current_positions++
-	// BANDASTATION EDIT END
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
 	unassigned -= player
@@ -995,19 +988,7 @@ SUBSYSTEM_DEF(job)
 		job_debug("[debug_prefix]: Player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
-	// BANDASTATION EDIT START - The assigned slot owns age and species checks.
-	if(possible_job.donor_lock_reason(player_client))
-		return JOB_UNAVAILABLE_DONOR
-	var/datum/job_character_selection/selection = player_client.prefs.select_job_character(possible_job, latejoin)
-	var/too_young = isnum(possible_job.required_character_age) && selection.age < possible_job.required_character_age
-	var/profile_error = selection.character_error(possible_job, player_client, latejoin)
-	qdel(selection)
-	if(too_young)
-		return JOB_UNAVAILABLE_AGE
-	if(profile_error)
-		return JOB_UNAVAILABLE_CHARACTER_PROFILE
-	// BANDASTATION EDIT END
-	return JOB_AVAILABLE
+	return check_job_character_eligibility(player, possible_job, latejoin) // BANDASTATION EDIT: final selected-profile check.
 
 /**
  * Check if the station manifest has at least a certain amount of this staff type.

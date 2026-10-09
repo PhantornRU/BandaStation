@@ -5,3 +5,4 @@
 #include "code/cultist.dm"
 #include "code/dynamic.dm"
 #include "code/roundstart.dm"
+#include "code/blood_worm.dm"

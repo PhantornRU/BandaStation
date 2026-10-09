@@ -89,7 +89,6 @@
 
 /datum/dynamic_ruleset/Destroy()
 	selected_minds = null
-	prepared_job_changes = null // BANDASTATION ADDITION - Pending occupation changes.
 	return ..()
 
 /// Used for parsing config entries to validate them
@@ -105,7 +104,6 @@
 		NAMEOF_STATIC(src, ruleset_flags),
 		NAMEOF_STATIC(src, ruleset_lazy_templates),
 		NAMEOF_STATIC(src, selected_minds),
-		NAMEOF_STATIC(src, prepared_job_changes), // BANDASTATION ADDITION
 		NAMEOF_STATIC(src, vars),
 	)
 
@@ -237,18 +235,17 @@
 
 	for(var/mob/candidate as anything in selected_candidates)
 		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
-		// BANDASTATION EDIT START - Remember only occupation changes introduced by this preparation.
-		var/list/previous_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate_mind)
-		previous_blocks = previous_blocks ? previous_blocks.Copy() : list()
-		var/previous_forced_job = LAZYACCESS(SSjob.forced_occupations, candidate_mind)
-		// BANDASTATION EDIT END
-		prepare_for_role(candidate_mind)
-		LAZYADDASSOC(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles()) // this is what makes sure you can't roll traitor as a sec-off
-		record_prepared_job_changes(candidate_mind, previous_blocks, previous_forced_job) // BANDASTATION ADDITION
+		prepare_job_assignment(candidate_mind) // BANDASTATION EDIT: roundstart owns cancellable preparation.
 		selected_minds += candidate_mind
 		antag_candidates -= candidate
 
 	return TRUE
+
+// BANDASTATION ADDITION: neutral preparation hook for occupation constraints.
+/datum/dynamic_ruleset/proc/prepare_job_assignment(datum/mind/candidate)
+	PROTECTED_PROC(TRUE)
+	prepare_for_role(candidate)
+	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
 
 /// Gets the mind of a candidate, can be overridden to return a different mind if necessary
 /datum/dynamic_ruleset/proc/get_candidate_mind(mob/dead/candidate)
@@ -379,7 +376,6 @@
 	var/list/execute_args = create_execute_args()
 	for(var/datum/mind/mind as anything in selected_minds)
 		assign_role(arglist(list(mind) + execute_args))
-	prepared_job_changes = null // BANDASTATION ADDITION - Executed assignments are no longer cancellable.
 
 /// Allows you to supply extra arguments to assign_role() if needed
 /datum/dynamic_ruleset/proc/create_execute_args()

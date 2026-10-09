@@ -183,7 +183,6 @@
 		for(var/i in roundstart_experience)
 			spawned_human.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-	apply_donor_spawn_context(spawned) // BANDASTATION EDIT - Initial public title
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
 /// Return the outfit to use
@@ -330,10 +329,6 @@
 			.")
 
 	return info
-
-// BANDASTATION ADDITION - Called only for the first crew record, never a later identity change.
-/datum/job/proc/on_initial_crew_record(mob/living/carbon/human/body, datum/record/crew/record)
-	SEND_SIGNAL(body, COMSIG_HUMAN_INITIAL_CREW_RECORD, src, record)
 
 /// Returns information pertaining to this job's radio.
 /datum/job/proc/get_radio_information()

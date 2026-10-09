@@ -1,6 +1,9 @@
 #include "_jobs.dm"
 
 #include "code/controller/subsystem/job.dm"
+#include "code/controller/admission.dm"
+#include "code/controller/roundstart.dm"
+#include "code/player/latejoin.dm"
 
 // NT Representation department
 #include "code/departments/nt_representation.dm"

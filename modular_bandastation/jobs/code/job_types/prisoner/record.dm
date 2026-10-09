@@ -1,3 +1,7 @@
+/// Called only for the first crew record, never a later identity change.
+/datum/job/proc/on_initial_crew_record(mob/living/carbon/human/body, datum/record/crew/record)
+	SEND_SIGNAL(body, COMSIG_HUMAN_INITIAL_CREW_RECORD, src, record)
+
 /mob/living/carbon/human
 	var/prisoner_crime
 	var/prisoner_record_registered = FALSE

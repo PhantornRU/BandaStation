@@ -1,17 +1,33 @@
-/datum/dynamic_ruleset
+/datum/dynamic_ruleset/roundstart
 	/// Occupation changes owned by each unexecuted assignment, excluding pre-existing restrictions.
 	VAR_PRIVATE/list/prepared_job_changes
 
-/datum/dynamic_ruleset/proc/record_prepared_job_changes(datum/mind/candidate, list/previous_blocks, previous_forced_job)
-	PROTECTED_PROC(TRUE)
+/datum/dynamic_ruleset/roundstart/prepare_job_assignment(datum/mind/candidate)
+	var/list/previous_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate)
+	previous_blocks = previous_blocks ? previous_blocks.Copy() : list()
+	var/previous_forced = LAZYACCESS(SSjob.forced_occupations, candidate)
+	. = ..()
 	var/list/current_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate)
 	LAZYSET(prepared_job_changes, candidate, list(
 		"blocked" = (current_blocks || list()) - previous_blocks,
 		"forced" = LAZYACCESS(SSjob.forced_occupations, candidate),
-		"previous_forced" = previous_forced_job,
+		"previous_forced" = previous_forced,
 	))
 
-/datum/dynamic_ruleset/proc/cancel_assignment(datum/mind/candidate)
+/datum/dynamic_ruleset/roundstart/execute()
+	. = ..()
+	prepared_job_changes = null
+
+/datum/dynamic_ruleset/roundstart/Destroy()
+	prepared_job_changes = null
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/set_config_value(new_var, new_val)
+	if(new_var == NAMEOF(src, prepared_job_changes))
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/proc/cancel_assignment(datum/mind/candidate)
 	if(!(candidate in selected_minds))
 		return FALSE
 	var/list/changes = LAZYACCESS(prepared_job_changes, candidate)
@@ -40,26 +56,3 @@
 			unqueue_ruleset(ruleset)
 			qdel(ruleset)
 	return cancelled
-
-/datum/dynamic_ruleset/roundstart/blood_worm/proc/get_bloodless_jobs(client/player)
-	var/list/bloodless_jobs = list()
-	if(!player)
-		return bloodless_jobs
-	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		var/datum/job_character_selection/selection = player.prefs.select_job_character(job)
-		var/datum/species/species = GLOB.species_prototypes[selection.species]
-		qdel(selection)
-		if(!species || (TRAIT_NOBLOOD in species.inherent_traits))
-			bloodless_jobs += job.title
-	return bloodless_jobs
-
-/datum/dynamic_ruleset/roundstart/blood_worm/proc/check_roundstart_host(datum/mind/source, mob/living/character)
-	SIGNAL_HANDLER
-	if(!CAN_HAVE_BLOOD(character))
-		return COMPONENT_CANCEL_CHARACTER_SPAWN
-
-/datum/dynamic_ruleset/roundstart/blood_worm/cancel_assignment(datum/mind/candidate)
-	if(!..())
-		return FALSE
-	UnregisterSignal(candidate, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED)
-	return TRUE

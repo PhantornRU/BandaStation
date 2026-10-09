@@ -129,13 +129,6 @@
 	return !(TRAIT_NOBLOOD in species.inherent_traits)
 	// BANDASTATION EDIT END
 
-/datum/dynamic_ruleset/roundstart/blood_worm/prepare_for_role(datum/mind/candidate)
-	..()
-	// BANDASTATION EDIT START - This ruleset owns profile and actual-host compatibility.
-	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_bloodless_jobs(GET_CLIENT(candidate.current)))
-	RegisterSignal(candidate, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED, PROC_REF(check_roundstart_host))
-	// BANDASTATION EDIT END
-
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
 	UnregisterSignal(candidate, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED) // BANDASTATION ADDITION
 	if (!CAN_HAVE_BLOOD(candidate.current))

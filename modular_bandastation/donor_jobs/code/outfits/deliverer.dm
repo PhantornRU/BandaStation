@@ -1,6 +1,5 @@
 /datum/outfit/job/cargo_tech/donor_deliverer
 	name = "Cargo Technician (Deliverer)"
-	preserve_backpack_overflow = TRUE
 	uniform = /obj/item/clothing/under/misc/overalls
 	shoes = /obj/item/clothing/shoes/workboots
 	suit = null
