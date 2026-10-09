@@ -22,9 +22,7 @@
 	if(!isnull(forced_slot))
 		result.slot = forced_slot
 	else if(!use_current)
-		var/requested = pref_job_slots[job.title]
-		if(isnull(requested))
-			requested = LAZYACCESS(job_assigned_profiles, job.title)
+		var/requested = get_job_character_slot(job.title)
 		if(requested == JOB_SLOT_RANDOMISED_SLOT)
 			result.randomized = TRUE
 		else if(!isnull(requested) && requested != JOB_SLOT_CURRENT_SLOT)

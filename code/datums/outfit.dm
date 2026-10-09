@@ -265,10 +265,14 @@
 					if(!preserve_backpack_overflow)
 						user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 						continue
-					var/obj/item/supply = SSwardrobe.provide_type(path, user.drop_location())
-					// Native stacks may already have merged with supplies on the floor.
-					if(!QDELETED(supply) && !user.equip_to_storage(supply, ITEM_SLOT_BACK, indirect_action = TRUE))
-						to_chat(user, span_notice("[supply] не помещается в сумку и оставлен рядом с вами."))
+					var/obj/item/supply = SSwardrobe.provide_type(path, user)
+					// Native stacks may already have merged with the wearer's inventory.
+					if(QDELETED(supply))
+						continue
+					if(user.equip_to_storage(supply, ITEM_SLOT_BACK, indirect_action = TRUE) || QDELETED(supply))
+						continue
+					to_chat(user, span_notice("[supply] не помещается в сумку и оставлен рядом с вами."))
+					supply.forceMove(user.drop_location())
 					// BANDASTATION EDIT END
 
 		if(belt_contents)

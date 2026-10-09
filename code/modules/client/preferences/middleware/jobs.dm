@@ -38,7 +38,8 @@
 
 /datum/preference_middleware/jobs/proc/set_job_to_profile(list/params, mob/user)
 	// BANDASTATION EDIT START: validate external slot assignments before saving.
-	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
+	var/client/player = GET_CLIENT(user)
+	if(player?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 	if(!istext(params["job"]))
 		return FALSE
@@ -50,7 +51,7 @@
 	var/profile_slot = params["profile"]
 
 	if (profile_slot == -1)
-		LAZYREMOVE(preferences.job_assigned_profiles, job_title)
+		preferences.set_job_character_slot(job_title, null) // BANDASTATION EDIT: clear both assignment formats.
 		return TRUE
 	// BANDASTATION EDIT START
 	if(!isnum(profile_slot) || profile_slot != round(profile_slot) || profile_slot < 1 || profile_slot > preferences.max_save_slots)
@@ -59,7 +60,7 @@
 		return FALSE
 	// BANDASTATION EDIT END
 
-	LAZYSET(preferences.job_assigned_profiles, job_title, profile_slot)
+	preferences.set_job_character_slot(job_title, profile_slot) // BANDASTATION EDIT: keep legacy and slot UI writes consistent.
 	return TRUE
 
 /datum/preference_middleware/jobs/get_constant_data()
@@ -106,20 +107,22 @@
 
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
 	var/list/data = list()
+	var/list/job_slots = preferences.get_job_character_slots() // BANDASTATION EDIT: match character selection, including legacy saves.
 
 	data["job_preferences"] = list()
 	for(var/job, priority in preferences.job_preferences)
+		var/slot = job_slots[job] // BANDASTATION EDIT
 		data["job_preferences"] += list(list(
 			"job" = job,
 			"priority" = priority,
-			"assigned_profile_slot" = LAZYACCESS(preferences.job_assigned_profiles, job),
+			"assigned_profile_slot" = isnum(slot) && slot > 0 ? slot : null, // BANDASTATION EDIT: native UI only represents saved profiles.
 		))
 
-	for(var/job, slot in SANITIZE_LIST(preferences.job_assigned_profiles) - SANITIZE_LIST(preferences.job_preferences))
+	for(var/job, slot in job_slots - SANITIZE_LIST(preferences.job_preferences)) // BANDASTATION EDIT
 		data["job_preferences"] += list(list(
 			"job" = job,
 			"priority" = null,
-			"assigned_profile_slot" = slot,
+			"assigned_profile_slot" = isnum(slot) && slot > 0 ? slot : null, // BANDASTATION EDIT
 		))
 
 	return data

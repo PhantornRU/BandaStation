@@ -7,6 +7,31 @@
 	/// Assoc list of [job title] = [slot number]. Stores which character slot to use for each job.
 	var/list/pref_job_slots = list()
 
+/// Explicit current/random selections take precedence over legacy saved-profile assignments.
+/datum/preferences/proc/get_job_character_slot(job_title)
+	var/slot_index = LAZYACCESS(pref_job_slots, job_title)
+	return isnull(slot_index) ? LAZYACCESS(job_assigned_profiles, job_title) : slot_index
+
+/// UI consumers must show the same assignments that character selection resolves.
+/datum/preferences/proc/get_job_character_slots()
+	var/list/slots = islist(job_assigned_profiles) ? job_assigned_profiles.Copy() : list()
+	for(var/job_title, slot_index in pref_job_slots)
+		if(!isnull(slot_index))
+			slots[job_title] = slot_index
+	return slots
+
+/// Store an already-validated assignment in both formats; null clears only this job.
+/datum/preferences/proc/set_job_character_slot(job_title, slot_index)
+	if(isnull(slot_index))
+		pref_job_slots -= job_title
+	else
+		pref_job_slots[job_title] = slot_index
+	if(!isnull(slot_index) && slot_index > JOB_SLOT_CURRENT_SLOT)
+		LAZYSET(job_assigned_profiles, job_title, slot_index)
+	else
+		LAZYREMOVE(job_assigned_profiles, job_title)
+	save_preferences()
+
 /**
  * Generates available slot selection options
  *
@@ -30,9 +55,10 @@
 
 	return slot_options += list(num2text(JOB_SLOT_RANDOMISED_SLOT) = JOB_SLOT_RANDOMISED_TEXT)
 
-/// Resets pref_job_slots to empty list and saves preferences
+/// Clear both saved assignment formats so legacy profiles cannot reappear after reset.
 /datum/preferences/proc/reset_job_slots()
 	pref_job_slots = list()
+	job_assigned_profiles = null
 	save_preferences()
 
 /**

@@ -7,7 +7,7 @@
 /datum/preference_middleware/pref_job_slots/get_ui_data(mob/user)
 	var/list/data = list()
 
-	data["pref_job_slots"] = preferences.pref_job_slots
+	data["pref_job_slots"] = preferences.get_job_character_slots()
 	data["profile_index"] = preferences.get_slot_options()
 	var/list/job_profiles = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
@@ -25,7 +25,8 @@
 	return data
 
 /datum/preference_middleware/pref_job_slots/proc/set_job_slot(list/params, mob/user)
-	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
+	var/client/player = GET_CLIENT(user)
+	if(player?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 
 	var/job_title = params["job"]
@@ -42,13 +43,12 @@
 	if(slot_index > 0 && slot_index != preferences.default_slot && !preferences.savefile.get_entry("character[slot_index]")?["real_name"])
 		return FALSE
 
-	preferences.pref_job_slots[job_title] = slot_index
-
-	preferences.save_preferences()
+	preferences.set_job_character_slot(job_title, slot_index)
 	return TRUE
 
 /datum/preference_middleware/pref_job_slots/proc/reset_job_slots(list/params, mob/user)
-	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
+	var/client/player = GET_CLIENT(user)
+	if(player?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
 	preferences.reset_job_slots()
 	return TRUE

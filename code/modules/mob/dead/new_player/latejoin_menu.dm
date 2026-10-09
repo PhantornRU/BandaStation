@@ -247,7 +247,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		for(var/datum/job/job_datum as anything in department.department_jobs)
 			// BANDASTATION ADDITION START: RP donor roles need an explicit preference.
-			if((istype(job_datum, /datum/job/donor) || (istype(job_datum, /datum/job/prisoner) && job_datum.get_required_donor_tier())) && !requester.prefs.job_preferences[job_datum.title])
+			if(job_datum.requires_explicit_preference() && !requester.prefs.job_preferences[job_datum.title])
 				continue
 			// BANDASTATION ADDITION END
 			var/availability = owner.IsJobUnavailable(job_datum.title, latejoin = TRUE)

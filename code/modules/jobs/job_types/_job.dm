@@ -190,6 +190,10 @@
 /datum/job/proc/get_outfit(consistent)
 	return outfit
 
+/// Whether automatic staffing and random latejoin require an enabled job preference.
+/datum/job/proc/requires_explicit_preference() // BANDASTATION ADDITION
+	return FALSE
+
 /// Announce that this job as joined the round to all crew members.
 /// Note the joining mob has no client at this point.
 /datum/job/proc/announce_job(mob/living/joining_mob)

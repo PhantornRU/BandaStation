@@ -38,5 +38,5 @@
 /datum/job/prisoner/get_required_donor_tier()
 	return CONFIG_GET(flag/donor_prisoner_gate) ? DONATOR_TIER_1 : 0
 
-/datum/job/proc/requires_explicit_preference()
-	return istype(src, /datum/job/donor) || (istype(src, /datum/job/prisoner) && CONFIG_GET(flag/donor_prisoner_gate))
+/datum/job/donor/requires_explicit_preference()
+	return TRUE

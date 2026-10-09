@@ -458,3 +458,70 @@
 		CONFIG_SET(number/extreme_popcap, extreme_cap_before)
 	release_donor_player_fixtures()
 	return ..()
+
+/datum/client_interface/assistant_overflow_test
+	var/player_age = 30
+
+/datum/unit_test/donor_assistant_overflow
+	var/datum/job/assistant
+	var/positions_before
+	var/total_before
+	var/list/joinable_before
+	var/enabled_before
+	var/hard_cap_before
+	var/extreme_cap_before
+
+/datum/unit_test/donor_assistant_overflow/Run()
+	assistant = SSjob.get_job_type(/datum/job/assistant)
+	positions_before = assistant.current_positions
+	total_before = assistant.total_positions
+	joinable_before = SSjob.joinable_occupations
+	enabled_before = CONFIG_GET(flag/donor_jobs_enabled)
+	hard_cap_before = CONFIG_GET(number/hard_popcap)
+	extreme_cap_before = CONFIG_GET(number/extreme_popcap)
+	CONFIG_SET(number/hard_popcap, 0)
+	CONFIG_SET(number/extreme_popcap, 0)
+	assistant.current_positions = 1
+	assistant.total_positions = 1
+	var/datum/job/ordinary = allocate(/datum/job/cargo_technician)
+	ordinary.total_positions = 1
+	ordinary.current_positions = 1
+	var/datum/job/donor/alternative = allocate(/datum/job/donor/vip_guest)
+	alternative.total_positions = -1
+	SSjob.joinable_occupations = list(assistant, ordinary, alternative)
+	var/datum/client_interface/assistant_overflow_test/player = allocate(/datum/client_interface/assistant_overflow_test)
+	player.ban_cache = list()
+	player.prefs = allocate(/datum/preferences, player)
+	player.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/age], 35)
+	var/mob/dead/new_player/lobby = allocate(/mob/dead/new_player)
+	lobby.mock_client = player
+	player.mob = lobby
+	lobby.key = player.key
+	lobby.mind = allocate(/datum/mind)
+	lobby.mind.set_current(lobby)
+	for(var/list/scenario as anything in list(
+		list("enabled" = TRUE, "tier" = 0, "age" = 30, "available" = TRUE),
+		list("enabled" = TRUE, "tier" = DONATOR_TIER_5, "age" = 30, "available" = FALSE),
+		list("enabled" = FALSE, "tier" = DONATOR_TIER_5, "age" = 30, "available" = TRUE),
+		list("enabled" = TRUE, "tier" = DONATOR_TIER_5, "age" = 14, "available" = TRUE),
+	))
+		CONFIG_SET(flag/donor_jobs_enabled, scenario["enabled"])
+		player.donator_level = scenario["tier"]
+		player.player_age = scenario["age"]
+		TEST_ASSERT_EQUAL(lobby.IsJobUnavailable(assistant.title, latejoin = TRUE), scenario["available"] ? JOB_AVAILABLE : JOB_UNAVAILABLE_SLOTFULL, "Assistant admission counted an unavailable donor alternative")
+		TEST_ASSERT_EQUAL(SSjob.assign_role(lobby, assistant, latejoin = TRUE, do_eligibility_checks = FALSE), scenario["available"], "Final Assistant admission disagreed with the menu capacity check")
+		if(scenario["available"])
+			TEST_ASSERT_EQUAL(assistant.current_positions, 2, "Assistant admission did not use the native position counter")
+			lobby.cancel_character_spawn()
+		TEST_ASSERT_EQUAL(assistant.current_positions, 1, "Assistant rejection or cancellation changed another occupied position")
+
+/datum/unit_test/donor_assistant_overflow/Destroy()
+	if(assistant)
+		assistant.current_positions = positions_before
+		assistant.total_positions = total_before
+		SSjob.joinable_occupations = joinable_before
+		CONFIG_SET(flag/donor_jobs_enabled, enabled_before)
+		CONFIG_SET(number/hard_popcap, hard_cap_before)
+		CONFIG_SET(number/extreme_popcap, extreme_cap_before)
+	release_donor_player_fixtures()
+	return ..()

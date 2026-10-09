@@ -147,7 +147,8 @@
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	// BANDASTATION EDIT START - Canonical lookup and common capacity check
-	if(!client || !istext(rank))
+	var/client/requester = GET_CLIENT(src)
+	if(!requester || !istext(rank))
 		return JOB_UNAVAILABLE_GENERIC
 	var/datum/job/job = SSjob.get_job(rank)
 	if(!job || job.title != rank || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
@@ -160,7 +161,7 @@
 	if(eligibility_check != JOB_AVAILABLE)
 		return eligibility_check
 
-	if(latejoin && !job.special_check_latejoin(client))
+	if(latejoin && !job.special_check_latejoin(requester))
 		return JOB_UNAVAILABLE_GENERIC
 	return JOB_AVAILABLE
 
@@ -169,10 +170,11 @@
 		return FALSE
 	if(!is_assistant_job(job))
 		return TRUE
-	if(isnum(client.player_age) && client.player_age <= 14)
+	var/client/requester = GET_CLIENT(src)
+	if(isnum(requester?.player_age) && requester.player_age <= 14)
 		return FALSE
 	for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
-		if(other_job != job && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
+		if(other_job != job && !other_job.donor_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
 			return TRUE
 	return FALSE
 

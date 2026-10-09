@@ -14,9 +14,9 @@
 	for(var/job_title in input)
 		if(++visited > 128)
 			break
-		var/variant_id = input[job_title]
 		if(!istext(job_title) || !length(job_title) || length(job_title) > 128)
 			continue
+		var/variant_id = input[job_title]
 		if(!istext(variant_id) || !length(variant_id) || length(variant_id) > 128)
 			continue
 		variants[job_title] = variant_id
@@ -26,9 +26,9 @@
 	if(!islist(value) || length(value) > 128)
 		return FALSE
 	for(var/job_title in value)
-		var/variant_id = value[job_title]
 		if(!istext(job_title) || !length(job_title) || length(job_title) > 128)
 			return FALSE
+		var/variant_id = value[job_title]
 		if(!istext(variant_id) || !length(variant_id) || length(variant_id) > 128)
 			return FALSE
 	return TRUE

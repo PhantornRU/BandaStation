@@ -48,3 +48,6 @@
 	if(!CONFIG_GET(flag/donor_prisoner_gate))
 		return list()
 	return ..()
+
+/datum/job/prisoner/requires_explicit_preference()
+	return CONFIG_GET(flag/donor_prisoner_gate)

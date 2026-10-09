@@ -129,6 +129,34 @@
 			count++
 	return count
 
+/datum/unit_test/donor_outfit_cash_ownership/Run()
+	for(var/outfit_path in list(/datum/outfit/job/donor/vip_guest, /datum/outfit/job/donor/banker))
+		var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
+		body.mind_initialize()
+		allocated += body.mind
+		var/obj/item/storage/backpack/backpack = allocate(/obj/item/storage/backpack)
+		TEST_ASSERT(body.equip_to_slot_or_del(backpack, ITEM_SLOT_BACK), "Could not equip the native backpack")
+		TEST_ASSERT_EQUAL(length(backpack.contents), 0, "The personal backpack was not empty before equipping")
+		var/turf/floor = get_turf(body)
+		var/obj/item/stack/spacecash/c1000/foreign_cash = allocate(/obj/item/stack/spacecash/c1000, floor)
+		TEST_ASSERT(foreign_cash.flags_1 & INITIALIZED_1, "The foreign floor cash was not initialized")
+		TEST_ASSERT(foreign_cash.get_amount() < foreign_cash.max_amount, "The foreign floor cash cannot accept another bill")
+		var/foreign_amount = foreign_cash.get_amount()
+		var/datum/outfit/job/outfit = allocate(outfit_path)
+		TEST_ASSERT(foreign_cash.type in outfit.backpack_contents, "[outfit_path] has no starting cash compatible with the foreign stack")
+		outfit.back = null // Keep the empty personal bag beside the foreign floor stack.
+		body.equipOutfit(outfit)
+		var/cash_value = 0
+		for(var/obj/item/stack/spacecash/cash as anything in body.get_all_contents_type(/obj/item/stack/spacecash))
+			cash_value += cash.get_item_credit_value()
+		TEST_ASSERT_EQUAL(cash_value, ispath(outfit_path, /datum/outfit/job/donor/banker) ? 5000 : 2000, "[outfit_path] issued its starting cash to someone else's floor stack")
+		TEST_ASSERT(!QDELETED(foreign_cash), "[outfit_path] consumed the foreign floor cash")
+		TEST_ASSERT_EQUAL(foreign_cash.loc, floor, "[outfit_path] moved the foreign floor cash")
+		TEST_ASSERT_EQUAL(foreign_cash.get_amount(), foreign_amount, "[outfit_path] changed the foreign floor cash")
+		TEST_ASSERT_EQUAL(length(backpack.get_all_contents_type(/obj/item/stack/spacecash)), 1, "[outfit_path] did not preserve native cash merging in the personal bag")
+		qdel(body)
+		qdel(foreign_cash)
+
 /datum/unit_test/donor_outfit_storage/Run()
 	for(var/outfit_path in list(/datum/outfit/job/donor/vip_guest, /datum/outfit/job/donor/banker))
 		var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent)
@@ -146,13 +174,14 @@
 		outfit.back = null // Keep the already full personal bag.
 		var/turf/floor = get_turf(body)
 		var/cash_before = 0
-		for(var/obj/item/stack/spacecash/cash as anything in floor.get_all_contents_type(/obj/item/stack/spacecash))
+		for(var/obj/item/stack/spacecash/cash in floor)
 			cash_before += cash.get_item_credit_value()
 		body.equipOutfit(outfit)
 		var/cash_after = 0
-		for(var/obj/item/stack/spacecash/cash as anything in floor.get_all_contents_type(/obj/item/stack/spacecash))
+		for(var/obj/item/stack/spacecash/cash in floor)
 			cash_after += cash.get_item_credit_value()
 		TEST_ASSERT_EQUAL(cash_after - cash_before, ispath(outfit_path, /datum/outfit/job/donor/banker) ? 5000 : 2000, "[outfit_path] lost its required cash when the personal bag was full")
+		TEST_ASSERT_EQUAL(length(body.get_all_contents_type(/obj/item/stack/spacecash)), 0, "[outfit_path] left rejected cash loose in the wearer's inventory")
 		TEST_ASSERT_EQUAL(backpack.atom_storage.max_slots, storage_slots, "The outfit expanded backpack slots")
 		TEST_ASSERT_EQUAL(backpack.atom_storage.max_total_storage, storage_weight, "The outfit expanded backpack weight capacity")
 
