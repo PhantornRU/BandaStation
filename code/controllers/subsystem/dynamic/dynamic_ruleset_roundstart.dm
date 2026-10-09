@@ -123,7 +123,7 @@
 	// BANDASTATION EDIT START - Inspect the effective job profile, without switching slots.
 	if(isnewplayer(candidate))
 		var/mob/dead/new_player/player = candidate
-		return player.has_eligible_crew_preference(get_blacklisted_roles(), require_blood = TRUE)
+		return player.has_eligible_crew_preference(get_blacklisted_roles() | get_bloodless_jobs(candidate_client))
 	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = GLOB.species_prototypes[species_type]
 	return !(TRAIT_NOBLOOD in species.inherent_traits)
@@ -131,16 +131,13 @@
 
 /datum/dynamic_ruleset/roundstart/blood_worm/prepare_for_role(datum/mind/candidate)
 	..()
-	// Prevent assignment to another enabled job's bloodless profile after candidacy.
-	var/client/player = candidate.current.client
-	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		var/datum/job_character_selection/selection = player.prefs.select_job_character(job)
-		var/datum/species/species = GLOB.species_prototypes[selection.species]
-		qdel(selection)
-		if(!species || (TRAIT_NOBLOOD in species.inherent_traits))
-			LAZYADDASSOC(SSjob.prevented_occupations, candidate, job.title)
+	// BANDASTATION EDIT START - This ruleset owns profile and actual-host compatibility.
+	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_bloodless_jobs(GET_CLIENT(candidate.current)))
+	RegisterSignal(candidate, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED, PROC_REF(check_roundstart_host))
+	// BANDASTATION EDIT END
 
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
+	UnregisterSignal(candidate, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED) // BANDASTATION ADDITION
 	if (!CAN_HAVE_BLOOD(candidate.current))
 		CRASH("A roundstart blood worm tried to spawn into a candidate mob with no blood. This shouldn't happen, because we already checked for TRAIT_NOBLOOD in species traits.")
 

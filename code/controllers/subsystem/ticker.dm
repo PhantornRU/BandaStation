@@ -468,16 +468,14 @@ SUBSYSTEM_DEF(ticker)
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
 			// BANDASTATION EDIT - A failed final profile/map admission must release the native vacancy.
 			var/mob/living/character = destination ? player.create_character(destination) : null
-			// BANDASTATION EDIT - Random species can invalidate a Blood Worm host.
-			for(var/datum/dynamic_ruleset/roundstart/blood_worm/ruleset in SSdynamic.queued_rulesets)
-				if((character?.mind in ruleset.selected_minds) && !CAN_HAVE_BLOOD(character))
-					character = null
+			// BANDASTATION EDIT - Pending role owners may reject the actual body before equipment.
+			if(character && (SEND_SIGNAL(character.mind, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED, character) & COMPONENT_CANCEL_CHARACTER_SPAWN))
+				character = null
 			if(character)
 				GLOB.joined_player_list += player.ckey
 			else
 				var/datum/mind/candidate = player.mind || player.new_character?.mind
-				for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
-					ruleset.selected_minds -= candidate
+				SSdynamic.cancel_roundstart_assignment(candidate) // BANDASTATION EDIT - Dynamic owns its pending restrictions.
 				player.cancel_character_spawn()
 		CHECK_TICK
 

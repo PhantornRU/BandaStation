@@ -176,6 +176,7 @@
 #include "drink_icons.dm"
 #include "dropper.dm"
 #include "dummy_spawn.dm"
+#include "dynamic_roundstart_cancellation.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
 #include "embedding.dm"

@@ -4,3 +4,4 @@
 #include "code/config.dm"
 #include "code/cultist.dm"
 #include "code/dynamic.dm"
+#include "code/roundstart.dm"

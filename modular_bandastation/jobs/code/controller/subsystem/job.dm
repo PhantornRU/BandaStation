@@ -63,28 +63,22 @@
 	return occupants >= popcap
 
 /// Dynamic and normal occupation selection share native eligibility and canonical preferences.
-/mob/dead/new_player/proc/has_eligible_crew_preference(list/blacklisted_roles, require_blood = FALSE)
-	var/client/requester = client
+/mob/dead/new_player/proc/has_eligible_crew_preference(list/blacklisted_roles)
+	var/client/requester = GET_CLIENT(src)
 	if(!requester)
 		return FALSE
 	var/random_fallback = requester.prefs.read_preference(/datum/preference/choiced/jobless_role) != RETURNTOLOBBY
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(QDELETED(src) || !requester || client != requester)
+		if(QDELETED(src) || !requester || GET_CLIENT(src) != requester)
 			return FALSE
 		if((job.title in blacklisted_roles) || !job.spawn_positions || (job.job_flags & JOB_LATEJOIN_ONLY))
 			continue
 		if(!requester.prefs.job_preferences[job.title] && (!random_fallback || job.requires_explicit_preference()))
 			continue
 		var/availability = SSjob.check_job_eligibility(src, job, "Candidate admission")
-		if(QDELETED(src) || !requester || client != requester)
+		if(QDELETED(src) || !requester || GET_CLIENT(src) != requester)
 			return FALSE
 		if(availability != JOB_AVAILABLE)
 			continue
-		if(!require_blood)
-			return TRUE
-		var/datum/job_character_selection/selection = requester.prefs.select_job_character(job)
-		var/datum/species/species = GLOB.species_prototypes[selection.species]
-		qdel(selection)
-		if(species && !(TRAIT_NOBLOOD in species.inherent_traits))
-			return TRUE
+		return TRUE
 	return FALSE
