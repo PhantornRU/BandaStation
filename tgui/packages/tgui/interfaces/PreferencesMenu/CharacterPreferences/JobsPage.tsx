@@ -6,6 +6,7 @@ import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 // BANDASTATION ADDITION START: donor job UI extension points
 import { JobLabel } from '../../../bandastation/donor_jobs/JobLabel';
+import { JobList } from '../../../bandastation/donor_jobs/JobList';
 import {
   JobTabButtons,
   JobTabsProvider,
@@ -359,31 +360,38 @@ export function JobsPage() {
         <Stack.Divider />
         <Stack.Item grow>
           <Section fill scrollable>
-            <Stack fill g={1} align="center" className="PreferencesMenu__Jobs">
-              <Stack.Item grow minWidth={0}>
-                <Stack vertical>
-                  <Department department="Engineering" />
-                  <Department department="Science" />
-                  <Department department="Silicon" />
-                  <Department department="Assistant" />
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow minWidth={0}>
-                <Stack vertical>
-                  <Department department="Captain" />
-                  <Department department="NT Representation" />
-                  <Department department="Service" />
-                  <Department department="Cargo" />
-                </Stack>
-              </Stack.Item>
-              <Stack.Item grow minWidth={0}>
-                <Stack vertical>
-                  <Department department="Security" />
-                  <Department department="Justice" />
-                  <Department department="Medical" />
-                </Stack>
-              </Stack.Item>
-            </Stack>
+            <JobList jobRow={JobRow}>
+              <Stack
+                fill
+                g={1}
+                align="center"
+                className="PreferencesMenu__Jobs"
+              >
+                <Stack.Item grow minWidth={0}>
+                  <Stack vertical>
+                    <Department department="Engineering" />
+                    <Department department="Science" />
+                    <Department department="Silicon" />
+                    <Department department="Assistant" />
+                  </Stack>
+                </Stack.Item>
+                <Stack.Item grow minWidth={0}>
+                  <Stack vertical>
+                    <Department department="Captain" />
+                    <Department department="NT Representation" />
+                    <Department department="Service" />
+                    <Department department="Cargo" />
+                  </Stack>
+                </Stack.Item>
+                <Stack.Item grow minWidth={0}>
+                  <Stack vertical>
+                    <Department department="Security" />
+                    <Department department="Justice" />
+                    <Department department="Medical" />
+                  </Stack>
+                </Stack.Item>
+              </Stack>
+            </JobList>
           </Section>
         </Stack.Item>
       </Stack>

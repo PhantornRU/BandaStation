@@ -20,5 +20,28 @@
   .Dropdown__control {
     color: inherit;
     text-shadow: var(--text-shadow);
+
+    &.Button--disabled {
+      --button-color: var(--color-text);
+    }
+  }
+}
+
+.PreferencesMenu__JobTiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: start;
+  gap: var(--space-m);
+}
+
+.PreferencesMenu__JobTiers > .PreferencesMenu__JobTier {
+  &,
+  &:first-child {
+    margin: 0;
+  }
+
+  &--locked .PreferencesMenu__Department {
+    filter: saturate(0.2);
+    opacity: 0.65;
   }
 }

@@ -64,3 +64,7 @@ export function useJobTabFilter() {
   return (name: string) =>
     (data.donor_jobs?.[name]?.required_tier ?? 0) > 0 === subscriptionJobs;
 }
+
+export function useSubscriptionJobs() {
+  return useContext(JobTabsContext).subscriptionJobs;
+}

@@ -23,7 +23,9 @@ export function JobLabel(props: { jobName: string; description: string }) {
     >
       <div className="PreferencesMenu__JobVariant">
         <Dropdown
+          key={job.lock_reason ? 'locked' : 'available'}
           color="transparent"
+          disabled={!!job.lock_reason}
           width="100%"
           selected={selected?.name}
           options={job.variants.map((variant) => ({
