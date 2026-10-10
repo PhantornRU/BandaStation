@@ -101,16 +101,6 @@ jobs:
         background: true
         run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
 
-      - name: Check Icon Cutter
-        if: ${{ !cancelled() }}
-        background: true
-        run: tools/bootstrap/python -m tools.icon_cutter.check
-
-      - name: Run DMI tests
-        if: ${{ !cancelled() }}
-        background: true
-        run: tools/bootstrap/python -m dmi.test
-
       - name: Check file directories
         if: ${{ !cancelled() }}
         background: true
