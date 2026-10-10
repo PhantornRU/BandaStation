@@ -4,8 +4,15 @@ import { useBackend } from 'tgui/backend';
 import { Color } from 'tgui-core/color';
 import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
+// BANDASTATION ADDITION START: donor job UI extension points
+import { JobLabel } from '../../../bandastation/donor_jobs/JobLabel';
+import {
+  JobTabButtons,
+  JobTabsProvider,
+  useJobTabFilter,
+} from '../../../bandastation/donor_jobs/JobTabs';
 import { JOBS_RU } from '../../../bandastation/ru_jobs'; // BANDASTATION EDIT
+// BANDASTATION ADDITION END
 import {
   createSetPreference,
   type Job,
@@ -15,7 +22,6 @@ import {
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 import { JobSlotDropdown } from './JobSlotDropdown';
-import { JobVariantSelector } from './JobVariantSelector'; // BANDASTATION ADDITION
 
 function sortJobs(entries: [string, Job][], head?: string) {
   return sortBy(entries, [
@@ -207,16 +213,14 @@ function JobRow(props: JobRowProps) {
   const donorJob = data.donor_jobs?.[name];
   const additionalReason =
     donorJob?.lock_reason || data.job_character_profiles?.[name]?.error;
-  const hasVariants = (donorJob?.variants.length ?? 0) > 1;
 
   return (
     <Stack.Item className={className}>
       <Stack fill align="center">
-        <Tooltip content={job.description} position="bottom-start">
-          <Stack.Item grow className="job-name">
-            {donorJob?.title || JOBS_RU[name] || name}
-          </Stack.Item>
-        </Tooltip>
+        <Stack.Item grow minWidth={0} className="job-name">
+          <JobLabel jobName={name} description={job.description} />
+          {/* BANDASTATION EDIT */}
+        </Stack.Item>
         <Stack.Item className="options">
           {rightSide}
           {!!additionalReason && (
@@ -237,11 +241,6 @@ function JobRow(props: JobRowProps) {
           <JobSlotDropdown name={name} />
         </Stack.Item>
       </Stack>
-      {hasVariants && (
-        <Box mt={0.5}>
-          <JobVariantSelector jobName={name} />
-        </Box>
-      )}
     </Stack.Item>
   );
 }
@@ -254,6 +253,7 @@ function Department(props: DepartmentProps) {
   const { department: name } = props;
   const className = `PreferencesMenu__Department`;
 
+  const matchesJobTab = useJobTabFilter(); // BANDASTATION ADDITION
   const data = useServerPrefs();
   if (!data) {
     return;
@@ -268,7 +268,13 @@ function Department(props: DepartmentProps) {
 
   const jobsForDepartment = jobs_sorted
     .map((jobName) => [jobName, jobs[jobName]] as const)
-    .filter(([, job]) => job.department === name);
+    .filter(
+      ([jobName, job]) => job.department === name && matchesJobTab(jobName), // BANDASTATION EDIT
+    );
+
+  if (!jobsForDepartment.length) {
+    return null;
+  }
 
   return (
     <Box
@@ -320,7 +326,10 @@ function JoblessRoleDropdown() {
 
   const setPreference = createSetPreference(act, 'joblessrole');
   return (
-    <Section title="Что делать если не удалось войти?">
+    <Section
+      title="Что делать если не удалось войти?"
+      buttons={<JobTabButtons />} // BANDASTATION ADDITION: existing title extension point
+    >
       <Stack fill textAlign="center">
         {options.map((option) => (
           <Stack.Item grow key={option.value}>
@@ -341,40 +350,43 @@ function JoblessRoleDropdown() {
 
 export function JobsPage() {
   return (
-    <Stack fill vertical g={0}>
-      <Stack.Item>
-        <JoblessRoleDropdown />
-      </Stack.Item>
-      <Stack.Divider />
-      <Stack.Item grow>
-        <Section fill scrollable>
-          <Stack fill g={1} align="center" className="PreferencesMenu__Jobs">
-            <Stack.Item grow minWidth={0}>
-              <Stack vertical>
-                <Department department="Engineering" />
-                <Department department="Science" />
-                <Department department="Silicon" />
-                <Department department="Assistant" />
-              </Stack>
-            </Stack.Item>
-            <Stack.Item grow minWidth={0}>
-              <Stack vertical>
-                <Department department="Captain" />
-                <Department department="NT Representation" />
-                <Department department="Service" />
-                <Department department="Cargo" />
-              </Stack>
-            </Stack.Item>
-            <Stack.Item grow minWidth={0}>
-              <Stack vertical>
-                <Department department="Security" />
-                <Department department="Justice" />
-                <Department department="Medical" />
-              </Stack>
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </Stack.Item>
-    </Stack>
+    <JobTabsProvider>
+      {/* BANDASTATION ADDITION */}
+      <Stack fill vertical g={0}>
+        <Stack.Item>
+          <JoblessRoleDropdown />
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item grow>
+          <Section fill scrollable>
+            <Stack fill g={1} align="center" className="PreferencesMenu__Jobs">
+              <Stack.Item grow minWidth={0}>
+                <Stack vertical>
+                  <Department department="Engineering" />
+                  <Department department="Science" />
+                  <Department department="Silicon" />
+                  <Department department="Assistant" />
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow minWidth={0}>
+                <Stack vertical>
+                  <Department department="Captain" />
+                  <Department department="NT Representation" />
+                  <Department department="Service" />
+                  <Department department="Cargo" />
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow minWidth={0}>
+                <Stack vertical>
+                  <Department department="Security" />
+                  <Department department="Justice" />
+                  <Department department="Medical" />
+                </Stack>
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </JobTabsProvider>
   );
 }

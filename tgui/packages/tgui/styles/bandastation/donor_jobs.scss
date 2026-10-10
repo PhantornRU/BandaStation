@@ -1,0 +1,24 @@
+.Section:not(.Section--fitted) .PreferencesMenu__JobTabs {
+  margin: 0;
+  padding: 0;
+
+  .Tab {
+    min-height: var(--button-height);
+    min-width: auto;
+  }
+}
+
+.Section__title:has(.PreferencesMenu__JobTabs) > .Section__buttons {
+  top: 50%;
+  margin-top: 0;
+  transform: translateY(-50%);
+}
+
+.PreferencesMenu__Department .job-name:has(.PreferencesMenu__JobVariant) {
+  padding: 2px;
+
+  .Dropdown__control {
+    color: inherit;
+    text-shadow: var(--text-shadow);
+  }
+}
