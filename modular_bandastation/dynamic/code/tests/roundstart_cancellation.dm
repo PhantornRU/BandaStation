@@ -20,8 +20,16 @@
 	var/list/lobby_before
 	var/list/spawns_before
 	var/list/positions_before = list()
+	var/datum/job/ai/fixture_ai
 
 /datum/unit_test/dynamic_roundstart_cancellation/Run()
+	allow_job_fixture_species(list(/datum/species/plasmaman))
+	if(!SSjob.get_job_type(/datum/job/ai))
+		fixture_ai = allocate(/datum/job/ai)
+		SSjob.type_occupations[fixture_ai.type] = fixture_ai
+		SSjob.name_occupations[fixture_ai.title] = fixture_ai
+		SSjob.all_occupations += fixture_ai
+		SSjob.joinable_occupations += fixture_ai
 	queue_before = SSdynamic.queued_rulesets
 	prevented_before = SSjob.prevented_occupations
 	forced_before = SSjob.forced_occupations
@@ -47,6 +55,7 @@
 		ruleset.max_antag_cap = scenario["count"]
 		SSdynamic.queued_rulesets = list(ruleset)
 		var/datum/job/job = SSjob.get_job_type(scenario["job"])
+		TEST_ASSERT_NOTNULL(job, "The scenario has no registered canonical job")
 		if(!(job in positions_before))
 			positions_before[job] = job.current_positions
 		GLOB.jobspawn_overrides[job.title] = list(run_loc_floor_bottom_left)
@@ -138,4 +147,9 @@
 	for(var/datum/job/job as anything in positions_before)
 		job.current_positions = positions_before[job]
 	release_job_player_fixtures()
+	if(fixture_ai)
+		SSjob.type_occupations -= fixture_ai.type
+		SSjob.name_occupations -= fixture_ai.title
+		SSjob.all_occupations -= fixture_ai
+		SSjob.joinable_occupations -= fixture_ai
 	return ..()

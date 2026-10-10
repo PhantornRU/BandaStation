@@ -390,6 +390,7 @@
 #include "../../../modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm"
 #include "../../../modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm"
 #include "../../../modular_bandastation/donor_jobs/code/tests/_tests.dm"
+#include "../../../modular_bandastation/objects/code/tests/pda.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

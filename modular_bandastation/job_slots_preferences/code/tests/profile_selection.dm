@@ -1,4 +1,5 @@
 /datum/unit_test/job_character_selection/Run()
+	allow_job_fixture_species(list(/datum/species/lizard))
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	var/datum/preferences/preferences = allocate(/datum/preferences, player)
 	player.prefs = preferences

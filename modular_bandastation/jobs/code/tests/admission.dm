@@ -56,6 +56,10 @@
 	var/datum/job/prisoner/job
 	var/turf/prisoner_turf
 	var/area/prisoner_area_before
+	var/datum/space_level/prisoner_level
+	var/list/prisoner_level_traits_before
+	var/list/station_levels_before
+	var/list/station_cache_before
 	var/list/prisoner_starts_before
 	var/positions_before
 	var/total_before
@@ -75,22 +79,16 @@
 	CONFIG_SET(number/extreme_popcap, 0)
 	job.current_positions = 0
 	job.total_positions = 1
-	for(var/station_z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		for(var/turf/open/floor/candidate in Z_TURFS(station_z))
-			if(candidate.is_blocked_turf(TRUE))
-				continue
-			var/occupied = FALSE
-			for(var/atom/movable/content as anything in candidate)
-				if(!istype(content, /atom/movable/lighting_object))
-					occupied = TRUE
-					break
-			if(occupied)
-				continue
-			prisoner_turf = candidate
-			break
-		if(prisoner_turf)
-			break
-	TEST_ASSERT_NOTNULL(prisoner_turf, "The map has no safe station turf for the native prisoner landmark")
+	// Build a native station/prison destination in the test reservation, including minimal maps.
+	prisoner_turf = run_loc_floor_bottom_left
+	prisoner_level = SSmapping.z_list[prisoner_turf.z]
+	prisoner_level_traits_before = prisoner_level.traits
+	station_levels_before = SSmapping.z_trait_levels[ZTRAIT_STATION]
+	station_cache_before = GLOB.station_levels_cache
+	GLOB.station_levels_cache = list()
+	prisoner_level.traits = prisoner_level.traits.Copy()
+	prisoner_level.traits[ZTRAIT_STATION] = TRUE
+	SSmapping.z_trait_levels[ZTRAIT_STATION] = SSmapping.levels_by_trait(ZTRAIT_STATION) | list(prisoner_turf.z)
 	prisoner_area_before = get_area(prisoner_turf)
 	prisoner_starts_before = GLOB.donor_prisoner_starts.Copy()
 	var/area/prisoner_area = GLOB.areas_by_type[/area/station/security/prison]
@@ -148,6 +146,10 @@
 	if(prisoner_area_before)
 		prisoner_turf.change_area(get_area(prisoner_turf), prisoner_area_before)
 		GLOB.donor_prisoner_starts = prisoner_starts_before
+	if(prisoner_level_traits_before)
+		prisoner_level.traits = prisoner_level_traits_before
+		SSmapping.z_trait_levels[ZTRAIT_STATION] = station_levels_before
+		GLOB.station_levels_cache = station_cache_before
 	if(!isnull(positions_before))
 		job.current_positions = positions_before
 		job.total_positions = total_before

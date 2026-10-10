@@ -5,6 +5,10 @@
 
 /datum/modpack/donor_jobs/initialize()
 	. = ..()
+	// Civilian donor jobs receive the native Assistant benefit from Cybernetic Revolution.
+	var/list/cybernetics = /datum/station_trait/cybernetic_revolution::job_to_cybernetic
+	for(var/job_type in typesof(/datum/job/donor))
+		cybernetics[job_type] = cybernetics[/datum/job/assistant]
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 	GLOB.job_titles_ru += list(
 		"Barber" = "Парикмахер",
