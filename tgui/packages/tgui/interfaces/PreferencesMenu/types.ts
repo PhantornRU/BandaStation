@@ -42,7 +42,6 @@ export enum JobPriority {
 type JobPreference = {
   job: string;
   priority: JobPriority | null;
-  assigned_profile_slot: number | null;
 };
 
 export type Name = {
@@ -191,6 +190,25 @@ export type PreferencesMenuData = {
     }
   >;
   job_preferences: JobPreference[];
+
+  // BANDASTATION ADDITION START: per-character variants, donor requirements and neutral profiles.
+  donor_jobs?: Record<
+    string,
+    {
+      title: string | null;
+      profile_title: string | null;
+      selected: string | null;
+      variants: { id: string; name: string }[];
+      required_tier: number;
+      lock_reason: string | null;
+    }
+  >;
+  job_character_profiles?: Record<
+    string,
+    { slot: number | null; randomized: BooleanLike; error: string | null }
+  >;
+  pref_job_slots: Record<string, number>;
+  // BANDASTATION ADDITION END
 
   keybindings: Record<string, string[]>;
   overflow_role: string;

@@ -25,10 +25,7 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
   const { name } = props;
 
   const currentProfileName = data.character_profiles[data.active_slot - 1];
-  const assignedProfileSlot =
-    data.job_preferences.find((pref) => pref.job === name)?.assigned_profile_slot ??
-    null;
-  const currentSlotNumber = assignedProfileSlot ?? 0;
+  const currentSlotNumber = data.pref_job_slots[name] ?? 0;
   const currentSlotName =
     currentSlotNumber > 0
       ? data.character_profiles[currentSlotNumber - 1]
@@ -51,30 +48,49 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
           ]
         : [],
     ),
+    {
+      value: -1,
+      displayText: 'Случайное имя и внешность активного персонажа',
+    },
   ];
   const selectedOption = slotOptions.find(
     (option) => option.value === currentSlotNumber,
   );
+  const entryProfile = data.job_character_profiles?.[name];
+  const entryName = entryProfile?.slot
+    ? data.character_profiles[entryProfile.slot - 1]
+    : null;
+  const profileTitle = data.donor_jobs?.[name]?.profile_title;
+  const entryDescription = entryProfile?.error
+    ? entryProfile.error
+    : entryName
+      ? `В начале раунда: ${entryProfile?.slot}. ${entryName}${entryProfile?.randomized ? ', случайная внешность' : ''}${profileTitle ? `, ${profileTitle}` : ''}`
+      : 'Профиль для входа недоступен';
 
   return (
     <Tooltip
-      content={currentSlotName ?? 'Активный персонаж'}
+      content={`${selectedOption?.displayText ?? currentSlotName ?? 'Активный персонаж'}. ${entryDescription}`}
       position="top-end"
     >
       <div>
         <Dropdown
           noChevron
           iconOnly
-          icon={SLOT_ICONS[currentSlotNumber] ?? 'user'}
+          icon={
+            currentSlotNumber === -1
+              ? 'dice'
+              : (SLOT_ICONS[currentSlotNumber] ?? 'user')
+          }
           width="auto"
           menuWidth="auto"
           selected={selectedOption?.displayText}
           options={slotOptions}
           onSelected={(value: number | string) => {
             const slot = Number(value);
-            act('set_job_to_profile', {
+            act('set_job_slot', {
               job: name,
-              profile: slot > 0 ? slot : -1,
+              slot,
+              edit_slot: data.active_slot,
             });
           }}
         />

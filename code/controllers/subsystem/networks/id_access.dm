@@ -216,6 +216,9 @@ SUBSYSTEM_DEF(id_access)
 	var/list/station_job_trims = subtypesof(/datum/id_trim/job)
 	for(var/trim_path in station_job_trims)
 		var/datum/id_trim/job/trim = trim_singletons_by_path[trim_path]
+		// BANDASTATION EDIT - Donor templates follow native CentCom authentication, never payment.
+		if(trim.centcom_template && trim.job)
+			centcom_job_templates[trim_path] = trim.assignment
 		if(!length(trim.template_access))
 			continue
 
@@ -521,7 +524,7 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
-	if(istype(trim, /datum/id_trim/job))
+	if(istype(trim, /datum/id_trim/job) && id_card.registered_account) // BANDASTATION EDIT - Templates also apply to blank CentCom-issued IDs.
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
 		id_card.registered_account.account_job = job_trim.job
 

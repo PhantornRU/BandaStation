@@ -203,7 +203,7 @@
 	Launch(TRUE)
 
 	to_chat(user, span_notice("Вызываю шаттл. Ожидайте..."))
-	while(mode != SHUTTLE_CALL && !damaged)
+	while(!QDELETED(user) && user.client && mode != SHUTTLE_CALL && !damaged) // BANDASTATION EDIT - Stop waiting for a cancelled entry.
 		stoplag()
 
 /**

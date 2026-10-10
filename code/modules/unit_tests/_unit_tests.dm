@@ -381,6 +381,17 @@
 #include "find_reference_sanity.dm"
 #endif
 
+// BANDASTATION EDIT - Donor jobs tests share the native assertion macros.
+#include "../../../modular_bandastation/jobs/code/tests/fixtures.dm"
+#include "../../../modular_bandastation/jobs/code/tests/admission.dm"
+#include "../../../modular_bandastation/jobs/code/tests/handover.dm"
+#include "../../../modular_bandastation/jobs/code/tests/prisoner_record.dm"
+#include "../../../modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm"
+#include "../../../modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm"
+#include "../../../modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm"
+#include "../../../modular_bandastation/donor_jobs/code/tests/_tests.dm"
+#include "../../../modular_bandastation/objects/code/tests/pda.dm"
+
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

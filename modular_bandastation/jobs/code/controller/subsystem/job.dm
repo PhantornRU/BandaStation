@@ -13,6 +13,9 @@
 		return FALSE
 
 	for(var/datum/job/job as anything in shuffle_and_sort_jobs_by_staffing_priority(joinable_occupations))
+		// RP jobs must never be an automatic staffing fallback.
+		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
+			continue
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("GRJ: Job lacks spawn positions to be eligible, Player: [player], Job: [job]")
 			continue

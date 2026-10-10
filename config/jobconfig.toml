@@ -207,10 +207,11 @@
 "# Total Positions" = 2
 
 [PRISONER]
+# DONOR_PRISONER_GATE uses 3 roundstart / 5 total positions unless explicitly overridden.
 "# Playtime Requirements" = 0
 "# Required Account Age" = 0
 "# Required Character Age" = 0
-"# Spawn Positions" = 2
+"# Spawn Positions" = 4
 "# Total Positions" = 0
 
 [PSYCHOLOGIST]
@@ -281,6 +282,160 @@
 [WARDEN]
 "# Playtime Requirements" = 300
 "# Required Account Age" = 7
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_BARBER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_BATH]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_CASINO]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 3
+"# Total Positions" = 3
+
+[DONOR_WAITER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[DONOR_ACOLYTE]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 5
+"# Total Positions" = 5
+
+[DONOR_WRESTLER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 4
+"# Total Positions" = 4
+
+[DONOR_MUSICAN]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_ACTOR]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 5
+"# Total Positions" = 5
+
+[DONOR_ADMINISTRATOR]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_TOURIST_TSF]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
+[DONOR_TOURIST_USSP]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
+[DONOR_CLEANING_MANAGER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[DONOR_GUARD]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_MIGRANT]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
+[DONOR_UNCERTAIN]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
+[DONOR_ADJUTANT]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 3
+"# Total Positions" = 3
+
+[DONOR_REPRESENTATIVE_TSF]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_REPRESENTATIVE_USSP]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[DONOR_DEALER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[DONOR_VIP_GUEST]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
+[DONOR_BANKER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Required Character Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[DONOR_SECLOWN]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
 "# Required Character Age" = 0
 "# Spawn Positions" = 1
 "# Total Positions" = 1

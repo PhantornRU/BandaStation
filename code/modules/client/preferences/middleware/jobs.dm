@@ -1,40 +1,38 @@
 /datum/preference_middleware/jobs
 	action_delegations = list(
 		"set_job_preference" = PROC_REF(set_job_preference),
-		"set_job_to_profile" = PROC_REF(set_job_to_profile),
 	)
 
 /datum/preference_middleware/jobs/proc/set_job_preference(list/params, mob/user)
+	// BANDASTATION EDIT START: authority stays on the server, including direct middleware calls.
+	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
+		return FALSE
+	// BANDASTATION EDIT END
 	var/job_title = params["job"]
 	var/level = params["level"]
+	if(!istext(job_title)) // BANDASTATION EDIT: external canonical title.
+		return FALSE
 
 	if (level != null && level != JP_LOW && level != JP_MEDIUM && level != JP_HIGH)
 		return FALSE
 
 	var/datum/job/job = SSjob.get_job(job_title)
 
-	if (isnull(job))
+	if (isnull(job) || job.title != job_title) // BANDASTATION EDIT: only canonical titles.
 		return FALSE
 
 	if (job.faction != FACTION_STATION)
 		return FALSE
+	// BANDASTATION EDIT START: clearing remains available when entitlement expires.
+	if(!isnull(level) && job.donor_lock_reason(user.client))
+		return FALSE
+	// BANDASTATION EDIT END
 
 	if (!preferences.set_job_preference_level(job, level))
 		return FALSE
 
 	preferences.character_preview_view?.update_body()
 
-	return TRUE
-
-/datum/preference_middleware/jobs/proc/set_job_to_profile(list/params, mob/user)
-	var/job_title = params["job"]
-	var/profile_slot = params["profile"]
-
-	if (!isnum(profile_slot) || profile_slot == -1)
-		LAZYREMOVE(preferences.job_assigned_profiles, job_title)
-		return TRUE
-
-	LAZYSET(preferences.job_assigned_profiles, job_title, profile_slot)
 	return TRUE
 
 /datum/preference_middleware/jobs/get_constant_data()
@@ -80,24 +78,10 @@
 	return data
 
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
-	var/list/data = list()
-
-	data["job_preferences"] = list()
-	for(var/job, priority in preferences.job_preferences)
-		data["job_preferences"] += list(list(
-			"job" = job,
-			"priority" = priority,
-			"assigned_profile_slot" = LAZYACCESS(preferences.job_assigned_profiles, job),
-		))
-
-	for(var/job, slot in SANITIZE_LIST(preferences.job_assigned_profiles) - SANITIZE_LIST(preferences.job_preferences))
-		data["job_preferences"] += list(list(
-			"job" = job,
-			"priority" = null,
-			"assigned_profile_slot" = slot,
-		))
-
-	return data
+	var/list/job_rows = list()
+	for(var/job_title, priority in preferences.job_preferences)
+		job_rows += list(list("job" = job_title, "priority" = priority))
+	return list("job_preferences" = job_rows)
 
 /datum/preference_middleware/jobs/get_ui_static_data(mob/user)
 	var/list/data = list()

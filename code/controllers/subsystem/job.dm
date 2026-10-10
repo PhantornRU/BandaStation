@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
-	if(!new_overflow)
+	if(!new_overflow || new_overflow.requires_explicit_preference()) // BANDASTATION EDIT - Donor roles cannot be overflow
 		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role]")
 		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
 	var/cap = CONFIG_GET(number/overflow_cap)
@@ -247,13 +247,17 @@ SUBSYSTEM_DEF(job)
 		job_debug("AR: Failed, player has no mind or job is null. Player: [player], Rank: [isnull(job) ? "null" : job.type]")
 		return FALSE
 
-	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE) != JOB_AVAILABLE))
+	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE, latejoin = latejoin) != JOB_AVAILABLE)) // BANDASTATION EDIT - Final profile admission
 		return FALSE
 
+	// BANDASTATION EDIT: final admission also applies to prechecked callers.
+	if(!prepare_job_assignment(player, job, latejoin))
+		return FALSE
+
+	job.current_positions++
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
 	unassigned -= player
-	job.current_positions++
 	return TRUE
 
 /datum/controller/subsystem/job/proc/find_occupation_candidates(datum/job/job, level = 0)
@@ -292,6 +296,9 @@ SUBSYSTEM_DEF(job)
 	job_debug("GRJ: Giving random job, Player: [player]")
 	. = FALSE
 	for(var/datum/job/job as anything in shuffle(joinable_occupations))
+		// BANDASTATION EDIT - RP roles require an explicit preference.
+		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
+			continue
 		if(QDELETED(player))
 			job_debug("GRJ: Player is deleted, aborting")
 			break
@@ -322,6 +329,8 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/reset_occupations()
 	job_debug("RO: Occupations reset.")
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		// BANDASTATION EDIT - Discard selections from a cancelled assignment pass.
+		QDEL_NULL(player.assigned_character)
 		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))
@@ -946,10 +955,15 @@ SUBSYSTEM_DEF(job)
  * * debug_prefix - Logging prefix for the job_debug log entries. For example, GRJ during give_random_job or DO during divide_occupations.
  * * add_job_to_log - If TRUE, appends the job type to the log entry. If FALSE, does not. Set to FALSE when check is part of iterating over players for a specific job, set to TRUE when check is part of iterating over jobs for a specific player and you don't want extra log entry spam.
  */
-/datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE)
-	if(!player.mind)
+/datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE) // BANDASTATION EDIT - Selected character eligibility
+	var/client/player_client = player ? GET_CLIENT(player) : null
+	if(!player?.mind || !possible_job || !player_client)
 		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
+
+	// BANDASTATION EDIT - Server entitlement; cosmetic preferences are not authorization.
+	if(possible_job.donor_lock_reason(player_client))
+		return JOB_UNAVAILABLE_DONOR
 
 	if(possible_job.title in LAZYACCESS(prevented_occupations, player.mind))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
@@ -969,18 +983,12 @@ SUBSYSTEM_DEF(job)
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_BANNED
 
-	// Check for character age
-	var/client/player_client = GET_CLIENT(player)
-	if(isnum(possible_job.required_character_age) && possible_job.required_character_age > player_client.prefs.read_preference(/datum/preference/numeric/age))
-		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_AGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return JOB_UNAVAILABLE_AGE
-
 	// Need to recheck the player exists after is_banned_from since it can query the DB which may sleep.
-	if(QDELETED(player))
+	if(QDELETED(player) || GET_CLIENT(player) != player_client)
 		job_debug("[debug_prefix]: Player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
-	return JOB_AVAILABLE
+	return check_job_character_eligibility(player, possible_job, latejoin) // BANDASTATION EDIT: final selected-profile check.
 
 /**
  * Check if the station manifest has at least a certain amount of this staff type.

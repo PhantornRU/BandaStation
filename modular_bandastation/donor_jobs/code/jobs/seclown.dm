@@ -1,0 +1,30 @@
+/datum/job/donor/seclown
+	important_information = "Поддерживайте мораль сотрудников службы безопасности и подчиняйтесь начальнику отдела. Вы остаётесь клоуном с обязанностями перед NT; не охотьтесь за антагонистами, пока есть действующие офицеры."
+	title = "Security Clown"
+	description = "Поддерживайте мораль сотрудников СБ и подчиняйтесь начальнику отдела. Вы остаётесь клоуном: не охотьтесь за антагонистами, пока есть действующие офицеры."
+	donor_tier = 5
+	config_tag = "DONOR_SECLOWN"
+	total_positions = 1
+	spawn_positions = 1
+	display_order = 42
+	outfit = /datum/outfit/job/donor/seclown
+	supervisors = JOB_HEAD_OF_SECURITY_RU
+	departments_list = list(/datum/job_department/security)
+	job_flags = (STATION_JOB_FLAGS & ~JOB_CAN_BE_INTERN) | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_BLACKLISTED
+	plasmaman_outfit = /datum/outfit/plasmaman/clown
+	paycheck_department = ACCOUNT_SEC
+	donor_variant_specs = list(
+		"default" = list("Клоун СБ", /datum/outfit/job/donor/seclown),
+		"title_8cd08702d6" = list("Клоун Службы Безопасности", /datum/outfit/job/donor/seclown),
+		"title_190bf220ef" = list("Клоун-Детектив", /datum/outfit/job/donor/seclown),
+		"title_a22b40d7a4" = list("Клоун-Смотритель", /datum/outfit/job/donor/seclown),
+		"title_2384147c33" = list("Хонкектив", /datum/outfit/job/donor/seclown),
+		"title_410a1ecab5" = list("Клоун Кадет", /datum/outfit/job/donor/seclown),
+	)
+
+/datum/job/donor/seclown/after_spawn(mob/living/spawned, client/player_client)
+	if(ishuman(spawned))
+		var/mob/living/carbon/human/human = spawned
+		if(!human.donor_spawn_context?.identity_applied)
+			human.apply_pref_name(/datum/preference/name/clown, player_client)
+	return ..()

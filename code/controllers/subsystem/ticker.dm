@@ -465,11 +465,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		SStitle.show_title_screen_to(player.client) // BANDASTATION ADDITION - HTML Title Screen
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
-			GLOB.joined_player_list += player.ckey
-			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
-			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
-				continue
-			player.create_character(destination)
+			create_initial_job_character(player) // BANDASTATION EDIT: module-owned per-player admission/cancellation.
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()

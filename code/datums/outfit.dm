@@ -257,7 +257,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+					equip_backpack_item(user, path) // BANDASTATION EDIT: outfits own this operation.
 
 		if(belt_contents)
 			for(var/path in belt_contents)
@@ -310,6 +310,10 @@
  * essentially calls add_fingerprint to every defined item on the human
  *
  */
+// BANDASTATION ADDITION: outfits can replace one backpack insertion operation.
+/datum/outfit/proc/equip_backpack_item(mob/living/carbon/human/user, item_path)
+	return user.equip_to_storage(SSwardrobe.provide_type(item_path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/user)
 	if(!istype(user))
 		return

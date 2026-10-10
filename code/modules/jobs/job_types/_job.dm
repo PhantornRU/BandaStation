@@ -189,6 +189,10 @@
 /datum/job/proc/get_outfit(consistent)
 	return outfit
 
+/// Whether automatic staffing and random latejoin require an enabled job preference.
+/datum/job/proc/requires_explicit_preference() // BANDASTATION ADDITION
+	return FALSE
+
 /// Announce that this job as joined the round to all crew members.
 /// Note the joining mob has no client at this point.
 /datum/job/proc/announce_job(mob/living/joining_mob)
@@ -231,7 +235,7 @@
 
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, client/player_client, consistent = FALSE)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
-	equip_outfit_and_loadout(equipping.get_outfit(consistent), player_client?.prefs, visual_only)
+	equip_outfit_and_loadout(equipping.donor_outfit_for(src, player_client?.prefs, visual_only, consistent), player_client?.prefs, visual_only) // BANDASTATION EDIT - Variant before loadout
 
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(human)
@@ -299,12 +303,12 @@
 	return TRUE
 
 /// Gets the message that shows up when spawning as this job
-/datum/job/proc/get_spawn_message()
+/datum/job/proc/get_spawn_message(mob/spawned) // BANDASTATION EDIT - Variant-specific job instructions
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	return boxed_message(span_infoplain(jointext(get_spawn_message_information(spawned), "\n&bull; ")))
 
 /// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
-/datum/job/proc/get_spawn_message_information()
+/datum/job/proc/get_spawn_message_information(mob/spawned) // BANDASTATION EDIT - Optional greeting recipient
 	SHOULD_CALL_PARENT(TRUE)
 	var/list/info = list()
 	info += "<b>Ваша роль на станции: [job_title_ru(title)].</b>\n"
@@ -518,20 +522,26 @@
 
 /// Spawns the mob to be played as, taking into account preferences and the desired spawn point.
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)
+	var/mob/dead/new_player/requester = isnewplayer(player_client.mob) ? player_client.mob : null // BANDASTATION EDIT - AI construction transfers the lobby mind.
 	var/mob/living/spawn_instance
 	if(ispath(spawn_type, /mob/living/silicon/ai))
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), player_client.mob, null, null, TRUE)
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
-	spawn_instance.apply_prefs_job(player_client, src)
-	if(!player_client)
+	if(player_client)
+		prepare_donor_character(spawn_instance, player_client.prefs) // BANDASTATION EDIT - Live variant before greeting and equipment
+		spawn_instance.apply_prefs_job(player_client, src)
+	if(!player_client || (requester?.assigned_character && player_client.prefs.default_slot != requester.assigned_character.slot)) // BANDASTATION EDIT - A yielding ban check must not spawn a different profile.
+		if(isAI(spawn_instance) && !QDELETED(requester)) // BANDASTATION EDIT - Return the native mind before discarding an unfinished AI.
+			spawn_instance.mind?.transfer_to(requester)
 		qdel(spawn_instance)
 		return // Disconnected while checking for the appearance ban.
 	return spawn_instance
 
 
 /// Applies the preference options to the spawning mob, taking the job into account. Assumes the client has the proper mind.
+
 /mob/living/proc/apply_prefs_job(client/player_client, datum/job/job)
 
 
@@ -565,7 +575,8 @@
 
 	src.job = job.title
 
-	var/randomise_job_slot = player_client.prefs.set_assigned_slot(job.title, player_client.mob?.mind?.late_joiner) // BANDASTATION ADDITION - Pref Job Slots
+	var/mob/dead/new_player/requester = isnewplayer(player_client.mob) ? player_client.mob : null // BANDASTATION EDIT - One committed profile
+	var/randomise_job_slot = requester?.assigned_character ? requester.assigned_character.randomized : player_client.prefs.set_assigned_slot(job.title, player_client.mob?.mind?.late_joiner) // BANDASTATION EDIT - Preserve non-lobby callers
 	if(fully_randomize || randomise_job_slot)  // BANDASTATION EDIT - Pref Job Slots - OLD: if(fully_randomize)
 		player_client.prefs.apply_prefs_to(src)
 
@@ -603,6 +614,8 @@
 		fully_replace_character_name(real_name, GLOB.current_anonymous_theme.anonymous_ai_name(TRUE))
 		return
 	apply_pref_name(/datum/preference/name/ai, player_client) // This proc already checks if the player is appearance banned.
+	if(!player_client) // BANDASTATION EDIT - The ban lookup may yield while the client disconnects.
+		return
 	set_core_display_icon(null, player_client)
 	apply_pref_emote_display(player_client)
 	apply_pref_hologram_display(player_client)
@@ -648,7 +661,7 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
-	spawning.client.show_spawn_text_overlay()
+	spawning.client?.show_spawn_text_overlay() // BANDASTATION EDIT - The handed-over character survives a Login disconnect.
 
 /// Called when a mob that has this job is admin respawned
 /datum/job/proc/on_respawn(mob/new_character)

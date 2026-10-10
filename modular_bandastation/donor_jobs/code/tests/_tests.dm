@@ -1,0 +1,6 @@
+#include "dealer_stock.dm"
+#include "equipment.dm"
+#include "id_templates.dm"
+#include "prisoner_record.dm"
+#include "preferences_regressions.dm"
+#include "profile_selection.dm"

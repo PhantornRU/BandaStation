@@ -1,0 +1,37 @@
+/datum/unit_test/donor_configuration
+	var/jobs_before
+	var/gate_before
+
+/datum/unit_test/donor_configuration/Run()
+	jobs_before = CONFIG_GET(flag/donor_jobs_enabled)
+	gate_before = CONFIG_GET(flag/donor_prisoner_gate)
+	var/datum/client_interface/player = allocate(/datum/client_interface)
+	player.donator_level = MAX_DONATOR_LEVEL
+	var/list/new_job_types = subtypesof(/datum/job/donor)
+	TEST_ASSERT_EQUAL(length(new_job_types), 22, "The canonical donor roster changed")
+	for(var/jobs_enabled in list(FALSE, TRUE))
+		for(var/prisoner_gate in list(FALSE, TRUE))
+			CONFIG_SET(flag/donor_jobs_enabled, jobs_enabled)
+			CONFIG_SET(flag/donor_prisoner_gate, prisoner_gate)
+			for(var/job_type in new_job_types)
+				var/datum/job/job = allocate(job_type)
+				TEST_ASSERT_EQUAL(job.config_check(), jobs_enabled, "[job.title] ignored DONOR_JOBS_ENABLED")
+				TEST_ASSERT_EQUAL(isnull(job.donor_lock_reason(player)), jobs_enabled, "[job.title] ignored the server enable flag")
+			var/datum/job/prisoner/prisoner = allocate(/datum/job/prisoner)
+			TEST_ASSERT(prisoner.config_check(), "Disabling a donor flag disabled native Prisoner")
+			TEST_ASSERT_EQUAL(prisoner.get_required_donor_tier(), prisoner_gate ? DONATOR_TIER_1 : 0, "Prisoner tier depends on the wrong flag")
+			TEST_ASSERT_EQUAL(!!length(prisoner.get_donor_variants()), prisoner_gate, "Prisoner variants depend on the wrong flag")
+			if(isnull(CHECK_MAP_JOB_CHANGE(prisoner.title, "total_positions")))
+				TEST_ASSERT_EQUAL(prisoner.total_positions, prisoner_gate ? 5 : 0, "Prisoner lost native latejoin vacancies")
+			if(isnull(CHECK_MAP_JOB_CHANGE(prisoner.title, "spawn_positions")))
+				TEST_ASSERT_EQUAL(prisoner.spawn_positions, prisoner_gate ? 3 : 4, "Prisoner lost native roundstart vacancies")
+			var/datum/job/cargo_technician/cargo = allocate(/datum/job/cargo_technician)
+			TEST_ASSERT_NULL(cargo.donor_lock_reason(null), "Deliverer requires a paid tier")
+			var/datum/job_variant/deliverer = cargo.resolve_donor_variant("title_c3e626e8a5")
+			TEST_ASSERT_EQUAL(deliverer.outfit_type, /datum/outfit/job/cargo_tech/donor_deliverer, "A donor flag disabled the free Deliverer variant")
+
+/datum/unit_test/donor_configuration/Destroy()
+	if(!isnull(jobs_before))
+		CONFIG_SET(flag/donor_jobs_enabled, jobs_before)
+		CONFIG_SET(flag/donor_prisoner_gate, gate_before)
+	return ..()

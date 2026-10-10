@@ -4,8 +4,15 @@ import { useBackend } from 'tgui/backend';
 import { Color } from 'tgui-core/color';
 import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
+// BANDASTATION ADDITION START: donor job UI extension points
+import { JobLabel } from '../../../bandastation/donor_jobs/JobLabel';
+import {
+  JobTabButtons,
+  JobTabsProvider,
+  useJobTabFilter,
+} from '../../../bandastation/donor_jobs/JobTabs';
 import { JOBS_RU } from '../../../bandastation/ru_jobs'; // BANDASTATION EDIT
+// BANDASTATION ADDITION END
 import {
   createSetPreference,
   type Job,
@@ -28,6 +35,7 @@ type PriorityButtonProps = {
   position: number;
   modifier?: string;
   selected: boolean;
+  disabled?: boolean;
   onClick: () => void;
 };
 
@@ -45,6 +53,7 @@ function PriorityButton(props: PriorityButtonProps) {
         props.selected && 'selected',
       ])}
       style={positionVariable}
+      disabled={props.disabled}
       onClick={props.onClick}
     >
       {props.name}
@@ -70,11 +79,12 @@ function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
     }
 
     function setPriority() {
-      const { act } = useBackend<PreferencesMenuData>();
+      const { act, data } = useBackend<PreferencesMenuData>();
 
       act('set_job_preference', {
         job: jobName,
         level: priority,
+        edit_slot: data.active_slot, // BANDASTATION ADDITION: reject a stale character row on the server.
       });
     }
 
@@ -90,10 +100,11 @@ type PriorityButtonsProps = {
   createSetPriority: CreateSetPriority;
   isOverflow: boolean;
   priority: JobPriority | null;
+  restricted: boolean;
 };
 
 function PriorityButtons(props: PriorityButtonsProps) {
-  const { createSetPriority, isOverflow, priority } = props;
+  const { createSetPriority, isOverflow, priority, restricted } = props;
 
   return (
     <Stack className="PreferencesMenu__Priority">
@@ -112,6 +123,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="high"
             position={0}
             selected={!!priority}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.High)}
           />
         </>
@@ -130,6 +142,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="low"
             position={2}
             selected={priority === JobPriority.Low}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.Low)}
           />
 
@@ -138,6 +151,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="mid"
             position={1}
             selected={priority === JobPriority.Medium}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.Medium)}
           />
 
@@ -146,6 +160,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
             modifier="high"
             position={0}
             selected={priority === JobPriority.High}
+            disabled={restricted}
             onClick={createSetPriority(JobPriority.High)}
           />
         </>
@@ -171,7 +186,7 @@ function JobRow(props: JobRowProps) {
 
   let rightSide: ReactNode;
   const experienceNeeded = data.job_required_experience?.[name];
-  const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
+  const daysLeft = data.job_days_left?.[name] ?? 0;
 
   if (experienceNeeded) {
     const { experience_type, required_playtime } = experienceNeeded;
@@ -191,30 +206,40 @@ function JobRow(props: JobRowProps) {
         Нужно еще дней: <b>{daysLeft}</b>
       </Stack.Item>
     );
-  } else if (data.job_bans && data.job_bans.indexOf(name) !== -1) {
+  } else if (data.job_bans?.includes(name)) {
     rightSide = <Stack.Item className="restricted ban">Забанен</Stack.Item>;
-  } else {
-    rightSide = (
-      <>
-        <PriorityButtons
-          createSetPriority={createSetPriority}
-          isOverflow={isOverflow}
-          priority={priority}
-        />
-        <JobSlotDropdown name={name} />
-      </>
-    );
   }
+
+  const donorJob = data.donor_jobs?.[name];
+  const additionalReason =
+    donorJob?.lock_reason || data.job_character_profiles?.[name]?.error;
 
   return (
     <Stack.Item className={className}>
       <Stack fill align="center">
-        <Tooltip content={job.description} position="bottom-start">
-          <Stack.Item grow className="job-name">
-            {JOBS_RU[name] || name}
-          </Stack.Item>
-        </Tooltip>
-        <Stack.Item className="options">{rightSide}</Stack.Item>
+        <Stack.Item grow minWidth={0} className="job-name">
+          <JobLabel jobName={name} description={job.description} />
+          {/* BANDASTATION EDIT */}
+        </Stack.Item>
+        <Stack.Item className="options">
+          {rightSide}
+          {!!additionalReason && (
+            <Tooltip content={additionalReason}>
+              <Stack.Item className="restricted">
+                {donorJob?.lock_reason
+                  ? `Тир ${donorJob.required_tier}`
+                  : 'Профиль недоступен'}
+              </Stack.Item>
+            </Tooltip>
+          )}
+          <PriorityButtons
+            createSetPriority={createSetPriority}
+            isOverflow={isOverflow}
+            priority={priority}
+            restricted={!!rightSide || !!additionalReason}
+          />
+          <JobSlotDropdown name={name} />
+        </Stack.Item>
       </Stack>
     </Stack.Item>
   );
@@ -228,6 +253,7 @@ function Department(props: DepartmentProps) {
   const { department: name } = props;
   const className = `PreferencesMenu__Department`;
 
+  const matchesJobTab = useJobTabFilter(); // BANDASTATION ADDITION
   const data = useServerPrefs();
   if (!data) {
     return;
@@ -242,7 +268,13 @@ function Department(props: DepartmentProps) {
 
   const jobsForDepartment = jobs_sorted
     .map((jobName) => [jobName, jobs[jobName]] as const)
-    .filter(([, job]) => job.department === name);
+    .filter(
+      ([jobName, job]) => job.department === name && matchesJobTab(jobName), // BANDASTATION EDIT
+    );
+
+  if (!jobsForDepartment.length) {
+    return null;
+  }
 
   return (
     <Box
@@ -294,7 +326,10 @@ function JoblessRoleDropdown() {
 
   const setPreference = createSetPreference(act, 'joblessrole');
   return (
-    <Section title="Что делать если не удалось войти?">
+    <Section
+      title="Что делать если не удалось войти?"
+      buttons={<JobTabButtons />} // BANDASTATION ADDITION: existing title extension point
+    >
       <Stack fill textAlign="center">
         {options.map((option) => (
           <Stack.Item grow key={option.value}>
@@ -315,40 +350,43 @@ function JoblessRoleDropdown() {
 
 export function JobsPage() {
   return (
-    <Stack fill vertical g={0}>
-      <Stack.Item>
-        <JoblessRoleDropdown />
-      </Stack.Item>
-      <Stack.Divider />
-      <Stack.Item grow>
-        <Section fill>
-          <Stack fill g={1} align="center" className="PreferencesMenu__Jobs">
-            <Stack.Item grow minWidth={0}>
-              <Stack vertical>
-                <Department department="Engineering" />
-                <Department department="Science" />
-                <Department department="Silicon" />
-                <Department department="Assistant" />
-              </Stack>
-            </Stack.Item>
-            <Stack.Item grow minWidth={0}>
-              <Stack vertical>
-                <Department department="Captain" />
-                <Department department="NT Representation" />
-                <Department department="Service" />
-                <Department department="Cargo" />
-              </Stack>
-            </Stack.Item>
-            <Stack.Item grow minWidth={0}>
-              <Stack vertical>
-                <Department department="Security" />
-                <Department department="Justice" />
-                <Department department="Medical" />
-              </Stack>
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </Stack.Item>
-    </Stack>
+    <JobTabsProvider>
+      {/* BANDASTATION ADDITION */}
+      <Stack fill vertical g={0}>
+        <Stack.Item>
+          <JoblessRoleDropdown />
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item grow>
+          <Section fill scrollable>
+            <Stack fill g={1} align="center" className="PreferencesMenu__Jobs">
+              <Stack.Item grow minWidth={0}>
+                <Stack vertical>
+                  <Department department="Engineering" />
+                  <Department department="Science" />
+                  <Department department="Silicon" />
+                  <Department department="Assistant" />
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow minWidth={0}>
+                <Stack vertical>
+                  <Department department="Captain" />
+                  <Department department="NT Representation" />
+                  <Department department="Service" />
+                  <Department department="Cargo" />
+                </Stack>
+              </Stack.Item>
+              <Stack.Item grow minWidth={0}>
+                <Stack vertical>
+                  <Department department="Security" />
+                  <Department department="Justice" />
+                  <Department department="Medical" />
+                </Stack>
+              </Stack.Item>
+            </Stack>
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </JobTabsProvider>
   );
 }

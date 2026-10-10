@@ -235,12 +235,17 @@
 
 	for(var/mob/candidate as anything in selected_candidates)
 		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
-		prepare_for_role(candidate_mind)
-		LAZYADDASSOC(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles()) // this is what makes sure you can't roll traitor as a sec-off
+		prepare_job_assignment(candidate_mind) // BANDASTATION EDIT: roundstart owns cancellable preparation.
 		selected_minds += candidate_mind
 		antag_candidates -= candidate
 
 	return TRUE
+
+// BANDASTATION ADDITION: neutral preparation hook for occupation constraints.
+/datum/dynamic_ruleset/proc/prepare_job_assignment(datum/mind/candidate)
+	PROTECTED_PROC(TRUE)
+	prepare_for_role(candidate)
+	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
 
 /// Gets the mind of a candidate, can be overridden to return a different mind if necessary
 /datum/dynamic_ruleset/proc/get_candidate_mind(mob/dead/candidate)
