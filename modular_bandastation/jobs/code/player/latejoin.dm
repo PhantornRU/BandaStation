@@ -1,49 +1,25 @@
-/// Preflight owns the attempt guard and rechecks admission after every potentially yielding phase.
-/mob/dead/new_player/proc/prepare_latejoin(rank)
-	var/client/requester = GET_CLIENT(src)
-	// A repeated request must leave the first attempt's spawning guard intact.
-	if(spawning || !requester || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
-		return null
-	spawning = TRUE
-	var/error = IsJobUnavailable(rank, latejoin = TRUE)
-	if(error != JOB_AVAILABLE)
-		reject_late_spawn(get_job_unavailable_error_message(error, rank))
-		return null
-	if(SSshuttle.arrivals)
-		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
-			return null
-		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
-			SSshuttle.arrivals.RequireUndocked(src)
+/// Only the additional admission checks; the native caller owns preflight and shuttle waits.
+/mob/dead/new_player/proc/validate_latejoin(rank, client/requester)
 	if(QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)
-		reject_late_spawn()
-		return null
+		return reject_late_spawn()
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-		reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
-		return null
+		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
 	if(!requester.holder && length(SSticker.queued_players) && SSticker.queued_players[1] != src)
-		reject_late_spawn("Дождитесь своей очереди на вход.")
-		return null
+		return reject_late_spawn("Дождитесь своей очереди на вход.")
 	if(!(ckey(key) in GLOB.admin_datums) && SSjob.is_latejoin_population_full())
-		reject_late_spawn("Достигнут лимит живых игроков.")
-		return null
-	error = IsJobUnavailable(rank, latejoin = TRUE)
+		return reject_late_spawn("Достигнут лимит живых игроков.")
+	var/error = IsJobUnavailable(rank, latejoin = TRUE)
 	if(error != JOB_AVAILABLE || QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)
-		reject_late_spawn(get_job_unavailable_error_message(error, rank))
-		return null
+		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
 	if(SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
-		reject_late_spawn("Раунд завершён; поздний вход недоступен.")
-		return null
+		return reject_late_spawn("Раунд завершён; поздний вход недоступен.")
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-		reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
-		return null
+		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
 	if(!requester.holder && length(SSticker.queued_players) && SSticker.queued_players[1] != src)
-		reject_late_spawn("Дождитесь своей очереди на вход.")
-		return null
+		return reject_late_spawn("Дождитесь своей очереди на вход.")
 	if(SSshuttle.arrivals?.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-		reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
-		return null
-	return SSjob.get_job(rank)
+		return reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
+	return TRUE
 
 /// Fail before equipment; the only disposable body belongs to this lobby mob.
 /mob/dead/new_player/proc/cancel_character_spawn()

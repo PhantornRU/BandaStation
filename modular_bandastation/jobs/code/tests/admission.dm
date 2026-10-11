@@ -218,6 +218,7 @@
 			lobby.next_in_queue = allocate(/mob/dead/new_player)
 		lobby.spawning = TRUE
 		TEST_ASSERT(!lobby.AttemptLateSpawn(job.title), "A repeated request entered while the first request was spawning")
+		TEST_ASSERT(lobby.spawning, "A repeated request reset the first attempt's spawning guard")
 		TEST_ASSERT_EQUAL(lobby.availability_calls, 0, "A repeated request reached eligibility checks")
 		lobby.spawning = FALSE
 		TEST_ASSERT(!lobby.AttemptLateSpawn(job.title), "A changed queue or load restriction was ignored after eligibility recheck")

@@ -25,8 +25,37 @@
 	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
 	tgui_icon = FA_ICON_LOCK
 
-// BANDASTATION EDIT - Initial crime and tattoos are registered on the actual
-// manifest record by on_initial_crew_record, after it exists.
+// BANDASTATION EDIT START - Resolve one crime for equipment and the initial record.
+/mob/living/carbon/human
+	var/prisoner_crime
+	var/prisoner_record_registered = FALSE
+	var/prisoner_tattoos_applied = FALSE
+
+/datum/job/prisoner/get_spawn_mob(client/player_client, atom/spawn_point)
+	var/crime_name = player_client.prefs.read_preference(/datum/preference/choiced/prisoner_crime)
+	. = ..()
+	if(!ishuman(.))
+		return
+	var/mob/living/carbon/human/new_prisoner = .
+	new_prisoner.prisoner_crime = GLOB.prisoner_crimes[crime_name] ? crime_name : pick(assoc_to_keys(GLOB.prisoner_crimes))
+// BANDASTATION EDIT END
+
+// BANDASTATION EDIT - The initial-record callback supplies the created record;
+// CREWMEMBER_JOINED is too early, so there is no global join subscription.
+/datum/job/prisoner/proc/handle_prisoner_joining(mob/living/carbon/human/crewmember, datum/record/crew/target_record)
+	if(crewmember.prisoner_record_registered)
+		return FALSE
+	var/crime_name = crewmember.prisoner_crime
+	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
+	if(!crime)
+		CRASH("Initial Prisoner record has no selected crime")
+	crewmember.prisoner_record_registered = TRUE
+	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
+	target_record.crimes += past_crime
+	target_record.recreate_manifest_photos(add_height_chart = TRUE)
+	to_chat(crewmember, span_warning("Вы отбываете наказание за: [crime.name]."))
+	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
+	return TRUE
 
 /datum/outfit/job/prisoner
 	name = "Prisoner"
@@ -46,4 +75,21 @@
 	if(prob(1)) // D BOYYYYSSSSS
 		head = /obj/item/clothing/head/beanie/black/dboy
 
-// BANDASTATION EDIT - Tattoos use the same fixed crime as the initial record.
+/datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visuals_only)
+	. = ..()
+	// BANDASTATION EDIT START - Preview and repeated equipment must not consume tattoos.
+	if(visuals_only || new_prisoner.prisoner_tattoos_applied)
+		return
+	var/crime_name = new_prisoner.prisoner_crime
+	// BANDASTATION EDIT END
+	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
+	if (isnull(crime))
+		return
+	new_prisoner.prisoner_tattoos_applied = TRUE // BANDASTATION EDIT - Effects belong to this character once.
+	var/list/limbs_to_tat = new_prisoner.get_bodyparts()
+	for(var/i in 1 to crime.tattoos)
+		if(!length(SSpersistence.prison_tattoos_to_use) || !length(limbs_to_tat)) // BANDASTATION EDIT - A body may have fewer limbs than tattoos.
+			return
+		var/obj/item/bodypart/tatted_limb = pick_n_take(limbs_to_tat)
+		var/list/tattoo = pick_n_take(SSpersistence.prison_tattoos_to_use)
+		tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])

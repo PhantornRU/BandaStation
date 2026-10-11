@@ -28,11 +28,19 @@
 		body.mind_initialize()
 		allocated += body.mind
 		body.mind.set_assigned_role(job)
+		var/datum/outfit/job/prisoner/outfit = allocate(/datum/outfit/job/prisoner)
+		var/tattoos_available = length(SSpersistence.prison_tattoos_to_use)
+		outfit.post_equip(body, visuals_only = TRUE)
+		TEST_ASSERT_EQUAL(length(SSpersistence.prison_tattoos_to_use), tattoos_available, "A native Prisoner preview consumed persistent tattoos")
+		TEST_ASSERT(!body.prisoner_tattoos_applied, "A preview prevented the native live tattoo effects")
 		body.dress_up_as_job(job, consistent = TRUE)
 		var/datum/prisoner_crime/selected_crime = GLOB.prisoner_crimes[body.prisoner_crime]
 		TEST_ASSERT_NOTNULL(selected_crime, "The native spawn did not resolve a selected or random crime")
 		if(crime_key != "Random")
 			TEST_ASSERT_EQUAL(body.prisoner_crime, crime_key, "The native spawn used another profile's crime")
+		TEST_ASSERT_EQUAL(tattoos_available - length(SSpersistence.prison_tattoos_to_use), selected_crime.tattoos, "Native post_equip did not use the resolved crime before record creation")
+		var/datum/record/crew/same_name = allocate(/datum/record/crew)
+		same_name.name = body.real_name
 		var/list/crew_before = GLOB.manifest.general.Copy()
 		var/list/locked_before = GLOB.manifest.locked.Copy()
 		GLOB.manifest.inject(body, initial_spawn = TRUE)
@@ -45,6 +53,7 @@
 		TEST_ASSERT_EQUAL(length(record.crimes), 1, "Native Prisoner lost its initial crime with both flags disabled")
 		var/datum/crime/crime = record.crimes[1]
 		TEST_ASSERT_EQUAL(crime.name, selected_crime.name, "Native record changed the resolved crime")
+		TEST_ASSERT_EQUAL(length(same_name.crimes), 0, "The Prisoner handler wrote into an older record with the same name")
 		var/datum/memory/key/permabrig_crimes/memory = body.mind.memories[/datum/memory/key/permabrig_crimes]
 		TEST_ASSERT_NOTNULL(memory, "Native Prisoner lost its crime memory")
 		TEST_ASSERT_EQUAL(memory.crimes, selected_crime.name, "Crime memory differed from the actual record")
@@ -54,9 +63,16 @@
 			if(limb.GetComponent(/datum/component/tattoo))
 				tattoo_count++
 		TEST_ASSERT_EQUAL(tattoo_count, selected_crime.tattoos, "Native Prisoner lost crime-specific tattoos")
+		var/tattoos_after = length(SSpersistence.prison_tattoos_to_use)
+		var/list/photos_after = record.record_photos.Copy()
+		outfit.post_equip(body, visuals_only = FALSE)
+		TEST_ASSERT_EQUAL(length(SSpersistence.prison_tattoos_to_use), tattoos_after, "Repeated native equipment consumed another tattoo set")
 		TEST_ASSERT(!job.on_initial_crew_record(body, record), "A repeated native callback registered the crime again")
 		TEST_ASSERT_EQUAL(length(record.crimes), 1, "A repeated native callback duplicated the crime")
 		TEST_ASSERT_EQUAL(body.mind.memories[/datum/memory/key/permabrig_crimes], memory, "A repeated callback rerolled the crime memory")
+		TEST_ASSERT_EQUAL(body.prisoner_crime, selected_crime.name, "A repeated effect rerolled the selected or Random crime")
+		for(var/photo_key in photos_after)
+			TEST_ASSERT_EQUAL(record.record_photos[photo_key], photos_after[photo_key], "A repeated callback recreated the Prisoner photos")
 
 /datum/unit_test/native_prisoner_initial_record/Destroy()
 	if(!isnull(jobs_enabled_before))

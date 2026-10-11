@@ -25,20 +25,6 @@
 		return JOB_UNAVAILABLE_AGE
 	return profile_error ? JOB_UNAVAILABLE_CHARACTER_PROFILE : JOB_AVAILABLE
 
-/// Preserve native Assistant overflow, excluding alternatives unavailable under the server gate.
-/mob/dead/new_player/proc/IsJobSlotUnavailable(datum/job/job)
-	if(job.total_positions < 0 || job.current_positions < job.total_positions)
-		return FALSE
-	if(!is_assistant_job(job))
-		return TRUE
-	var/client/requester = GET_CLIENT(src)
-	if(isnum(requester?.player_age) && requester.player_age <= 14)
-		return FALSE
-	for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
-		if(other_job != job && !other_job.donor_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
-			return TRUE
-	return FALSE
-
 /// An assigned lobby character occupies capacity until native handover makes it a living player.
 /datum/controller/subsystem/job/proc/is_latejoin_population_full()
 	var/hard_cap = CONFIG_GET(number/hard_popcap)

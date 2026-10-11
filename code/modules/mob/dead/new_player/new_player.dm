@@ -145,6 +145,21 @@
 
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
+// BANDASTATION EDIT START - One native capacity operation for the menu and final admission.
+/mob/dead/new_player/proc/IsJobSlotUnavailable(datum/job/job)
+	if(job.total_positions < 0 || job.current_positions < job.total_positions)
+		return FALSE
+	if(!is_assistant_job(job))
+		return TRUE
+	var/client/requester = GET_CLIENT(src)
+	if(isnum(requester?.player_age) && requester.player_age <= 14) //Newbies can always be assistants
+		return FALSE
+	for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
+		if(other_job != job && !other_job.donor_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
+			return TRUE
+	return FALSE
+// BANDASTATION EDIT END
+
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	// BANDASTATION EDIT START - Canonical lookup and common capacity check
 	var/client/requester = GET_CLIENT(src)
@@ -166,10 +181,27 @@
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	// BANDASTATION EDIT START: module-owned preflight before native assignment and handover.
-	var/datum/job/job = prepare_latejoin(rank)
-	if(!job)
+	// BANDASTATION EDIT START - A repeated request must leave the current attempt intact.
+	var/client/requester = GET_CLIENT(src)
+	if(spawning || !requester || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
 		return FALSE
+	spawning = TRUE
+	// BANDASTATION EDIT END
+	var/error = IsJobUnavailable(rank, latejoin = TRUE) // BANDASTATION EDIT - Effective profile includes the native respawn restriction.
+	if(error != JOB_AVAILABLE)
+		return reject_late_spawn(get_job_unavailable_error_message(error, rank)) // BANDASTATION EDIT - Release the attempt guard.
+
+	if(SSshuttle.arrivals)
+		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
+			return reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.") // BANDASTATION EDIT
+
+		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
+			SSshuttle.arrivals.RequireUndocked(src)
+
+	if(!validate_latejoin(rank, requester)) // BANDASTATION EDIT - Recheck admission after shuttle and eligibility waits.
+		return FALSE
+	var/datum/job/job = SSjob.get_job(rank)
+	// BANDASTATION EDIT START - Native assignment, construction and handover; failures release only this attempt.
 	if(!SSjob.assign_role(src, job, latejoin = TRUE, do_eligibility_checks = FALSE))
 		return reject_late_spawn("Профессия больше недоступна; выберите её повторно.")
 	mind.late_joiner = TRUE
