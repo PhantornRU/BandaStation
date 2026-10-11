@@ -51,6 +51,9 @@
 #include "code/job_types/nanotrasen_representative/pda.dm"
 #include "code/job_types/nanotrasen_representative/trim.dm"
 
+// Prisoner
+#include "code/job_types/prisoner/spawn.dm"
+
 // Research Scientist
 #include "code/job_types/research_director/trim.dm"
 
