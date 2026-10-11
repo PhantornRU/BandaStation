@@ -244,6 +244,7 @@
 // BANDASTATION ADDITION: neutral preparation hook for occupation constraints.
 /datum/dynamic_ruleset/proc/prepare_job_assignment(datum/mind/candidate)
 	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	prepare_for_role(candidate)
 	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
 

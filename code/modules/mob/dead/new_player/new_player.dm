@@ -187,6 +187,7 @@
 		return FALSE
 	spawning = TRUE
 	// BANDASTATION EDIT END
+	notify_localhost_respawn(requester) // BANDASTATION EDIT - Upstream notification belongs to the attempt, not eligibility queries.
 	var/error = IsJobUnavailable(rank, latejoin = TRUE) // BANDASTATION EDIT - Effective profile includes the native respawn restriction.
 	if(error != JOB_AVAILABLE)
 		return reject_late_spawn(get_job_unavailable_error_message(error, rank)) // BANDASTATION EDIT - Release the attempt guard.

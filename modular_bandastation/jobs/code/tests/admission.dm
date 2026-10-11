@@ -314,3 +314,39 @@
 		CONFIG_SET(number/extreme_popcap, extreme_cap_before)
 	release_job_player_fixtures()
 	return ..()
+
+/datum/unit_test/native_job_lifetime_guards
+	var/list/players_before
+	var/list/occupations_before = list()
+	var/load_jobs_before
+
+/datum/unit_test/native_job_lifetime_guards/Run()
+	players_before = GLOB.new_player_list.Copy()
+	load_jobs_before = CONFIG_GET(flag/load_jobs_from_txt)
+	CONFIG_SET(flag/load_jobs_from_txt, FALSE)
+	for(var/field in list("name_occupations", "type_occupations", "all_occupations", "joinable_occupations", "joinable_departments", "joinable_departments_by_type", "experience_jobs_map", "unassigned"))
+		occupations_before[field] = SSjob.vars[field]
+	// Force the explicit-preference branch first; shuffle must not hide the regression.
+	SSjob.joinable_occupations = list(allocate(/datum/job/donor/vip_guest))
+	TEST_ASSERT(!SSjob.give_random_job(null), "A null lobby was assigned a random profession")
+	var/mob/dead/new_player/deleted = allocate(/mob/dead/new_player)
+	qdel(deleted)
+	TEST_ASSERT(!SSjob.give_random_job(deleted), "A deleted lobby was assigned a random profession")
+	var/mob/dead/new_player/mindless = allocate(/mob/dead/new_player)
+	mindless.assigned_character = allocate(/datum/job_character_selection)
+	var/datum/job_character_selection/selection = mindless.assigned_character
+	GLOB.new_player_list = list(null, mindless)
+	SSjob.reset_occupations()
+	// Keep newly built datums for teardown, then restore the original registries/cache owners.
+	allocated += SSjob.all_occupations + SSjob.joinable_departments
+	TEST_ASSERT_NULL(mindless.assigned_character, "A lobby without a mind retained its character selection")
+	TEST_ASSERT(QDELETED(selection), "Reset detached the mindless selection without releasing it")
+
+/datum/unit_test/native_job_lifetime_guards/Destroy()
+	if(!isnull(players_before))
+		GLOB.new_player_list = players_before
+		for(var/field in occupations_before)
+			SSjob.vars[field] = occupations_before[field]
+		CONFIG_SET(flag/load_jobs_from_txt, load_jobs_before)
+	release_job_player_fixtures()
+	return ..()

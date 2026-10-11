@@ -6,7 +6,8 @@
 	return preference == "job_outfit_variants"
 
 /datum/preference_middleware/donor_jobs/proc/set_donor_job_variant(list/params, mob/user)
-	if(!user.client || user.client.prefs != preferences)
+	var/client/player = GET_CLIENT(user)
+	if(!player || player.prefs != preferences)
 		return FALSE
 	if(params["slot"] != preferences.default_slot)
 		return FALSE
@@ -16,6 +17,8 @@
 		return FALSE
 	var/datum/job/job = SSjob.get_job(job_title)
 	if(!job || job.title != job_title || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
+		return FALSE
+	if(job.donor_lock_reason(player))
 		return FALSE
 	var/list/variants = job.get_donor_variants()
 	if(!variants[variant_id])

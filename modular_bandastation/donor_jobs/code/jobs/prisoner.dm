@@ -37,6 +37,7 @@
 
 /datum/job/prisoner/config_check()
 	if(CONFIG_GET(flag/donor_prisoner_gate))
+		allow_bureaucratic_error = FALSE
 		if(isnull(CHECK_MAP_JOB_CHANGE(title, "total_positions")))
 			total_positions = 5
 		if(isnull(CHECK_MAP_JOB_CHANGE(title, "spawn_positions")))

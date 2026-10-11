@@ -5,6 +5,13 @@
 /datum/unit_test/donor_configuration/Run()
 	jobs_before = CONFIG_GET(flag/donor_jobs_enabled)
 	gate_before = CONFIG_GET(flag/donor_prisoner_gate)
+	// Inspect the real cached pool before this test changes any configuration.
+	var/datum/job/prisoner/startup_prisoner = SSjob.get_job_type(/datum/job/prisoner)
+	TEST_ASSERT_NOTNULL(startup_prisoner, "Startup did not register native Prisoner")
+	if(SSjob.overflow_role != startup_prisoner.type)
+		TEST_ASSERT_EQUAL(startup_prisoner.allow_bureaucratic_error, !gate_before, "Startup Prisoner has the wrong bureaucratic error policy")
+		var/list/overflow_jobs = SSjob.get_valid_overflow_jobs()
+		TEST_ASSERT_EQUAL(!!overflow_jobs.Find(startup_prisoner), !gate_before, "The initialized overflow pool disagrees with the Prisoner gate")
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	player.donator_level = MAX_DONATOR_LEVEL
 	var/list/new_job_types = subtypesof(/datum/job/donor)
@@ -19,6 +26,7 @@
 				TEST_ASSERT_EQUAL(isnull(job.donor_lock_reason(player)), jobs_enabled, "[job.title] ignored the server enable flag")
 			var/datum/job/prisoner/prisoner = allocate(/datum/job/prisoner)
 			TEST_ASSERT(prisoner.config_check(), "Disabling a donor flag disabled native Prisoner")
+			TEST_ASSERT_EQUAL(prisoner.allow_bureaucratic_error, !prisoner_gate, "Prisoner did not preserve the native bureaucratic error default when ungated")
 			TEST_ASSERT_EQUAL(prisoner.get_required_donor_tier(), prisoner_gate ? DONATOR_TIER_1 : 0, "Prisoner tier depends on the wrong flag")
 			TEST_ASSERT_EQUAL(!!length(prisoner.get_donor_variants()), prisoner_gate, "Prisoner variants depend on the wrong flag")
 			if(isnull(CHECK_MAP_JOB_CHANGE(prisoner.title, "total_positions")))

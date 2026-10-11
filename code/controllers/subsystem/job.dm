@@ -296,12 +296,13 @@ SUBSYSTEM_DEF(job)
 	job_debug("GRJ: Giving random job, Player: [player]")
 	. = FALSE
 	for(var/datum/job/job as anything in shuffle(joinable_occupations))
-		// BANDASTATION EDIT - RP roles require an explicit preference.
-		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
-			continue
 		if(QDELETED(player))
 			job_debug("GRJ: Player is deleted, aborting")
 			break
+
+		// BANDASTATION EDIT - RP roles require an explicit preference after the native lifetime guard.
+		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
+			continue
 
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("GRJ: Job lacks spawn positions to be eligible, Player: [player], Job: [job]")
@@ -329,9 +330,11 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/reset_occupations()
 	job_debug("RO: Occupations reset.")
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		if(!player) // BANDASTATION EDIT - Check the entry before releasing its selection.
+			continue
 		// BANDASTATION EDIT - Discard selections from a cancelled assignment pass.
 		QDEL_NULL(player.assigned_character)
-		if(!player?.mind)
+		if(!player.mind) // BANDASTATION EDIT - Mindless lobbies still release their selection.
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))
 	setup_occupations()

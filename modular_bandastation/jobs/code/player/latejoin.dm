@@ -1,3 +1,10 @@
+/// Preserve upstream localhost policy without logging every menu/candidate check.
+/mob/dead/new_player/proc/notify_localhost_respawn(client/requester)
+	if(CONFIG_GET(flag/allow_respawn) != RESPAWN_FLAG_NEW_CHARACTER || !requester.is_localhost())
+		return
+	to_chat(requester.mob, span_notice("Этот персонаж уже участвовал в данном раунде, однако это ограничение обходится при использовании localhost."))
+	log_admin("[key_name_and_tag(requester)] пропускает повторное присоединение к раунду тем же персонажем.")
+
 /// Only the additional admission checks; the native caller owns preflight and shuttle waits.
 /mob/dead/new_player/proc/validate_latejoin(rank, client/requester)
 	if(QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)

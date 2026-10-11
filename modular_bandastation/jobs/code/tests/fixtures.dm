@@ -1,3 +1,6 @@
+/datum/client_interface/proc/is_localhost()
+	return FALSE
+
 /datum/unit_test
 	var/list/job_fixture_species_before
 

@@ -108,3 +108,78 @@
 /datum/unit_test/job_character_selection/Destroy()
 	release_job_player_fixtures()
 	return ..()
+
+/datum/client_interface/respawn_policy_test
+	var/localhost_connection = FALSE
+
+/datum/client_interface/respawn_policy_test/is_localhost()
+	return localhost_connection
+
+/datum/unit_test/job_character_respawn_policy
+	var/respawn_before
+	var/state_before
+
+/datum/unit_test/job_character_respawn_policy/Run()
+	respawn_before = CONFIG_GET(flag/allow_respawn)
+	state_before = SSticker.current_state
+	CONFIG_SET(flag/allow_respawn, RESPAWN_FLAG_NEW_CHARACTER)
+	SSticker.current_state = GAME_STATE_PLAYING
+	var/datum/client_interface/respawn_policy_test/player = allocate(/datum/client_interface/respawn_policy_test)
+	var/datum/preferences/preferences = allocate(/datum/preferences, player)
+	player.prefs = preferences
+	preferences.default_slot = 1
+	preferences.max_save_slots = 2
+	preferences.load_and_save = FALSE
+	preferences.path = null
+	QDEL_NULL(preferences.savefile)
+	preferences.savefile = allocate(/datum/json_savefile)
+	preferences.savefile.set_entry("character2", list("real_name" = "Assigned Character", "age" = 40, "species" = SPECIES_HUMAN))
+	preferences.write_preference(GLOB.preference_entries[/datum/preference/numeric/age], 40)
+	preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_HUMAN)
+	preferences.write_preference(GLOB.preference_entries[/datum/preference/toggle/late_join_always_current_slot], FALSE)
+	var/datum/job/job = SSjob.get_job_type(/datum/job/cargo_technician)
+	preferences.pref_job_slots[job.title] = 2
+	var/mob/dead/new_player/lobby = allocate(/mob/dead/new_player)
+	lobby.mock_client = player
+	player.mob = lobby
+	lobby.mind = allocate(/datum/mind)
+	lobby.mind.set_current(lobby)
+	player.persistent_client.joined_as_slots = list("2")
+	TEST_ASSERT_EQUAL(SSjob.check_job_character_eligibility(lobby, job, TRUE), JOB_UNAVAILABLE_CHARACTER_PROFILE, "An already played assigned slot bypassed respawn because the current slot was unused")
+	player.persistent_client.joined_as_slots = list("1")
+	TEST_ASSERT_EQUAL(SSjob.check_job_character_eligibility(lobby, job, TRUE), JOB_AVAILABLE, "The unused assigned slot inherited the current slot's respawn restriction")
+	player.persistent_client.joined_as_slots = list("2")
+	TEST_ASSERT_EQUAL(SSjob.check_job_character_eligibility(lobby, job, FALSE), JOB_AVAILABLE, "A latejoin restriction affected roundstart evaluation")
+	player.localhost_connection = TRUE
+	var/logs_before = length(GLOB.admin_activities)
+	for(var/query in 1 to 3)
+		TEST_ASSERT_EQUAL(SSjob.check_job_character_eligibility(lobby, job, TRUE), JOB_AVAILABLE, "Localhost did not bypass the assigned-slot respawn restriction")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "Candidate/menu eligibility produced localhost admin logs")
+	lobby.spawning = TRUE
+	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "A repeated latejoin request entered the spawn path")
+	TEST_ASSERT(lobby.spawning, "A repeated request released the first attempt's guard")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "A repeated request produced another localhost notification")
+	lobby.spawning = FALSE
+	// Use an invalid job to exercise actual preflight without creating a body or waiting for a shuttle.
+	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid job spawned a character")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 1, "An actual localhost attempt did not produce exactly one upstream admin log")
+	TEST_ASSERT(findtext(GLOB.admin_activities[length(GLOB.admin_activities)], "пропускает повторное присоединение"), "The attempt logged a different admin event")
+	// Upstream currently notifies every localhost attempt in this mode, even with an unused slot.
+	player.persistent_client.joined_as_slots = list()
+	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid job with an unused profile spawned")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 2, "The unused-slot attempt changed upstream localhost notification policy")
+	player.localhost_connection = FALSE
+	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid remote attempt spawned")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 2, "A remote attempt produced a localhost admin log")
+	player.localhost_connection = TRUE
+	CONFIG_SET(flag/allow_respawn, RESPAWN_FLAG_FREE)
+	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid attempt in another respawn mode spawned")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 2, "Another respawn mode produced a localhost exception log")
+	TEST_ASSERT_EQUAL(preferences.default_slot, 1, "Respawn eligibility changed the current profile")
+
+/datum/unit_test/job_character_respawn_policy/Destroy()
+	if(!isnull(respawn_before))
+		CONFIG_SET(flag/allow_respawn, respawn_before)
+		SSticker.current_state = state_before
+	release_job_player_fixtures()
+	return ..()

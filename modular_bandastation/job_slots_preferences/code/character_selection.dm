@@ -67,7 +67,7 @@
 		var/species_error = job.character_species_error(species)
 		if(species_error)
 			return species_error
-	if(latejoin && CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER)
+	if(latejoin && CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER && !player.is_localhost())
 		if("[slot]" in player.persistent_client.joined_as_slots)
 			return "Вы уже играли на назначенном персонаже в этом раунде."
 	return null
