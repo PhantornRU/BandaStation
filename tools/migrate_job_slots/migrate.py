@@ -169,7 +169,9 @@ def migrate_file(source: Path, root: Path, backup_root: Path | None = None) -> b
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("player_saves", type=Path, help="Root containing <initial>/<ckey>/preferences.json")
-    parser.add_argument("--apply", action="store_true", help="Write converted preferences (default: dry-run)")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--apply", action="store_true", help="Write converted preferences (default: dry-run)")
+    mode.add_argument("--check-ready", action="store_true", help="Read-only gate: fail if any file still needs conversion")
     parser.add_argument("--backup-dir", type=Path, help="Separate directory for immutable original files")
     parser.add_argument("--server-stopped", action="store_true", help="Confirm the server and other save writers are stopped")
     args = parser.parse_args(argv)
@@ -200,8 +202,9 @@ def main(argv: list[str] | None = None) -> int:
             # Error messages never include saved preferences or malformed JSON contents.
             detail = str(error) if isinstance(error, ValueError) else type(error).__name__
             print(f"ERROR {label}: {detail}")
-    print(f"{'APPLY' if args.apply else 'DRY_RUN'} examined={len(files)} changed={changed} unchanged={unchanged} errors={errors}")
-    return 1 if errors else 0
+    mode_name = "APPLY" if args.apply else "READY_CHECK" if args.check_ready else "DRY_RUN"
+    print(f"{mode_name} examined={len(files)} changed={changed} unchanged={unchanged} errors={errors}")
+    return 1 if errors or (args.check_ready and changed) else 0
 
 
 if __name__ == "__main__":
