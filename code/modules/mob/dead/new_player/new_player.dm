@@ -413,6 +413,7 @@
 	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
 
+	///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
 ///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
 GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "Reset Lobby Menu HUD", null) // BANDASTATION EDIT: Empty category
 	var/mob/dead/new_player/new_player = usr
