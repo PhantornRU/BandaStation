@@ -6,9 +6,11 @@
 	log_admin("[key_name_and_tag(requester)] пропускает повторное присоединение к раунду тем же персонажем.")
 
 /// Only the additional admission checks; the native caller owns preflight and shuttle waits.
-/mob/dead/new_player/proc/validate_latejoin(rank, client/requester)
+/mob/dead/new_player/proc/validate_latejoin(rank, client/requester, list/entry_profile)
 	if(QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)
 		return reject_late_spawn()
+	if(!requester.prefs.is_latejoin_profile_current(rank, entry_profile))
+		return reject_late_spawn("Настройки входа изменились; выберите профессию повторно.")
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		return reject_late_spawn("Вход временно ограничен из-за нагрузки сервера.")
 	if(!requester.holder && length(SSticker.queued_players) && SSticker.queued_players[1] != src)
@@ -18,6 +20,8 @@
 	var/error = IsJobUnavailable(rank, latejoin = TRUE)
 	if(error != JOB_AVAILABLE || QDELETED(src) || !requester || GET_CLIENT(src) != requester || requester.mob != src)
 		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
+	if(!requester.prefs.is_latejoin_profile_current(rank, entry_profile))
+		return reject_late_spawn("Настройки входа изменились; выберите профессию повторно.")
 	if(SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
 		return reject_late_spawn("Раунд завершён; поздний вход недоступен.")
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])

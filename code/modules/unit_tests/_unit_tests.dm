@@ -384,6 +384,7 @@
 // BANDASTATION EDIT - Donor jobs tests share the native assertion macros.
 #include "../../../modular_bandastation/jobs/code/tests/fixtures.dm"
 #include "../../../modular_bandastation/jobs/code/tests/admission.dm"
+#include "../../../modular_bandastation/jobs/code/tests/latejoin_context.dm"
 #include "../../../modular_bandastation/jobs/code/tests/handover.dm"
 #include "../../../modular_bandastation/jobs/code/tests/prisoner_record.dm"
 #include "../../../modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm"

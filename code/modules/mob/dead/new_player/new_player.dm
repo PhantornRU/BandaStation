@@ -188,6 +188,7 @@
 	spawning = TRUE
 	// BANDASTATION EDIT END
 	notify_localhost_respawn(requester) // BANDASTATION EDIT - Upstream notification belongs to the attempt, not eligibility queries.
+	var/list/entry_profile = requester.prefs.capture_latejoin_profile(rank) // BANDASTATION ADDITION - Before any eligibility or shuttle wait.
 	var/error = IsJobUnavailable(rank, latejoin = TRUE) // BANDASTATION EDIT - Effective profile includes the native respawn restriction.
 	if(error != JOB_AVAILABLE)
 		return reject_late_spawn(get_job_unavailable_error_message(error, rank)) // BANDASTATION EDIT - Release the attempt guard.
@@ -199,7 +200,7 @@
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
 			SSshuttle.arrivals.RequireUndocked(src)
 
-	if(!validate_latejoin(rank, requester)) // BANDASTATION EDIT - Recheck admission after shuttle and eligibility waits.
+	if(!validate_latejoin(rank, requester, entry_profile)) // BANDASTATION EDIT - Recheck admission after shuttle and eligibility waits.
 		return FALSE
 	var/datum/job/job = SSjob.get_job(rank)
 	// BANDASTATION EDIT START - Native assignment, construction and handover; failures release only this attempt.
