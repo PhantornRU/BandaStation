@@ -4,6 +4,7 @@
 #include "code\preferences\variants.dm"
 #include "code\outfits\_donor.dm"
 #include "code\spawn_context.dm"
+#include "code\job_extensions.dm"
 #include "code\jobs\acolyte.dm"
 #include "code\jobs\actor.dm"
 #include "code\jobs\adjutant.dm"

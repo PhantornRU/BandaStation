@@ -136,9 +136,9 @@
 			return "[job_title_ru(jobtitle)] несовместим с некоторыми выбранными вами ролями антагонистов."
 		if(JOB_UNAVAILABLE_AGE)
 			return "Ваш персонаж недостаточно стар для игры за [job_title_ru(jobtitle)]."
-		// BANDASTATION EDIT START - Server-backed donor/profile failures
-		if(JOB_UNAVAILABLE_DONOR)
-			return "Для профессии недоступен требуемый уровень подписки."
+		// BANDASTATION EDIT START - Server-backed job/profile failures
+		if(JOB_UNAVAILABLE_JOB_LOCK)
+			return "Профессия недоступна по дополнительным условиям входа."
 		if(JOB_UNAVAILABLE_CHARACTER_PROFILE)
 			return "Назначенный персонаж не проходит условия профессии. Проверьте слот, возраст, вид и повторный вход."
 		// BANDASTATION EDIT END
@@ -155,7 +155,7 @@
 	if(isnum(requester?.player_age) && requester.player_age <= 14) //Newbies can always be assistants
 		return FALSE
 	for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
-		if(other_job != job && !other_job.donor_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
+		if(other_job != job && !other_job.get_join_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
 			return TRUE
 	return FALSE
 // BANDASTATION EDIT END
@@ -305,7 +305,7 @@
 		return null
 	var/datum/job/assigned_job = mind.assigned_role
 	var/datum/job_character_selection/selection = resolve_assigned_job_character(assigned_job, mind.late_joiner, forced_slot)
-	if(selection.character_error(assigned_job, client, mind.late_joiner) || assigned_job.donor_lock_reason(client) || !load_assigned_job_character())
+	if(selection.character_error(assigned_job, client, mind.late_joiner) || assigned_job.get_join_lock_reason(client) || !load_assigned_job_character())
 		return null
 	// BANDASTATION EDIT END
 	mind.active = FALSE //we wish to transfer the key manually
@@ -316,7 +316,7 @@
 	if(!player_client)
 		qdel(spawning_mob)
 		return null
-	if(assigned_job.donor_lock_reason(player_client) || selection.actual_body_error(assigned_job, spawning_mob)) // BANDASTATION EDIT - Recheck admission after the yielding appearance lookup.
+	if(assigned_job.get_join_lock_reason(player_client) || selection.actual_body_error(assigned_job, spawning_mob)) // BANDASTATION EDIT - Recheck admission after the yielding appearance lookup.
 		qdel(spawning_mob)
 		return null
 	if(!isAI(spawning_mob))

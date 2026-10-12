@@ -965,8 +965,8 @@ SUBSYSTEM_DEF(job)
 		return JOB_UNAVAILABLE_GENERIC
 
 	// BANDASTATION EDIT - Server entitlement; cosmetic preferences are not authorization.
-	if(possible_job.donor_lock_reason(player_client))
-		return JOB_UNAVAILABLE_DONOR
+	if(possible_job.get_join_lock_reason(player_client))
+		return JOB_UNAVAILABLE_JOB_LOCK
 
 	if(possible_job.title in LAZYACCESS(prevented_occupations, player.mind))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")

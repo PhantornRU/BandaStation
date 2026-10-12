@@ -24,7 +24,7 @@
 	if (job.faction != FACTION_STATION)
 		return FALSE
 	// BANDASTATION EDIT START: clearing remains available when entitlement expires.
-	if(!isnull(level) && job.donor_lock_reason(user.client))
+	if(!isnull(level) && job.get_join_lock_reason(user.client))
 		return FALSE
 	// BANDASTATION EDIT END
 

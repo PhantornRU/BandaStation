@@ -65,7 +65,6 @@
 
 /mob/living/carbon/human/Destroy()
 	GLOB.human_list -= src
-	QDEL_NULL(donor_spawn_context) // BANDASTATION EDIT - Per-spawn state ownership
 
 	if (mob_mood)
 		QDEL_NULL(mob_mood)

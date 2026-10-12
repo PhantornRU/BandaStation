@@ -1,5 +1,6 @@
 #include "_jobs.dm"
 
+#include "code/extension_hooks.dm"
 #include "code/controller/subsystem/job.dm"
 #include "code/controller/admission.dm"
 #include "code/controller/roundstart.dm"

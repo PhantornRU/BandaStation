@@ -235,7 +235,7 @@
 
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only = FALSE, client/player_client, consistent = FALSE)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
-	equip_outfit_and_loadout(equipping.donor_outfit_for(src, player_client?.prefs, visual_only, consistent), player_client?.prefs, visual_only) // BANDASTATION EDIT - Variant before loadout
+	equip_outfit_and_loadout(equipping.get_spawn_outfit(src, player_client?.prefs, visual_only, consistent), player_client?.prefs, visual_only) // BANDASTATION EDIT - Variant before loadout
 
 /datum/job/proc/announce_head(mob/living/carbon/human/human, channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(human)
@@ -530,7 +530,7 @@
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	if(player_client)
-		prepare_donor_character(spawn_instance, player_client.prefs) // BANDASTATION EDIT - Live variant before greeting and equipment
+		prepare_spawn_character(spawn_instance, player_client.prefs) // BANDASTATION EDIT - Live variant before greeting and equipment
 		spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client || (requester?.assigned_character && player_client.prefs.default_slot != requester.assigned_character.slot)) // BANDASTATION EDIT - A yielding ban check must not spawn a different profile.
 		if(isAI(spawn_instance) && !QDELETED(requester)) // BANDASTATION EDIT - Return the native mind before discarding an unfinished AI.

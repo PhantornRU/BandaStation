@@ -1,0 +1,22 @@
+/// Additional job admission rules. A null reason preserves ordinary admission.
+/datum/job/proc/get_join_lock_reason(client/player)
+	SHOULD_CALL_PARENT(TRUE)
+	return null
+
+/// Runs before preference application, appearance checks and the greeting; must not yield.
+/datum/job/proc/prepare_spawn_character(mob/living/body, datum/preferences/preferences)
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	return
+
+/// A character-specific outfit. Native jobs still dispatch through get_outfit().
+/datum/job/proc/get_spawn_outfit(mob/living/carbon/human/body, datum/preferences/preferences, visual_only, consistent)
+	return get_outfit(consistent)
+
+/// Display metadata only; never replace a canonical job title, trim or ban key.
+/datum/job/proc/get_character_job_title(datum/job_character_selection/character)
+	return job_title_ru(title)
+
+/datum/id_trim/job
+	/// Expose a registered job template only through native CentCom authentication.
+	var/centcom_template = FALSE

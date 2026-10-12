@@ -23,8 +23,16 @@
 		return
 	var/mob/living/carbon/human/body = spawned
 	var/list/variants = preferences.read_preference(/datum/preference/job_outfit_variants)
+	QDEL_NULL(body.donor_spawn_context)
 	body.donor_spawn_context = new(src, variants?[title])
 	body.donor_spawn_context.RegisterSignal(body, COMSIG_HUMAN_INITIAL_CREW_RECORD, TYPE_PROC_REF(/datum/donor_spawn_context, register_crew_record))
+	body.donor_spawn_context.RegisterSignal(body, COMSIG_QDELETING, TYPE_PROC_REF(/datum/donor_spawn_context, on_body_deleted))
+
+/datum/donor_spawn_context/proc/on_body_deleted(mob/living/carbon/human/body)
+	SIGNAL_HANDLER
+	if(body.donor_spawn_context == src)
+		body.donor_spawn_context = null
+	qdel(src)
 
 /datum/donor_spawn_context/proc/belongs_to(datum/job/job)
 	return job && job.type == job_type

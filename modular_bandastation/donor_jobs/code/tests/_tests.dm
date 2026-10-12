@@ -4,3 +4,4 @@
 #include "prisoner_record.dm"
 #include "preferences_regressions.dm"
 #include "profile_selection.dm"
+#include "extension_hooks.dm"

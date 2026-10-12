@@ -8,8 +8,8 @@
 #define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 /// Checks for character age.
 #define JOB_UNAVAILABLE_AGE 7
-// BANDASTATION EDIT START - Donor jobs admission
-#define JOB_UNAVAILABLE_DONOR 8
+// BANDASTATION EDIT START - Additional job and profile admission
+#define JOB_UNAVAILABLE_JOB_LOCK 8
 #define JOB_UNAVAILABLE_CHARACTER_PROFILE 9
 // BANDASTATION EDIT END
 
