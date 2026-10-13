@@ -23,6 +23,7 @@
 
 /datum/outfit/job/donor/adjutant/butler
 	name = "Adjutant (butler)"
+	id_trim = /datum/id_trim/job/donor_adjutant/butler
 	belt = /obj/item/modular_computer/pda/crew/bar
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/black
 	glasses = /obj/item/clothing/glasses/monocle
@@ -31,6 +32,7 @@
 
 /datum/outfit/job/donor/adjutant/maid
 	name = "Adjutant (maid)"
+	id_trim = /datum/id_trim/job/donor_adjutant/maid
 	belt = /obj/item/modular_computer/pda/crew/bar
 	uniform = /obj/item/clothing/under/costume/maid
 	suit = null

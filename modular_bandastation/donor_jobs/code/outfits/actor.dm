@@ -10,6 +10,7 @@
 
 /datum/outfit/job/donor/actor/painter
 	name = "Actor (painter)"
+	id_trim = /datum/id_trim/job/donor_actor/painter
 	uniform = /obj/item/clothing/under/misc/assistantformal
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	head = /obj/item/clothing/head/beret

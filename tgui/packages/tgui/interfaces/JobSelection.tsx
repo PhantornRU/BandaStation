@@ -2,7 +2,6 @@ import { Color } from 'tgui-core/color';
 import {
   Box,
   Button,
-  Icon,
   NoticeBox,
   Section,
   Stack,
@@ -17,6 +16,7 @@ import {
   ReverseJobsRu,
 } from '../bandastation/ru_jobs'; // BANDASTATION EDIT
 import { Window } from '../layouts';
+import { JobHudIcon } from '../bandastation/donor_jobs/JobHudIcon'; // BANDASTATION ADDITION
 import { JOB2ICON } from './common/JobToIcon';
 
 type Job = {
@@ -29,6 +29,7 @@ type Job = {
   jobIcon: string;
   public_title: string; // BANDASTATION ADDITION: display identity differs from the canonical job key.
   character_profile: string; // BANDASTATION ADDITION
+  job_icon?: string; // BANDASTATION ADDITION: native HUD glyph of the assigned profile.
 };
 
 type Department = {
@@ -94,9 +95,9 @@ function JobEntry(props: JobEntryProps) {
       }}
     >
       <Stack fill>
-        {jobIcon && (
+        {(job.job_icon || jobIcon) && ( // BANDASTATION EDIT: shared modular icon renderer.
           <Stack.Item>
-            <Icon style={{ marginRight: '0.1em' }} name={jobIcon} />
+            <JobHudIcon icon={job.job_icon} fallback={jobIcon} />
           </Stack.Item>
         )}
         <Stack.Item grow>

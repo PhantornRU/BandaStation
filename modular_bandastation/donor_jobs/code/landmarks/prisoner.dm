@@ -1,5 +1,15 @@
 GLOBAL_LIST_EMPTY(donor_prisoner_starts)
 
+/obj/effect/landmark/start/prisoner
+	icon = 'modular_bandastation/donor_jobs/icons/landmarks.dmi'
+	icon_state = "prisoner"
+
+// A persistent native override; the existing safe-permabrig checks still apply.
+/obj/effect/landmark/start/prisoner/latejoin
+	icon_state = "prisoner_arrive"
+	jobspawn_override = TRUE
+	delete_after_roundstart = FALSE
+
 // Native roundstart landmarks are deleted once the round starts; keep their turfs for latejoin.
 /obj/effect/landmark/start/prisoner/Initialize(mapload)
 	. = ..()

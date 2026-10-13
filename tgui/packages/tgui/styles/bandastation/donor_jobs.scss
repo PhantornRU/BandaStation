@@ -27,6 +27,24 @@
   }
 }
 
+.DonorJobs__HudIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.35em;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.PreferencesMenu__JobVariant {
+  display: flex;
+  align-items: center;
+
+  > .Dropdown {
+    min-width: 0;
+  }
+}
+
 .PreferencesMenu__JobTiers {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));

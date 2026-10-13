@@ -17,6 +17,10 @@
 /datum/job/proc/get_character_job_title(datum/job_character_selection/character)
 	return job_title_ru(title)
 
+/// Isolated HUD glyph for the selected character; display metadata only.
+/datum/job/proc/get_character_job_icon(datum/job_character_selection/character)
+	return get_job_hud_icon(src)
+
 /datum/id_trim/job
 	/// Expose a registered job template only through native CentCom authentication.
 	var/centcom_template = FALSE

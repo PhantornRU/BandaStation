@@ -53,6 +53,7 @@
 			"title" = default_variant?.public_title,
 			"profile_title" = profile_title,
 			"selected" = selected_variant?.id,
+			"icon" = icon2base64(job.get_donor_variant_icon(selected_variant?.id)),
 			"variants" = options,
 			"required_tier" = required_tier,
 			"lock_reason" = job.donor_lock_reason(user.client),

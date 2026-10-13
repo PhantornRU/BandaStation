@@ -3,6 +3,7 @@ import { Box, Dropdown, Tooltip } from 'tgui-core/components';
 
 import type { PreferencesMenuData } from '../../interfaces/PreferencesMenu/types';
 import { JOBS_RU } from '../ru_jobs';
+import { JobHudIcon } from './JobHudIcon';
 
 export function JobLabel(props: { jobName: string; description: string }) {
   const { act, data } = useBackend<PreferencesMenuData>();
@@ -10,7 +11,10 @@ export function JobLabel(props: { jobName: string; description: string }) {
   if (!job || job.variants.length < 2) {
     return (
       <Tooltip content={props.description} position="bottom-start">
-        <Box>{job?.title || JOBS_RU[props.jobName] || props.jobName}</Box>
+        <Box>
+          <JobHudIcon icon={job?.icon} />
+          {job?.title || JOBS_RU[props.jobName] || props.jobName}
+        </Box>
       </Tooltip>
     );
   }
@@ -22,6 +26,7 @@ export function JobLabel(props: { jobName: string; description: string }) {
       position="bottom-start"
     >
       <div className="PreferencesMenu__JobVariant">
+        <JobHudIcon icon={job.icon} />
         <Dropdown
           key={job.lock_reason ? 'locked' : 'available'}
           color="transparent"

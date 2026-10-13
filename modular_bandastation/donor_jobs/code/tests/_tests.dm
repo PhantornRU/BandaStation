@@ -1,5 +1,7 @@
 #include "dealer_stock.dm"
 #include "equipment.dm"
+#include "seclown_equipment.dm"
+#include "icons_landmarks.dm"
 #include "id_templates.dm"
 #include "prisoner_record.dm"
 #include "preferences_regressions.dm"

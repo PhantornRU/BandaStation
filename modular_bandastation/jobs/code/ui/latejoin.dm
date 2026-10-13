@@ -12,6 +12,7 @@
 	var/list/data = list(
 		"public_title" = public_title,
 		"character_profile" = profile_description,
+		"job_icon" = icon2base64(job.get_character_job_icon(character)),
 	)
 	qdel(character)
 	return data

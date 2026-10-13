@@ -23,6 +23,7 @@
 
 /datum/outfit/job/donor/cleaning_manager/apprentice
 	name = "Cleaning Manager (apprentice)"
+	id_trim = /datum/id_trim/job/donor_cleaning_manager/apprentice
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/workboots
 	suit = null

@@ -10,7 +10,7 @@
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	player.prefs = allocate(/datum/preferences, player)
 	player.prefs.write_preference(GLOB.preference_entries[/datum/preference/loadout], null)
-	var/list/outfit_paths = subtypesof(/datum/outfit/job/donor) + list(/datum/outfit/job/prisoner, /datum/outfit/job/cargo_tech/donor_deliverer)
+	var/list/outfit_paths = subtypesof(/datum/outfit/job/donor) + typesof(/datum/outfit/job/donor/seclown) + list(/datum/outfit/job/prisoner, /datum/outfit/job/cargo_tech/donor_deliverer)
 	for(var/outfit_path in outfit_paths)
 		check_outfit(outfit_path, player)
 

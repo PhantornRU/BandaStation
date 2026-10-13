@@ -13,13 +13,15 @@
 	job_flags = (STATION_JOB_FLAGS & ~JOB_CAN_BE_INTERN) | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_BLACKLISTED
 	plasmaman_outfit = /datum/outfit/plasmaman/clown
 	paycheck_department = ACCOUNT_SEC
+	mind_traits = list(TRAIT_NAIVE)
+	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 	donor_variant_specs = list(
 		"default" = list("Клоун СБ", /datum/outfit/job/donor/seclown),
 		"title_8cd08702d6" = list("Клоун Службы Безопасности", /datum/outfit/job/donor/seclown),
-		"title_190bf220ef" = list("Клоун-Детектив", /datum/outfit/job/donor/seclown),
-		"title_a22b40d7a4" = list("Клоун-Смотритель", /datum/outfit/job/donor/seclown),
-		"title_2384147c33" = list("Хонкектив", /datum/outfit/job/donor/seclown),
-		"title_410a1ecab5" = list("Клоун Кадет", /datum/outfit/job/donor/seclown),
+		"title_190bf220ef" = list("Клоун-Детектив", /datum/outfit/job/donor/seclown/detective),
+		"title_a22b40d7a4" = list("Клоун-Смотритель", /datum/outfit/job/donor/seclown/warden),
+		"title_2384147c33" = list("Хонкектив", /datum/outfit/job/donor/seclown/detective),
+		"title_410a1ecab5" = list("Клоун Кадет", /datum/outfit/job/donor/seclown/cadet),
 	)
 
 /datum/job/donor/seclown/after_spawn(mob/living/spawned, client/player_client)
