@@ -350,3 +350,58 @@
 		CONFIG_SET(flag/load_jobs_from_txt, load_jobs_before)
 	release_job_player_fixtures()
 	return ..()
+
+// Test-only jobs remain outside the live occupation registries.
+/datum/job/priority_lifetime_test
+	title = "Priority lifetime fixture"
+	job_flags = NONE
+	spawn_positions = 1
+	staffing_priority = 1
+	var/lock_calls = 0
+
+/datum/job/priority_lifetime_test/config_check()
+	return FALSE
+
+/datum/job/priority_lifetime_test/get_join_lock_reason(client/player)
+	..()
+	lock_calls++
+	qdel(player.mob)
+	return "Test-only interruption during eligibility"
+
+/datum/job/priority_lifetime_test/explicit
+	staffing_priority = 2
+	var/preference_calls = 0
+
+/datum/job/priority_lifetime_test/explicit/requires_explicit_preference()
+	preference_calls++
+	return TRUE
+
+/datum/unit_test/priority_job_lifetime_guard
+	var/list/joinable_before
+
+/datum/unit_test/priority_job_lifetime_guard/Run()
+	joinable_before = SSjob.joinable_occupations
+	var/datum/job/priority_lifetime_test/first = allocate(/datum/job/priority_lifetime_test)
+	var/datum/job/priority_lifetime_test/explicit/second = allocate(/datum/job/priority_lifetime_test/explicit)
+	// Distinct staffing priorities make the real shuffle/sort order deterministic.
+	SSjob.joinable_occupations = list(second, first)
+	var/datum/client_interface/player = allocate(/datum/client_interface)
+	player.ban_cache = list()
+	player.prefs = allocate(/datum/preferences, player)
+	var/mob/dead/new_player/lobby = allocate(/mob/dead/new_player)
+	lobby.mock_client = player
+	player.mob = lobby
+	lobby.mind = allocate(/datum/mind)
+	lobby.mind.set_current(lobby)
+	TEST_ASSERT(!SSjob.give_priority_job(lobby), "A deleted lobby received a priority profession")
+	TEST_ASSERT(QDELETED(lobby), "The test did not reach the eligibility interruption")
+	TEST_ASSERT_EQUAL(first.lock_calls, 1, "The first native eligibility check was not reached exactly once")
+	TEST_ASSERT_EQUAL(second.preference_calls, 0, "Priority selection inspected another job after the lobby was deleted")
+	TEST_ASSERT_EQUAL(first.current_positions, 0, "The rejected priority job occupied a vacancy")
+	TEST_ASSERT_EQUAL(second.current_positions, 0, "The unvisited priority job occupied a vacancy")
+
+/datum/unit_test/priority_job_lifetime_guard/Destroy()
+	if(!isnull(joinable_before))
+		SSjob.joinable_occupations = joinable_before
+	release_job_player_fixtures()
+	return ..()

@@ -140,7 +140,7 @@ class FileConversionTests(unittest.TestCase):
         bad_documents = [
             [],
             {"preferences": self.document},
-            {**self.document, "version": 53},
+            {**self.document, "version": 54},
             {**self.document, "version": 31},
             {**self.document, "version": True},
             {**self.document, "version": 51.5},
@@ -161,6 +161,30 @@ class FileConversionTests(unittest.TestCase):
                 self.assertIn("errors=1", output)
                 self.assertEqual(self.source.read_bytes(), source_bytes)
                 self.assertFalse(self.backups.exists())
+
+    def test_supported_save_versions_preserve_keybindings_and_characters(self):
+        for version in (32, 52, 53):
+            with self.subTest(version=version):
+                document = deepcopy(self.document)
+                document["version"] = version
+                document["key_bindings"] = {"swap_hands_row": ["X"], "custom_binding": ["Z"]}
+                document["character1"]["version"] = version
+                original = json.dumps(document, ensure_ascii=False).encode("utf-8")
+                self.source.write_bytes(original)
+                backup_root = self.backups / f"version-{version}"
+                result, output = self.run_cli("--apply", "--server-stopped", "--backup-dir", str(backup_root))
+                self.assertEqual(result, 0, output)
+                converted = json.loads(self.source.read_text(encoding="utf-8"))
+                self.assertEqual(converted["version"], version)
+                self.assertEqual(converted["key_bindings"], document["key_bindings"])
+                self.assertEqual(converted["character1"], document["character1"])
+                self.assertEqual(converted["pref_job_slots"], {"Cargo Technician": 2, "Assistant": -1})
+                self.assertEqual((backup_root / "a" / "alice" / "preferences.json").read_bytes(), original)
+                after = self.source.read_bytes()
+                result, output = self.run_cli("--check-ready")
+                self.assertEqual(result, 0, output)
+                self.assertIn("changed=0 unchanged=1 errors=0", output)
+                self.assertEqual(self.source.read_bytes(), after)
 
     def test_unexpected_player_path_is_rejected_and_other_json_is_ignored(self):
         unrelated = self.root / "other.json"

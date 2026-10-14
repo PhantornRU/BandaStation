@@ -15,7 +15,7 @@ from typing import Any
 
 
 SAVEFILE_VERSION_MIN = 32
-SAVEFILE_VERSION_MAX = 52
+SAVEFILE_VERSION_MAX = 53
 
 
 def migrate_job_slots(document: dict[str, Any]) -> dict[str, Any]:

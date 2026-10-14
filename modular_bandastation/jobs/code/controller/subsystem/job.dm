@@ -13,6 +13,10 @@
 		return FALSE
 
 	for(var/datum/job/job as anything in shuffle_and_sort_jobs_by_staffing_priority(joinable_occupations))
+		// Eligibility can yield; recheck the lobby before the next iteration.
+		if(QDELETED(player))
+			job_debug("GRJ: Player is deleted, aborting")
+			break
 		// RP jobs must never be an automatic staffing fallback.
 		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
 			continue
