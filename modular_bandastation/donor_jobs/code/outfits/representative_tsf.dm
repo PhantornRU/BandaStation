@@ -2,9 +2,9 @@
 	name = "Representative TSF"
 	jobtype = /datum/job/donor/representative_tsf
 	id_trim = /datum/id_trim/job/donor_representative_tsf
-	uniform = /obj/item/clothing/under/suit/navy
+	uniform = /obj/item/clothing/under/rank/tsf/donor/representative
 	shoes = /obj/item/clothing/shoes/laceup
-	head = /obj/item/clothing/head/beret
+	head = /obj/item/clothing/head/beret/donor_tsf
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/white
 	l_pocket = /obj/item/melee/baton/telescopic

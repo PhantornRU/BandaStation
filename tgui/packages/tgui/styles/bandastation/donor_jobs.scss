@@ -52,7 +52,14 @@
   gap: var(--space-m);
 }
 
-.PreferencesMenu__JobTiers > .PreferencesMenu__JobTier {
+.PreferencesMenu__JobTierColumn {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: var(--space-m);
+}
+
+.PreferencesMenu__JobTierColumn > .PreferencesMenu__JobTier {
   &,
   &:first-child {
     margin: 0;

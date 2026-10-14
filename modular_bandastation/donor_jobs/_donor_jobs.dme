@@ -7,6 +7,8 @@
 #include "code\job_extensions.dm"
 #include "code\items\seclown_uniform.dm"
 #include "code\items\honk.dm"
+#include "code\items\tsf_clothing.dm"
+#include "code\items\ussp_clothing.dm"
 #include "code\jobs\acolyte.dm"
 #include "code\jobs\actor.dm"
 #include "code\jobs\adjutant.dm"

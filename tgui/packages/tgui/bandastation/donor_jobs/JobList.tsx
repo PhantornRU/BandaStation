@@ -33,61 +33,72 @@ export function JobList(props: {
   const tiers = [
     ...new Set(names.map((name) => donorJobs[name].required_tier)),
   ].sort((a, b) => a - b);
+  const tierColumns = [
+    tiers.filter((tier) => tier < 3),
+    tiers.filter((tier) => tier === 3),
+    tiers.filter((tier) => tier > 3),
+  ].filter((columnTiers) => columnTiers.length);
   const JobRow = props.jobRow;
+
+  function renderTier(tier: number) {
+    const tierJobs = names.filter(
+      (name) => donorJobs[name].required_tier === tier,
+    );
+    const locked = tierJobs.every((name) => !!donorJobs[name].lock_reason);
+    return (
+      <Section
+        key={tier}
+        className={classes([
+          'PreferencesMenu__JobTier',
+          locked && 'PreferencesMenu__JobTier--locked',
+        ])}
+        title={`Тир ${tier}`}
+        buttons={
+          <Box color={locked ? 'label' : 'good'}>
+            <Icon name={locked ? 'lock' : 'check'} />{' '}
+            {locked ? 'Недоступен' : 'Доступен'}
+          </Box>
+        }
+      >
+        <Stack vertical g={0}>
+          {tierJobs.map((name) => {
+            const job = jobs[name];
+            const department = departments[job.department];
+            return (
+              <Box
+                key={name}
+                style={
+                  {
+                    '--department-color': Color.fromHex(department.color)
+                      .darken(10)
+                      .toString(),
+                  } as CSSProperties
+                }
+              >
+                <JobRow
+                  name={name}
+                  job={job}
+                  className={classes([
+                    'PreferencesMenu__Department',
+                    `PreferencesMenu__Department--${job.department.replace(' ', '')}`,
+                    name === department.head && 'head',
+                  ])}
+                />
+              </Box>
+            );
+          })}
+        </Stack>
+      </Section>
+    );
+  }
 
   return (
     <div className="PreferencesMenu__JobTiers">
-      {tiers.map((tier) => {
-        const tierJobs = names.filter(
-          (name) => donorJobs[name].required_tier === tier,
-        );
-        const locked = tierJobs.every((name) => !!donorJobs[name].lock_reason);
-        return (
-          <Section
-            key={tier}
-            className={classes([
-              'PreferencesMenu__JobTier',
-              locked && 'PreferencesMenu__JobTier--locked',
-            ])}
-            title={`Тир ${tier}`}
-            buttons={
-              <Box color={locked ? 'label' : 'good'}>
-                <Icon name={locked ? 'lock' : 'check'} />{' '}
-                {locked ? 'Недоступен' : 'Доступен'}
-              </Box>
-            }
-          >
-            <Stack vertical g={0}>
-              {tierJobs.map((name) => {
-                const job = jobs[name];
-                const department = departments[job.department];
-                return (
-                  <Box
-                    key={name}
-                    style={
-                      {
-                        '--department-color': Color.fromHex(department.color)
-                          .darken(10)
-                          .toString(),
-                      } as CSSProperties
-                    }
-                  >
-                    <JobRow
-                      name={name}
-                      job={job}
-                      className={classes([
-                        'PreferencesMenu__Department',
-                        `PreferencesMenu__Department--${job.department.replace(' ', '')}`,
-                        name === department.head && 'head',
-                      ])}
-                    />
-                  </Box>
-                );
-              })}
-            </Stack>
-          </Section>
-        );
-      })}
+      {tierColumns.map((columnTiers) => (
+        <div key={columnTiers[0]} className="PreferencesMenu__JobTierColumn">
+          {columnTiers.map(renderTier)}
+        </div>
+      ))}
     </div>
   );
 }

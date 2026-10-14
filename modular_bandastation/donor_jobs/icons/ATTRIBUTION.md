@@ -13,3 +13,29 @@ These icons use [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/),
 | honk_rifle_righthand.dmi | modular_ss220/jobs/icons/custom_gun/mob/custom_guns_righthand.dmi | honkrifle_security0–4 |
 | job_hud.dmi | modular_ss220/jobs/icons/hud.dmi | 22 canonical donor roles; prisoner, deliverer, painter, apprentice, butler, maid |
 | landmarks.dmi | modular_ss220/jobs/icons/landmarks.dmi | prisoner, prisoner_arrive, bath, dealer, uncertain, barber, vip, art, bar |
+
+
+## TSF and USSP clothing
+
+The same pinned source and CC BY-SA 3.0 attribution apply to the faction clothing below. The existing native TSF inventory states `tsf_marine` and `tsf_marsoc` are reused rather than copied. Original worn cap spelling `solgovcselitesoft` is normalized to `solgovcelitesoft`; pixels and frame metadata are unchanged. Only states consumed by native clothing types are included. See [the item mapping](../FACTION_CLOTHING.md).
+
+| Local file | Original path | States |
+| --- | --- | --- |
+| tsf_uniforms.dmi | icons/obj/clothing/under/solgov.dmi | solgovc, solgovcelite, solgovr |
+| tsf_uniforms.dmi | icons/obj/clothing/under/centcom.dmi | navy_gold |
+| tsf_uniforms_worn.dmi | icons/mob/clothing/under/solgov.dmi | solgov_s, solgovc_s, solgovelite_s, solgovcelite_s, solgovr_s |
+| tsf_uniforms_worn.dmi | icons/mob/clothing/under/centcom.dmi | navy_gold_s |
+| tsf_hats.dmi | icons/obj/clothing/hats.dmi | solgovsoft, solgovsoft_flipped, solgovcsoft, solgovcsoft_flipped, solgovelitesoft, solgovelitesoft_flipped, solgovcelitesoft, solgovcelitesoft_flipped, solgovcberet, solgovceliteberet, hardsuit0-solgovmarine, hardsuit0-solgovcommand |
+| tsf_hats_worn.dmi | icons/mob/clothing/head.dmi | solgovsoft, solgovsoft_flipped, solgovcsoft, solgovcsoft_flipped, solgovelitesoft, solgovelitesoft_flipped, solgovcelitesoft, solgovcelitesoft_flipped, solgovcberet, solgovceliteberet, hardsuit0-solgovmarine, hardsuit0-solgovcommand |
+| tsf_suits.dmi | icons/obj/clothing/suits.dmi | solgovcommander, ert_solgov_marine, ert_solgov_command |
+| tsf_suits_worn.dmi | icons/mob/clothing/suit.dmi | solgovcommander, ert_solgov_marine, ert_solgov_command |
+| tsf_uniforms_lefthand.dmi | icons/mob/inhands/clothing_lefthand.dmi | navy_gold |
+| tsf_uniforms_righthand.dmi | icons/mob/inhands/clothing_righthand.dmi | navy_gold |
+| ussp_uniforms.dmi | icons/obj/clothing/under/ussp.dmi | soviet, sovietofficer, sovietadmiral |
+| ussp_uniforms_worn.dmi | icons/mob/clothing/under/ussp.dmi | soviet_s, sovietofficer_s, sovietadmiral_s |
+| ussp_hats.dmi | icons/obj/clothing/hats.dmi | sovietsidecap, sovietofficerhat, sovietadmiralhat, hardsuit0-soviet, hardsuit0-soviet-commander |
+| ussp_hats_worn.dmi | icons/mob/clothing/head.dmi | sovietsidecap, sovietofficerhat, sovietadmiralhat, hardsuit0-soviet, hardsuit0-soviet-commander |
+| ussp_suits.dmi | icons/obj/clothing/suits.dmi | sovietcoat, sovietofficercoat, hardsuit-soviet, hardsuit-soviet-commander |
+| ussp_suits_worn.dmi | icons/mob/clothing/suit.dmi | sovietcoat, sovietofficercoat, hardsuit-soviet, hardsuit-soviet-commander |
+| ussp_suits_lefthand.dmi | icons/mob/inhands/clothing_lefthand.dmi | hardsuit-soviet, hardsuit-soviet-commander |
+| ussp_suits_righthand.dmi | icons/mob/inhands/clothing_righthand.dmi | hardsuit-soviet, hardsuit-soviet-commander |
