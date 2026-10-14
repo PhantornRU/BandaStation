@@ -77,6 +77,7 @@
 	icon = 'modular_bandastation/donor_jobs/icons/tsf_hats.dmi'
 	worn_icon = 'modular_bandastation/donor_jobs/icons/tsf_hats_worn.dmi'
 	icon_state = "solgovcberet"
+	inhand_icon_state = "greyscale_softcap"
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null

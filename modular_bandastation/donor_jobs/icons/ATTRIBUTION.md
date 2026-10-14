@@ -4,7 +4,7 @@ The retained pixels are from [Paradise-SS220 revision 71c8bb1b88e29c352875865b36
 
 These icons use [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), as recorded in the [source README](https://github.com/ss220club/Paradise-SS220/blob/71c8bb1b88e29c352875865b362a1f8a99a205cc/README.md#license). Only the states below are retained; unrelated clothing, gun and trainee/HONK-squad HUD states have been removed. Frame pixels, directions and animation metadata are unchanged for clothing, guns and landmarks. The uniform state was renamed from security_clown_s to security_clown by the original BandaStation import. HUD glyphs retain their eight-by-eight pixels and move down eight pixels within the 32-by-32 frame to match TG's existing HUD crop and Orbit positioning.
 
-| Local file | Original path | States |
+| Local file | Original path | Local states (source names where different) |
 | --- | --- | --- |
 | seclown_uniform.dmi | modular_ss220/jobs/icons/clothing/uniforms.dmi | security_clown (source: security_clown_s) |
 | seclown_uniform_worn.dmi | modular_ss220/jobs/icons/clothing/mob/uniform.dmi | security_clown (source: security_clown_s) |
@@ -19,12 +19,12 @@ These icons use [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/),
 
 The same pinned source and CC BY-SA 3.0 attribution apply to the faction clothing below. The existing native TSF inventory states `tsf_marine` and `tsf_marsoc` are reused rather than copied. Original worn cap spelling `solgovcselitesoft` is normalized to `solgovcelitesoft`; pixels and frame metadata are unchanged. Only states consumed by native clothing types are included. See [the item mapping](../FACTION_CLOTHING.md).
 
-| Local file | Original path | States |
+| Local file | Original path | Local states (source names where different) |
 | --- | --- | --- |
 | tsf_uniforms.dmi | icons/obj/clothing/under/solgov.dmi | solgovc, solgovcelite, solgovr |
 | tsf_uniforms.dmi | icons/obj/clothing/under/centcom.dmi | navy_gold |
-| tsf_uniforms_worn.dmi | icons/mob/clothing/under/solgov.dmi | solgov_s, solgovc_s, solgovelite_s, solgovcelite_s, solgovr_s |
-| tsf_uniforms_worn.dmi | icons/mob/clothing/under/centcom.dmi | navy_gold_s |
+| tsf_uniforms_worn.dmi | icons/mob/clothing/under/solgov.dmi | tsf_marine (source: solgov_s), solgovc (source: solgovc_s), tsf_marsoc (source: solgovelite_s), solgovcelite (source: solgovcelite_s), solgovr (source: solgovr_s) |
+| tsf_uniforms_worn.dmi | icons/mob/clothing/under/centcom.dmi | navy_gold (source: navy_gold_s) |
 | tsf_hats.dmi | icons/obj/clothing/hats.dmi | solgovsoft, solgovsoft_flipped, solgovcsoft, solgovcsoft_flipped, solgovelitesoft, solgovelitesoft_flipped, solgovcelitesoft, solgovcelitesoft_flipped, solgovcberet, solgovceliteberet, hardsuit0-solgovmarine, hardsuit0-solgovcommand |
 | tsf_hats_worn.dmi | icons/mob/clothing/head.dmi | solgovsoft, solgovsoft_flipped, solgovcsoft, solgovcsoft_flipped, solgovelitesoft, solgovelitesoft_flipped, solgovcelitesoft, solgovcelitesoft_flipped, solgovcberet, solgovceliteberet, hardsuit0-solgovmarine, hardsuit0-solgovcommand |
 | tsf_suits.dmi | icons/obj/clothing/suits.dmi | solgovcommander, ert_solgov_marine, ert_solgov_command |
@@ -32,7 +32,7 @@ The same pinned source and CC BY-SA 3.0 attribution apply to the faction clothin
 | tsf_uniforms_lefthand.dmi | icons/mob/inhands/clothing_lefthand.dmi | navy_gold |
 | tsf_uniforms_righthand.dmi | icons/mob/inhands/clothing_righthand.dmi | navy_gold |
 | ussp_uniforms.dmi | icons/obj/clothing/under/ussp.dmi | soviet, sovietofficer, sovietadmiral |
-| ussp_uniforms_worn.dmi | icons/mob/clothing/under/ussp.dmi | soviet_s, sovietofficer_s, sovietadmiral_s |
+| ussp_uniforms_worn.dmi | icons/mob/clothing/under/ussp.dmi | soviet (source: soviet_s), sovietofficer (source: sovietofficer_s), sovietadmiral (source: sovietadmiral_s) |
 | ussp_hats.dmi | icons/obj/clothing/hats.dmi | sovietsidecap, sovietofficerhat, sovietadmiralhat, hardsuit0-soviet, hardsuit0-soviet-commander |
 | ussp_hats_worn.dmi | icons/mob/clothing/head.dmi | sovietsidecap, sovietofficerhat, sovietadmiralhat, hardsuit0-soviet, hardsuit0-soviet-commander |
 | ussp_suits.dmi | icons/obj/clothing/suits.dmi | sovietcoat, sovietofficercoat, hardsuit-soviet, hardsuit-soviet-commander |
