@@ -2,6 +2,7 @@
 #include "equipment.dm"
 #include "seclown_equipment.dm"
 #include "faction_outfits.dm"
+#include "faction_uniform_overlays.dm"
 #include "tsf_clothing.dm"
 #include "ussp_clothing.dm"
 #include "icons_landmarks.dm"

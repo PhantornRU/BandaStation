@@ -5,7 +5,6 @@
 	icon = 'modular_bandastation/donor_jobs/icons/ussp_uniforms.dmi'
 	worn_icon = 'modular_bandastation/donor_jobs/icons/ussp_uniforms_worn.dmi'
 	icon_state = "soviet"
-	worn_icon_state = "soviet_s"
 	inhand_icon_state = "g_suit"
 	female_sprite_flags = NO_FEMALE_UNIFORM
 
@@ -13,14 +12,12 @@
 	name = "\improper USSP officer uniform"
 	desc = "Классическая форма офицера СССП."
 	icon_state = "sovietofficer"
-	worn_icon_state = "sovietofficer_s"
 	inhand_icon_state = "gy_suit"
 
 /obj/item/clothing/under/costume/soviet/ussp/admiral
 	name = "\improper USSP admiral uniform"
 	desc = "Классическая парадная форма адмирала СССП."
 	icon_state = "sovietadmiral"
-	worn_icon_state = "sovietadmiral_s"
 	inhand_icon_state = "w_suit"
 
 /obj/item/clothing/head/hats/ussp/classic

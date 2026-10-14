@@ -1,9 +1,9 @@
 /// The source inventory includes admiral clothing and both space pairs, beyond the two donor outfits.
 /datum/unit_test/ussp_clothing_assets/Run()
 	var/list/required = list(
-		list(/obj/item/clothing/under/costume/soviet/ussp, ITEM_SLOT_ICLOTHING, "soviet", "soviet_s"),
-		list(/obj/item/clothing/under/costume/soviet/ussp/officer, ITEM_SLOT_ICLOTHING, "sovietofficer", "sovietofficer_s"),
-		list(/obj/item/clothing/under/costume/soviet/ussp/admiral, ITEM_SLOT_ICLOTHING, "sovietadmiral", "sovietadmiral_s"),
+		list(/obj/item/clothing/under/costume/soviet/ussp, ITEM_SLOT_ICLOTHING, "soviet", "soviet"),
+		list(/obj/item/clothing/under/costume/soviet/ussp/officer, ITEM_SLOT_ICLOTHING, "sovietofficer", "sovietofficer"),
+		list(/obj/item/clothing/under/costume/soviet/ussp/admiral, ITEM_SLOT_ICLOTHING, "sovietadmiral", "sovietadmiral"),
 		list(/obj/item/clothing/head/hats/ussp/classic, ITEM_SLOT_HEAD, "sovietsidecap", "sovietsidecap"),
 		list(/obj/item/clothing/head/hats/ussp/classic/officer, ITEM_SLOT_HEAD, "sovietofficerhat", "sovietofficerhat"),
 		list(/obj/item/clothing/head/hats/ussp/classic/admiral, ITEM_SLOT_HEAD, "sovietadmiralhat", "sovietadmiralhat"),

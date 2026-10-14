@@ -46,20 +46,20 @@
 }
 
 .PreferencesMenu__JobTiers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  align-items: start;
-  gap: var(--space-m);
-}
-
-.PreferencesMenu__JobTierColumn {
   display: flex;
   flex-direction: column;
   min-width: 0;
   gap: var(--space-m);
 }
 
-.PreferencesMenu__JobTierColumn > .PreferencesMenu__JobTier {
+.PreferencesMenu__JobTierJobs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  align-items: start;
+  gap: var(--space-s) var(--space-m);
+}
+
+.PreferencesMenu__JobTiers > .PreferencesMenu__JobTier {
   &,
   &:first-child {
     margin: 0;

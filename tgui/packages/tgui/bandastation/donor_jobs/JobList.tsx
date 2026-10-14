@@ -1,7 +1,7 @@
 import type { ComponentType, CSSProperties, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Color } from 'tgui-core/color';
-import { Box, Icon, Section, Stack } from 'tgui-core/components';
+import { Box, Icon, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import type {
@@ -33,11 +33,6 @@ export function JobList(props: {
   const tiers = [
     ...new Set(names.map((name) => donorJobs[name].required_tier)),
   ].sort((a, b) => a - b);
-  const tierColumns = [
-    tiers.filter((tier) => tier < 3),
-    tiers.filter((tier) => tier === 3),
-    tiers.filter((tier) => tier > 3),
-  ].filter((columnTiers) => columnTiers.length);
   const JobRow = props.jobRow;
 
   function renderTier(tier: number) {
@@ -60,13 +55,14 @@ export function JobList(props: {
           </Box>
         }
       >
-        <Stack vertical g={0}>
+        <div className="PreferencesMenu__JobTierJobs">
           {tierJobs.map((name) => {
             const job = jobs[name];
             const department = departments[job.department];
             return (
               <Box
                 key={name}
+                minWidth={0}
                 style={
                   {
                     '--department-color': Color.fromHex(department.color)
@@ -87,18 +83,14 @@ export function JobList(props: {
               </Box>
             );
           })}
-        </Stack>
+        </div>
       </Section>
     );
   }
 
   return (
     <div className="PreferencesMenu__JobTiers">
-      {tierColumns.map((columnTiers) => (
-        <div key={columnTiers[0]} className="PreferencesMenu__JobTierColumn">
-          {columnTiers.map(renderTier)}
-        </div>
-      ))}
+      {tiers.map(renderTier)}
     </div>
   );
 }

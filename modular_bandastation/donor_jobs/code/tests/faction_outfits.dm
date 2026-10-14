@@ -27,7 +27,7 @@
 		TEST_ASSERT_EQUAL(body.wear_suit?.type, test_case[4], "[job.title] changed its required faction outerwear")
 		TEST_ASSERT_NOTNULL(body.get_idcard(hand_first = FALSE), "The faction outfit bypassed native ID issuance")
 		var/obj/item/clothing/under/uniform = body.w_uniform
-		TEST_ASSERT((uniform.worn_icon_state || uniform.icon_state) in icon_states(uniform.worn_icon), "[job.title] has no worn uniform appearance")
+		TEST_ASSERT(uniform.icon_state in icon_states(uniform.worn_icon), "[job.title] has no worn uniform appearance")
 		TEST_ASSERT(body.head.icon_state in icon_states(body.head.worn_icon), "[job.title] has no worn headwear appearance")
 		var/mob/living/carbon/human/preview = allocate(/mob/living/carbon/human/consistent)
 		preview.dress_up_as_job(job, visual_only = TRUE, player_client = player, consistent = TRUE)

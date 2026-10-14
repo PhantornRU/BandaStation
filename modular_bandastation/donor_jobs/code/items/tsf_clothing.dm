@@ -12,38 +12,32 @@
 	// The inventory pixels already exist in BandaStation; only the worn appearance differs.
 	icon = 'modular_bandastation/objects/icons/obj/clothing/under/tsf.dmi'
 	icon_state = "tsf_marine"
-	worn_icon_state = "solgov_s"
 
 /obj/item/clothing/under/rank/tsf/donor/specops
 	name = "\improper Trans-Solar Federation Specops marine uniform"
 	desc = "A combat uniform worn by the Trans-Solar Federation's special operations marines."
 	icon = 'modular_bandastation/objects/icons/obj/clothing/under/tsf.dmi'
 	icon_state = "tsf_marsoc"
-	worn_icon_state = "solgovelite_s"
 
 /obj/item/clothing/under/rank/tsf/donor/command
 	name = "\improper Trans-Solar Federation lieutenant's uniform"
 	desc = "A marine uniform with a lieutenant's insignia on its shoulders and cuffs."
 	icon_state = "solgovc"
-	worn_icon_state = "solgovc_s"
 
 /obj/item/clothing/under/rank/tsf/donor/command/specops
 	name = "\improper Trans-Solar Federation Specops lieutenant's uniform"
 	desc = "A special operations marine uniform with a lieutenant's insignia."
 	icon_state = "solgovcelite"
-	worn_icon_state = "solgovcelite_s"
 
 /obj/item/clothing/under/rank/tsf/donor/representative
 	name = "\improper Trans-Solar Federation representative's uniform"
 	desc = "A formal uniform worn by diplomatic representatives of the Trans-Solar Federation."
 	icon_state = "solgovr"
-	worn_icon_state = "solgovr_s"
 
 /obj/item/clothing/under/rank/tsf/donor/commander
 	name = "\improper Trans-Solar Federation commander's uniform"
 	desc = "A space-black uniform with gold trim, worn by generals of the Trans-Solar Federation."
 	icon_state = "navy_gold"
-	worn_icon_state = "navy_gold_s"
 	inhand_icon_state = "navy_gold"
 	lefthand_file = 'modular_bandastation/donor_jobs/icons/tsf_uniforms_lefthand.dmi'
 	righthand_file = 'modular_bandastation/donor_jobs/icons/tsf_uniforms_righthand.dmi'
