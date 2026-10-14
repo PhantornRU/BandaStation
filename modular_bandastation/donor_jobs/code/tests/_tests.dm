@@ -7,6 +7,7 @@
 #include "ussp_clothing.dm"
 #include "icons_landmarks.dm"
 #include "id_templates.dm"
+#include "identity_items.dm"
 #include "prisoner_record.dm"
 #include "preferences_regressions.dm"
 #include "profile_selection.dm"

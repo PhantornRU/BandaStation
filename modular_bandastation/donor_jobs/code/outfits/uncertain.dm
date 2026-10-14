@@ -2,6 +2,7 @@
 	name = "Uncertain"
 	jobtype = /datum/job/donor/uncertain
 	id_trim = /datum/id_trim/job/donor_uncertain
+	belt = /obj/item/modular_computer/pda/crew/curator
 	uniform = /obj/item/clothing/under/costume/kilt
 	shoes = /obj/item/clothing/shoes/sandal/velcro
 	suit = /obj/item/clothing/suit/costume/poncho

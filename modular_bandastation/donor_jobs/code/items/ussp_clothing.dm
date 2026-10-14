@@ -23,21 +23,26 @@
 /obj/item/clothing/head/hats/ussp/classic
 	name = "\improper USSP side cap"
 	desc = "Классическая военная пилотка с красной звездой СССП."
-	icon = 'modular_bandastation/donor_jobs/icons/ussp_hats.dmi'
+	icon = 'modular_bandastation/objects/icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'modular_bandastation/donor_jobs/icons/ussp_hats_worn.dmi'
-	icon_state = "sovietsidecap"
+	icon_state = "ussp_pilotka"
+	worn_icon_state = "sovietsidecap"
 	inhand_icon_state = "greyscale_softcap"
 
 /obj/item/clothing/head/hats/ussp/classic/officer
 	name = "\improper USSP officer hat"
 	desc = "Классическая фуражка офицера СССП."
+	icon = 'modular_bandastation/donor_jobs/icons/ussp_hats.dmi'
 	icon_state = "sovietofficerhat"
+	worn_icon_state = "sovietofficerhat"
 	inhand_icon_state = "that"
 
 /obj/item/clothing/head/hats/ussp/classic/admiral
 	name = "\improper USSP admiral hat"
 	desc = "Классическая парадная фуражка адмирала СССП."
+	icon = 'modular_bandastation/donor_jobs/icons/ussp_hats.dmi'
 	icon_state = "sovietadmiralhat"
+	worn_icon_state = "sovietadmiralhat"
 	inhand_icon_state = "that"
 
 /obj/item/clothing/suit/costume/soviet/ussp

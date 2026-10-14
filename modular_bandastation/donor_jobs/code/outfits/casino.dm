@@ -2,6 +2,7 @@
 	name = "Casino"
 	jobtype = /datum/job/donor/casino
 	id_trim = /datum/id_trim/job/donor_casino
+	belt = /obj/item/modular_computer/pda/crew/bar
 	uniform = /obj/item/clothing/under/suit/burgundy
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/toggle/lawyer/purple

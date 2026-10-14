@@ -55,6 +55,34 @@
 			TEST_ASSERT(body.dropItemToGround(beret, force = TRUE), "Could not release the TSF beret before checking the other hand")
 		qdel(beret)
 
+/// Reusing BS uniforms must preserve a visible native carry appearance in both hands.
+/datum/unit_test/donor_tsf_uniform_inhands/Run()
+	var/mob/living/carbon/human/body = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
+	var/list/uniform_types = list(
+		/obj/item/clothing/under/rank/tsf/marine,
+		/obj/item/clothing/under/rank/tsf/marsoc,
+		/obj/item/clothing/under/rank/tsf/marine_officer,
+		/obj/item/clothing/under/rank/tsf/marsoc_officer,
+		/obj/item/clothing/under/rank/tsf/commander,
+	)
+	for(var/uniform_type in uniform_types)
+		var/obj/item/clothing/under/uniform = allocate(uniform_type)
+		for(var/hand_index in list(LEFT_HANDS, RIGHT_HANDS))
+			TEST_ASSERT(body.put_in_hand(uniform, hand_index), "Could not hold [uniform_type] in hand [hand_index]")
+			var/list/hand_overlays = body.get_held_overlays()
+			TEST_ASSERT_EQUAL(length(hand_overlays), 1, "Native renderer lost the held TSF uniform")
+			var/mutable_appearance/actual = hand_overlays[1]
+			var/expected_file = hand_index == LEFT_HANDS ? 'icons/mob/inhands/clothing/suits_lefthand.dmi' : 'icons/mob/inhands/clothing/suits_righthand.dmi'
+			TEST_ASSERT_EQUAL(actual.icon, expected_file, "TSF uniform replaced the native carry renderer")
+			TEST_ASSERT_EQUAL(actual.icon_state, "ro_suit", "TSF uniform fell back to an absent inventory state")
+			TEST_ASSERT(actual.icon_state in icon_states(actual.icon), "The held TSF uniform is invisible")
+			for(var/direction in GLOB.cardinals)
+				var/icon/actual_frame = icon(actual.icon, actual.icon_state, direction)
+				var/icon/expected_frame = icon(expected_file, "ro_suit", direction)
+				TEST_ASSERT_EQUAL(icon2base64(actual_frame), icon2base64(expected_frame), "TSF uniform lost its native carry frame in direction [direction]")
+			TEST_ASSERT(body.dropItemToGround(uniform, force = TRUE), "Could not release the TSF uniform")
+		qdel(uniform)
+
 /// Imported space appearances preserve TG's pressure protection and armour contract.
 /datum/unit_test/donor_tsf_spacesuits/Run()
 	var/list/suit_types = list(/obj/item/clothing/suit/space/donor_tsf, /obj/item/clothing/suit/space/donor_tsf/command)

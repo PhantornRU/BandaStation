@@ -4,7 +4,7 @@
 		list(/obj/item/clothing/under/costume/soviet/ussp, ITEM_SLOT_ICLOTHING, "soviet", "soviet"),
 		list(/obj/item/clothing/under/costume/soviet/ussp/officer, ITEM_SLOT_ICLOTHING, "sovietofficer", "sovietofficer"),
 		list(/obj/item/clothing/under/costume/soviet/ussp/admiral, ITEM_SLOT_ICLOTHING, "sovietadmiral", "sovietadmiral"),
-		list(/obj/item/clothing/head/hats/ussp/classic, ITEM_SLOT_HEAD, "sovietsidecap", "sovietsidecap"),
+		list(/obj/item/clothing/head/hats/ussp/classic, ITEM_SLOT_HEAD, "ussp_pilotka", "sovietsidecap"),
 		list(/obj/item/clothing/head/hats/ussp/classic/officer, ITEM_SLOT_HEAD, "sovietofficerhat", "sovietofficerhat"),
 		list(/obj/item/clothing/head/hats/ussp/classic/admiral, ITEM_SLOT_HEAD, "sovietadmiralhat", "sovietadmiralhat"),
 		list(/obj/item/clothing/suit/costume/soviet/ussp, ITEM_SLOT_OCLOTHING, "sovietcoat", "sovietcoat"),
@@ -19,6 +19,9 @@
 		var/obj/item/clothing/item = allocate(test_case[1])
 		TEST_ASSERT_EQUAL(item.icon_state, test_case[3], "[item.type] lost its required source appearance")
 		TEST_ASSERT_EQUAL(item.worn_icon_state || item.icon_state, test_case[4], "[item.type] uses the wrong worn state")
+		if(item.type == /obj/item/clothing/head/hats/ussp/classic)
+			TEST_ASSERT_EQUAL(item.icon, 'modular_bandastation/objects/icons/obj/clothing/head/hats.dmi', "The USSP sidecap duplicated its native inventory icon")
+			TEST_ASSERT_EQUAL(item.worn_icon, 'modular_bandastation/donor_jobs/icons/ussp_hats_worn.dmi', "The USSP sidecap lost its distinct source worn appearance")
 		TEST_ASSERT(item.icon_state in icon_states(item.icon), "[item.type] has no inventory sprite")
 		TEST_ASSERT(test_case[4] in icon_states(item.worn_icon), "[item.type] has no worn sprite")
 		TEST_ASSERT(item.inhand_icon_state in icon_states(item.lefthand_file), "[item.type] is invisible in the left hand")
