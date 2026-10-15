@@ -50,6 +50,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	 * If a job is absent from the list, it is considered to be "JP_NEVER"
 	 */
 	var/list/job_preferences = list()
+	/**
+	 * Lazylist of job titles to character slot numbers
+	 * When rolling for a job, if that job is present in this list, we load that slot instead of the active slot
+	 */
+	var/list/job_assigned_profiles
+
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 
@@ -263,7 +269,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return FALSE
 
 			var/default_value = read_preference(requested_preference.type)
-			var/editing_slot = default_slot // BANDASTATION EDIT: modal replies belong to the original character.
 
 			// Yielding
 			var/new_color = tgui_color_picker(
@@ -275,10 +280,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if (!new_color)
 				return FALSE
-			// BANDASTATION EDIT START: reject a delayed reply after changing character or client.
-			if(editing_slot != default_slot || QDELETED(ui) || !ui.user?.client || ui.user.client != parent)
-				return FALSE
-			// BANDASTATION EDIT END
 
 			if (!update_preference(requested_preference, new_color))
 				return FALSE

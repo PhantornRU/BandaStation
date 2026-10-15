@@ -4,32 +4,41 @@
 
 GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
+// BANDASTATION ADDITION: Job restrictions
+/datum/latejoin_menu/proc/is_job_allowed_for_species_with_string(job_title, mob/dead/new_player/owner)
+	var/species = owner.client?.prefs?.read_preference(/datum/preference/choiced/species)
+	if(!species)
+		return TRUE
+
+	if(locate(/datum/station_trait/xenobureaucracy_error) in GLOB.lobby_station_traits)
+		return TRUE
+
+	if(!job_title)
+		return TRUE
+
+	var/list/job_restrictions = CONFIG_GET(str_list/job_restrictions)
+	if(!(job_title in job_restrictions))
+		return TRUE
+
+	var/list/allowed_species = CONFIG_GET(str_list/allowed_species)
+	if(!allowed_species || !length(allowed_species))
+		return TRUE
+
+	return ("[species]" in allowed_species)
+// BANDASTATION ADDITION END
+
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
-	// BANDASTATION EDIT START: both menus show the same restrictions and use the same admission path.
-	var/client/requester = user.client
-	if(!requester || requester.interviewee)
-		return
-	var/editing_slot = requester.prefs.default_slot
 	var/list/jobs = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		var/availability = user.IsJobUnavailable(job.title, latejoin = TRUE)
-		if(QDELETED(user) || user.client != requester || requester.mob != user)
-			return
-		if(availability != JOB_AVAILABLE && (job.job_flags & JOB_HIDE_WHEN_EMPTY))
-			continue
-		var/label = get_job_choice_label(job, user, availability, jobs)
-		jobs[label] = job.title
+		jobs += job.title
 
-	var/input_contents = input(user, "Выберите профессию:", "Поздний вход") as null|anything in jobs
+	var/input_contents = input(user, "Pick a job to join as:", "Latejoin Job Selection") as null|anything in jobs
 
-	if(!input_contents || QDELETED(user) || user.client != requester || requester.mob != user)
-		return
-	if(requester.prefs.default_slot != editing_slot)
+	if(!input_contents)
 		return
 
-	user.AttemptLateSpawn(jobs[input_contents])
-	// BANDASTATION EDIT END
+	user.AttemptLateSpawn(input_contents)
 
 /datum/latejoin_menu/ui_close(mob/dead/new_player/user)
 	. = ..()
@@ -54,9 +63,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 /datum/latejoin_menu/ui_data(mob/user)
 	var/mob/dead/new_player/owner = user
-	var/client/requester = owner.client // BANDASTATION ADDITION
-	if(!requester)
-		return list()
+	var/client/requester = owner.client // BANDASTATION EDIT - Preserve the requester across eligibility waits.
 	var/list/departments = list()
 	var/list/data = list(
 		"disable_jobs_for_non_observers" = SSlag_switch.measures[DISABLE_NON_OBSJOBS],
@@ -88,10 +95,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				continue
 
 			var/job_availability = owner.IsJobUnavailable(job_datum.title, latejoin = TRUE)
-			// BANDASTATION ADDITION START: eligibility can wait for native ban checks.
-			if(QDELETED(owner) || owner.client != requester)
+			if(QDELETED(owner) || owner.client != requester) // BANDASTATION EDIT - Eligibility may yield.
 				return list()
-			// BANDASTATION ADDITION END
 
 			var/list/job_data = list(
 				"prioritized" = (job_datum in SSjob.prioritized_jobs),
@@ -118,6 +123,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 /datum/latejoin_menu/ui_static_data(mob/user)
 	var/list/departments = list()
+	var/mob/dead/new_player/owner = user
 
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		var/list/department_jobs = list()
@@ -131,7 +137,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			//Jobs under multiple departments should only be displayed if this is their first department or the command department
 			if(LAZYLEN(job_datum.departments_list) > 1 && job_datum.departments_list[1] != department.type && !(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue
-			// BANDASTATION EDIT: visibility and availability live in ui_data, including reopened vacancies.
+			if(!uses_dynamic_job_visibility() && (job_datum.job_flags & JOB_HIDE_WHEN_EMPTY) && owner.IsJobUnavailable(job_datum.title, latejoin = TRUE) != JOB_AVAILABLE) // BANDASTATION EDIT - Module visibility policy.
+				continue
 
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
@@ -147,9 +154,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 /datum/latejoin_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.) // BANDASTATION EDIT: honor native UI status.
-		return
 
+/datum/latejoin_menu/proc/handle_native_ui_action(action, list/params, datum/tgui/ui, datum/ui_state/state) // BANDASTATION EDIT - Resume native actions after module routing.
 	if(!ui.user.client || ui.user.client.interviewee || !isnewplayer(ui.user))
 		return TRUE
 
@@ -159,7 +165,43 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		if("ui_mounted_with_no_bluescreen")
 			owner.jobs_menu_mounted = TRUE
 		if("select_job")
-			return select_character_job(owner, params) // BANDASTATION EDIT - Slot-checked request and post-confirmation identity.
+			if(params["job"] == "Random")
+				var/job = get_random_job(owner)
+				if(!job)
+					return TRUE
+
+				params["job"] = job
+
+			if(!SSticker?.IsRoundInProgress())
+				tgui_alert(owner, "The round is either not ready, or has already finished...", "Oh No!")
+				return TRUE
+
+			if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+				tgui_alert(owner, "There is an administrative lock on entering the game for non-observers!", "Oh No!")
+				return TRUE
+
+			//Determines Relevent Population Cap
+			var/relevant_cap
+			var/hard_popcap = CONFIG_GET(number/hard_popcap)
+			var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
+			if(hard_popcap && extreme_popcap)
+				relevant_cap = min(hard_popcap, extreme_popcap)
+			else
+				relevant_cap = max(hard_popcap, extreme_popcap)
+
+			if(SSticker.queued_players.len && !(ckey(owner.key) in GLOB.admin_datums))
+				if((living_player_count() >= relevant_cap) || (owner != SSticker.queued_players[1]))
+					tgui_alert(owner, "The server is full!", "Oh No!")
+					return TRUE
+
+			// BANDASTATION ADDITION: Job restriction
+			if(!is_job_allowed_for_species_with_string(params["job"], owner))
+				to_chat(usr,span_alertwarning("Выбранная раса несовместима с выбранной профессией!"))
+				return TRUE
+			// BANDASTATION ADDITION END
+
+			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
+			owner.AttemptLateSpawn(params["job"])
 		if("viewpoll")
 			var/datum/poll_question/poll = locate(params["viewpoll"]) in GLOB.polls
 			if(!poll)
@@ -179,22 +221,11 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 /// Gives the user a random job that they can join as, and prompts them if they'd actually like to keep it, rerolling if not. Cancellable by the user.
 /// WARNING: BLOCKS THREAD!
 /datum/latejoin_menu/proc/get_random_job(mob/dead/new_player/owner)
-	var/client/requester = owner.client // BANDASTATION ADDITION
-	if(!requester)
-		return
-	var/editing_slot = requester.prefs.default_slot // BANDASTATION ADDITION
 	var/list/dept_data = list()
 
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		for(var/datum/job/job_datum as anything in department.department_jobs)
-			// BANDASTATION ADDITION START: RP donor roles need an explicit preference.
-			if(job_datum.requires_explicit_preference() && !requester.prefs.job_preferences[job_datum.title])
-				continue
-			// BANDASTATION ADDITION END
-			var/availability = owner.IsJobUnavailable(job_datum.title, latejoin = TRUE)
-			if(QDELETED(owner) || owner.client != requester)
-				return
-			if(availability != JOB_AVAILABLE)
+			if(owner.IsJobUnavailable(job_datum.title, latejoin = TRUE) != JOB_AVAILABLE)
 				continue
 			dept_data += job_datum.title
 
@@ -212,14 +243,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		var/random = pick_n_take(dept_data)
 		var/list/random_job_options = list(JOB_CHOICE_YES, JOB_CHOICE_REROLL, JOB_CHOICE_CANCEL)
 
-		var/list/character_data = get_job_character_data(SSjob.get_job(random), owner) // BANDASTATION ADDITION
-		random_job = tgui_alert(owner, "[character_data["public_title"]]?", "Случайная должность", random_job_options) // BANDASTATION EDIT
-		// BANDASTATION ADDITION START: do not use a reply from a departed or changed player.
-		if(QDELETED(owner) || owner.client != requester || requester.mob != owner)
-			return
-		if(requester.prefs.default_slot != editing_slot)
-			return
-		// BANDASTATION ADDITION END
+		random_job = tgui_alert(owner, "[job_title_ru(random)]?", "Случайная должность", random_job_options)
 
 		if(random_job == JOB_CHOICE_CANCEL)
 			return

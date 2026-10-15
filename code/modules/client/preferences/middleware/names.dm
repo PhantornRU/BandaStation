@@ -43,7 +43,7 @@
 		if (isnull(name_preference.relevant_job))
 			continue
 
-		if (name_preference.is_relevant_to_job(highest_priority_job)) // BANDASTATION EDIT - Shared job names.
+		if (istype(highest_priority_job, name_preference.relevant_job))
 			return name_preference.savefile_key
 
 	return "real_name"

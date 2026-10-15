@@ -296,10 +296,6 @@ SUBSYSTEM_DEF(job)
 			job_debug("GRJ: Player is deleted, aborting")
 			break
 
-		// BANDASTATION EDIT - RP roles require an explicit preference after the native lifetime guard.
-		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
-			continue
-
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("GRJ: Job lacks spawn positions to be eligible, Player: [player], Job: [job]")
 			continue
@@ -313,7 +309,7 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		// This check handles its own output to job_debug.
-		if(check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
+		if(check_random_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE) // BANDASTATION EDIT: modular fallback admission.
 			continue
 
 		if(assign_role(player, job, do_eligibility_checks = FALSE))
@@ -950,9 +946,8 @@ SUBSYSTEM_DEF(job)
  * * debug_prefix - Logging prefix for the job_debug log entries. For example, GRJ during give_random_job or DO during divide_occupations.
  * * add_job_to_log - If TRUE, appends the job type to the log entry. If FALSE, does not. Set to FALSE when check is part of iterating over players for a specific job, set to TRUE when check is part of iterating over jobs for a specific player and you don't want extra log entry spam.
  */
-/datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE) // BANDASTATION EDIT - Selected character eligibility
-	var/client/player_client = player ? GET_CLIENT(player) : null
-	if(!player?.mind || !possible_job || !player_client)
+/datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE)
+	if(!player.mind)
 		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
@@ -973,13 +968,21 @@ SUBSYSTEM_DEF(job)
 	if(is_banned_from(player.ckey, possible_job.title))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_BANNED
+	return JOB_AVAILABLE // BANDASTATION EDIT: selected-profile admission continues in the module wrapper.
+
+/datum/controller/subsystem/job/proc/check_current_character_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE) // BANDASTATION EDIT: preserve the original current-character phase.
+	// Check for character age
+	var/client/player_client = GET_CLIENT(player)
+	if(isnum(possible_job.required_character_age) && possible_job.required_character_age > player_client.prefs.read_preference(/datum/preference/numeric/age))
+		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_AGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_AGE
 
 	// Need to recheck the player exists after is_banned_from since it can query the DB which may sleep.
-	if(QDELETED(player) || GET_CLIENT(player) != player_client)
+	if(QDELETED(player))
 		job_debug("[debug_prefix]: Player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
-	return check_job_character_eligibility(player, possible_job, latejoin) // BANDASTATION EDIT: final selected-profile check.
+	return JOB_AVAILABLE
 
 /**
  * Check if the station manifest has at least a certain amount of this staff type.

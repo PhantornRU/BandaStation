@@ -1,3 +1,76 @@
+/// Native messages stay native; only module-specific rejection codes reach this fallback.
+/proc/get_extended_job_unavailable_error_message(retval, jobtitle)
+	switch(retval)
+		if(JOB_UNAVAILABLE_JOB_LOCK)
+			return "Профессия недоступна по дополнительным условиям входа."
+		if(JOB_UNAVAILABLE_CHARACTER_PROFILE)
+			return "Назначенный персонаж не проходит условия профессии. Проверьте слот, возраст, вид и повторный вход."
+	return GENERIC_JOB_UNAVAILABLE_ERROR
+
+/// Keep metadata for vacancies that can reopen; ui_data owns live visibility without static SQL.
+/datum/latejoin_menu/proc/uses_dynamic_job_visibility()
+	return TRUE
+
+/// The fallback menu shares canonical admission and selected-character labels with TGUI.
+/datum/latejoin_menu/fallback_ui(mob/dead/new_player/user)
+	var/client/requester = user.client
+	if(!requester || requester.interviewee)
+		return
+	var/editing_slot = requester.prefs.default_slot
+	var/list/jobs = list()
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		var/availability = user.IsJobUnavailable(job.title, latejoin = TRUE)
+		if(QDELETED(user) || user.client != requester || requester.mob != user || requester.prefs.default_slot != editing_slot)
+			return
+		if(availability != JOB_AVAILABLE && (job.job_flags & JOB_HIDE_WHEN_EMPTY))
+			continue
+		var/label = get_job_choice_label(job, user, availability, jobs)
+		jobs[label] = job.title
+	var/input_contents = input(user, "Выберите профессию:", "Поздний вход") as null|anything in jobs
+	if(!input_contents || QDELETED(user) || user.client != requester || requester.mob != user)
+		return
+	if(requester.prefs.default_slot != editing_slot)
+		return
+	user.AttemptLateSpawn(jobs[input_contents])
+
+/// Random admission excludes roles requiring an explicit preference and rejects stale modal replies.
+/datum/latejoin_menu/get_random_job(mob/dead/new_player/owner)
+	var/client/requester = owner.client
+	if(!requester)
+		return
+	var/editing_slot = requester.prefs.default_slot
+	var/list/candidates = list()
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		for(var/datum/job/job as anything in department.department_jobs)
+			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
+				continue
+			var/availability = owner.IsJobUnavailable(job.title, latejoin = TRUE)
+			if(QDELETED(owner) || owner.client != requester || requester.mob != owner || requester.prefs.default_slot != editing_slot)
+				return
+			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
+				continue
+			if(availability == JOB_AVAILABLE)
+				candidates += job.title
+	if(!length(candidates))
+		tgui_alert(owner, "В данный момент для вас нет случайной профессии. Обратитесь в ahelp за помощью.", "О нет!")
+		return
+	while(length(candidates))
+		var/job_title = pick_n_take(candidates)
+		var/datum/job/job = SSjob.get_job(job_title)
+		if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job_title])
+			continue
+		var/list/character_data = get_job_character_data(job, owner)
+		var/choice = tgui_alert(owner, "[character_data["public_title"]]?", "Случайная должность", list("Yes", "Reroll", "Cancel"))
+		if(QDELETED(owner) || owner.client != requester || requester.mob != owner || requester.prefs.default_slot != editing_slot)
+			return
+		if(choice == "Cancel")
+			return
+		if(choice == "Yes")
+			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job_title])
+				return
+			return job_title
+	tgui_alert(owner, "В данный момент нет доступных для вас случайных профессий!", "О нет!")
+
 /// Display the same selected profile and variant that admission will use.
 /datum/latejoin_menu/proc/get_job_character_data(datum/job/job, mob/dead/new_player/user)
 	if(!user.client)
@@ -38,8 +111,10 @@
 /// Enrich only native dynamic rows: hidden jobs stay hidden and eligibility is not repeated.
 /datum/latejoin_menu/ui_data(mob/user)
 	var/client/requester = user.client
-	var/editing_slot = requester?.prefs.default_slot
-	var/list/job_slots = requester?.prefs.pref_job_slots
+	if(!requester)
+		return list()
+	var/editing_slot = requester.prefs.default_slot
+	var/list/job_slots = requester.prefs.pref_job_slots
 	job_slots = islist(job_slots) ? job_slots.Copy() : list()
 	var/always_current_slot = requester ? requester.prefs.read_preference(/datum/preference/toggle/late_join_always_current_slot) : null
 	. = ..()
@@ -76,8 +151,19 @@
 		if(job.total_positions - job.current_positions > 0)
 			department_data["open_slots"] += job.total_positions - job.current_positions
 
+/// Selected jobs use module admission; other interactive actions retain the native menu.
+/datum/latejoin_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(action == "select_job")
+		return select_character_job(ui.user, params)
+	return handle_native_ui_action(action, params, ui, state)
+
 /// A modal random choice may yield; stale selections must not enter as another profile.
 /datum/latejoin_menu/proc/select_character_job(mob/dead/new_player/owner, list/params)
+	if(!owner.client || owner.client.interviewee || !isnewplayer(owner))
+		return TRUE
 	var/client/requester = owner.client
 	var/editing_slot = requester.prefs.default_slot
 	if(params["edit_slot"] != editing_slot)

@@ -287,6 +287,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+	job_assigned_profiles = SANITIZE_LIST(job_assigned_profiles)
+	for(var/job, slot in job_assigned_profiles)
+		if(!isnum(slot) || slot < 1 || slot > max_save_slots)
+			job_assigned_profiles -= job
 
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 

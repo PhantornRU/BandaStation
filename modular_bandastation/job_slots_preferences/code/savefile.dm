@@ -1,5 +1,7 @@
 /// Load the assignment format without erasing temporarily unavailable jobs or slots.
 /datum/preferences/proc/load_job_character_slots()
+	// Native legacy fields remain dormant; only pref_job_slots participates in selection.
+	job_assigned_profiles = null
 	pref_job_slots = list()
 	var/list/saved_slots = savefile.get_entry("pref_job_slots")
 	if(!islist(saved_slots))
@@ -14,4 +16,6 @@
 			pref_job_slots[job_title] = slot_index
 
 /datum/preferences/proc/save_job_character_slots()
+	job_assigned_profiles = null
+	savefile.remove_entry("job_assigned_profiles")
 	savefile.set_entry("pref_job_slots", pref_job_slots)

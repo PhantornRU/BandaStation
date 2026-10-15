@@ -6,4 +6,4 @@
 /// Adapt the exact-record callback to the native Prisoner lifecycle.
 /datum/job/prisoner/on_initial_crew_record(mob/living/carbon/human/body, datum/record/crew/record)
 	..()
-	return handle_prisoner_joining(body, record)
+	return register_initial_prisoner_record(body, record)

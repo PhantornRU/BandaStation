@@ -17,9 +17,6 @@
 		if(QDELETED(player))
 			job_debug("GRJ: Player is deleted, aborting")
 			break
-		// RP jobs must never be an automatic staffing fallback.
-		if(job.requires_explicit_preference() && !player.client?.prefs.job_preferences[job.title])
-			continue
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			job_debug("GRJ: Job lacks spawn positions to be eligible, Player: [player], Job: [job]")
 			continue
@@ -33,7 +30,7 @@
 			continue
 
 		// This check handles its own output to job_debug.
-		if(check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
+		if(check_random_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
 			continue
 
 		if(assign_role(player, job, do_eligibility_checks = FALSE))

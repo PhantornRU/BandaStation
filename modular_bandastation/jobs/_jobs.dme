@@ -1,6 +1,7 @@
 #include "_jobs.dm"
 
 #include "code/extension_hooks.dm"
+#include "code/native_job_extensions.dm"
 #include "code/controller/subsystem/job.dm"
 #include "code/controller/admission.dm"
 #include "code/controller/assignment.dm"

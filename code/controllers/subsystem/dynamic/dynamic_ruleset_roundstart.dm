@@ -115,14 +115,10 @@
 	if (!..())
 		return FALSE
 
-	// BANDASTATION EDIT START - Inspect the effective job profile, without switching slots.
-	if(isnewplayer(candidate))
-		var/mob/dead/new_player/player = candidate
-		return player.has_eligible_crew_preference(get_blacklisted_roles() | get_bloodless_jobs(candidate_client))
 	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = GLOB.species_prototypes[species_type]
+
 	return !(TRAIT_NOBLOOD in species.inherent_traits)
-	// BANDASTATION EDIT END
 
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
 	if (!CAN_HAVE_BLOOD(candidate.current))
