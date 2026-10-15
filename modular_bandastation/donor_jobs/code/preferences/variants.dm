@@ -31,6 +31,6 @@
 		CRASH("Job variants require a default: [type]")
 	return donor_variants
 
-/datum/job/proc/resolve_donor_variant(variant_id)
+/datum/job/proc/resolve_donor_variant(variant_id) as /datum/job_variant
 	var/list/variants = get_donor_variants()
 	return variants[variant_id] || variants["default"]

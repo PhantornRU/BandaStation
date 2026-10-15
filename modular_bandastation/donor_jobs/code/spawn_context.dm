@@ -5,14 +5,12 @@
 	var/job_type
 	var/outfit_type
 	var/public_title
-	var/variant_id
 	var/identity_applied = FALSE
 	var/record_registered = FALSE
 
 /datum/donor_spawn_context/New(datum/job/job, variant_choice)
 	job_type = job.type
 	var/datum/job_variant/variant = job.resolve_donor_variant(variant_choice)
-	variant_id = variant?.id
 	outfit_type = variant?.outfit_type || job.get_outfit(FALSE)
 	public_title = variant?.public_title || job.title
 	return ..()

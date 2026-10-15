@@ -41,7 +41,6 @@
 	var/list/data = list()
 
 	data["pref_job_slots"] = preferences.pref_job_slots
-	data["profile_index"] = preferences.get_slot_options()
 	var/list/job_profiles = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(job.job_flags & JOB_LATEJOIN_ONLY)

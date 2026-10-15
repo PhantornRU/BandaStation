@@ -16,20 +16,20 @@
 	var/client/requester = user.client
 	if(!requester || requester.interviewee)
 		return
-	var/editing_slot = requester.prefs.default_slot
+	var/list/profile_context = requester.prefs.capture_latejoin_profile()
 	var/list/jobs = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		var/availability = user.IsJobUnavailable(job.title, latejoin = TRUE)
-		if(QDELETED(user) || user.client != requester || requester.mob != user || requester.prefs.default_slot != editing_slot)
+		if(QDELETED(user) || !requester || user.client != requester || requester.mob != user || !requester.prefs.is_latejoin_profile_current(null, profile_context))
 			return
 		if(availability != JOB_AVAILABLE && (job.job_flags & JOB_HIDE_WHEN_EMPTY))
 			continue
 		var/label = get_job_choice_label(job, user, availability, jobs)
 		jobs[label] = job.title
 	var/input_contents = input(user, "Выберите профессию:", "Поздний вход") as null|anything in jobs
-	if(!input_contents || QDELETED(user) || user.client != requester || requester.mob != user)
+	if(!input_contents || QDELETED(user) || !requester || user.client != requester || requester.mob != user)
 		return
-	if(requester.prefs.default_slot != editing_slot)
+	if(!requester.prefs.is_latejoin_profile_current(null, profile_context))
 		return
 	user.AttemptLateSpawn(jobs[input_contents])
 
@@ -38,14 +38,14 @@
 	var/client/requester = owner.client
 	if(!requester)
 		return
-	var/editing_slot = requester.prefs.default_slot
+	var/list/profile_context = requester.prefs.capture_latejoin_profile()
 	var/list/candidates = list()
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		for(var/datum/job/job as anything in department.department_jobs)
 			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
 				continue
 			var/availability = owner.IsJobUnavailable(job.title, latejoin = TRUE)
-			if(QDELETED(owner) || owner.client != requester || requester.mob != owner || requester.prefs.default_slot != editing_slot)
+			if(QDELETED(owner) || !requester || owner.client != requester || requester.mob != owner || !requester.prefs.is_latejoin_profile_current(null, profile_context))
 				return
 			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
 				continue
@@ -61,7 +61,7 @@
 			continue
 		var/list/character_data = get_job_character_data(job, owner)
 		var/choice = tgui_alert(owner, "[character_data["public_title"]]?", "Случайная должность", list("Yes", "Reroll", "Cancel"))
-		if(QDELETED(owner) || owner.client != requester || requester.mob != owner || requester.prefs.default_slot != editing_slot)
+		if(QDELETED(owner) || !requester || owner.client != requester || requester.mob != owner || !requester.prefs.is_latejoin_profile_current(null, profile_context))
 			return
 		if(choice == "Cancel")
 			return
@@ -113,22 +113,12 @@
 	var/client/requester = user.client
 	if(!requester)
 		return list()
-	var/editing_slot = requester.prefs.default_slot
-	var/list/job_slots = requester.prefs.pref_job_slots
-	job_slots = islist(job_slots) ? job_slots.Copy() : list()
-	var/always_current_slot = requester ? requester.prefs.read_preference(/datum/preference/toggle/late_join_always_current_slot) : null
+	var/list/profile_context = requester.prefs.capture_latejoin_profile()
 	. = ..()
-	if(QDELETED(user) || !requester || user.client != requester || requester.prefs.default_slot != editing_slot)
+	if(QDELETED(user) || !requester || user.client != requester || !requester.prefs.is_latejoin_profile_current(null, profile_context))
 		return list()
-	var/list/current_job_slots = requester.prefs.pref_job_slots
-	current_job_slots = islist(current_job_slots) ? current_job_slots : list()
-	if(length(current_job_slots) != length(job_slots) || requester.prefs.read_preference(/datum/preference/toggle/late_join_always_current_slot) != always_current_slot)
-		return list()
-	for(var/job_title in job_slots)
-		if(!(job_title in current_job_slots) || current_job_slots[job_title] != job_slots[job_title])
-			return list()
 	var/list/data = .
-	data["edit_slot"] = editing_slot
+	data["edit_slot"] = profile_context["editing_slot"]
 	var/list/departments = data["departments"]
 	for(var/department_name in departments)
 		var/list/department_data = departments[department_name]
@@ -165,16 +155,16 @@
 	if(!owner.client || owner.client.interviewee || !isnewplayer(owner))
 		return TRUE
 	var/client/requester = owner.client
-	var/editing_slot = requester.prefs.default_slot
-	if(params["edit_slot"] != editing_slot)
+	var/list/profile_context = requester.prefs.capture_latejoin_profile()
+	if(params["edit_slot"] != profile_context["editing_slot"])
 		return TRUE
 	if(params["job"] == "Random")
 		var/job = get_random_job(owner)
 		if(!job)
 			return TRUE
 		params["job"] = job
-	if(QDELETED(owner) || owner.client != requester || requester.mob != owner)
+	if(QDELETED(owner) || !requester || owner.client != requester || requester.mob != owner)
 		return TRUE
-	if(requester.prefs.default_slot != editing_slot)
+	if(!requester.prefs.is_latejoin_profile_current(null, profile_context))
 		return TRUE
 	owner.AttemptLateSpawn(params["job"])
