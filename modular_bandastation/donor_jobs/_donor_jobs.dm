@@ -51,3 +51,14 @@
 		var/datum/id_trim/job/trim = trim_singletons_by_path[trim_path]
 		if(trim.centcom_template && trim.job)
 			centcom_job_templates[trim_path] = trim.assignment
+
+/// Unregistered IDs accept job access templates without creating a bank account.
+/datum/controller/subsystem/id_access/add_trim_access_to_card(obj/item/card/id/id_card, trim_path)
+	var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+	if(!istype(trim, /datum/id_trim/job) || id_card.registered_account)
+		return ..()
+	// The native parent unconditionally updates a job trim's bank account after these effects.
+	id_card.clear_access()
+	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
+	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+	apply_active_reta_grants_to_card(id_card)

@@ -1,9 +1,8 @@
+import '../../styles/bandastation/donor_jobs.scss';
+
 import { Icon } from 'tgui-core/components';
 
-export function JobHudIcon(props: {
-  icon?: string;
-  fallback?: string | null;
-}) {
+export function JobHudIcon(props: { icon?: string; fallback?: string | null }) {
   if (props.icon) {
     return (
       <img

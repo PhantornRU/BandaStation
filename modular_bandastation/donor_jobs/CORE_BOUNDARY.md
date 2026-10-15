@@ -2,7 +2,7 @@
 
 Сравнение ведётся с базой PR `820de7f6ef9235d8417250cb01eec15da6735b18`. Перед этой чисткой (`a4bea76ffe9540d21f1865e5fb56ed4bcb3a6920`) в `code/` были затронуты 19 файлов и 396 строк, в том числе 10 файлов и 344 строки в `code/modules/`. Строки считаются как additions + deletions из `git diff --numstat`, а не как размер процедур.
 
-После повторной чистки в `code/modules/` остаются 4 файла и 23 строки: `new_player.dm` — 11 вместо 121, `latejoin_menu.dm` — 6 вместо 118. Во всём `code/` остаются 11 файлов и 50 строк. Предыдущий этап оставлял соответственно 5/29 и 13/70; повторная проверка убрала ещё два файла из native diff. Добавления модульной логики не входят в эти показатели.
+После повторной чистки в `code/modules/` остаются 4 файла и 23 строки: `new_player.dm` — 11 вместо 121, `latejoin_menu.dm` — 6 вместо 118. Во всём `code/` остаются 9 файлов и 46 строк. Первый опубликованный результат `b135fcb` оставлял 11/50; независимая проверка дополнительно вернула два native-файла. Добавления модульной логики не входят в эти показатели.
 
 Подключение остаётся штатным: `tgstation.dme` → `modular_bandastation/modular_bandastation.dme`, который включает `_donor_jobs.dme`, `_job_slots_preferences.dme`, `_jobs.dme` в этом порядке. Новый `jobs/code/native_job_extensions.dm` включён в `_jobs.dme`; остальные дополнения находятся в уже подключённых файлах. Макросы новых сигналов и кодов отказа принадлежат `_defines220`.
 
@@ -21,9 +21,7 @@
 | --- | --- | --- |
 | `code/controllers/subsystem/dynamic/_dynamic_ruleset.dm` | +1/−2 | `prepare_job_assignment()` объединяет штатную подготовку и blacklist в отменяемую фазу. `prepare_execution()` помечен `SHOULD_NOT_OVERRIDE`; перенос всей процедуры в модуль потребовал бы копирования алгоритма Dynamic. |
 | `code/controllers/subsystem/job.dm` | +3/−1 | Один alternate eligibility call в штатном random loop и граница после account-age/playtime/jobban: успех parent и заголовок `check_current_character_eligibility()` перед исходной проверкой текущего персонажа. Сигнатура и исходный хвост сохранены; старый хвост выделен в самостоятельную процедуру, чтобы избежать недостижимого кода. Модульный wrapper вызывает native parent с четырьмя аргументами один раз, сохраняет его отказы, проверяет requester после SQL и применяет selected-profile admission; `latejoin` принадлежит wrapper. |
-| `code/controllers/subsystem/networks/id_access.dm` | +1/−1 | Null guard банковского аккаунта для пустой CentCom ID. Штатное применение job trim допускает карту без счёта; регистрация новых trims находится в модуле. |
 | `code/controllers/subsystem/ticker.dm` | +3/−3 | Проверка/отмена результата roundstart construction до оснащения и записи участника. Коллекции, оснащение и handover остаются у ticker. |
-| `code/datums/mind/_mind.dm` | +1/−1 | Вызов `get_character_spawn_message(current)` передаёт созданное тело модульному greeting. Штатные final `get_spawn_message()` и обычный job информационный proc не изменены. |
 | `code/datums/outfit.dm` | +1/−1 | `equip_backpack_item()` в существующем storage loop: обычный outfit сохраняет штатную операцию, donor outfit обрабатывает переполнение. |
 | `code/datums/records/manifest.dm` | +5/−3 | Флаг первоначального спавна и callback с конкретным только что созданным crew record. Обычная повторная инъекция manifest при смене личности не повторяет Prisoner effects. |
 
@@ -41,10 +39,27 @@
 | `code/__DEFINES/jobs.dm` | Два модульных кода отказа в `_defines220/code/defines/jobs.dm`. |
 | `code/modules/client/preferences.dm` | `job_slots_preferences/code/job_slots_preferences.dm`: модульный `ui_act()` перехватывает только color action, вызывает конкретный `/datum::ui_act()` для штатного signal/status, затем guarded modal helper. Остальные действия идут через `..()`. |
 | `code/controllers/subsystem/dynamic/dynamic_ruleset_roundstart.dm` | `dynamic/code/blood_worm.dm`: override Blood Worm вызывает конкретный roundstart ancestor для общих проверок и модульный selected-profile predicate. Исходный subtype species-фильтр не запускается. |
+| `code/datums/mind/_mind.dm` | `jobs/code/native_job_extensions.dm`: короткий greeting entrypoint назначает роль один раз, сохраняет проверку смены роли и передаёт созданное тело в модульные инструкции. Native final formatter сохранён. |
+| `code/controllers/subsystem/networks/id_access.dm` | Модульный adapter отдельно обслуживает job-template карту без банковского счёта; остальные карты идут через `..()`. Сохраняются очистка, обычные доступы, wildcard-доступы и активные RETA grants. Новая пустая ID обычно уже имеет штатный счёт; исключение относится к реально отсутствующему `registered_account`. |
 
 Уже возвращённые ранее файлы также не входят в diff PR: `.github/workflows/run_linters.yml`, `code/__DEFINES/dcs/signals/signals_mob/signals_mob_carbon.dm`, `code/__DEFINES/dcs/signals/signals_mind.dm`, `code/controllers/subsystem/processing/quirks.dm`, `code/modules/client/preferences/names.dm`, `code/modules/mob/dead/new_player/logout.dm`.
 
-`config/game_options.txt` содержит два закомментированных opt-in переключателя модуля; `config/jobconfig.toml` — шаблоны штатных параметров новых профессий с ключами `"# ..."`, которые parser намеренно не применяет до снятия `#`. По умолчанию используются значения job datums. `html/changelogs/bandastation/AutoChangeLog-donor-roles.yml` содержит changelog. Эти файлы документируют поддерживаемые настройки и не реализуют игровые алгоритмы в ядре.
+`config/game_options.txt` полностью восстановлен: opt-in переключатели объявлены в модуле и описаны в README. В `config/jobconfig.toml` остаются только 22 пустые секции (+23 строки): наличие секции предотвращает штатное предупреждение об отсутствующей конфигурации, значения берутся из job datums. Подробные шаблоны вынесены в [jobconfig.example.toml](jobconfig.example.toml); их ключи `"# ..."` не применяются parser до снятия префикса. Существующие секции и все читаемые загрузчиком значения сохранены. Changelog остаётся в штатном каталоге.
+
+## TGUI и остальные пути вне модулей
+
+Независимая проверка охватывает весь PR: статистика `code/` не включает TypeScript, стили и конфиги. Native TGUI сократился с 5 файлов / 254 строк в `b135fcb` до 4 / 171. `styles/interfaces/PreferencesMenu.scss` полностью восстановлен; модульный `JobHudIcon` статически импортирует неизменённый модульный SCSS, используя штатный Rspack CSS pipeline.
+
+| Native TGUI файл | Diff к базе | Оставшая интеграция |
+| --- | --- | --- |
+| `interfaces/PreferencesMenu/CharacterPreferences/JobsPage.tsx` | +56/−26 | Импорты модульных label/restriction/filter/layout и priority hook; один исходный `JobRow` обслуживает обе вкладки. `JobsLayout` владеет provider, `JobsSection` — tier list. Исходные три колонки и старая фабрика priority callbacks восстановлены; активный caller использует hook, захватывающий слот отрисованной строки. |
+| `interfaces/PreferencesMenu/CharacterPreferences/JobSlotDropdown.tsx` | +16/−8 | Канонические `pref_job_slots`, действие `set_job_slot`, `edit_slot` и описание выбранного профиля. Отдельная копия штатного виджета ради удаления этого diff не создаётся. |
+| `interfaces/PreferencesMenu/types.ts` | +6/−2 | Типы канонического протокола профилей. |
+| `interfaces/JobSelection.tsx` | +32/−25 | Модульное объединение static metadata с authoritative dynamic vacancies, отображение профиля/варианта и отправка render-slot. Скрытые dynamic вакансии не восстанавливаются из static данных. |
+
+В сумме native DM и TGUI содержат 217 затронутых строк вместо 304 в первом опубликованном результате. Это показатель границы с ядром; новые модульные файлы и конфигурационные данные считаются отдельно.
+
+`tools/migrate_job_slots/` — новый самостоятельный offline CLI, а не переделка существующего инструмента. Он нужен для перехода на единственное runtime-хранилище и не вызывается игрой. Данные конфигурации и changelog используют штатные каталоги. Изменений workflow, карт и native assets в diff PR нет.
 
 ## Активный путь и сохранённый исходный код
 

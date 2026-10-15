@@ -7,6 +7,16 @@
 /datum/job/proc/get_character_spawn_message(mob/spawned)
 	return boxed_message(span_infoplain(jointext(get_spawn_message_information(spawned), "\n&bull; ")))
 
+/// Supply the committed body without repeating assignment or the native greeting.
+/datum/mind/set_assigned_role_with_greeting(datum/job/new_role, client/incoming_client)
+	// The original sends its greeting itself, so calling it would repeat these effects.
+	. = set_assigned_role(new_role)
+	if(assigned_role != new_role)
+		return
+	var/intro_message = new_role.get_character_spawn_message(current)
+	if(incoming_client && intro_message)
+		to_chat(incoming_client, intro_message)
+
 /// Replace only the short construction boundary: calling the original would apply preferences too early.
 /datum/job/get_spawn_mob(client/player_client, atom/spawn_point)
 	var/mob/dead/new_player/requester = isnewplayer(player_client.mob) ? player_client.mob : null
