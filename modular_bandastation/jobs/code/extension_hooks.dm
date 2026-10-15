@@ -1,3 +1,10 @@
+/datum/preference/name/proc/is_relevant_to_job(datum/job/job)
+	return istype(job, relevant_job)
+
+/// Whether automatic staffing and random latejoin require an enabled job preference.
+/datum/job/proc/requires_explicit_preference()
+	return FALSE
+
 /// Additional job admission rules. A null reason preserves ordinary admission.
 /datum/job/proc/get_join_lock_reason(client/player)
 	SHOULD_CALL_PARENT(TRUE)

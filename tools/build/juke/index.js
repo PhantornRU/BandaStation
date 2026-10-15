@@ -4424,7 +4424,7 @@ var exec = (executable, args = [], options = {}) => {
       combined += data;
     });
     child.on("error", (err) => reject(err));
-    child.on("close", (code, signal) => {
+    child.on("exit", (code, signal) => {
       children.delete(child);
       if (code !== 0 && canThrow) {
         const error = new ExitCode(code);

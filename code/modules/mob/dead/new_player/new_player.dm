@@ -215,6 +215,7 @@
 	if(!transfer_character())
 		cancel_character_spawn()
 		return reject_late_spawn("Передача персонажа не состоялась; место профессии освобождено.")
+	//Remove the player from the join queue if he was in one and reset the timer
 	SSticker.queued_players -= src
 	SSticker.queue_delay = 4
 	var/latejoin_period = CEILING(STATION_TIME_PASSED() / (5 MINUTES), 5)
@@ -312,21 +313,24 @@
 	var/mob/living/spawning_mob = assigned_job.get_spawn_mob(client, destination)
 	if(QDELETED(src) || QDELETED(spawning_mob))
 		return null
-	var/client/player_client = src.client || spawning_mob.client // An AI constructor can take the client.
+	// Annoyingly the AI mob yoinks our client on init so we have to check for it here
+	var/client/player_client = src.client || spawning_mob.client
 	if(!player_client)
 		qdel(spawning_mob)
 		return null
 	if(assigned_job.get_join_lock_reason(player_client) || selection.actual_body_error(assigned_job, spawning_mob)) // BANDASTATION EDIT - Recheck admission after the yielding appearance lookup.
 		qdel(spawning_mob)
 		return null
-	if(!isAI(spawning_mob))
+	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
+		// transfer_to sets mind to null
 		var/datum/mind/preserved_mind = mind
 		preserved_mind.original_character_slot_index = selection.slot // BANDASTATION EDIT - The committed profile, not the previously active slot.
-		preserved_mind.transfer_to(spawning_mob)
+		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
 	player_client.init_verbs()
 	. = spawning_mob
 	new_character = .
+
 
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
@@ -385,6 +389,7 @@
 	if(!has_eligible_crew_preference(null))
 		if(warn)
 			to_chat(src, span_warning("Ни одна выбранная профессия сейчас недоступна. Проверьте профиль и подписку."))
+		SSdynamic.cancel_roundstart_assignment(mind)
 		ready = PLAYER_NOT_READY
 		return FALSE
 	return TRUE

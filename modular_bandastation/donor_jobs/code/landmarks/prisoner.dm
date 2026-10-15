@@ -13,12 +13,19 @@ GLOBAL_LIST_EMPTY(donor_prisoner_starts)
 // Native roundstart landmarks are deleted once the round starts; keep their turfs for latejoin.
 /obj/effect/landmark/start/prisoner/Initialize(mapload)
 	. = ..()
-	GLOB.donor_prisoner_starts |= get_turf(src)
+	if(!jobspawn_override)
+		GLOB.donor_prisoner_starts |= get_turf(src)
 
 /datum/job/prisoner/proc/get_safe_prisoner_turfs()
-	var/list/candidates = GLOB.donor_prisoner_starts.Copy()
-	for(var/atom/override_spawn as anything in GLOB.jobspawn_overrides[title])
-		candidates |= get_turf(override_spawn)
+	var/list/overrides = GLOB.jobspawn_overrides?[title]
+	var/list/candidates
+	if(length(overrides))
+		// Native overrides replace ordinary starts, even if none pass the safety checks.
+		candidates = list()
+		for(var/atom/override_spawn as anything in overrides)
+			candidates |= get_turf(override_spawn)
+	else
+		candidates = GLOB.donor_prisoner_starts.Copy()
 	var/list/result = list()
 	for(var/turf/location as anything in candidates)
 		if(QDELETED(location) || !is_station_level(location.z) || location.is_blocked_turf(TRUE))

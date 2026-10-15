@@ -177,5 +177,8 @@ jobs:
               - 'modular_bandastation/translations/public/ru_names/**'
               - 'tools/translations/**'
       - name: Validate Translations
-        if: ${{ !cancelled() && steps.ru-names-filter.outputs.run_ru_names == 'true' }}
+        if: steps.linter-setup.conclusion == 'success' && !cancelled() && steps.ru-names-filter.outputs.run_ru_names == 'true'
         run: bash tools/translations/validate_ru_names.sh
+      - name: Run TGUI Checks
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: tools/build/build.sh --ci lint tgui-test

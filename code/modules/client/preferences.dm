@@ -276,7 +276,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (!new_color)
 				return FALSE
 			// BANDASTATION EDIT START: reject a delayed reply after changing character or client.
-			if(editing_slot != default_slot || ui.user.client != parent)
+			if(editing_slot != default_slot || QDELETED(ui) || !ui.user?.client || ui.user.client != parent)
 				return FALSE
 			// BANDASTATION EDIT END
 

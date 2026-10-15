@@ -1,7 +1,12 @@
 /// Final admission fixes the selected profile before native role assignment occupies the vacancy.
-/datum/controller/subsystem/job/proc/prepare_job_assignment(mob/dead/new_player/player, datum/job/job, latejoin)
+/datum/controller/subsystem/job/proc/prepare_job_assignment(mob/dead/new_player/player, datum/job/job, latejoin, is_debug_dummy = FALSE)
+	if(QDELETED(player) || !player.mind || !job)
+		return FALSE
 	var/client/requester = GET_CLIENT(player)
-	if(QDELETED(player) || !requester || !player.mind || job.get_join_lock_reason(requester))
+	// Only the native admin full-crew tool opts in for its freshly created non-player dummy.
+	if(is_debug_dummy)
+		return !latejoin && !requester && !player.key && !player.assigned_character && !player.spawning
+	if(!requester || job.get_join_lock_reason(requester))
 		return FALSE
 	var/datum/job_character_selection/selection = requester.prefs.select_job_character(job, latejoin)
 	if(selection.character_error(job, requester, latejoin) || (latejoin && (player.IsJobSlotUnavailable(job) || (!(ckey(player.key) in GLOB.admin_datums) && is_latejoin_population_full()))))

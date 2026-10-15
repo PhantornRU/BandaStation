@@ -10,7 +10,6 @@
 	abstract_type = /obj/item/clothing/under/rank/tsf/donor
 	icon = 'modular_bandastation/donor_jobs/icons/tsf_uniforms.dmi'
 	worn_icon = 'modular_bandastation/donor_jobs/icons/tsf_uniforms_worn.dmi'
-	inhand_icon_state = "ro_suit"
 	female_sprite_flags = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/rank/tsf/donor/commander

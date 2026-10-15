@@ -240,8 +240,9 @@ SUBSYSTEM_DEF(job)
  * * job - The job to assign
  * * latejoin - Set to TRUE if this is a latejoin role assignment.
  * * do_eligibility_checks - Set to TRUE to conduct all job eligibility tests and reject on failure. Set to FALSE if job eligibility has been tested elsewhere and they can be safely skipped.
+ * * is_debug_dummy - Only the admin full-crew tool may assign a fresh, clientless dummy without a character profile.
  */
-/datum/controller/subsystem/job/proc/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE)
+/datum/controller/subsystem/job/proc/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE, is_debug_dummy = FALSE) // BANDASTATION EDIT - Preserve the native admin dummy caller.
 	job_debug("AR: Running, Player: [player], Job: [isnull(job) ? "null" : job], LateJoin: [latejoin]")
 	if(!player?.mind || !job)
 		job_debug("AR: Failed, player has no mind or job is null. Player: [player], Rank: [isnull(job) ? "null" : job.type]")
@@ -251,13 +252,13 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 
 	// BANDASTATION EDIT: final admission also applies to prechecked callers.
-	if(!prepare_job_assignment(player, job, latejoin))
+	if(!prepare_job_assignment(player, job, latejoin, is_debug_dummy))
 		return FALSE
 
-	job.current_positions++
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
 	unassigned -= player
+	job.current_positions++
 	return TRUE
 
 /datum/controller/subsystem/job/proc/find_occupation_candidates(datum/job/job, level = 0)
@@ -330,11 +331,9 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/reset_occupations()
 	job_debug("RO: Occupations reset.")
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
-		if(!player) // BANDASTATION EDIT - Check the entry before releasing its selection.
-			continue
-		// BANDASTATION EDIT - Discard selections from a cancelled assignment pass.
-		QDEL_NULL(player.assigned_character)
-		if(!player.mind) // BANDASTATION EDIT - Mindless lobbies still release their selection.
+		if(player?.assigned_character) // BANDASTATION EDIT - Mindless lobbies also release cancelled selections.
+			QDEL_NULL(player.assigned_character)
+		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))
 	setup_occupations()
@@ -963,10 +962,6 @@ SUBSYSTEM_DEF(job)
 	if(!player?.mind || !possible_job || !player_client)
 		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
-
-	// BANDASTATION EDIT - Server entitlement; cosmetic preferences are not authorization.
-	if(possible_job.get_join_lock_reason(player_client))
-		return JOB_UNAVAILABLE_JOB_LOCK
 
 	if(possible_job.title in LAZYACCESS(prevented_occupations, player.mind))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")

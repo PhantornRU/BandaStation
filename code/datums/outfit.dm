@@ -304,6 +304,10 @@
 
 #undef EQUIP_OUTFIT_ITEM
 
+// BANDASTATION ADDITION: outfits can replace one backpack insertion operation.
+/datum/outfit/proc/equip_backpack_item(mob/living/carbon/human/user, item_path)
+	return user.equip_to_storage(SSwardrobe.provide_type(item_path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+
 /**
  * Apply a fingerprint from the passed in human to all items in the outfit
  *
@@ -311,10 +315,6 @@
  * essentially calls add_fingerprint to every defined item on the human
  *
  */
-// BANDASTATION ADDITION: outfits can replace one backpack insertion operation.
-/datum/outfit/proc/equip_backpack_item(mob/living/carbon/human/user, item_path)
-	return user.equip_to_storage(SSwardrobe.provide_type(item_path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
-
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/user)
 	if(!istype(user))
 		return

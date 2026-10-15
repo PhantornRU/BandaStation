@@ -609,7 +609,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		new_guy.mind.name = "[rank] Dummy"
 
 		// Assign the rank to the new player dummy.
-		if(!SSjob.assign_role(new_guy, job, do_eligibility_checks = FALSE))
+		if(!SSjob.assign_role(new_guy, job, do_eligibility_checks = FALSE, is_debug_dummy = TRUE)) // BANDASTATION EDIT - Admin-created dummies have no player profile.
 			qdel(new_guy)
 			to_chat(user, "[rank] wasn't able to be spawned.")
 			continue
