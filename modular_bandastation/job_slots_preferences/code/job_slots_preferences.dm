@@ -58,6 +58,10 @@
 	var/datum/job/job = SSjob.get_job(job_title)
 	if(!job)
 		return FALSE
+	// A committed lobby profile is already loaded; reuse its appearance mode without selecting or switching again.
+	var/mob/dead/new_player/requester = isnewplayer(parent?.mob) ? parent.mob : null
+	if(requester?.assigned_character && requester.assigned_character.job_type == job.type)
+		return requester.assigned_character.randomized
 	var/datum/job_character_selection/selection = select_job_character(job, is_late_join)
 	var/randomized = selection.randomized
 	if(!selection.error && selection.slot != default_slot)

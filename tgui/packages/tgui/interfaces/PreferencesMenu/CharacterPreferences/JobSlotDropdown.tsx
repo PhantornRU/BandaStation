@@ -1,6 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Dropdown, Tooltip } from 'tgui-core/components';
 
+import { getJobProfileDescription } from '../../../bandastation/job_slots_preferences/profileDescription'; // BANDASTATION ADDITION
 import type { PreferencesMenuData } from '../types';
 
 const SLOT_ICONS = {
@@ -56,16 +57,7 @@ export const JobSlotDropdown = (props: JobSlotDropdownProps) => {
   const selectedOption = slotOptions.find(
     (option) => option.value === currentSlotNumber,
   );
-  const entryProfile = data.job_character_profiles?.[name];
-  const entryName = entryProfile?.slot
-    ? data.character_profiles[entryProfile.slot - 1]
-    : null;
-  const profileTitle = data.donor_jobs?.[name]?.profile_title;
-  const entryDescription = entryProfile?.error
-    ? entryProfile.error
-    : entryName
-      ? `В начале раунда: ${entryProfile?.slot}. ${entryName}${entryProfile?.randomized ? ', случайная внешность' : ''}${profileTitle ? `, ${profileTitle}` : ''}`
-      : 'Профиль для входа недоступен';
+  const entryDescription = getJobProfileDescription(data, name); // BANDASTATION ADDITION
 
   return (
     <Tooltip

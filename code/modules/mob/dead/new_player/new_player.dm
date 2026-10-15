@@ -38,9 +38,6 @@
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
-	// BANDASTATION EDIT START - Transient selection belongs to the lobby mob
-	QDEL_NULL(assigned_character)
-	// BANDASTATION EDIT END
 
 	return ..()
 
@@ -145,21 +142,6 @@
 
 	return GENERIC_JOB_UNAVAILABLE_ERROR
 
-// BANDASTATION EDIT START - One native capacity operation for the menu and final admission.
-/mob/dead/new_player/proc/IsJobSlotUnavailable(datum/job/job)
-	if(job.total_positions < 0 || job.current_positions < job.total_positions)
-		return FALSE
-	if(!is_assistant_job(job))
-		return TRUE
-	var/client/requester = GET_CLIENT(src)
-	if(isnum(requester?.player_age) && requester.player_age <= 14) //Newbies can always be assistants
-		return FALSE
-	for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
-		if(other_job != job && !other_job.get_join_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
-			return TRUE
-	return FALSE
-// BANDASTATION EDIT END
-
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	// BANDASTATION EDIT START - Canonical lookup and common capacity check
 	var/client/requester = GET_CLIENT(src)
@@ -181,17 +163,10 @@
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	// BANDASTATION EDIT START - A repeated request must leave the current attempt intact.
 	var/client/requester = GET_CLIENT(src)
-	if(spawning || !requester || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
+	var/list/entry_profile = begin_latejoin_attempt(rank, requester) // BANDASTATION EDIT - Admission before native shuttle waits.
+	if(!entry_profile)
 		return FALSE
-	spawning = TRUE
-	// BANDASTATION EDIT END
-	notify_localhost_respawn(requester) // BANDASTATION EDIT - Upstream notification belongs to the attempt, not eligibility queries.
-	var/list/entry_profile = requester.prefs.capture_latejoin_profile(rank) // BANDASTATION ADDITION - Before any eligibility or shuttle wait.
-	var/error = IsJobUnavailable(rank, latejoin = TRUE) // BANDASTATION EDIT - Effective profile includes the native respawn restriction.
-	if(error != JOB_AVAILABLE)
-		return reject_late_spawn(get_job_unavailable_error_message(error, rank)) // BANDASTATION EDIT - Release the attempt guard.
 
 	if(SSshuttle.arrivals)
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
@@ -365,10 +340,6 @@
 /mob/dead/new_player/proc/check_job_preferences(warn = TRUE)
 	if(!client)
 		return FALSE //Not sure how this would get run without the mob having a client, but let's just be safe.
-	// BANDASTATION EDIT - Selected invaders/forced roles are admitted on their actual job.
-	var/datum/job/forced_job = SSjob.get_job_type(LAZYACCESS(SSjob.forced_occupations, mind))
-	if(forced_job)
-		return SSjob.check_job_eligibility(src, forced_job, "Forced admission") == JOB_AVAILABLE
 	if(client.prefs.read_preference(/datum/preference/choiced/jobless_role) != RETURNTOLOBBY)
 		return TRUE
 	// If they have antags enabled, they're potentially doing this on purpose instead of by accident. Notify admins if so.
@@ -385,13 +356,6 @@
 				antag preferences enabled. This is an old antag rolling technique. The player has been asked to update their job preferences \
 				and has been forcefully returned to the lobby.")
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
-	// BANDASTATION EDIT - Expired subscription/profile restrictions do not imply antag rolling.
-	if(!has_eligible_crew_preference(null))
-		if(warn)
-			to_chat(src, span_warning("Ни одна выбранная профессия сейчас недоступна. Проверьте профиль и подписку."))
-		SSdynamic.cancel_roundstart_assignment(mind)
-		ready = PLAYER_NOT_READY
-		return FALSE
 	return TRUE
 
 /**

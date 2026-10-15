@@ -1,6 +1,5 @@
 #include "_modpack.dm"
 #include "_modpacks.dm"
-#include "donor_jobs/_donor_jobs.dme"
 
 // --- MODULES START --- //
 #include "_defines220/_defines220.dme"
@@ -39,6 +38,7 @@
 #include "database220/_database220.dme"
 #include "discord/_discord.dme"
 #include "domains/_domains.dme"
+#include "donor_jobs/_donor_jobs.dme"
 #include "dynamic/_dynamic.dme"
 #include "emote_panel/_emote_panel.dme"
 #include "ert/_ert.dme"

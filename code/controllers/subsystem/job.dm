@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
-	if(!new_overflow || new_overflow.requires_explicit_preference()) // BANDASTATION EDIT - Donor roles cannot be overflow
+	if(!new_overflow)
 		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role]")
 		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
 	var/cap = CONFIG_GET(number/overflow_cap)
@@ -240,19 +240,14 @@ SUBSYSTEM_DEF(job)
  * * job - The job to assign
  * * latejoin - Set to TRUE if this is a latejoin role assignment.
  * * do_eligibility_checks - Set to TRUE to conduct all job eligibility tests and reject on failure. Set to FALSE if job eligibility has been tested elsewhere and they can be safely skipped.
- * * is_debug_dummy - Only the admin full-crew tool may assign a fresh, clientless dummy without a character profile.
  */
-/datum/controller/subsystem/job/proc/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE, is_debug_dummy = FALSE) // BANDASTATION EDIT - Preserve the native admin dummy caller.
+/datum/controller/subsystem/job/proc/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE)
 	job_debug("AR: Running, Player: [player], Job: [isnull(job) ? "null" : job], LateJoin: [latejoin]")
 	if(!player?.mind || !job)
 		job_debug("AR: Failed, player has no mind or job is null. Player: [player], Rank: [isnull(job) ? "null" : job.type]")
 		return FALSE
 
-	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE, latejoin = latejoin) != JOB_AVAILABLE)) // BANDASTATION EDIT - Final profile admission
-		return FALSE
-
-	// BANDASTATION EDIT: final admission also applies to prechecked callers.
-	if(!prepare_job_assignment(player, job, latejoin, is_debug_dummy))
+	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE) != JOB_AVAILABLE))
 		return FALSE
 
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
@@ -331,8 +326,6 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/reset_occupations()
 	job_debug("RO: Occupations reset.")
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
-		if(player?.assigned_character) // BANDASTATION EDIT - Mindless lobbies also release cancelled selections.
-			QDEL_NULL(player.assigned_character)
 		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))

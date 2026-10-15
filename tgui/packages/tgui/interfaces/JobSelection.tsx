@@ -10,13 +10,20 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
+import { JobHudIcon } from '../bandastation/donor_jobs/JobHudIcon'; // BANDASTATION ADDITION
+// BANDASTATION ADDITION START: selected-character data and server-authoritative merge.
+import { mergeLatejoinDepartments } from '../bandastation/job_slots_preferences/latejoin';
+import type {
+  JobCharacterDisplayData,
+  LatejoinCharacterData,
+} from '../bandastation/job_slots_preferences/types';
+// BANDASTATION ADDITION END
 import {
   DEPARTMENTS_RU,
   JOBS_RU,
   ReverseJobsRu,
 } from '../bandastation/ru_jobs'; // BANDASTATION EDIT
 import { Window } from '../layouts';
-import { JobHudIcon } from '../bandastation/donor_jobs/JobHudIcon'; // BANDASTATION ADDITION
 import { JOB2ICON } from './common/JobToIcon';
 
 type Job = {
@@ -27,10 +34,7 @@ type Job = {
   prioritized: BooleanLike;
   description: string;
   jobIcon: string;
-  public_title: string; // BANDASTATION ADDITION: display identity differs from the canonical job key.
-  character_profile: string; // BANDASTATION ADDITION
-  job_icon?: string; // BANDASTATION ADDITION: native HUD glyph of the assigned profile.
-};
+} & JobCharacterDisplayData; // BANDASTATION ADDITION
 
 type Department = {
   color: string;
@@ -46,8 +50,7 @@ type Data = {
   disable_jobs_for_non_observers: BooleanLike;
   priority: BooleanLike;
   round_duration: string;
-  edit_slot: number; // BANDASTATION ADDITION
-};
+} & LatejoinCharacterData; // BANDASTATION ADDITION
 
 type JobEntryProps = {
   jobName: string;
@@ -190,24 +193,10 @@ export function JobSelection(props) {
     return null; // Stop TGUI whitescreens with TGUI-dev!
   }
 
-  // BANDASTATION EDIT: static metadata must not resurrect jobs hidden by current availability.
-  const departments: Record<string, Department> = Object.fromEntries(
-    Object.entries(data.departments).map(([name, department]) => [
-      name,
-      {
-        ...data.departments_static[name],
-        ...department,
-        jobs: Object.fromEntries(
-          Object.entries(department.jobs).map(([jobName, job]) => [
-            jobName,
-            {
-              ...data.departments_static[name]?.jobs[jobName],
-              ...job,
-            },
-          ]),
-        ),
-      },
-    ]),
+  // BANDASTATION EDIT: enrich only the current server list with static metadata.
+  const departments = mergeLatejoinDepartments(
+    data.departments,
+    data.departments_static,
   );
 
   const { shuttle_status, round_duration } = data;

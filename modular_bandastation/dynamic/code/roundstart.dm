@@ -1,6 +1,21 @@
+/// Prepare native occupation constraints before roundstart records its cancellable changes.
+/datum/dynamic_ruleset/proc/prepare_job_assignment(datum/mind/candidate)
+	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+	prepare_for_role(candidate)
+	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
+
 /datum/dynamic_ruleset/roundstart
 	/// Occupation changes owned by each unexecuted assignment, excluding pre-existing restrictions.
 	VAR_PRIVATE/list/prepared_job_changes
+
+/// A crew antagonist also needs an eligible job after the native mind and queued-selection checks.
+/datum/dynamic_ruleset/roundstart/is_valid_candidate(mob/candidate, client/candidate_client)
+	. = ..()
+	if(!. || !isnewplayer(candidate) || (ruleset_flags & RULESET_INVADER))
+		return
+	var/mob/dead/new_player/player = candidate
+	return player.has_eligible_crew_preference(get_blacklisted_roles())
 
 /datum/dynamic_ruleset/roundstart/prepare_job_assignment(datum/mind/candidate)
 	var/list/previous_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate)

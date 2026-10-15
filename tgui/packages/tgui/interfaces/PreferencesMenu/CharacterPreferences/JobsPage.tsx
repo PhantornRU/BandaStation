@@ -7,6 +7,7 @@ import { classes } from 'tgui-core/react';
 // BANDASTATION ADDITION START: donor job UI extension points
 import { JobLabel } from '../../../bandastation/donor_jobs/JobLabel';
 import { JobList } from '../../../bandastation/donor_jobs/JobList';
+import { useJobRestriction } from '../../../bandastation/donor_jobs/JobRestriction';
 import {
   JobTabButtons,
   JobTabsProvider,
@@ -66,9 +67,13 @@ type CreateSetPriority = (priority: JobPriority | null) => () => void;
 
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
-function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
-  if (createSetPriorityCache[jobName] !== undefined) {
-    return createSetPriorityCache[jobName];
+function createCreateSetPriorityFromName(
+  jobName: string,
+  editSlot: number, // BANDASTATION ADDITION: keep the character rendered by this row.
+): CreateSetPriority {
+  const cacheKey = `${jobName}:${editSlot}`; // BANDASTATION EDIT
+  if (createSetPriorityCache[cacheKey] !== undefined) {
+    return createSetPriorityCache[cacheKey];
   }
 
   const perPriorityCache: Map<JobPriority | null, () => void> = new Map();
@@ -80,12 +85,12 @@ function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
     }
 
     function setPriority() {
-      const { act, data } = useBackend<PreferencesMenuData>();
+      const { act } = useBackend<PreferencesMenuData>();
 
       act('set_job_preference', {
         job: jobName,
         level: priority,
-        edit_slot: data.active_slot, // BANDASTATION ADDITION: reject a stale character row on the server.
+        edit_slot: editSlot, // BANDASTATION ADDITION: reject a stale character row on the server.
       });
     }
 
@@ -93,7 +98,7 @@ function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
     return setPriority;
   }
 
-  createSetPriorityCache[jobName] = createSetPriority;
+  createSetPriorityCache[cacheKey] = createSetPriority;
   return createSetPriority;
 }
 
@@ -183,11 +188,14 @@ function JobRow(props: JobRowProps) {
   const jobPreference = data.job_preferences.find((pref) => pref.job === name);
   const priority = jobPreference?.priority ?? null;
   const isOverflow = data.overflow_role === name;
-  const createSetPriority = createCreateSetPriorityFromName(name);
+  const createSetPriority = createCreateSetPriorityFromName(
+    name,
+    data.active_slot,
+  ); // BANDASTATION EDIT
 
   let rightSide: ReactNode;
   const experienceNeeded = data.job_required_experience?.[name];
-  const daysLeft = data.job_days_left?.[name] ?? 0;
+  const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
   if (experienceNeeded) {
     const { experience_type, required_playtime } = experienceNeeded;
@@ -207,13 +215,11 @@ function JobRow(props: JobRowProps) {
         Нужно еще дней: <b>{daysLeft}</b>
       </Stack.Item>
     );
-  } else if (data.job_bans?.includes(name)) {
+  } else if (data.job_bans && data.job_bans.indexOf(name) !== -1) {
     rightSide = <Stack.Item className="restricted ban">Забанен</Stack.Item>;
   }
 
-  const donorJob = data.donor_jobs?.[name];
-  const additionalReason =
-    donorJob?.lock_reason || data.job_character_profiles?.[name]?.error;
+  const restriction = useJobRestriction(name); // BANDASTATION ADDITION
 
   return (
     <Stack.Item className={className}>
@@ -224,20 +230,12 @@ function JobRow(props: JobRowProps) {
         </Stack.Item>
         <Stack.Item className="options">
           {rightSide}
-          {!!additionalReason && (
-            <Tooltip content={additionalReason}>
-              <Stack.Item className="restricted">
-                {donorJob?.lock_reason
-                  ? `Тир ${donorJob.required_tier}`
-                  : 'Профиль недоступен'}
-              </Stack.Item>
-            </Tooltip>
-          )}
+          {restriction.notice}
           <PriorityButtons
             createSetPriority={createSetPriority}
             isOverflow={isOverflow}
             priority={priority}
-            restricted={!!rightSide || !!additionalReason}
+            restricted={!!rightSide || restriction.restricted}
           />
           <JobSlotDropdown name={name} />
         </Stack.Item>

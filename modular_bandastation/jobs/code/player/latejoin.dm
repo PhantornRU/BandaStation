@@ -1,3 +1,27 @@
+/// The transient selection is owned by the lobby mob, including unsuccessful attempts.
+/mob/dead/new_player/Destroy()
+	QDEL_NULL(assigned_character)
+	return ..()
+
+/// Release an unspawned assignment before native logout deletes its mind.
+/mob/dead/new_player/Logout()
+	if(!spawning && assigned_character && mind?.assigned_role)
+		SSjob.free_job_position(mind.assigned_role.title)
+	return ..()
+
+/// Start one request and capture its profile before eligibility or native shuttle waits.
+/mob/dead/new_player/proc/begin_latejoin_attempt(rank, client/requester)
+	if(spawning || !requester || SSticker.current_state != GAME_STATE_PLAYING || !SSticker.IsRoundInProgress())
+		return null
+	spawning = TRUE
+	notify_localhost_respawn(requester)
+	var/list/entry_profile = requester.prefs.capture_latejoin_profile(rank)
+	var/error = IsJobUnavailable(rank, latejoin = TRUE)
+	if(error != JOB_AVAILABLE)
+		reject_late_spawn(get_job_unavailable_error_message(error, rank))
+		return null
+	return entry_profile
+
 /// Preserve upstream localhost policy without logging every menu/candidate check.
 /mob/dead/new_player/proc/notify_localhost_respawn(client/requester)
 	if(CONFIG_GET(flag/allow_respawn) != RESPAWN_FLAG_NEW_CHARACTER || !requester.is_localhost())

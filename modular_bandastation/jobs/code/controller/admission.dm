@@ -1,3 +1,17 @@
+/// The menu and final admission use the same native capacity policy.
+/mob/dead/new_player/proc/IsJobSlotUnavailable(datum/job/job)
+	if(job.total_positions < 0 || job.current_positions < job.total_positions)
+		return FALSE
+	if(!is_assistant_job(job))
+		return TRUE
+	var/client/requester = GET_CLIENT(src)
+	if(isnum(requester?.player_age) && requester.player_age <= 14) //Newbies can always be assistants
+		return FALSE
+	for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
+		if(other_job != job && !other_job.get_join_lock_reason(requester) && (other_job.total_positions < 0 || other_job.current_positions < other_job.total_positions))
+			return TRUE
+	return FALSE
+
 /// Final admission fixes the selected profile before native role assignment occupies the vacancy.
 /datum/controller/subsystem/job/proc/prepare_job_assignment(mob/dead/new_player/player, datum/job/job, latejoin, is_debug_dummy = FALSE)
 	if(QDELETED(player) || !player.mind || !job)
@@ -65,4 +79,25 @@
 		if(availability != JOB_AVAILABLE)
 			continue
 		return TRUE
+	return FALSE
+
+/// Expired subscription/profile restrictions do not imply native antag rolling.
+/mob/dead/new_player/check_job_preferences(warn = TRUE)
+	if(client)
+		var/datum/job/forced_job = SSjob.get_job_type(LAZYACCESS(SSjob.forced_occupations, mind))
+		if(forced_job)
+			return SSjob.check_job_eligibility(src, forced_job, "Forced admission") == JOB_AVAILABLE
+	. = ..()
+	if(!. || client.prefs.read_preference(/datum/preference/choiced/jobless_role) != RETURNTOLOBBY)
+		return
+	return check_eligible_roundstart_preferences(warn)
+
+/// Reject only the failed assignment, without changing saved job preferences.
+/mob/dead/new_player/proc/check_eligible_roundstart_preferences(warn = TRUE)
+	if(has_eligible_crew_preference(null))
+		return TRUE
+	if(warn)
+		to_chat(src, span_warning("Ни одна выбранная профессия сейчас недоступна. Проверьте профиль и подписку."))
+	SSdynamic.cancel_roundstart_assignment(mind)
+	ready = PLAYER_NOT_READY
 	return FALSE

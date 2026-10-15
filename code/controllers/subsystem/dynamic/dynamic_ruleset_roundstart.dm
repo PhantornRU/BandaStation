@@ -12,11 +12,6 @@
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
 		if(candidate.mind in ruleset.selected_minds)
 			return FALSE
-	// BANDASTATION EDIT - A crew antagonist needs an eligible, non-blacklisted job.
-	if(isnewplayer(candidate))
-		var/mob/dead/new_player/player = candidate
-		if(!(ruleset_flags & RULESET_INVADER) && !player.has_eligible_crew_preference(get_blacklisted_roles()))
-			return FALSE
 	return ..()
 
 /// Helpful proc - to use if your ruleset forces a job - which ensures a candidate can play the passed job typepath
@@ -130,7 +125,6 @@
 	// BANDASTATION EDIT END
 
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
-	UnregisterSignal(candidate, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED) // BANDASTATION ADDITION
 	if (!CAN_HAVE_BLOOD(candidate.current))
 		CRASH("A roundstart blood worm tried to spawn into a candidate mob with no blood. This shouldn't happen, because we already checked for TRAIT_NOBLOOD in species traits.")
 

@@ -3,6 +3,7 @@
 #include "code/extension_hooks.dm"
 #include "code/controller/subsystem/job.dm"
 #include "code/controller/admission.dm"
+#include "code/controller/assignment.dm"
 #include "code/controller/roundstart.dm"
 #include "code/player/latejoin.dm"
 #include "code/ui/latejoin.dm"

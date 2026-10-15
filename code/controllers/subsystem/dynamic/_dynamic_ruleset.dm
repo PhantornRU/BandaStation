@@ -241,13 +241,6 @@
 
 	return TRUE
 
-// BANDASTATION ADDITION: neutral preparation hook for occupation constraints.
-/datum/dynamic_ruleset/proc/prepare_job_assignment(datum/mind/candidate)
-	PROTECTED_PROC(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-	prepare_for_role(candidate)
-	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
-
 /// Gets the mind of a candidate, can be overridden to return a different mind if necessary
 /datum/dynamic_ruleset/proc/get_candidate_mind(mob/dead/candidate)
 	return candidate.mind

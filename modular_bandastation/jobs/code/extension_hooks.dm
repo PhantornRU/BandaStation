@@ -28,6 +28,10 @@
 /datum/job/proc/get_character_job_icon(datum/job_character_selection/character)
 	return get_job_hud_icon(src)
 
+/// Outfits may replace one backpack insertion while ordinary outfits retain native overflow deletion.
+/datum/outfit/proc/equip_backpack_item(mob/living/carbon/human/user, item_path)
+	return user.equip_to_storage(SSwardrobe.provide_type(item_path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+
 /datum/id_trim/job
 	/// Expose a registered job template only through native CentCom authentication.
 	var/centcom_template = FALSE

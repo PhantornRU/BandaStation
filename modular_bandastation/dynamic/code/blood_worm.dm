@@ -19,6 +19,8 @@
 	SIGNAL_HANDLER
 	if(!CAN_HAVE_BLOOD(character))
 		return COMPONENT_CANCEL_CHARACTER_SPAWN
+	// This prepared assignment only validates its initial body; rejected bodies are cleaned up by cancellation.
+	UnregisterSignal(source, COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED)
 
 /datum/dynamic_ruleset/roundstart/blood_worm/cancel_assignment(datum/mind/candidate)
 	if(!..())

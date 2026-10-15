@@ -1,5 +1,9 @@
 import type { BooleanLike } from 'tgui-core/react';
 
+// BANDASTATION ADDITION START: module-owned job preference payloads.
+import type { DonorJobsData } from '../../bandastation/donor_jobs/types';
+import type { JobSlotsPreferencesData } from '../../bandastation/job_slots_preferences/types';
+// BANDASTATION ADDITION END
 import type { sendAct } from '../../events/act';
 import type {
   LoadoutCategory,
@@ -191,26 +195,6 @@ export type PreferencesMenuData = {
   >;
   job_preferences: JobPreference[];
 
-  // BANDASTATION ADDITION START: per-character variants, donor requirements and neutral profiles.
-  donor_jobs?: Record<
-    string,
-    {
-      title: string | null;
-      profile_title: string | null;
-      selected: string | null;
-      icon: string;
-      variants: { id: string; name: string }[];
-      required_tier: number;
-      lock_reason: string | null;
-    }
-  >;
-  job_character_profiles?: Record<
-    string,
-    { slot: number | null; randomized: BooleanLike; error: string | null }
-  >;
-  pref_job_slots: Record<string, number>;
-  // BANDASTATION ADDITION END
-
   keybindings: Record<string, string[]>;
   overflow_role: string;
   default_quirk_balance: number;
@@ -237,7 +221,8 @@ export type PreferencesMenuData = {
   manufacturers: Record<string, string[]>;
   selected_manufacturer: Record<string, string>;
   // BANDASTATION ADDITION END
-};
+} & DonorJobsData &
+  JobSlotsPreferencesData; // BANDASTATION ADDITION
 
 // BANDASTATION ADDITION START
 export type Seed = {

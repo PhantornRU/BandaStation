@@ -570,8 +570,7 @@
 
 	src.job = job.title
 
-	var/mob/dead/new_player/requester = isnewplayer(player_client.mob) ? player_client.mob : null // BANDASTATION EDIT - One committed profile
-	var/randomise_job_slot = requester?.assigned_character ? requester.assigned_character.randomized : player_client.prefs.set_assigned_slot(job.title, player_client.mob?.mind?.late_joiner) // BANDASTATION EDIT - Preserve non-lobby callers
+	var/randomise_job_slot = player_client.prefs.set_assigned_slot(job.title, player_client.mob?.mind?.late_joiner) // BANDASTATION ADDITION - Pref Job Slots
 	if(fully_randomize || randomise_job_slot)  // BANDASTATION EDIT - Pref Job Slots - OLD: if(fully_randomize)
 		player_client.prefs.apply_prefs_to(src)
 

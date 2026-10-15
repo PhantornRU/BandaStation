@@ -1,3 +1,17 @@
+/datum/preference_middleware/jobs/set_job_preference(list/params, mob/user)
+	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
+		return FALSE
+	var/job_title = params["job"]
+	if(!istext(job_title))
+		return FALSE
+	var/datum/job/job = SSjob.get_job(job_title)
+	if(!job || job.title != job_title)
+		return FALSE
+	// Clearing remains available when a role or its selected profile becomes unavailable.
+	if(!isnull(params["level"]) && job.get_join_lock_reason(user.client))
+		return FALSE
+	return ..()
+
 /datum/preference_middleware/pref_job_slots
 	action_delegations = list(
 			"set_job_slot" = PROC_REF(set_job_slot),

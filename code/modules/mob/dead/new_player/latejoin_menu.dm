@@ -18,13 +18,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			return
 		if(availability != JOB_AVAILABLE && (job.job_flags & JOB_HIDE_WHEN_EMPTY))
 			continue
-		var/list/character_data = get_job_character_data(job, user)
-		var/label = "[character_data["public_title"]] ([character_data["character_profile"]])"
-		var/reason = get_job_unavailable_reason(job, user, availability)
-		if(reason)
-			label += " — [reason]"
-		if(jobs[label])
-			label += " ([job.title])"
+		var/label = get_job_choice_label(job, user, availability, jobs)
 		jobs[label] = job.title
 
 	var/input_contents = input(user, "Выберите профессию:", "Поздний вход") as null|anything in jobs
@@ -68,7 +62,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		"disable_jobs_for_non_observers" = SSlag_switch.measures[DISABLE_NON_OBSJOBS],
 		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
-		"edit_slot" = owner.client.prefs.default_slot, // BANDASTATION ADDITION
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
@@ -106,21 +99,18 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
 				"jobIcon" = job_datum.tgui_icon,
 			)
-			job_data += get_job_character_data(job_datum, owner) // BANDASTATION ADDITION
 
 			if(job_availability != JOB_AVAILABLE)
 				if (job_datum.job_flags & JOB_HIDE_WHEN_EMPTY)
 					continue
-				job_data["unavailable_reason"] = get_job_unavailable_reason(job_datum, owner, job_availability) // BANDASTATION EDIT
+				job_data["unavailable_reason"] = get_job_unavailable_error_message(job_availability, job_datum.title)
 
-			// BANDASTATION EDIT START: count vacancies available to this player.
-			if(job_availability == JOB_AVAILABLE)
-				if(job_datum.total_positions < 0)
-					department_data["open_slots"] = "∞"
-				if(department_data["open_slots"] != "∞")
-					if(job_datum.total_positions - job_datum.current_positions > 0)
-						department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
-			// BANDASTATION EDIT END
+			if(job_datum.total_positions < 0)
+				department_data["open_slots"] = "∞"
+
+			if(department_data["open_slots"] != "∞")
+				if(job_datum.total_positions - job_datum.current_positions > 0)
+					department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
 
 			department_jobs[job_datum.title] = job_data
 
@@ -169,26 +159,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		if("ui_mounted_with_no_bluescreen")
 			owner.jobs_menu_mounted = TRUE
 		if("select_job")
-			// BANDASTATION EDIT START: stale selections must not change a different character.
-			var/client/requester = owner.client
-			var/editing_slot = requester.prefs.default_slot
-			if(params["edit_slot"] != editing_slot)
-				return TRUE
-			// BANDASTATION EDIT END
-			if(params["job"] == "Random")
-				var/job = get_random_job(owner)
-				if(!job)
-					return TRUE
-
-				params["job"] = job
-
-			// BANDASTATION EDIT START: random-job confirmation yields; final checks belong to AttemptLateSpawn.
-			if(QDELETED(owner) || owner.client != requester || requester.mob != owner)
-				return TRUE
-			if(requester.prefs.default_slot != editing_slot)
-				return TRUE
-			// BANDASTATION EDIT END
-			owner.AttemptLateSpawn(params["job"])
+			return select_character_job(owner, params) // BANDASTATION EDIT - Slot-checked request and post-confirmation identity.
 		if("viewpoll")
 			var/datum/poll_question/poll = locate(params["viewpoll"]) in GLOB.polls
 			if(!poll)
