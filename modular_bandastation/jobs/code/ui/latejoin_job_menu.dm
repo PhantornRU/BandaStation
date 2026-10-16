@@ -1,29 +1,15 @@
-/// Enrich native canonical choices; native owns the input and the subsequent spawn call.
-/datum/latejoin_menu/proc/prepare_latejoin_job_choices(mob/dead/new_player/user, list/job_titles, datum/latejoin_profile_snapshot/context)
-	if(!user?.is_latejoin_request_current(context) || context.requester.interviewee)
-		return null
-	var/list/choices = list()
-	for(var/job_title in job_titles)
-		var/datum/job/job = SSjob.get_job(job_title)
-		var/availability = user.IsJobUnavailable(job_title, latejoin = TRUE)
-		if(!user?.is_latejoin_request_current(context))
-			return null
-		if(availability != JOB_AVAILABLE && (job.job_flags & JOB_HIDE_WHEN_EMPTY))
-			continue
-		choices[get_job_choice_label(job, user, availability, choices)] = job_title
-	return choices
-
-/datum/latejoin_menu/proc/resolve_latejoin_job_choice(mob/dead/new_player/user, choice, list/choices, datum/latejoin_profile_snapshot/context)
-	if(!user?.is_latejoin_request_current(context))
-		return null
-	return choices[choice]
-
 /datum/latejoin_menu/proc/is_latejoin_selection_current(mob/dead/new_player/owner, list/params, datum/latejoin_profile_snapshot/context)
 	return owner?.is_latejoin_request_current(context) && params["edit_slot"] == context.editing_slot
 
 /datum/latejoin_menu/proc/is_latejoin_random_job_allowed(mob/dead/new_player/owner, datum/job/job)
 	var/client/requester = owner?.client
 	return job && requester && !requester.interviewee && (!job.requires_explicit_preference() || requester.prefs.job_preferences[job.title])
+
+/// Recheck explicit opt-in after the native confirmation, before its caller uses the chosen job.
+/datum/latejoin_menu/get_random_job(mob/dead/new_player/owner)
+	. = ..()
+	if(. && !is_latejoin_random_job_allowed(owner, SSjob.get_job(.)))
+		return null
 
 /datum/latejoin_menu/proc/get_latejoin_job_label(mob/dead/new_player/owner, job_title)
 	var/list/character_data = get_job_character_data(SSjob.get_job(job_title), owner)
@@ -59,24 +45,6 @@
 	)
 	qdel(character)
 	return data
-
-/datum/latejoin_menu/proc/get_job_unavailable_reason(datum/job/job, mob/dead/new_player/user, availability)
-	if(availability == JOB_AVAILABLE)
-		return null
-	if(availability == JOB_UNAVAILABLE_JOB_LOCK)
-		return job.get_join_lock_reason(user.client) || get_job_unavailable_error_message(availability, job.title)
-	return get_job_unavailable_error_message(availability, job.title)
-
-/// Keep the fallback label tied to a canonical job, even when public titles collide.
-/datum/latejoin_menu/proc/get_job_choice_label(datum/job/job, mob/dead/new_player/user, availability, list/choices)
-	var/list/character_data = get_job_character_data(job, user)
-	var/label = "[character_data["public_title"]] ([character_data["character_profile"]])"
-	var/reason = get_job_unavailable_reason(job, user, availability)
-	if(reason)
-		label += " — [reason]"
-	if(choices[label])
-		label += " ([job.title])"
-	return label
 
 /// Enrich only native dynamic rows: hidden jobs stay hidden and eligibility is not repeated.
 /datum/latejoin_menu/ui_data(mob/user)

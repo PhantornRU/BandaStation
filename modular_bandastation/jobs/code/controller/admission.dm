@@ -1,4 +1,4 @@
-/// The menu and final admission use the same native capacity policy.
+/// Repeat native capacity conditions without SQL at final admission; keep them aligned with IsJobUnavailable.
 /mob/dead/new_player/proc/IsJobSlotUnavailable(datum/job/job)
 	if(job.total_positions == -1 || job.current_positions < job.total_positions)
 		return FALSE

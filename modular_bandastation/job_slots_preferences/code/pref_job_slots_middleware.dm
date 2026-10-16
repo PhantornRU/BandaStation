@@ -10,14 +10,8 @@
 
 /datum/preference_middleware/jobs/get_ui_data(mob/user)
 	. = ..()
-	var/list/priorities = list()
 	for(var/list/job_data as anything in .["job_preferences"])
-		if(!(job_data["job"] in preferences.job_preferences))
-			continue
-		var/list/priority_data = job_data.Copy()
-		priority_data -= "assigned_profile_slot"
-		priorities += list(priority_data)
-	.["job_preferences"] = priorities
+		job_data -= "assigned_profile_slot"
 
 /datum/preference_middleware/jobs/set_job_preference(list/params, mob/user)
 	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
@@ -79,15 +73,13 @@
 		if(!islist(saved_profile) || !saved_profile["real_name"])
 			return FALSE
 
-	preferences.set_job_character_slot(job_title, slot_index)
-	return TRUE
+	return preferences.set_job_character_slot(job_title, slot_index)
 
 /datum/preference_middleware/pref_job_slots/proc/reset_job_slots(list/params, mob/user)
 	var/client/player = GET_CLIENT(user)
 	if(player?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE
-	preferences.reset_job_slots()
-	return TRUE
+	return preferences.reset_job_slots()
 
 #undef JOB_SLOT_RANDOMISED_SLOT
 #undef JOB_SLOT_CURRENT_SLOT

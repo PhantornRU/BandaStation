@@ -21,10 +21,6 @@
 		return
 	spawning_mind.transfer_to(spawning_player)
 
-/// A character-specific outfit. Native jobs still dispatch through get_outfit().
-/datum/job/proc/get_spawn_outfit(mob/living/carbon/human/body, datum/preferences/preferences, visual_only, consistent)
-	return get_variant_outfit(body, preferences, visual_only, consistent)
-
 /// Display metadata only; never replace a canonical job title, trim or ban key.
 /datum/job/proc/get_character_job_title(datum/job_character_selection/character)
 	var/list/variants = character.read_preference(/datum/preference/job_outfit_variants)

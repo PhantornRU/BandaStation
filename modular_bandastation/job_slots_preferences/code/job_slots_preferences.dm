@@ -7,16 +7,22 @@
 
 /// Store an assignment validated by the action handler; the current slot needs no entry.
 /datum/preferences/proc/set_job_character_slot(job_title, slot_index)
+	if(!isnull(invalid_job_profile_assignment_entries))
+		return FALSE
 	if(slot_index == JOB_SLOT_CURRENT_SLOT)
 		pref_job_slots -= job_title
 	else
 		pref_job_slots[job_title] = slot_index
 	save_preferences()
+	return TRUE
 
 /// Clear saved job assignments without changing character slots.
 /datum/preferences/proc/reset_job_slots()
+	if(!isnull(invalid_job_profile_assignment_entries))
+		return FALSE
 	pref_job_slots.Cut()
 	save_preferences()
+	return TRUE
 
 /**
  * Loads assigned character slot for a job

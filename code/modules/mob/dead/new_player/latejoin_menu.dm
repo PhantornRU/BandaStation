@@ -29,23 +29,15 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
-	var/datum/choice_context = user.capture_latejoin_request() // BANDASTATION EDIT - Preserve identity across the modal.
 	var/list/jobs = list()
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		jobs += job.title
-
-	jobs = prepare_latejoin_job_choices(user, jobs, choice_context) // BANDASTATION EDIT - Decorate canonical choices.
-	if(isnull(jobs))
-		return
 
 	var/input_contents = input(user, "Pick a job to join as:", "Latejoin Job Selection") as null|anything in jobs
 
 	if(!input_contents)
 		return
 
-	input_contents = resolve_latejoin_job_choice(user, input_contents, jobs, choice_context) // BANDASTATION EDIT - Resolve the label only for the same request.
-	if(!input_contents)
-		return
 	user.AttemptLateSpawn(input_contents)
 
 /datum/latejoin_menu/ui_close(mob/dead/new_player/user)
@@ -281,8 +273,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		if(random_job == JOB_CHOICE_CANCEL)
 			return
 		if(random_job == JOB_CHOICE_YES)
-			if(!is_latejoin_random_job_allowed(owner, SSjob.get_job(random))) // BANDASTATION EDIT - Recheck explicit opt-in after confirmation.
-				return
 			return random
 
 #undef JOB_CHOICE_YES

@@ -42,7 +42,8 @@
 /datum/job_variant_context/proc/belongs_to(datum/job/job)
 	return job && job.type == job_type
 
-/datum/job/proc/get_variant_outfit(mob/living/carbon/human/body, datum/preferences/preferences, visual_only, consistent)
+/// Select this body's outfit before native equipment; ordinary jobs retain get_outfit().
+/datum/job/proc/get_spawn_outfit(mob/living/carbon/human/body, datum/preferences/preferences, visual_only, consistent)
 	if(!visual_only)
 		return body.job_variant_context?.belongs_to(src) ? body.job_variant_context.outfit_type : get_outfit(consistent)
 	if(!preferences)
