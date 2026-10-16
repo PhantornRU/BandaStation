@@ -115,10 +115,7 @@
 	if (!..())
 		return FALSE
 
-	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = GLOB.species_prototypes[species_type]
-
-	return !(TRAIT_NOBLOOD in species.inherent_traits)
+	return is_valid_host_profile(candidate, candidate_client) // BANDASTATION EDIT - Validate the profile selected for the host job.
 
 /datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
 	if (!CAN_HAVE_BLOOD(candidate.current))

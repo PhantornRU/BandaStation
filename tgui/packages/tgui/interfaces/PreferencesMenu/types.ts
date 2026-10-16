@@ -1,8 +1,8 @@
 import type { BooleanLike } from 'tgui-core/react';
 
 // BANDASTATION ADDITION START: module-owned job preference payloads.
-import type { DonorJobsData } from '../../bandastation/donor_jobs/types';
 import type { JobSlotsPreferencesData } from '../../bandastation/job_slots_preferences/types';
+import type { JobVariantsData } from '../../bandastation/jobs/types';
 // BANDASTATION ADDITION END
 import type { sendAct } from '../../events/act';
 import type {
@@ -221,7 +221,7 @@ export type PreferencesMenuData = {
   manufacturers: Record<string, string[]>;
   selected_manufacturer: Record<string, string>;
   // BANDASTATION ADDITION END
-} & DonorJobsData &
+} & JobVariantsData &
   JobSlotsPreferencesData; // BANDASTATION ADDITION
 
 // BANDASTATION ADDITION START

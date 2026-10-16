@@ -2,11 +2,11 @@ import { useBackend } from 'tgui/backend';
 import { Stack, Tooltip } from 'tgui-core/components';
 
 import type { JobSlotsPreferencesData } from '../job_slots_preferences/types';
-import type { DonorJobsData } from './types';
+import type { JobVariantsData } from '../jobs/types';
 
 export function useJobRestriction(jobName: string) {
-  const { data } = useBackend<DonorJobsData & JobSlotsPreferencesData>();
-  const donorJob = data.donor_jobs?.[jobName];
+  const { data } = useBackend<JobVariantsData & JobSlotsPreferencesData>();
+  const donorJob = data.job_variants?.[jobName];
   const reason =
     donorJob?.lock_reason || data.job_character_profiles?.[jobName]?.error;
 

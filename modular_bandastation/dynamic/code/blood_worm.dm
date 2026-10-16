@@ -1,11 +1,3 @@
-/// Keep the full roundstart parent chain while replacing the old active-profile species check.
-/datum/dynamic_ruleset/roundstart/blood_worm/is_valid_candidate(mob/living/candidate, client/candidate_client)
-	// The concrete ancestor call preserves its chain; the replaced active-profile veto must remain dormant.
-	SHOULD_CALL_PARENT(FALSE)
-	if(!call(src, /datum/dynamic_ruleset/roundstart::is_valid_candidate())(candidate, candidate_client))
-		return FALSE
-	return is_valid_host_profile(candidate, candidate_client)
-
 /// Native candidacy has already checked the mind and queued rulesets before this phase.
 /datum/dynamic_ruleset/roundstart/blood_worm/proc/is_valid_host_profile(mob/candidate, client/candidate_client)
 	if(isnewplayer(candidate))

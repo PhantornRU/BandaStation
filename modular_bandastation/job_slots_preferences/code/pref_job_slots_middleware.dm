@@ -1,22 +1,3 @@
-/datum/preference_middleware/jobs/New(datum/preferences)
-	. = ..()
-	action_delegations = action_delegations.Copy()
-	action_delegations -= "set_job_to_profile"
-
-/// The native action is retained for upstream compatibility, but never edits either assignment map.
-/datum/preference_middleware/jobs/set_job_to_profile(list/params, mob/user)
-	return FALSE
-
-/datum/preference_middleware/jobs/get_ui_data(mob/user)
-	. = ..()
-	var/list/priorities = list()
-	for(var/list/job_data as anything in .["job_preferences"])
-		if(!(job_data["job"] in preferences.job_preferences))
-			continue
-		job_data -= "assigned_profile_slot"
-		priorities += list(job_data)
-	.["job_preferences"] = priorities
-
 /datum/preference_middleware/jobs/set_job_preference(list/params, mob/user)
 	if(user.client?.prefs != preferences || params["edit_slot"] != preferences.default_slot)
 		return FALSE

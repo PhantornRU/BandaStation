@@ -1,24 +1,31 @@
-/// Capture one job, or the whole menu when no job is known yet, without retaining the mutable map.
-/datum/preferences/proc/capture_latejoin_profile(job_title = null)
-	var/list/assigned_slots = list()
-	if(istext(job_title))
-		assigned_slots[job_title] = pref_job_slots?[job_title]
-	else if(islist(pref_job_slots))
-		assigned_slots = pref_job_slots.Copy()
-	return list(
-		"preferences" = src,
-		"editing_slot" = default_slot,
-		"assigned_slots" = assigned_slots,
-		"use_current_slot" = read_preference(/datum/preference/toggle/late_join_always_current_slot),
-	)
+/// Routing settings that must stay unchanged while a latejoin menu or request yields.
+/// This deliberately does not freeze the contents of a saved or edited character profile.
+/datum/latejoin_profile_snapshot
+	var/datum/preferences/preferences
+	var/editing_slot
+	var/list/assigned_slots
+	var/use_current_slot
 
-/// A chosen job only depends on its own assignment; menu rows and modal choices depend on every row.
-/datum/preferences/proc/is_latejoin_profile_current(job_title, list/context)
-	if(!islist(context) || context["preferences"] != src || context["editing_slot"] != default_slot)
+/// Capture one job, or the whole menu, without retaining the mutable assignment map.
+/datum/preferences/proc/capture_latejoin_profile(job_title = null)
+	var/datum/latejoin_profile_snapshot/context = new
+	context.preferences = src
+	context.editing_slot = default_slot
+	context.assigned_slots = list()
+	if(istext(job_title))
+		context.assigned_slots[job_title] = pref_job_slots?[job_title]
+	else if(islist(pref_job_slots))
+		context.assigned_slots = pref_job_slots.Copy()
+	context.use_current_slot = read_preference(/datum/preference/toggle/late_join_always_current_slot)
+	return context
+
+/// A selected job depends on its own assignment; menu rows depend on every assignment.
+/datum/preferences/proc/is_latejoin_profile_current(job_title, datum/latejoin_profile_snapshot/context)
+	if(!istype(context) || QDELETED(context) || context.preferences != src || context.editing_slot != default_slot)
 		return FALSE
-	if(context["use_current_slot"] != read_preference(/datum/preference/toggle/late_join_always_current_slot))
+	if(context.use_current_slot != read_preference(/datum/preference/toggle/late_join_always_current_slot))
 		return FALSE
-	var/list/assigned_slots = context["assigned_slots"]
+	var/list/assigned_slots = context.assigned_slots
 	if(!islist(assigned_slots))
 		return FALSE
 	var/list/current_slots = islist(pref_job_slots) ? pref_job_slots : list()

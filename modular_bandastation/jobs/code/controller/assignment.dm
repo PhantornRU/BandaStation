@@ -6,31 +6,6 @@
 		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
 	. = ..()
 
-/// Preserve native account, playtime and ban checks, then validate the current requester's selected profile.
-/datum/controller/subsystem/job/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE)
-	var/client/player_client = player ? GET_CLIENT(player) : null
-	if(!player?.mind || !possible_job || !player_client)
-		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return JOB_UNAVAILABLE_GENERIC
-	. = ..(player, possible_job, debug_prefix, add_job_to_log)
-	if(. != JOB_AVAILABLE)
-		return
-	// is_banned_from in the native parent can query the database and sleep.
-	if(QDELETED(player) || GET_CLIENT(player) != player_client)
-		job_debug("[debug_prefix]: Player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return JOB_UNAVAILABLE_GENERIC
-	return check_job_character_eligibility(player, possible_job, latejoin)
-
-/// Fix the selected profile before native assignment occupies the vacancy, including prechecked callers.
-/datum/controller/subsystem/job/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE, is_debug_dummy = FALSE)
-	if(!player?.mind || !job)
-		return FALSE
-	if(do_eligibility_checks && check_job_eligibility(player, job, "AR", add_job_to_log = TRUE, latejoin = latejoin) != JOB_AVAILABLE)
-		return FALSE
-	if(!prepare_job_assignment(player, job, latejoin, is_debug_dummy))
-		return FALSE
-	return ..(player, job, latejoin, FALSE)
-
 /// Release cancelled selections before native role changes, including lobbies without a mind.
 /datum/controller/subsystem/job/reset_occupations()
 	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)

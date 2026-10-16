@@ -12,7 +12,7 @@
 	if(ishuman(spawned) && length(variant_information))
 		var/mob/living/carbon/human/human = spawned
 		// Use the committed outfit; callers without a spawn context still receive the current default.
-		var/outfit_type = human.donor_spawn_context?.outfit_type || resolve_donor_variant(null)?.outfit_type
+		var/outfit_type = human.job_variant_context?.outfit_type || resolve_job_variant(null)?.outfit_type
 		if(variant_information[outfit_type])
 			information = variant_information[outfit_type]
 	if(information)
@@ -31,8 +31,8 @@
 	if(!ishuman(spawned))
 		return
 	var/mob/living/carbon/human/human = spawned
-	var/outfit_type = human.donor_spawn_context?.outfit_type || resolve_donor_variant(null)?.outfit_type
-	if(ispath(outfit_type, /datum/outfit/job/cargo_tech/donor_deliverer))
+	var/outfit_type = human.job_variant_context?.outfit_type || resolve_job_variant(null)?.outfit_type
+	if(ispath(outfit_type, /datum/outfit/job/cargo_tech/deliverer))
 		. += DONOR_ROLE_RP_NOTICE
 		. += important_information
 

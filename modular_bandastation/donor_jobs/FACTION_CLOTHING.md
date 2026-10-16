@@ -15,20 +15,20 @@
 | `/obj/item/clothing/under/solgov/command` | `/obj/item/clothing/under/rank/tsf/marine_officer` | Near-identical BS artwork; no duplicate uniform. |
 | `/obj/item/clothing/under/solgov/command/elite` | `/obj/item/clothing/under/rank/tsf/marsoc_officer` | Near-identical BS artwork; no duplicate uniform. |
 | `/obj/item/clothing/under/solgov/rep` | `/obj/item/clothing/under/rank/tsf/commander` | Near-identical source representative artwork; BS's separate beige representative suit is a different model. |
-| `/obj/item/clothing/under/rank/centcom/captain/solgov` | `/obj/item/clothing/under/rank/tsf/donor/commander` | Missing inventory/worn/carry appearance; native TSF uniform behaviour. |
-| `/obj/item/clothing/head/soft/solgov` | `/obj/item/clothing/head/soft/donor_tsf` | One native cap supports both orientations; no second item. |
-| `/obj/item/clothing/head/soft/solgov/marines` | `/obj/item/clothing/head/soft/donor_tsf` | Source differs from preceding cap in armour/start orientation; no foreign armour imported. |
-| `/obj/item/clothing/head/soft/solgov/marines/elite` | `/obj/item/clothing/head/soft/donor_tsf/specops` | Missing unique inventory/worn appearance. |
-| `/obj/item/clothing/head/soft/solgov/marines/command` | `/obj/item/clothing/head/soft/donor_tsf/command` | Missing unique inventory/worn appearance. |
-| `/obj/item/clothing/head/soft/solgov/marines/command/elite` | `/obj/item/clothing/head/soft/donor_tsf/command/specops` | Missing unique inventory/worn appearance; original worn spelling normalized. |
-| `/obj/item/clothing/head/beret/solgov/command` | `/obj/item/clothing/head/beret/donor_tsf` | Native beret with original fixed-colour appearance. |
-| `/obj/item/clothing/head/beret/solgov/command/elite` | `/obj/item/clothing/head/beret/donor_tsf/specops` | Native beret with original fixed-colour appearance. |
-| `/obj/item/clothing/head/helmet/space/deathsquad/beret/solgov` | `/obj/item/clothing/head/beret/donor_tsf/specops` | Identical elite beret artwork; no duplicate item or pressure/200+ armour mechanics. |
-| `/obj/item/clothing/head/helmet/space/hardsuit/ert/solgov` | `/obj/item/clothing/head/helmet/space/donor_tsf` | Native TG space helmet; no camera/light/hardsuit code imported. |
-| `/obj/item/clothing/head/helmet/space/hardsuit/ert/solgov/command` | `/obj/item/clothing/head/helmet/space/donor_tsf/command` | Native TG space helmet; no camera/light/hardsuit code imported. |
-| `/obj/item/clothing/suit/space/hardsuit/ert/solgov` | `/obj/item/clothing/suit/space/donor_tsf` | Native TG spacesuit; no source mechanics or armour balance imported. |
-| `/obj/item/clothing/suit/space/hardsuit/ert/solgov/command` | `/obj/item/clothing/suit/space/donor_tsf/command` | Native TG spacesuit; no source mechanics or armour balance imported. |
-| `/obj/item/clothing/suit/space/deathsquad/officer/solgov` | `/obj/item/clothing/suit/armor/donor_tsf_commander` | Native TG armour with existing armor_centcom_formal rating; no unsupported toggle or foreign armour. |
+| `/obj/item/clothing/under/rank/centcom/captain/solgov` | `/obj/item/clothing/under/rank/tsf/classic/commander` | Missing inventory/worn/carry appearance; native TSF uniform behaviour. |
+| `/obj/item/clothing/head/soft/solgov` | `/obj/item/clothing/head/soft/tsf` | One native cap supports both orientations; no second item. |
+| `/obj/item/clothing/head/soft/solgov/marines` | `/obj/item/clothing/head/soft/tsf` | Source differs from preceding cap in armour/start orientation; no foreign armour imported. |
+| `/obj/item/clothing/head/soft/solgov/marines/elite` | `/obj/item/clothing/head/soft/tsf/specops` | Missing unique inventory/worn appearance. |
+| `/obj/item/clothing/head/soft/solgov/marines/command` | `/obj/item/clothing/head/soft/tsf/command` | Missing unique inventory/worn appearance. |
+| `/obj/item/clothing/head/soft/solgov/marines/command/elite` | `/obj/item/clothing/head/soft/tsf/command/specops` | Missing unique inventory/worn appearance; original worn spelling normalized. |
+| `/obj/item/clothing/head/beret/solgov/command` | `/obj/item/clothing/head/beret/tsf` | Native beret with original fixed-colour appearance. |
+| `/obj/item/clothing/head/beret/solgov/command/elite` | `/obj/item/clothing/head/beret/tsf/specops` | Native beret with original fixed-colour appearance. |
+| `/obj/item/clothing/head/helmet/space/deathsquad/beret/solgov` | `/obj/item/clothing/head/beret/tsf/specops` | Identical elite beret artwork; no duplicate item or pressure/200+ armour mechanics. |
+| `/obj/item/clothing/head/helmet/space/hardsuit/ert/solgov` | `/obj/item/clothing/head/helmet/space/tsf` | Native TG space helmet; no camera/light/hardsuit code imported. |
+| `/obj/item/clothing/head/helmet/space/hardsuit/ert/solgov/command` | `/obj/item/clothing/head/helmet/space/tsf/command` | Native TG space helmet; no camera/light/hardsuit code imported. |
+| `/obj/item/clothing/suit/space/hardsuit/ert/solgov` | `/obj/item/clothing/suit/space/tsf` | Native TG spacesuit; no source mechanics or armour balance imported. |
+| `/obj/item/clothing/suit/space/hardsuit/ert/solgov/command` | `/obj/item/clothing/suit/space/tsf/command` | Native TG spacesuit; no source mechanics or armour balance imported. |
+| `/obj/item/clothing/suit/space/deathsquad/officer/solgov` | `/obj/item/clothing/suit/armor/tsf_commander` | Native TG armour with existing armor_centcom_formal rating; no unsupported toggle or foreign armour. |
 
 ## СССП
 

@@ -16,7 +16,7 @@ export function JobTabsProvider(props: { children: ReactNode }) {
   const serverPrefs = useServerPrefs();
   const [selected, selectSubscriptionJobs] = useState(false);
   const hasSubscriptionJobs = !!serverPrefs?.jobs.jobs_sorted.some(
-    (name) => (data.donor_jobs?.[name]?.required_tier ?? 0) > 0,
+    (name) => (data.job_variants?.[name]?.required_tier ?? 0) > 0,
   );
 
   return (
@@ -62,7 +62,7 @@ export function useJobTabFilter() {
   const { data } = useBackend<PreferencesMenuData>();
   const { subscriptionJobs } = useContext(JobTabsContext);
   return (name: string) =>
-    (data.donor_jobs?.[name]?.required_tier ?? 0) > 0 === subscriptionJobs;
+    (data.job_variants?.[name]?.required_tier ?? 0) > 0 === subscriptionJobs;
 }
 
 export function useSubscriptionJobs() {

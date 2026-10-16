@@ -9,22 +9,22 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_MAINT_TUNNELS, ACCESS_SERVICE)
 
-/datum/id_trim/job/donor_bath
+/datum/id_trim/job/donor_bath_attendant
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_bath"
 	assignment = "Bath"
-	job = /datum/job/donor/bath
+	job = /datum/job/donor/bath_attendant
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "hudbath"
 	template_access = null
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_MAINT_TUNNELS, ACCESS_SERVICE)
 
-/datum/id_trim/job/donor_casino
+/datum/id_trim/job/donor_croupier
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_casino"
 	assignment = "Casino"
-	job = /datum/job/donor/casino
+	job = /datum/job/donor/croupier
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "hudcasino"
 	template_access = null
@@ -64,11 +64,11 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_MAINT_TUNNELS, ACCESS_THEATRE, ACCESS_RC_ANNOUNCE, ACCESS_SERVICE)
 
-/datum/id_trim/job/donor_musican
+/datum/id_trim/job/donor_musician
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_musican"
 	assignment = "Musician"
-	job = /datum/job/donor/musican
+	job = /datum/job/donor/musician
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "hudmusician"
 	template_access = null
@@ -86,11 +86,11 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_MAINT_TUNNELS, ACCESS_THEATRE, ACCESS_SERVICE)
 
-/datum/id_trim/job/donor_administrator
+/datum/id_trim/job/donor_service_administrator
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_administrator"
 	assignment = "Administrator"
-	job = /datum/job/donor/administrator
+	job = /datum/job/donor/service_administrator
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "hudadministrator"
 	template_access = null
@@ -130,11 +130,11 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MINERAL_STOREROOM, ACCESS_SERVICE)
 
-/datum/id_trim/job/donor_guard
+/datum/id_trim/job/donor_service_guard
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_guard"
 	assignment = "Guard"
-	job = /datum/job/donor/guard
+	job = /datum/job/donor/service_guard
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "hudguard"
 	template_access = null
@@ -152,11 +152,11 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_MAINT_TUNNELS)
 
-/datum/id_trim/job/donor_uncertain
+/datum/id_trim/job/donor_unemployed
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_uncertain"
 	assignment = "Uncertain"
-	job = /datum/job/donor/uncertain
+	job = /datum/job/donor/unemployed
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "huduncertain"
 	template_access = null
@@ -196,11 +196,11 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_LIBRARY, ACCESS_COMMAND, ACCESS_RC_ANNOUNCE, ACCESS_EVA)
 
-/datum/id_trim/job/donor_dealer
+/datum/id_trim/job/donor_merchant
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_dealer"
 	assignment = "Dealer"
-	job = /datum/job/donor/dealer
+	job = /datum/job/donor/merchant
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "huddealer"
 	template_access = null
@@ -229,11 +229,11 @@
 	centcom_template = TRUE
 	minimal_access = list(ACCESS_MAINT_TUNNELS, ACCESS_LIBRARY, ACCESS_EVA)
 
-/datum/id_trim/job/donor_seclown
+/datum/id_trim/job/donor_security_clown
 	trim_icon = 'modular_bandastation/donor_jobs/icons/id_trims.dmi'
 	trim_state = "trim_seclown"
 	assignment = "Security Clown"
-	job = /datum/job/donor/seclown
+	job = /datum/job/donor/security_clown
 	sechud_icon = 'modular_bandastation/donor_jobs/icons/job_hud.dmi'
 	sechud_icon_state = "hudsecurityclown"
 	template_access = null

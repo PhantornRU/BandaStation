@@ -235,7 +235,7 @@
 
 	for(var/mob/candidate as anything in selected_candidates)
 		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
-		prepare_job_assignment(candidate_mind) // BANDASTATION EDIT: roundstart owns cancellable preparation.
+		prepare_job_constraints(candidate_mind) // BANDASTATION EDIT - Track cancellable occupation constraints.
 		selected_minds += candidate_mind
 		antag_candidates -= candidate
 
@@ -349,6 +349,13 @@
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)
 	SHOULD_CALL_PARENT(TRUE)
 	return TRUE
+
+/// Apply native occupation constraints as one phase that roundstart can track and undo.
+/datum/dynamic_ruleset/proc/prepare_job_constraints(datum/mind/candidate) // BANDASTATION EDIT
+	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+	prepare_for_role(candidate)
+	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
 
 /**
  * Handles any special logic that needs to be done for a player before they are assigned to this ruleset

@@ -1,11 +1,9 @@
-import { sortBy } from 'es-toolkit';
 import type { CSSProperties, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Color } from 'tgui-core/color';
 import { Box, Button, Section, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 // BANDASTATION ADDITION START: donor job UI extension points
-import { JobLabel } from '../../../bandastation/donor_jobs/JobLabel';
 import { useJobRestriction } from '../../../bandastation/donor_jobs/JobRestriction';
 import {
   JobsLayout,
@@ -16,6 +14,7 @@ import {
   useJobTabFilter,
 } from '../../../bandastation/donor_jobs/JobTabs';
 import { useJobPriorityAction } from '../../../bandastation/job_slots_preferences/priority';
+import { JobLabel } from '../../../bandastation/jobs/JobLabel';
 import { JOBS_RU } from '../../../bandastation/ru_jobs'; // BANDASTATION EDIT
 // BANDASTATION ADDITION END
 import {
@@ -27,13 +26,6 @@ import {
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 import { JobSlotDropdown } from './JobSlotDropdown';
-
-function sortJobs(entries: [string, Job][], head?: string) {
-  return sortBy(entries, [
-    ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key,
-  ]);
-}
 
 type PriorityButtonProps = {
   name: string;
@@ -67,38 +59,6 @@ function PriorityButton(props: PriorityButtonProps) {
 }
 
 type CreateSetPriority = (priority: JobPriority | null) => () => void;
-
-const createSetPriorityCache: Record<string, CreateSetPriority> = {};
-
-function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
-  if (createSetPriorityCache[jobName] !== undefined) {
-    return createSetPriorityCache[jobName];
-  }
-
-  const perPriorityCache: Map<JobPriority | null, () => void> = new Map();
-
-  function createSetPriority(priority: JobPriority | null) {
-    const existingCallback = perPriorityCache.get(priority);
-    if (existingCallback !== undefined) {
-      return existingCallback;
-    }
-
-    function setPriority() {
-      const { act } = useBackend<PreferencesMenuData>();
-
-      act('set_job_preference', {
-        job: jobName,
-        level: priority,
-      });
-    }
-
-    perPriorityCache.set(priority, setPriority);
-    return setPriority;
-  }
-
-  createSetPriorityCache[jobName] = createSetPriority;
-  return createSetPriority;
-}
 
 type PriorityButtonsProps = {
   createSetPriority: CreateSetPriority;

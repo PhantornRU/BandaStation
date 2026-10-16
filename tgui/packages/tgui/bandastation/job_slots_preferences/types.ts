@@ -17,3 +17,37 @@ export type JobCharacterDisplayData = {
 export type LatejoinCharacterData = {
   edit_slot: number;
 };
+
+export type JobSlotCount = number | '∞';
+
+export type LatejoinJobMetadata = {
+  command: BooleanLike;
+  description: string;
+};
+
+export type LatejoinJobAvailability = {
+  availability: number;
+  unavailable_reason?: string | null;
+  open_slots: JobSlotCount;
+  used_slots: number;
+  prioritized: BooleanLike;
+  jobIcon: string;
+} & JobCharacterDisplayData;
+
+export type LatejoinJob = LatejoinJobMetadata & LatejoinJobAvailability;
+
+export type LatejoinDepartmentMetadata = {
+  color: string;
+  jobs: Record<string, LatejoinJobMetadata>;
+};
+
+export type LatejoinDepartmentAvailability = {
+  jobs: Record<string, LatejoinJobAvailability>;
+  open_slots: JobSlotCount;
+};
+
+export type LatejoinDepartment = {
+  color: string;
+  jobs: Record<string, LatejoinJob>;
+  open_slots: JobSlotCount;
+};

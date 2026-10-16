@@ -134,75 +134,72 @@
 		if(JOB_UNAVAILABLE_AGE)
 			return "Ваш персонаж недостаточно стар для игры за [job_title_ru(jobtitle)]."
 
-	return get_extended_job_unavailable_error_message(retval, jobtitle) // BANDASTATION EDIT - Module error codes.
+	// BANDASTATION EDIT - Additional availability reasons are supplied by modules.
+	var/additional_message = get_additional_job_unavailable_message(retval)
+	if(additional_message)
+		return additional_message
+	return GENERIC_JOB_UNAVAILABLE_ERROR
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
-	var/datum/job/job = SSjob.get_job(rank)
-	if(!(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
+	// BANDASTATION EDIT - One admission pipeline for the menu and the actual join.
+	var/client/requester = GET_CLIENT(src)
+	if(!requester || !istext(rank))
 		return JOB_UNAVAILABLE_GENERIC
-	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(is_assistant_job(job))
-			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return JOB_AVAILABLE
-			for(var/datum/job/other_job as anything in SSjob.joinable_occupations)
-				if(other_job.current_positions < other_job.total_positions && other_job != job)
-					return JOB_UNAVAILABLE_SLOTFULL
-		else
-			return JOB_UNAVAILABLE_SLOTFULL
+	var/datum/job/job = SSjob.get_job(rank)
+	if(!job || job.title != rank || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
+		return JOB_UNAVAILABLE_GENERIC
+	if(IsJobSlotUnavailable(job))
+		return JOB_UNAVAILABLE_SLOTFULL
 
-	var/eligibility_check = SSjob.check_job_eligibility(src, job, "Mob IsJobUnavailable")
+	var/eligibility_check = SSjob.check_job_eligibility(src, job, "Mob IsJobUnavailable", latejoin = latejoin)
 	if(eligibility_check != JOB_AVAILABLE)
 		return eligibility_check
 
-	if(latejoin && !job.special_check_latejoin(client))
+	if(latejoin && !job.special_check_latejoin(requester))
 		return JOB_UNAVAILABLE_GENERIC
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	// Check that they're picking someone new for new character respawning
-	if(CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER)
-		if(client?.is_localhost())
-			to_chat(client.mob, span_notice("Этот персонаж уже участвовал в данном раунде, однако это ограничение обходится при использовании localhost."))
-			log_admin("[key_name_and_tag(client)] пропускает повторное присоединение к раунду тем же персонажем.")
-		else if("[client.prefs.default_slot]" in persistent_client.joined_as_slots)
-			tgui_alert(usr, "Вы уже играли на данном персонаже в этом раунде!")
-			return FALSE
-
-	var/error = IsJobUnavailable(rank)
-	if(error != JOB_AVAILABLE)
-		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
+	// BANDASTATION EDIT - Profile policy is a phase of the complete native join algorithm.
+	var/client/requester = GET_CLIENT(src)
+	var/datum/entry_profile = begin_latejoin_attempt(rank, requester)
+	if(!entry_profile)
 		return FALSE
+	var/error = IsJobUnavailable(rank, latejoin = TRUE)
+	if(error != JOB_AVAILABLE)
+		return reject_late_spawn(get_job_unavailable_error_message(error, rank))
 
 	if(SSshuttle.arrivals)
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
-			tgui_alert(usr,"В данный момент шаттл прибытия сломан. Вы не сможете присоединится.")
-			return FALSE
-
+			return reject_late_spawn("В данный момент шаттл прибытия сломан. Вы не сможете присоединиться.")
 		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
-			SSshuttle.arrivals.RequireUndocked(src)
-
-	//Remove the player from the join queue if he was in one and reset the timer
-	SSticker.queued_players -= src
-	SSticker.queue_delay = 4
-
-	var/datum/job/job = SSjob.get_job(rank)
-
-	if(!SSjob.assign_role(src, job, TRUE))
-		tgui_alert(usr, "Возникла непредвиденная ошибка при выдаче роли, выбранной вами. Если вы не можете зайти, обратитесь к администрации.")
+			SSshuttle.arrivals.wait_for_latejoin_player(src, requester)
+	if(!validate_latejoin(rank, requester, entry_profile))
 		return FALSE
 
+	var/datum/job/job = SSjob.get_job(rank)
+	if(!SSjob.assign_role(src, job, latejoin = TRUE, do_eligibility_checks = FALSE))
+		return reject_late_spawn("Профессия больше недоступна; выберите её повторно.")
+	var/datum/assignment_context = assigned_character
+	var/datum/mind/assigned_mind = mind
+	mind.late_joiner = TRUE
+	var/atom/destination = job.get_latejoin_spawn_point()
+	var/mob/living/character = destination ? create_character(destination) : null
+	if(!character)
+		if(cancel_character_spawn(assignment_context, assigned_mind))
+			return reject_late_spawn("Персонаж не был создан; место профессии освобождено.")
+		return FALSE
+	if(!transfer_character())
+		if(cancel_character_spawn(assignment_context, assigned_mind))
+			return reject_late_spawn("Передача персонажа не состоялась; место профессии освобождено.")
+		return FALSE
+
+	// Commit queue and feedback only after the character has been handed over.
+	SSticker.queued_players -= src
+	SSticker.queue_delay = 4
 	var/latejoin_period = CEILING(STATION_TIME_PASSED() / (5 MINUTES), 5)
 	SSblackbox.record_feedback("tally", "latejoin_time", 1, latejoin_period)
-	mind.late_joiner = TRUE
-	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
-	if(!destination)
-		CRASH("Failed to find a latejoin spawn point.")
-	var/mob/living/character = create_character(destination, forced_slot = client.prefs.default_slot)
-	if(!character)
-		CRASH("Failed to create a character for latejoin.")
-	transfer_character()
 
-/mob/dead/new_player/proc/finish_latejoin_spawn(rank, datum/job/job, mob/living/character) // BANDASTATION EDIT - Module admission resumes native spawn bookkeeping.
 	SSjob.equip_rank(character, job, character.client)
 	job.after_latejoin_spawn(character)
 
@@ -257,12 +254,13 @@
 			humanc.clear_personalities()
 
 	if(humanc) // Quirks may change manifest datapoints, so inject only after assigning quirks
-		GLOB.manifest.inject(humanc, initial_spawn = TRUE) // BANDASTATION EDIT - Initial record callback
+		GLOB.manifest.inject(humanc, initial_job_record = TRUE) // BANDASTATION EDIT - Initial record callback
 		SEND_SIGNAL(humanc, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
 	var/area/station/arrivals = GLOB.areas_by_type[/area/station/hallway/secondary/entry]
 	if(humanc && arrivals && !arrivals.power_environ) //arrivals depowered
 		humanc.put_in_hands(new /obj/item/crowbar/large/emergency(get_turf(humanc))) //if hands full then just drops on the floor
 	log_manifest(character.mind.key, character.mind, character, latejoin = TRUE)
+	return TRUE // BANDASTATION EDIT - Report a completed join to the caller.
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -280,15 +278,15 @@
  */
 /mob/dead/new_player/proc/create_character(atom/destination, forced_slot)
 	spawning = TRUE
-
-	var/spawned_slot = isnum(forced_slot) ? forced_slot : LAZYACCESS(client.prefs.job_assigned_profiles, mind.assigned_role.title)
-	if(isnum(spawned_slot) && client.prefs.default_slot != spawned_slot)
-		client.prefs.load_character(spawned_slot) // if this fails, we will simply load their current slot anyways
-
-/mob/dead/new_player/proc/create_character_body(atom/destination) // BANDASTATION EDIT - Module-selected profile resumes native construction.
-	mind.active = FALSE //we wish to transfer the key manually
-	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
-	if(!validate_created_character(spawning_mob)) // BANDASTATION EDIT - Validate after yielding appearance, before native mind transfer.
+	// BANDASTATION EDIT - Commit the profile before construction; keep the whole native route here.
+	var/datum/character_context = prepare_character_profile(destination, forced_slot)
+	if(!character_context)
+		return null
+	var/datum/mind/spawning_mind = mind
+	var/datum/job/spawning_job = spawning_mind.assigned_role
+	spawning_mind.active = FALSE //we wish to transfer the key manually
+	var/mob/living/spawning_mob = spawning_job.get_spawn_mob(client, destination)
+	if(!validate_created_character(spawning_mob, spawning_mind, spawning_job, character_context))
 		return
 
 	// Annoyingly the AI mob yoinks our client on init so we have to check for it here

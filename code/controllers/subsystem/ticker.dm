@@ -467,7 +467,7 @@ SUBSYSTEM_DEF(ticker)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
 			var/mob/living/character = destination ? player.create_character(destination) : null
-			if(!validate_initial_job_character(player, character)) // BANDASTATION EDIT - Validate or cancel before equipment and handover.
+			if(!validate_roundstart_character(player, character)) // BANDASTATION EDIT - Validate or cancel before equipment and handover.
 				continue
 			GLOB.joined_player_list += player.ckey
 		CHECK_TICK

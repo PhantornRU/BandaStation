@@ -1,3 +1,5 @@
+import '../../styles/bandastation/donor_jobs.scss';
+
 import type {
   ComponentProps,
   ComponentType,
@@ -37,7 +39,7 @@ export function JobsSection(props: {
     content = props.children;
   } else if (serverPrefs) {
     const { jobs, jobs_sorted, departments } = serverPrefs.jobs;
-    const donorJobs = data.donor_jobs ?? {};
+    const donorJobs = data.job_variants ?? {};
     const names = jobs_sorted.filter(
       (name) => (donorJobs[name]?.required_tier ?? 0) > 0,
     );

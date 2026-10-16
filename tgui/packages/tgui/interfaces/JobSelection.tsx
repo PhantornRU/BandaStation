@@ -10,13 +10,16 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { JobHudIcon } from '../bandastation/donor_jobs/JobHudIcon'; // BANDASTATION ADDITION
 // BANDASTATION ADDITION START: selected-character data and server-authoritative merge.
 import { mergeLatejoinDepartments } from '../bandastation/job_slots_preferences/latejoin';
 import type {
-  JobCharacterDisplayData,
   LatejoinCharacterData,
+  LatejoinDepartment,
+  LatejoinDepartmentAvailability,
+  LatejoinDepartmentMetadata,
+  LatejoinJob,
 } from '../bandastation/job_slots_preferences/types';
+import { JobHudIcon } from '../bandastation/jobs/JobHudIcon'; // BANDASTATION ADDITION
 // BANDASTATION ADDITION END
 import {
   DEPARTMENTS_RU,
@@ -26,25 +29,9 @@ import {
 import { Window } from '../layouts';
 import { JOB2ICON } from './common/JobToIcon';
 
-type Job = {
-  unavailable_reason: string | null;
-  command: BooleanLike;
-  open_slots: number | string;
-  used_slots: number;
-  prioritized: BooleanLike;
-  description: string;
-  jobIcon: string;
-} & JobCharacterDisplayData; // BANDASTATION ADDITION
-
-type Department = {
-  color: string;
-  jobs: Record<string, Job>;
-  open_slots: number | string;
-};
-
 type Data = {
-  departments_static: Record<string, Department>;
-  departments: Record<string, Department>;
+  departments_static: Record<string, LatejoinDepartmentMetadata>;
+  departments: Record<string, LatejoinDepartmentAvailability>;
   alert_state: string;
   shuttle_status: string;
   disable_jobs_for_non_observers: BooleanLike;
@@ -54,8 +41,8 @@ type Data = {
 
 type JobEntryProps = {
   jobName: string;
-  job: Job;
-  department: Department;
+  job: LatejoinJob;
+  department: LatejoinDepartment;
   jobIcon: string;
   onClick: () => void;
 };
@@ -126,7 +113,7 @@ function JobEntry(props: JobEntryProps) {
 
 type DepartmentEntryProps = {
   name: string;
-  department: Department;
+  department: LatejoinDepartment;
 };
 
 function DepartmentEntry(props: DepartmentEntryProps) {

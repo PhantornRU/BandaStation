@@ -20,7 +20,7 @@
 	// Only the native admin full-crew tool opts in for its freshly created non-player dummy.
 	if(is_debug_dummy)
 		return !latejoin && !requester && !player.key && !player.assigned_character && !player.spawning
-	if(!requester || job.get_join_lock_reason(requester))
+	if(!requester || requester.mob != player || job.get_join_lock_reason(requester))
 		return FALSE
 	var/datum/job_character_selection/selection = requester.prefs.select_job_character(job, latejoin)
 	if(selection.character_error(job, requester, latejoin) || (latejoin && (player.IsJobSlotUnavailable(job) || (!(ckey(player.key) in GLOB.admin_datums) && is_latejoin_population_full()))))
@@ -30,7 +30,7 @@
 	player.assigned_character = selection
 	return TRUE
 
-/datum/controller/subsystem/job/proc/check_job_character_eligibility(mob/dead/new_player/player, datum/job/job, latejoin)
+/datum/controller/subsystem/job/check_character_eligibility(mob/dead/new_player/player, datum/job/job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE)
 	var/client/requester = GET_CLIENT(player)
 	if(QDELETED(player) || !requester || !player.mind)
 		return JOB_UNAVAILABLE_GENERIC
