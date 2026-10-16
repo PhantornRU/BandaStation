@@ -1,0 +1,902 @@
+{
+  "schema": 2,
+  "head": "7553b3553c80b5b385dab290ca318e23437bb6b5",
+  "upstream_base": "820de7f6ef9235d8417250cb01eec15da6735b18",
+  "reviewed_source_head": "d15909e7abab81a0dc4f21faf063b6bd1148706d",
+  "test_files": [
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/_tests.dm",
+      "sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47",
+      "lines": 14,
+      "dm_names": [],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
+      "sha256": "b0f9d0b9f184fa4a2872801f376cb1fc55b5b6aac56a02f28386ae9fc7f5866b",
+      "lines": 26,
+      "dm_names": [
+        "donor_dealer_stock"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/equipment.dm",
+      "sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199",
+      "lines": 225,
+      "dm_names": [
+        "donor_job_outfits",
+        "donor_outfit_cash_ownership",
+        "donor_outfit_storage",
+        "donor_variant_before_loadout"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
+      "sha256": "f92b88f6892d1621a48ce130ad6e3f1fe336933a9714e4b2790ddb21640358a1",
+      "lines": 30,
+      "dm_names": [
+        "job_extension_hooks"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
+      "sha256": "616e668f95e33369ebf6351fadb0398aef19bba7f881a028dcd9be764bb20f91",
+      "lines": 77,
+      "dm_names": [
+        "donor_faction_outfits"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
+      "sha256": "2072f9ae62b3a131fbc356c974ad7f1cd552d4134b81395af664d0883cec6454",
+      "lines": 45,
+      "dm_names": [
+        "donor_faction_uniform_overlays"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
+      "sha256": "ca20c4b3574d6a5cc3525381303adeaacf720d4549d84b7cae4ad9822d493485",
+      "lines": 87,
+      "dm_names": [
+        "donor_job_hud_icons",
+        "donor_job_landmarks"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/id_templates.dm",
+      "sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377",
+      "lines": 41,
+      "dm_names": [
+        "donor_id_templates"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/identity_items.dm",
+      "sha256": "966c438ff58e30ce0fa030b40e9930b50038a0e56119cd9d2cf3807fcd4b3933",
+      "lines": 87,
+      "dm_names": [
+        "donor_role_pdas",
+        "donor_id_appearances"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
+      "sha256": "c1e67ccd39b344c9202d146560bec4df4524fa838a0332879620fe908d9bd5ea",
+      "lines": 100,
+      "dm_names": [
+        "donor_job_outfit_variants_validation",
+        "donor_job_variant_action"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
+      "sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1",
+      "lines": 106,
+      "dm_names": [
+        "donor_prisoner_override_lifecycle"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
+      "sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a",
+      "lines": 82,
+      "dm_names": [
+        "donor_prisoner_initial_record"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
+      "sha256": "b486701e0a05151a90fcdffc5adb9473d22217c4120a5f4529152c5d9d8caff7",
+      "lines": 51,
+      "dm_names": [
+        "donor_configuration"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
+      "sha256": "4ac7b3864d7923c35cd29153dc9ce71169a4540c349f000a20ae238bbc903632",
+      "lines": 84,
+      "dm_names": [
+        "donor_seclown_equipment",
+        "donor_honk_rifle"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
+      "sha256": "0425757bf65b1b666930735a84c6a1e6f3a048568d4c82ed92e2d525b2e8bd28",
+      "lines": 108,
+      "dm_names": [
+        "donor_tsf_caps",
+        "donor_tsf_beret_inhands",
+        "donor_tsf_uniform_inhands",
+        "donor_tsf_spacesuits"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
+      "sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb",
+      "lines": 72,
+      "dm_names": [
+        "ussp_clothing_assets",
+        "ussp_space_clothing"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
+      "sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f",
+      "lines": 155,
+      "dm_names": [
+        "dynamic_roundstart_cancellation"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
+      "sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
+      "lines": 218,
+      "dm_names": [
+        "job_slot_preferences",
+        "job_slot_saved_format"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
+      "sha256": "ee60d2b2159070348dd359fc8b8286ca3f9249c32348b14b346e489892ff35c3",
+      "lines": 185,
+      "dm_names": [
+        "job_character_selection",
+        "job_character_respawn_policy"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
+      "sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e",
+      "lines": 85,
+      "dm_names": [
+        "native_admin_dummy_admission"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/admission.dm",
+      "sha256": "cdbf7876e859203679246d5527f6c2f81efc50dbc9e38fc5fabfec368ecc97b0",
+      "lines": 408,
+      "dm_names": [
+        "donor_entry_rollback",
+        "donor_final_admission",
+        "native_latejoin_admission_recheck",
+        "donor_assistant_overflow",
+        "native_job_lifetime_guards",
+        "priority_job_lifetime_guard"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/fixtures.dm",
+      "sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1",
+      "lines": 31,
+      "dm_names": [],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/handover.dm",
+      "sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+      "lines": 108,
+      "dm_names": [
+        "native_offline_character_handover",
+        "native_spawn_admission_interruptions",
+        "donor_character_handover"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/latejoin_context.dm",
+      "sha256": "0be26a2e7e5c258e52e00f7aa405299790611a65a2f89d0bd86130afb273cf93",
+      "lines": 107,
+      "dm_names": [
+        "latejoin_profile_context"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/prisoner_record.dm",
+      "sha256": "f80fd9d58f8704eb0a1d186af2520e592681c32ca7faa1a33b0ee3c18d0f2f08",
+      "lines": 89,
+      "dm_names": [
+        "native_prisoner_initial_record"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/objects/code/tests/pda.dm",
+      "sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33",
+      "lines": 25,
+      "dm_names": [
+        "pda_recycled_item_ownership"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "tools/build/juke/exec.test.js",
+      "sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
+      "lines": 18,
+      "dm_names": [],
+      "python_methods": []
+    },
+    {
+      "path": "tools/migrate_job_slots/tests/test_migrate.py",
+      "sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7",
+      "lines": 248,
+      "dm_names": [],
+      "python_methods": [
+        "test_explicit_new_values_win_including_current_and_random",
+        "test_missing_and_empty_maps",
+        "test_bad_maps_and_slots_are_rejected_without_reset",
+        "test_conversion_is_idempotent",
+        "test_default_dry_run_leaves_all_files_untouched",
+        "test_apply_requires_stopped_server_and_separate_backup",
+        "test_apply_backs_up_exact_bytes_and_second_run_does_not_write",
+        "test_bad_structure_json_and_assignments_are_not_overwritten",
+        "test_supported_save_versions_preserve_keybindings_and_characters",
+        "test_unexpected_player_path_is_rejected_and_other_json_is_ignored",
+        "test_backup_collision_does_not_overwrite_either_file",
+        "test_failed_atomic_replace_preserves_original_and_backup",
+        "test_concurrent_writer_is_detected_before_replace",
+        "test_empty_root_is_reported_as_wrong_input"
+      ]
+    },
+    {
+      "path": "tools/migrate_job_slots/tests/test_readiness.py",
+      "sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320",
+      "lines": 82,
+      "dm_names": [],
+      "python_methods": [
+        "test_legacy_files_block_deployment_without_any_write",
+        "test_plain_dry_run_keeps_its_original_exit_code",
+        "test_converted_files_allow_deployment",
+        "test_malformed_data_blocks_deployment",
+        "test_gate_cannot_be_combined_with_apply",
+        "test_empty_root_is_not_mistaken_for_completed_migration",
+        "test_current_and_random_assignments_remain_ready"
+      ]
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+      "sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+      "lines": 739,
+      "dm_names": [
+        "dynamic_roundstart_cancellation/blood_worm_signal_lifecycle",
+        "donor_centcom_template_idempotence",
+        "committed_job_slot_reuse",
+        "native_job_profile_legacy_action",
+        "native_job_profile_storage_boundary",
+        "native_job_profile_display_name",
+        "native_job_latejoin_offline_signal_once",
+        "prisoner_native_ancestor_and_dormant_join",
+        "native_ai_name_lookup_disconnect",
+        "job_character_greeting_entrypoint",
+        "random_job_current_preference_boundary",
+        "entry_history_handover_once",
+        "core_minimum_color_entrypoint",
+        "entry_error_messages",
+        "dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint",
+        "job_eligibility_native_parent_boundary"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regression_late_helpers.dm",
+      "sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5",
+      "lines": 10,
+      "dm_names": [],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
+      "sha256": "1959ef423608dddf325fc137eca068cb03f0187d7b24be9272fe722e53524f07",
+      "lines": 167,
+      "dm_names": [
+        "publish_audit_id_template_boundary",
+        "publish_audit_committed_body_greeting"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/readability_entry_regressions.dm",
+      "sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f",
+      "lines": 71,
+      "dm_names": [
+        "readability_latejoin_context"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/readability_jobs_regressions.dm",
+      "sha256": "8de4f9d38c9ba60712f2e6b5980119f8464ec08fd0a3f3c5b7c94987ed940a62",
+      "lines": 49,
+      "dm_names": [
+        "donor_greeting_committed_outfit"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+      "sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+      "lines": 291,
+      "dm_names": [
+        "contract_public_create_character",
+        "contract_public_latejoin",
+        "contract_spawn_cancellation_ownership",
+        "contract_roundstart_changes"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+      "sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
+      "lines": 151,
+      "dm_names": [
+        "job_spawn_rollback_ownership",
+        "job_native_equipment_sequence_once",
+        "prisoner_committed_crime_lifecycle"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_regressions_prefs.dm",
+      "sha256": "13f5896d1cc64af1b2b46266c5a03b27fee57cdca2e0e96842371380a30d6dd4",
+      "lines": 119,
+      "dm_names": [
+        "contract_cleanup_latejoin_authorization",
+        "contract_cleanup_availability_code",
+        "contract_cleanup_canonical_job_protocol",
+        "contract_cleanup_latejoin_offline_selection"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+      "sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
+      "lines": 19,
+      "dm_names": [
+        "job_variant_persisted_id_migration"
+      ],
+      "python_methods": []
+    },
+    {
+      "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_variant_regressions.dm",
+      "sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52",
+      "lines": 19,
+      "dm_names": [
+        "job_variant_legacy_save_migration"
+      ],
+      "python_methods": []
+    }
+  ],
+  "dm_names": [
+    "committed_job_slot_reuse",
+    "contract_cleanup_availability_code",
+    "contract_cleanup_canonical_job_protocol",
+    "contract_cleanup_latejoin_authorization",
+    "contract_cleanup_latejoin_offline_selection",
+    "contract_public_create_character",
+    "contract_public_latejoin",
+    "contract_roundstart_changes",
+    "contract_spawn_cancellation_ownership",
+    "core_minimum_color_entrypoint",
+    "donor_assistant_overflow",
+    "donor_centcom_template_idempotence",
+    "donor_character_handover",
+    "donor_configuration",
+    "donor_dealer_stock",
+    "donor_entry_rollback",
+    "donor_faction_outfits",
+    "donor_faction_uniform_overlays",
+    "donor_final_admission",
+    "donor_greeting_committed_outfit",
+    "donor_honk_rifle",
+    "donor_id_appearances",
+    "donor_id_templates",
+    "donor_job_hud_icons",
+    "donor_job_landmarks",
+    "donor_job_outfit_variants_validation",
+    "donor_job_outfits",
+    "donor_job_variant_action",
+    "donor_outfit_cash_ownership",
+    "donor_outfit_storage",
+    "donor_prisoner_initial_record",
+    "donor_prisoner_override_lifecycle",
+    "donor_role_pdas",
+    "donor_seclown_equipment",
+    "donor_tsf_beret_inhands",
+    "donor_tsf_caps",
+    "donor_tsf_spacesuits",
+    "donor_tsf_uniform_inhands",
+    "donor_variant_before_loadout",
+    "dynamic_roundstart_cancellation",
+    "dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint",
+    "dynamic_roundstart_cancellation/blood_worm_signal_lifecycle",
+    "entry_error_messages",
+    "entry_history_handover_once",
+    "job_character_greeting_entrypoint",
+    "job_character_respawn_policy",
+    "job_character_selection",
+    "job_eligibility_native_parent_boundary",
+    "job_extension_hooks",
+    "job_native_equipment_sequence_once",
+    "job_slot_preferences",
+    "job_slot_saved_format",
+    "job_spawn_rollback_ownership",
+    "job_variant_legacy_save_migration",
+    "job_variant_persisted_id_migration",
+    "latejoin_profile_context",
+    "native_admin_dummy_admission",
+    "native_ai_name_lookup_disconnect",
+    "native_job_latejoin_offline_signal_once",
+    "native_job_lifetime_guards",
+    "native_job_profile_display_name",
+    "native_job_profile_legacy_action",
+    "native_job_profile_storage_boundary",
+    "native_latejoin_admission_recheck",
+    "native_offline_character_handover",
+    "native_prisoner_initial_record",
+    "native_spawn_admission_interruptions",
+    "pda_recycled_item_ownership",
+    "priority_job_lifetime_guard",
+    "prisoner_committed_crime_lifecycle",
+    "prisoner_native_ancestor_and_dormant_join",
+    "publish_audit_committed_body_greeting",
+    "publish_audit_id_template_boundary",
+    "random_job_current_preference_boundary",
+    "readability_latejoin_context",
+    "ussp_clothing_assets",
+    "ussp_space_clothing"
+  ],
+  "dm_count": 77,
+  "python_count": 21,
+  "bun_count": 1,
+  "flag_modes": [
+    "00",
+    "01",
+    "10",
+    "11"
+  ],
+  "adaptations": [
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/_tests.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/_tests.dm",
+      "original_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47",
+      "changes": [],
+      "adapted_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
+      "original_sha256": "c317fad02c9c1f79c8cfc2373afeae4566f48c76e6b85ec2c209c362a039e0d8",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "b0f9d0b9f184fa4a2872801f376cb1fc55b5b6aac56a02f28386ae9fc7f5866b"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/equipment.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/equipment.dm",
+      "original_sha256": "1f598defa2f0c6495336d5ec3a6eaef8fba84ded145a93334486d35df8107e4c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
+      "original_sha256": "fac88f49550d149e1c4d5be10448feb3076dff12c0d88a867b8b3bc8cf3f336c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "f92b88f6892d1621a48ce130ad6e3f1fe336933a9714e4b2790ddb21640358a1"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
+      "original_sha256": "4952f89db77ed2ec53c2896880a0f7d43e1e8576a4b4b8ed5def4140153fff4d",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "616e668f95e33369ebf6351fadb0398aef19bba7f881a028dcd9be764bb20f91"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
+      "original_sha256": "d61d0d9e9c9ad07a7f7919c6ae433ae7068bc07483d0bf6f5aa0bc630d509ac6",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "2072f9ae62b3a131fbc356c974ad7f1cd552d4134b81395af664d0883cec6454"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
+      "original_sha256": "8f1a0d89eb04ac5077f9e1f30346c5ce22eec43bcff9bd6ee5ea2026f5a38d4c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "ca20c4b3574d6a5cc3525381303adeaacf720d4549d84b7cae4ad9822d493485"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/id_templates.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/id_templates.dm",
+      "original_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377",
+      "changes": [],
+      "adapted_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/identity_items.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/identity_items.dm",
+      "original_sha256": "22ef2f6f8c2a81dc2294c3110f28dfced6dc9909435b31503cf545e019426f4c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "966c438ff58e30ce0fa030b40e9930b50038a0e56119cd9d2cf3807fcd4b3933"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
+      "original_sha256": "e20b8eef3732167826aeb79a14b5d0dee86961d0932ad494e4b5a6a8544c3c4a",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "c1e67ccd39b344c9202d146560bec4df4524fa838a0332879620fe908d9bd5ea"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
+      "original_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1",
+      "changes": [],
+      "adapted_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
+      "original_sha256": "ec24138b3591b25945167b5e83763ff3db970c0e2e1852c9f26a5a418f167360",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
+      "original_sha256": "3333fb1c44f7afd105b7d29e1b4919f7f48ddab247b0dc8f3a0bcd016e358f42",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Assert independent requested startup flags and real initialized donor pool before mutating flags; retain all4 internal policy scenarios and original gate/overflow checks"
+      ],
+      "adapted_sha256": "b486701e0a05151a90fcdffc5adb9473d22217c4120a5f4529152c5d9d8caff7"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
+      "original_sha256": "f2bfbf1470aca465d943b8baff60f40bc8560bdde3ba7452a2f5a9f09fdd6036",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "4ac7b3864d7923c35cd29153dc9ce71169a4540c349f000a20ae238bbc903632"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
+      "original_sha256": "1d22a6f2f81ff165cb66f0fb7ecb5ca7a8efb7c4d8531e67f887c00ee540253f",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "0425757bf65b1b666930735a84c6a1e6f3a048568d4c82ed92e2d525b2e8bd28"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
+      "original_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb",
+      "changes": [],
+      "adapted_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb"
+    },
+    {
+      "destination": "modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
+      "source": "baseline/modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
+      "original_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f",
+      "changes": [],
+      "adapted_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f"
+    },
+    {
+      "destination": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
+      "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
+      "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
+      "changes": [],
+      "adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
+    },
+    {
+      "destination": "modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
+      "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
+      "original_sha256": "405cf2012545859381757fe3f930a622cef0d06223ff92f17cbb30f68b12ca58",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Character phase has full native signature; pass latejoin by name to retain original respawn-policy scenarios",
+        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph"
+      ],
+      "adapted_sha256": "ee60d2b2159070348dd359fc8b8286ca3f9249c32348b14b346e489892ff35c3"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
+      "original_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e",
+      "changes": [],
+      "adapted_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/admission.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/admission.dm",
+      "original_sha256": "8f60ce3eb11617ab0256a42b0b5022d38f5ab2bcf022edb6b5b638e34139dec4",
+      "changes": [
+        "Carry prior runner adapter into reviewed fixture bytes: native fake lobby key for priority lifetime ban lookup"
+      ],
+      "adapted_sha256": "cdbf7876e859203679246d5527f6c2f81efc50dbc9e38fc5fabfec368ecc97b0"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/fixtures.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/fixtures.dm",
+      "original_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1",
+      "changes": [],
+      "adapted_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/handover.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/handover.dm",
+      "original_sha256": "36bd02199c12eb3a91047dbb13c0dca9585ccdcbd87899801ceb1fa662a587ee",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
+      ],
+      "adapted_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/handover.dm",
+          "previous_sha256": "c50292c2482dad975289f0f18ae41e1a9cf6d99f52c12c17dc042e1a333e606f",
+          "corrected_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+          "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/latejoin_context.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/latejoin_context.dm",
+      "original_sha256": "ab50b9c8d07c703df96fa77fd739d0834490ab7a89f5d5755b8665065437b277",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "0be26a2e7e5c258e52e00f7aa405299790611a65a2f89d0bd86130afb273cf93"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/prisoner_record.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/prisoner_record.dm",
+      "original_sha256": "cdf53f49e2b34735da3d3124869f9fc05d04df7db63bf615dfae67ef905dda53",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "f80fd9d58f8704eb0a1d186af2520e592681c32ca7faa1a33b0ee3c18d0f2f08"
+    },
+    {
+      "destination": "modular_bandastation/objects/code/tests/pda.dm",
+      "source": "baseline/modular_bandastation/objects/code/tests/pda.dm",
+      "original_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33",
+      "changes": [],
+      "adapted_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33"
+    },
+    {
+      "destination": "tools/build/juke/exec.test.js",
+      "source": "baseline/tools/build/juke/exec.test.js",
+      "original_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
+      "changes": [],
+      "adapted_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c"
+    },
+    {
+      "destination": "tools/migrate_job_slots/tests/test_migrate.py",
+      "source": "baseline/tools/migrate_job_slots/tests/test_migrate.py",
+      "original_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7",
+      "changes": [],
+      "adapted_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7"
+    },
+    {
+      "destination": "tools/migrate_job_slots/tests/test_readiness.py",
+      "source": "baseline/tools/migrate_job_slots/tests/test_readiness.py",
+      "original_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320",
+      "changes": [],
+      "adapted_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+      "source": "task_state/20261016-pr11-core-minimum/REGRESSIONS.dm",
+      "original_sha256": "64d6a02fa8e95ad0fd455cf6e08c33fbf0e41ec57d16c0f3d25c99fecc101115",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Replace entry_latejoin_dispatch + removed finish continuation fixture with current contract_public_latejoin native public route fixture",
+        "Replace entry_specialized_body_admission/private body factory fixture with current contract_public_create_character public native route fixture",
+        "Replace entry_ui_dispatch/private UI continuation test with current contract_cleanup_latejoin_authorization, offline route assertion and shared-dispatch source contract",
+        "Replace old continuation-count authorization fixture with current contract_cleanup_latejoin_authorization signal/status/blocked-all-actions assertions",
+        "Legacy action contract now proves deletion/forged dispatch rejection instead of calling removed FALSE stub; same canonical mapping/DTO nonmutation checks",
+        "Storage boundary keeps hostile persisted legacy input and canonical-only load/save assertions; removed field no longer allocated or mutated",
+        "Fix a missed typepath before closing-list-bracket boundary in registry lookup; the allocated class/assertions remain unchanged.",
+        "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+      ],
+      "adapted_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+          "previous_sha256": "9e70ac58ea929eb0bf9e930a8f3580a769c4d164211074c0a5121b1bd0a2938b",
+          "corrected_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+          "reason": "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/core-minimum_regression_late_helpers.dm",
+      "source": "task_state/20261016-pr11-core-minimum/REGRESSION_LATE_HELPERS.dm",
+      "original_sha256": "67d3dc3c59a30cfb2046f9fc9eb0cc92bbf51655d4d24f13e6d2eee93b51ad8a",
+      "changes": [],
+      "adapted_sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
+      "source": "task_state/20261016-pr11-publish-reaudit/AUDIT_REGRESSIONS.dm",
+      "original_sha256": "66912a74547e04634082d7c594af63444e99ffe773020b5c57d2976b3bb1cfab",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "1959ef423608dddf325fc137eca068cb03f0187d7b24be9272fe722e53524f07"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/readability_entry_regressions.dm",
+      "source": "task_state/20261016-pr11-readability/ENTRY_REGRESSIONS.dm",
+      "original_sha256": "dd204930d677ef17b742fa7fffb03d4122deb5bd2917fd5c74ebc3fa00d9d72b",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/readability_jobs_regressions.dm",
+      "source": "task_state/20261016-pr11-readability/JOBS_REGRESSIONS.dm",
+      "original_sha256": "5477980c536c4d7fdf2ae21434f020f7ca014ee45982d0efcb4aad80f0b14e1a",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "8de4f9d38c9ba60712f2e6b5980119f8464ec08fd0a3f3c5b7c94987ed940a62"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/ENTRY_REGRESSIONS.dm",
+      "original_sha256": "ad585ca4c7d9e7eb4a31fd120b0548fc7a3b9140418ceb04157e10048b4d182f",
+      "changes": [
+        "Use the actual native Medical Doctor datum type for the later Dynamic writer; preserve both rollback assertions unchanged.",
+        "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
+      ],
+      "adapted_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+      "corrected_local_source_sha256": "a8411f1312ff389ade9cb24404aafa24de93f4e05741e33cf5d0f9e0790f4742",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+          "previous_sha256": "c3450400a377c5d1ffcb00d3219dc124d3ad42ee1756bb525062bec8df123ad2",
+          "corrected_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+          "reason": "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/JOBS_REGRESSIONS.dm",
+      "original_sha256": "e357a64d23f408ffe1ee4b997ad1f63e341b6f6ba39abdc293b13dcace17534c",
+      "changes": [
+        "Fixture teardown uses native delete_photos for associative photo entries, matching existing Prisoner fixtures; native BASE Destroy QDEL_LAZYLIST on photo keys is pre-existing. Photo creation and all lifecycle assertions retained."
+      ],
+      "adapted_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+          "previous_sha256": "e357a64d23f408ffe1ee4b997ad1f63e341b6f6ba39abdc293b13dcace17534c",
+          "corrected_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
+          "reason": "Fixture teardown uses native delete_photos for associative photo entries, matching existing Prisoner fixtures; native BASE Destroy QDEL_LAZYLIST on photo keys is pre-existing. Photo creation and all lifecycle assertions retained."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_regressions_prefs.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/REGRESSIONS_PREFS.dm",
+      "original_sha256": "b2ba030387e52abe60e7cfdb1a86e7ac37907f84b7d51c4b46d966759f0d55d7",
+      "changes": [
+        "Keep direct real selected-profile offline guard coverage without overriding a deleted continuation or bypassing native client authorization",
+        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph"
+      ],
+      "adapted_sha256": "13f5896d1cc64af1b2b46266c5a03b27fee57cdca2e0e96842371380a30d6dd4"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+      "source": "new replay fixture from VARIANT_MIGRATION.json",
+      "original_sha256": null,
+      "changes": [
+        "Three independent legacy-ID expected outputs plus immutable-input/idempotence/unknown preservation/cross-job scoping; root fixture separately verifies all129 IDs and save roundtrip",
+        "Correct only fixture canonical title to the actual unchanged original/current VIP Corporate Guest; expected vip_guest and all migration assertions retained."
+      ],
+      "adapted_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+          "previous_sha256": "0ccdda9aba7a33eeee72181c14c686c2936ff8d6422a598ab402e4a217d0e3e3",
+          "corrected_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
+          "reason": "Correct only fixture canonical title to the actual unchanged original/current VIP Corporate Guest; expected vip_guest and all migration assertions retained."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_variant_regressions.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/VARIANT_REGRESSIONS.dm",
+      "original_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52",
+      "changes": [],
+      "adapted_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52"
+    }
+  ],
+  "bundle_files": {
+    "browser/bind_sources.py": "a0d045ebf156fd3547b1f5677f273980f5b54ae2acb8d27104926c3bf379ec7f",
+    "browser/browser-checks.js": "0bab3ce08b01bdb899e3a7cc1fcbac27af295ee5124b69166b1e2180e4cf4759",
+    "browser/browser.tsx": "154c023b72f880ede40c613a70d493b36d3128f43dedf580d3ef1acbe1161054",
+    "browser/data.json": "f6e6d13662b20d123e0a18c5fac0e0abfe3c75aec94caa98a770ecd06ffccf58",
+    "browser/README.md": "e15279d721bded21e691edb5acbfcc5691f60ee9e224fcf0031156369a82d5c3",
+    "browser/serve.ts": "c127243f26b416ff69464466d40124945fc13a5937dce4f187c032acb864e36e",
+    "includes.dm": "9d5023ecc172544754f1528ea9fc845bb7158da9010f24be16ad28ab7bf7516f",
+    "late_includes.dm": "04ddd7a5a21e157ceaa7cf9992272dec124fa3e7e336cca0848bbeb7fbaf0a64",
+    "provenance.json": "cf5895dbcd540f4b106f759bf1fe7d7a983145190322ef98304e876ac717427e",
+    "README_RU.md": "ca5d613787ec790b1465dff15b781fdfacb56c9eee81c9d244fc95df76c92324",
+    "run.py": "3c3ba7260692432c4c8f6ef398ba99248a747d3c68b8a65dcb32a4933c9059d1",
+    "seal.py": "0c0d66fc8760af0ab50ad91fb8e2ca01a52639925ad5ab6ac6dc696bec71f04a",
+    "settings.example.json": "5ab936c7c953073fb9d30c35dff965dd7738d459026a3093f4c3ae267838eb84",
+    "SOURCE_INPUTS.json": "39265eb14c3cfb9d7ba148653291c7c8f58f68727f4b272ba9d835a9165fd173",
+    "source_invariants.py": "5fe3353f91a1202103fb2c9bd712fa96dac24bab9d643df8875846b3ab3f7182",
+    "VARIANT_MIGRATION.json": "c3cb09d4d941aef39e5f41554407478a75811c61bd4a63cd0f1bb296703d52c7"
+  },
+  "execution_status_at_seal": "PREPARED_NOT_RUN"
+}

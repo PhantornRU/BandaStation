@@ -1,0 +1,1061 @@
+{
+  "jobs": {
+    "departments": {
+      "Engineering": {
+        "color": "#c7a552",
+        "head": "Chief Engineer"
+      },
+      "Science": {
+        "color": "#b56bb9",
+        "head": "Research Director"
+      },
+      "Silicon": {
+        "color": "#3ab29a",
+        "head": "AI"
+      },
+      "Assistant": {
+        "color": "#8e79c7",
+        "head": "Assistant"
+      },
+      "Captain": {
+        "color": "#4f95ab",
+        "head": "Captain"
+      },
+      "NT Representation": {
+        "color": "#4b74a1",
+        "head": null
+      },
+      "Service": {
+        "color": "#7abb5c",
+        "head": "Bartender"
+      },
+      "Cargo": {
+        "color": "#bba067",
+        "head": "Quartermaster"
+      },
+      "Security": {
+        "color": "#c6546b",
+        "head": "Head of Security"
+      },
+      "Justice": {
+        "color": "#ac1955",
+        "head": "Magistrate"
+      },
+      "Medical": {
+        "color": "#4eacb4",
+        "head": "Chief Medical Officer"
+      }
+    },
+    "jobs": {
+      "Chief Engineer": {
+        "department": "Engineering",
+        "description": "Описание должности Chief Engineer."
+      },
+      "Station Engineer": {
+        "department": "Engineering",
+        "description": "Описание должности Station Engineer."
+      },
+      "Atmospheric Technician": {
+        "department": "Engineering",
+        "description": "Описание должности Atmospheric Technician."
+      },
+      "Research Director": {
+        "department": "Science",
+        "description": "Описание должности Research Director."
+      },
+      "Scientist": {
+        "department": "Science",
+        "description": "Описание должности Scientist."
+      },
+      "Roboticist": {
+        "department": "Science",
+        "description": "Описание должности Roboticist."
+      },
+      "Geneticist": {
+        "department": "Science",
+        "description": "Описание должности Geneticist."
+      },
+      "AI": {
+        "department": "Silicon",
+        "description": "Описание должности AI."
+      },
+      "Cyborg": {
+        "department": "Silicon",
+        "description": "Описание должности Cyborg."
+      },
+      "Assistant": {
+        "department": "Assistant",
+        "description": "Описание должности Assistant."
+      },
+      "Captain": {
+        "department": "Captain",
+        "description": "Описание должности Captain."
+      },
+      "Head of Personnel": {
+        "department": "Captain",
+        "description": "Описание должности Head of Personnel."
+      },
+      "Bartender": {
+        "department": "Service",
+        "description": "Описание должности Bartender."
+      },
+      "Cook": {
+        "department": "Service",
+        "description": "Описание должности Cook."
+      },
+      "Botanist": {
+        "department": "Service",
+        "description": "Описание должности Botanist."
+      },
+      "Janitor": {
+        "department": "Service",
+        "description": "Описание должности Janitor."
+      },
+      "Clown": {
+        "department": "Service",
+        "description": "Описание должности Clown."
+      },
+      "Mime": {
+        "department": "Service",
+        "description": "Описание должности Mime."
+      },
+      "Chaplain": {
+        "department": "Service",
+        "description": "Описание должности Chaplain."
+      },
+      "Psychologist": {
+        "department": "Service",
+        "description": "Описание должности Psychologist."
+      },
+      "Quartermaster": {
+        "department": "Cargo",
+        "description": "Описание должности Quartermaster."
+      },
+      "Cargo Technician": {
+        "department": "Cargo",
+        "description": "Описание должности Cargo Technician."
+      },
+      "Shaft Miner": {
+        "department": "Cargo",
+        "description": "Описание должности Shaft Miner."
+      },
+      "Head of Security": {
+        "department": "Security",
+        "description": "Описание должности Head of Security."
+      },
+      "Warden": {
+        "department": "Security",
+        "description": "Описание должности Warden."
+      },
+      "Detective": {
+        "department": "Security",
+        "description": "Описание должности Detective."
+      },
+      "Security Officer": {
+        "department": "Security",
+        "description": "Описание должности Security Officer."
+      },
+      "Magistrate": {
+        "department": "Justice",
+        "description": "Описание должности Magistrate."
+      },
+      "Lawyer": {
+        "department": "Justice",
+        "description": "Описание должности Lawyer."
+      },
+      "Chief Medical Officer": {
+        "department": "Medical",
+        "description": "Описание должности Chief Medical Officer."
+      },
+      "Medical Doctor": {
+        "department": "Medical",
+        "description": "Описание должности Medical Doctor."
+      },
+      "Paramedic": {
+        "department": "Medical",
+        "description": "Описание должности Paramedic."
+      },
+      "Chemist": {
+        "department": "Medical",
+        "description": "Описание должности Chemist."
+      },
+      "Coroner": {
+        "department": "Medical",
+        "description": "Описание должности Coroner."
+      },
+      "Acolyte": {
+        "department": "Service",
+        "description": "Помощник священника. Не получает его религиозные способности и право освящать воду автоматически."
+      },
+      "Actor": {
+        "department": "Service",
+        "description": "Шоу, сцена и совместные представления с другими артистами."
+      },
+      "Adjutant": {
+        "department": "Service",
+        "description": "Помощник глав по документам, советам и бытовым вопросам. Подчинён HoP и капитану. Не АВД и не представитель NT."
+      },
+      "Administrator": {
+        "department": "Service",
+        "description": "Координация сервиса, помощь HoP и организация мероприятий. Не глава отдела, не замена HoP, не администратор сервера."
+      },
+      "Banker": {
+        "department": "Assistant",
+        "description": "Богатый предприниматель: банк, мастерская, найм и бизнес через РП."
+      },
+      "Barber": {
+        "department": "Service",
+        "description": "Добровольные стрижки и уход за внешностью посетителей."
+      },
+      "Bath": {
+        "department": "Service",
+        "description": "Баня, отдых и встречи экипажа."
+      },
+      "Casino": {
+        "department": "Service",
+        "description": "Организация казино и азартных РП-развлечений."
+      },
+      "Cleaning Manager": {
+        "department": "Service",
+        "description": "Уборка станции, обслуживание освещения и организация чистоты."
+      },
+      "Dealer": {
+        "department": "Service",
+        "description": "Гражданская торговля: небольшой стартовый ассортимент и сделки с экипажем."
+      },
+      "Guard": {
+        "department": "Service",
+        "description": "Порядок в баре и на кухне. Не сотрудник СБ и не охотник на антагонистов."
+      },
+      "Migrant": {
+        "department": "Assistant",
+        "description": "Новый житель/посетитель станции, поиск работы и места в корпорации."
+      },
+      "Musician": {
+        "department": "Service",
+        "description": "Музыкальная атмосфера."
+      },
+      "Representative TSF": {
+        "department": "Assistant",
+        "description": "Гость для отдыха и переговоров; законы NT действуют, иммунитета нет."
+      },
+      "Representative USSP": {
+        "department": "Assistant",
+        "description": "Гость для отдыха и переговоров; законы NT действуют, иммунитета нет."
+      },
+      "Security Clown": {
+        "department": "Security",
+        "description": "Поддерживайте мораль сотрудников СБ и подчиняйтесь начальнику отдела. Вы остаётесь клоуном: не охотьтесь за антагонистами, пока есть действующие офицеры."
+      },
+      "Tourist TSF": {
+        "department": "Assistant",
+        "description": "Отдых и подработки иностранного посетителя; законы NT действуют. Вражда государств не разрешает нарушать правила."
+      },
+      "Tourist USSP": {
+        "department": "Assistant",
+        "description": "Отдых и подработки иностранного посетителя; законы NT действуют, дипломатического иммунитета нет."
+      },
+      "Uncertain": {
+        "department": "Assistant",
+        "description": "Забытый работник и выживание в технических тоннелях. Не автоматический антагонист."
+      },
+      "VIP Corporate Guest": {
+        "department": "Assistant",
+        "description": "Особый гость NT; РП-статус не отменяет законы и правила."
+      },
+      "Waiter": {
+        "department": "Service",
+        "description": "Обслуживание посетителей и ресторанная атмосфера."
+      },
+      "Wrestler": {
+        "department": "Service",
+        "description": "Дружеские соревнования, тренировки и спортивные представления."
+      },
+      "Prisoner": {
+        "department": "Security",
+        "description": "Отбывание наказания на станции."
+      }
+    },
+    "jobs_sorted": [
+      "Chief Engineer",
+      "Station Engineer",
+      "Atmospheric Technician",
+      "Research Director",
+      "Scientist",
+      "Roboticist",
+      "Geneticist",
+      "AI",
+      "Cyborg",
+      "Assistant",
+      "Captain",
+      "Head of Personnel",
+      "Bartender",
+      "Cook",
+      "Botanist",
+      "Janitor",
+      "Clown",
+      "Mime",
+      "Chaplain",
+      "Psychologist",
+      "Quartermaster",
+      "Cargo Technician",
+      "Shaft Miner",
+      "Head of Security",
+      "Warden",
+      "Detective",
+      "Security Officer",
+      "Magistrate",
+      "Lawyer",
+      "Chief Medical Officer",
+      "Medical Doctor",
+      "Paramedic",
+      "Chemist",
+      "Coroner",
+      "Acolyte",
+      "Actor",
+      "Adjutant",
+      "Administrator",
+      "Banker",
+      "Barber",
+      "Bath",
+      "Casino",
+      "Cleaning Manager",
+      "Dealer",
+      "Guard",
+      "Migrant",
+      "Musician",
+      "Representative TSF",
+      "Representative USSP",
+      "Security Clown",
+      "Tourist TSF",
+      "Tourist USSP",
+      "Uncertain",
+      "VIP Corporate Guest",
+      "Waiter",
+      "Wrestler",
+      "Prisoner"
+    ]
+  },
+  "job_variants": {
+    "Acolyte": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Послушник"
+        },
+        {
+          "id": "monk",
+          "name": "Монах"
+        },
+        {
+          "id": "disciple",
+          "name": "Приспешник"
+        },
+        {
+          "id": "follower",
+          "name": "Последователь"
+        },
+        {
+          "id": "ritualist",
+          "name": "Обрядчик"
+        }
+      ],
+      "selected": "default",
+      "title": "Послушник",
+      "lock_reason": null,
+      "profile_title": "Послушник"
+    },
+    "Actor": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Актёр"
+        },
+        {
+          "id": "actor",
+          "name": "Актер"
+        },
+        {
+          "id": "artist",
+          "name": "Артист"
+        },
+        {
+          "id": "standup_comedian",
+          "name": "Стендапер"
+        },
+        {
+          "id": "comedian",
+          "name": "Комедиант"
+        },
+        {
+          "id": "variety_artist",
+          "name": "Эстрадный Артист"
+        },
+        {
+          "id": "painter",
+          "name": "Художник"
+        },
+        {
+          "id": "creator",
+          "name": "Творец"
+        },
+        {
+          "id": "art_critic",
+          "name": "Искусствовед"
+        },
+        {
+          "id": "landscape_painter",
+          "name": "Пейзажист"
+        },
+        {
+          "id": "photorealist",
+          "name": "Фотореалист"
+        },
+        {
+          "id": "performance_artist",
+          "name": "Перфоманс-Артист"
+        }
+      ],
+      "selected": "default",
+      "title": "Актёр",
+      "lock_reason": null,
+      "profile_title": "Актёр"
+    },
+    "Adjutant": {
+      "required_tier": 4,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Адъютант"
+        },
+        {
+          "id": "butler",
+          "name": "Butler"
+        },
+        {
+          "id": "butler_ru",
+          "name": "Дворецкий"
+        },
+        {
+          "id": "maid",
+          "name": "Maid"
+        },
+        {
+          "id": "maid_ru",
+          "name": "Горничная"
+        }
+      ],
+      "selected": "default",
+      "title": "Адъютант",
+      "lock_reason": null,
+      "profile_title": "Адъютант"
+    },
+    "Administrator": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Сервис-администратор"
+        },
+        {
+          "id": "service_administrator",
+          "name": "Сервис-Администратор"
+        },
+        {
+          "id": "steward",
+          "name": "Сервис-Управитель"
+        },
+        {
+          "id": "pompadour",
+          "name": "Помпадур"
+        },
+        {
+          "id": "service_manager",
+          "name": "Сервис-Менеджер"
+        }
+      ],
+      "selected": "default",
+      "title": "Сервис-администратор",
+      "lock_reason": null,
+      "profile_title": "Сервис-администратор"
+    },
+    "Banker": {
+      "required_tier": 5,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Банкир"
+        },
+        {
+          "id": "independent_banker",
+          "name": "Независимый Банкир"
+        },
+        {
+          "id": "corporate",
+          "name": "Корпорат"
+        },
+        {
+          "id": "businessman",
+          "name": "Бизнесмен"
+        },
+        {
+          "id": "nt_banker",
+          "name": "Банкир NT"
+        },
+        {
+          "id": "nt_corporate",
+          "name": "Корпорат NT"
+        },
+        {
+          "id": "nt_businessman",
+          "name": "Бизнесмен NT"
+        }
+      ],
+      "selected": "default",
+      "title": "Банкир",
+      "lock_reason": null,
+      "profile_title": "Банкир"
+    },
+    "Barber": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Парикмахер"
+        },
+        {
+          "id": "stylist",
+          "name": "Стилист"
+        },
+        {
+          "id": "salon_owner",
+          "name": "Хозяин Студии Красоты"
+        },
+        {
+          "id": "makeup_artist",
+          "name": "Визажист"
+        },
+        {
+          "id": "coiffeur",
+          "name": "Куафёр"
+        },
+        {
+          "id": "hairdresser",
+          "name": "Цирюльник"
+        },
+        {
+          "id": "barber",
+          "name": "Брадобрей"
+        }
+      ],
+      "selected": "default",
+      "title": "Парикмахер",
+      "lock_reason": null,
+      "profile_title": "Парикмахер"
+    },
+    "Bath": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Банщик"
+        },
+        {
+          "id": "bath_owner",
+          "name": "Хозяин Бани"
+        },
+        {
+          "id": "bath_steamer",
+          "name": "Парильщик"
+        },
+        {
+          "id": "bath_master",
+          "name": "Пармейстер"
+        }
+      ],
+      "selected": "default",
+      "title": "Банщик",
+      "lock_reason": null,
+      "profile_title": "Банщик"
+    },
+    "Casino": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Крупье"
+        },
+        {
+          "id": "dealer",
+          "name": "Дилер"
+        },
+        {
+          "id": "slot_assistant",
+          "name": "Слот-Ассистент"
+        },
+        {
+          "id": "pit_boss",
+          "name": "Пит-Босс"
+        }
+      ],
+      "selected": "default",
+      "title": "Крупье",
+      "lock_reason": null,
+      "profile_title": "Крупье"
+    },
+    "Cleaning Manager": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Менеджер по клинингу"
+        },
+        {
+          "id": "cleaning_manager",
+          "name": "Менеджер по Клинингу"
+        },
+        {
+          "id": "rat_catcher",
+          "name": "Ловец Крыс"
+        },
+        {
+          "id": "cleaner_1",
+          "name": "Уборщик I-разряда"
+        },
+        {
+          "id": "cleaner_2",
+          "name": "Уборщик II-разряда"
+        },
+        {
+          "id": "cleaner_3",
+          "name": "Уборщик III-разряда"
+        },
+        {
+          "id": "cleaner_4",
+          "name": "Уборщик IV-разряда"
+        },
+        {
+          "id": "cleaner_5",
+          "name": "Уборщик V-разряда"
+        },
+        {
+          "id": "apprentice",
+          "name": "Подмастерье"
+        },
+        {
+          "id": "maintenance_assistant",
+          "name": "Ассистент-Механик"
+        },
+        {
+          "id": "assistant_1",
+          "name": "Ассистент I-го разряда"
+        },
+        {
+          "id": "assistant_2",
+          "name": "Ассистент II-го разряда"
+        },
+        {
+          "id": "assistant_3",
+          "name": "Ассистент III-го разряда"
+        },
+        {
+          "id": "assistant_4",
+          "name": "Ассистент IV-го разряда"
+        },
+        {
+          "id": "assistant_5",
+          "name": "Ассистент V-го разряда"
+        }
+      ],
+      "selected": "default",
+      "title": "Менеджер по клинингу",
+      "lock_reason": null,
+      "profile_title": "Менеджер по клинингу"
+    },
+    "Dealer": {
+      "required_tier": 4,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Торговец"
+        },
+        {
+          "id": "security_seller",
+          "name": "Независимый Торговец"
+        },
+        {
+          "id": "merchant",
+          "name": "Сдельщик"
+        },
+        {
+          "id": "philanthropist",
+          "name": "Барахольщик"
+        },
+        {
+          "id": "trader",
+          "name": "Меценат"
+        },
+        {
+          "id": "junk_dealer",
+          "name": "Коммерсант"
+        }
+      ],
+      "selected": "default",
+      "title": "Торговец",
+      "lock_reason": null,
+      "profile_title": "Торговец"
+    },
+    "Guard": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Охранник сервиса"
+        },
+        {
+          "id": "bodyguard",
+          "name": "Охранник"
+        },
+        {
+          "id": "external_guard",
+          "name": "Сторож Сервиса"
+        },
+        {
+          "id": "technical_guard",
+          "name": "Охранник Сервиса"
+        },
+        {
+          "id": "personal_guard",
+          "name": "Вышибала Сервиса"
+        }
+      ],
+      "selected": "default",
+      "title": "Охранник сервиса",
+      "lock_reason": null,
+      "profile_title": "Охранник сервиса"
+    },
+    "Migrant": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Мигрант"
+        }
+      ],
+      "selected": "default",
+      "title": "Мигрант",
+      "lock_reason": null,
+      "profile_title": "Мигрант"
+    },
+    "Musician": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Музыкант"
+        },
+        {
+          "id": "maestro",
+          "name": "Маэстро"
+        },
+        {
+          "id": "guitarist",
+          "name": "Гитарист"
+        },
+        {
+          "id": "drummer",
+          "name": "Барабанщик"
+        },
+        {
+          "id": "pianist",
+          "name": "Пианист"
+        },
+        {
+          "id": "piper",
+          "name": "Волынщик"
+        },
+        {
+          "id": "violinist",
+          "name": "Скрипач"
+        },
+        {
+          "id": "jester",
+          "name": "Скоморох"
+        },
+        {
+          "id": "saxophonist",
+          "name": "Саксофонист"
+        },
+        {
+          "id": "soloist",
+          "name": "Солист"
+        },
+        {
+          "id": "singer",
+          "name": "Певец"
+        },
+        {
+          "id": "touring_musician",
+          "name": "Гастролер"
+        }
+      ],
+      "selected": "default",
+      "title": "Музыкант",
+      "lock_reason": null,
+      "profile_title": "Музыкант"
+    },
+    "Representative TSF": {
+      "required_tier": 4,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Представитель ТСФ"
+        },
+        {
+          "id": "diplomat",
+          "name": "Дипломат ТСФ"
+        },
+        {
+          "id": "publicist",
+          "name": "Публицист ТСФ"
+        }
+      ],
+      "selected": "default",
+      "title": "Представитель ТСФ",
+      "lock_reason": null,
+      "profile_title": "Представитель ТСФ"
+    },
+    "Representative USSP": {
+      "required_tier": 4,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Представитель СССП"
+        },
+        {
+          "id": "diplomat",
+          "name": "Дипломат СССП"
+        },
+        {
+          "id": "press_secretary",
+          "name": "Пресс-Секретарь СССП"
+        }
+      ],
+      "selected": "default",
+      "title": "Представитель СССП",
+      "lock_reason": null,
+      "profile_title": "Представитель СССП"
+    },
+    "Security Clown": {
+      "required_tier": 5,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Клоун СБ"
+        },
+        {
+          "id": "security_clown",
+          "name": "Клоун Службы Безопасности"
+        },
+        {
+          "id": "detective",
+          "name": "Клоун-Детектив"
+        },
+        {
+          "id": "warden",
+          "name": "Клоун-Смотритель"
+        },
+        {
+          "id": "honkective",
+          "name": "Хонкектив"
+        },
+        {
+          "id": "cadet",
+          "name": "Клоун Кадет"
+        }
+      ],
+      "selected": "default",
+      "title": "Клоун СБ",
+      "lock_reason": null,
+      "profile_title": "Клоун СБ"
+    },
+    "Tourist TSF": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Турист ТСФ"
+        },
+        {
+          "id": "visitor",
+          "name": "Посетитель ТСФ"
+        }
+      ],
+      "selected": "default",
+      "title": "Турист ТСФ",
+      "lock_reason": null,
+      "profile_title": "Турист ТСФ"
+    },
+    "Tourist USSP": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Турист СССП"
+        },
+        {
+          "id": "visitor",
+          "name": "Посетитель СССП"
+        }
+      ],
+      "selected": "default",
+      "title": "Турист СССП",
+      "lock_reason": null,
+      "profile_title": "Турист СССП"
+    },
+    "Uncertain": {
+      "required_tier": 3,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Безработный"
+        },
+        {
+          "id": "unemployed_assistant",
+          "name": "Безработный Ассистент"
+        },
+        {
+          "id": "free_assistant",
+          "name": "Свободный Ассистент"
+        },
+        {
+          "id": "working_off_debt_assistant",
+          "name": "Отрабатыващий Ассистент"
+        },
+        {
+          "id": "maintenance_assistant",
+          "name": "Ассистент Технических Тоннелей"
+        }
+      ],
+      "selected": "default",
+      "title": "Безработный",
+      "lock_reason": null,
+      "profile_title": "Безработный"
+    },
+    "VIP Corporate Guest": {
+      "required_tier": 5,
+      "variants": [
+        {
+          "id": "default",
+          "name": "VIP-гость корпорации"
+        },
+        {
+          "id": "vip_guest",
+          "name": "VIP Гость"
+        },
+        {
+          "id": "vip_person",
+          "name": "VIP Персона"
+        },
+        {
+          "id": "nt_vip_guest",
+          "name": "VIP Гость NT"
+        },
+        {
+          "id": "nt_vip_person",
+          "name": "VIP Персона NT"
+        },
+        {
+          "id": "nt_corporate_guest",
+          "name": "Гость Корпорации NT"
+        }
+      ],
+      "selected": "default",
+      "title": "VIP-гость корпорации",
+      "lock_reason": null,
+      "profile_title": "VIP-гость корпорации"
+    },
+    "Waiter": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Официант"
+        },
+        {
+          "id": "service_host",
+          "name": "Хост Сервиса"
+        }
+      ],
+      "selected": "default",
+      "title": "Официант",
+      "lock_reason": null,
+      "profile_title": "Официант"
+    },
+    "Wrestler": {
+      "required_tier": 2,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Борец"
+        },
+        {
+          "id": "referee",
+          "name": "Рефери"
+        },
+        {
+          "id": "trainer",
+          "name": "Тренер"
+        },
+        {
+          "id": "boxer",
+          "name": "Боксёр"
+        },
+        {
+          "id": "athlete",
+          "name": "Спортсмен"
+        }
+      ],
+      "selected": "default",
+      "title": "Борец",
+      "lock_reason": null,
+      "profile_title": "Борец"
+    },
+    "Cargo Technician": {
+      "required_tier": 0,
+      "title": "Грузчик",
+      "selected": "default",
+      "lock_reason": null,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Грузчик"
+        },
+        {
+          "id": "deliverer",
+          "name": "Доставщик"
+        }
+      ],
+      "profile_title": "Грузчик"
+    },
+    "Prisoner": {
+      "required_tier": 1,
+      "title": "Заключённый",
+      "selected": "default",
+      "lock_reason": null,
+      "variants": [
+        {
+          "id": "default",
+          "name": "Заключённый"
+        },
+        {
+          "id": "convict",
+          "name": "Каторжник"
+        }
+      ],
+      "profile_title": "Заключённый"
+    }
+  }
+}

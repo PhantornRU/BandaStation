@@ -1,0 +1,12 @@
+{
+  "repository": "../BandaStation",
+  "byond_bin": "./dependencies/byond-bin",
+  "bootstrap_cache": "./dependencies/bootstrap-cache",
+  "runtime_dlls": "./dependencies/runtime-dlls",
+  "dll_sha256": {
+    "rust_g.dll": "51130B5597A992B01C06FA620EC3B45862247F7AA8D5E85285F271D15AC83B24",
+    "librust_utils.dll": "6E164AD80665018F911104AE56B9A4C8AF4A7265BA7732056830D59F7E6CF1FF"
+  },
+  "cutter": "./dependencies/hypnagogicv5-0-1.exe",
+  "cutter_sha256": "e6e5a8748ec77bbd705d04006f6c022f8dd7fb04a498fa1085b67346d4443239"
+}

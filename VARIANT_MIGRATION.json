@@ -1,0 +1,1034 @@
+[
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/acolyte.dm",
+    "job": "\"Acolyte\"",
+    "old_id": "title_fa2ad154cb",
+    "public_title": "Монах",
+    "outfit": "/datum/outfit/job/donor/acolyte",
+    "new_id": "monk"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/acolyte.dm",
+    "job": "\"Acolyte\"",
+    "old_id": "title_1678dcfc2b",
+    "public_title": "Приспешник",
+    "outfit": "/datum/outfit/job/donor/acolyte",
+    "new_id": "disciple"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/acolyte.dm",
+    "job": "\"Acolyte\"",
+    "old_id": "title_5bf3063650",
+    "public_title": "Последователь",
+    "outfit": "/datum/outfit/job/donor/acolyte",
+    "new_id": "follower"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/acolyte.dm",
+    "job": "\"Acolyte\"",
+    "old_id": "title_ad3bbe9dea",
+    "public_title": "Обрядчик",
+    "outfit": "/datum/outfit/job/donor/acolyte",
+    "new_id": "ritualist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_980bd5882d",
+    "public_title": "Актер",
+    "outfit": "/datum/outfit/job/donor/actor",
+    "new_id": "actor"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_e639ea25de",
+    "public_title": "Артист",
+    "outfit": "/datum/outfit/job/donor/actor",
+    "new_id": "artist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_666e779ffe",
+    "public_title": "Стендапер",
+    "outfit": "/datum/outfit/job/donor/actor",
+    "new_id": "standup_comedian"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_402e7e66c9",
+    "public_title": "Комедиант",
+    "outfit": "/datum/outfit/job/donor/actor/comedian",
+    "new_id": "comedian"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_b7d6ec5648",
+    "public_title": "Эстрадный Артист",
+    "outfit": "/datum/outfit/job/donor/actor",
+    "new_id": "variety_artist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_6f18f1d35f",
+    "public_title": "Художник",
+    "outfit": "/datum/outfit/job/donor/actor/painter",
+    "new_id": "painter"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_3e555ea0d3",
+    "public_title": "Творец",
+    "outfit": "/datum/outfit/job/donor/actor/painter",
+    "new_id": "creator"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_2e5c5324c9",
+    "public_title": "Искусствовед",
+    "outfit": "/datum/outfit/job/donor/actor/painter",
+    "new_id": "art_critic"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_461c5e40dd",
+    "public_title": "Пейзажист",
+    "outfit": "/datum/outfit/job/donor/actor/painter",
+    "new_id": "landscape_painter"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_404e8c6af6",
+    "public_title": "Фотореалист",
+    "outfit": "/datum/outfit/job/donor/actor/painter",
+    "new_id": "photorealist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/actor.dm",
+    "job": "\"Actor\"",
+    "old_id": "title_ca1e1a3fe6",
+    "public_title": "Перфоманс-Артист",
+    "outfit": "/datum/outfit/job/donor/actor/painter",
+    "new_id": "performance_artist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/adjutant.dm",
+    "job": "\"Adjutant\"",
+    "old_id": "title_676e2d10c4",
+    "public_title": "Butler",
+    "outfit": "/datum/outfit/job/donor/adjutant/butler",
+    "new_id": "butler"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/adjutant.dm",
+    "job": "\"Adjutant\"",
+    "old_id": "title_194cb4f395",
+    "public_title": "Дворецкий",
+    "outfit": "/datum/outfit/job/donor/adjutant/butler",
+    "new_id": "butler_ru"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/adjutant.dm",
+    "job": "\"Adjutant\"",
+    "old_id": "title_7076a8eeb7",
+    "public_title": "Maid",
+    "outfit": "/datum/outfit/job/donor/adjutant/maid",
+    "new_id": "maid"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/adjutant.dm",
+    "job": "\"Adjutant\"",
+    "old_id": "title_45cfde778e",
+    "public_title": "Горничная",
+    "outfit": "/datum/outfit/job/donor/adjutant/maid",
+    "new_id": "maid_ru"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/administrator.dm",
+    "job": "\"Administrator\"",
+    "old_id": "title_d20908b6e6",
+    "public_title": "Сервис-Администратор",
+    "outfit": "/datum/outfit/job/donor/administrator",
+    "new_id": "service_administrator"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/administrator.dm",
+    "job": "\"Administrator\"",
+    "old_id": "title_1e7d8aded0",
+    "public_title": "Сервис-Управитель",
+    "outfit": "/datum/outfit/job/donor/administrator",
+    "new_id": "steward"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/administrator.dm",
+    "job": "\"Administrator\"",
+    "old_id": "title_b4112b1abe",
+    "public_title": "Помпадур",
+    "outfit": "/datum/outfit/job/donor/administrator",
+    "new_id": "pompadour"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/administrator.dm",
+    "job": "\"Administrator\"",
+    "old_id": "title_e3c0153ea3",
+    "public_title": "Сервис-Менеджер",
+    "outfit": "/datum/outfit/job/donor/administrator",
+    "new_id": "service_manager"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/banker.dm",
+    "job": "\"Banker\"",
+    "old_id": "title_a9bad37f6c",
+    "public_title": "Независимый Банкир",
+    "outfit": "/datum/outfit/job/donor/banker",
+    "new_id": "independent_banker"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/banker.dm",
+    "job": "\"Banker\"",
+    "old_id": "title_be26aa1f6c",
+    "public_title": "Корпорат",
+    "outfit": "/datum/outfit/job/donor/banker",
+    "new_id": "corporate"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/banker.dm",
+    "job": "\"Banker\"",
+    "old_id": "title_8186c90396",
+    "public_title": "Бизнесмен",
+    "outfit": "/datum/outfit/job/donor/banker",
+    "new_id": "businessman"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/banker.dm",
+    "job": "\"Banker\"",
+    "old_id": "title_dfd2a4023a",
+    "public_title": "Банкир NT",
+    "outfit": "/datum/outfit/job/donor/banker",
+    "new_id": "nt_banker"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/banker.dm",
+    "job": "\"Banker\"",
+    "old_id": "title_9b812edd4a",
+    "public_title": "Корпорат NT",
+    "outfit": "/datum/outfit/job/donor/banker",
+    "new_id": "nt_corporate"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/banker.dm",
+    "job": "\"Banker\"",
+    "old_id": "title_cffc8f2bc5",
+    "public_title": "Бизнесмен NT",
+    "outfit": "/datum/outfit/job/donor/banker",
+    "new_id": "nt_businessman"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/barber.dm",
+    "job": "\"Barber\"",
+    "old_id": "title_6f6165b91f",
+    "public_title": "Стилист",
+    "outfit": "/datum/outfit/job/donor/barber",
+    "new_id": "stylist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/barber.dm",
+    "job": "\"Barber\"",
+    "old_id": "title_2c81d24615",
+    "public_title": "Хозяин Студии Красоты",
+    "outfit": "/datum/outfit/job/donor/barber",
+    "new_id": "salon_owner"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/barber.dm",
+    "job": "\"Barber\"",
+    "old_id": "title_9c317438ff",
+    "public_title": "Визажист",
+    "outfit": "/datum/outfit/job/donor/barber",
+    "new_id": "makeup_artist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/barber.dm",
+    "job": "\"Barber\"",
+    "old_id": "title_23113d9e46",
+    "public_title": "Куафёр",
+    "outfit": "/datum/outfit/job/donor/barber",
+    "new_id": "coiffeur"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/barber.dm",
+    "job": "\"Barber\"",
+    "old_id": "title_ccd298be8c",
+    "public_title": "Цирюльник",
+    "outfit": "/datum/outfit/job/donor/barber",
+    "new_id": "hairdresser"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/barber.dm",
+    "job": "\"Barber\"",
+    "old_id": "title_fd889e9fdb",
+    "public_title": "Брадобрей",
+    "outfit": "/datum/outfit/job/donor/barber",
+    "new_id": "barber"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/bath.dm",
+    "job": "\"Bath\"",
+    "old_id": "title_59b875790f",
+    "public_title": "Хозяин Бани",
+    "outfit": "/datum/outfit/job/donor/bath",
+    "new_id": "bath_owner"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/bath.dm",
+    "job": "\"Bath\"",
+    "old_id": "title_4bed95ffa5",
+    "public_title": "Парильщик",
+    "outfit": "/datum/outfit/job/donor/bath",
+    "new_id": "bath_steamer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/bath.dm",
+    "job": "\"Bath\"",
+    "old_id": "title_298399a251",
+    "public_title": "Пармейстер",
+    "outfit": "/datum/outfit/job/donor/bath",
+    "new_id": "bath_master"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cargo_technician.dm",
+    "job": "JOB_CARGO_TECHNICIAN",
+    "old_id": "title_c3e626e8a5",
+    "public_title": "Deliverer",
+    "outfit": "/datum/outfit/job/cargo_tech/donor_deliverer",
+    "new_id": "deliverer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cargo_technician.dm",
+    "job": "JOB_CARGO_TECHNICIAN",
+    "old_id": "title_9bc06590d6",
+    "public_title": "Доставщик",
+    "outfit": "/datum/outfit/job/cargo_tech/donor_deliverer",
+    "new_id": "deliverer_ru"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cargo_technician.dm",
+    "job": "JOB_CARGO_TECHNICIAN",
+    "old_id": "title_1044de84e6",
+    "public_title": "Переносчик",
+    "outfit": "/datum/outfit/job/cargo_tech/donor_deliverer",
+    "new_id": "porter"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/casino.dm",
+    "job": "\"Casino\"",
+    "old_id": "title_decf6968b3",
+    "public_title": "Дилер",
+    "outfit": "/datum/outfit/job/donor/casino",
+    "new_id": "dealer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/casino.dm",
+    "job": "\"Casino\"",
+    "old_id": "title_6412089ad5",
+    "public_title": "Слот-Ассистент",
+    "outfit": "/datum/outfit/job/donor/casino",
+    "new_id": "slot_assistant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/casino.dm",
+    "job": "\"Casino\"",
+    "old_id": "title_2c5efdcd59",
+    "public_title": "Пит-Босс",
+    "outfit": "/datum/outfit/job/donor/casino",
+    "new_id": "pit_boss"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_af28e87894",
+    "public_title": "Менеджер по Клинингу",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "cleaning_manager"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_699f9246d9",
+    "public_title": "Ловец Крыс",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "rat_catcher"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_2182b9664c",
+    "public_title": "Уборщик I-разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "cleaner_1"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_b00e6b3ad8",
+    "public_title": "Уборщик II-разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "cleaner_2"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_e84a0954fc",
+    "public_title": "Уборщик III-разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "cleaner_3"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_e0b933da94",
+    "public_title": "Уборщик IV-разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "cleaner_4"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_a3e33fb604",
+    "public_title": "Уборщик V-разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager",
+    "new_id": "cleaner_5"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_fb98757975",
+    "public_title": "Подмастерье",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "apprentice"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_35f098909c",
+    "public_title": "Ассистент-Механик",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "maintenance_assistant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_5e938821f0",
+    "public_title": "Ассистент I-го разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "assistant_1"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_d28fdcea7d",
+    "public_title": "Ассистент II-го разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "assistant_2"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_aebaad8051",
+    "public_title": "Ассистент III-го разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "assistant_3"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_f9f1c4fee5",
+    "public_title": "Ассистент IV-го разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "assistant_4"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager.dm",
+    "job": "\"Cleaning Manager\"",
+    "old_id": "title_8a2af0d4de",
+    "public_title": "Ассистент V-го разряда",
+    "outfit": "/datum/outfit/job/donor/cleaning_manager/apprentice",
+    "new_id": "assistant_5"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/dealer.dm",
+    "job": "\"Dealer\"",
+    "old_id": "title_5b94e95f0b",
+    "public_title": "Независимый Торговец",
+    "outfit": "/datum/outfit/job/donor/dealer",
+    "new_id": "security_seller"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/dealer.dm",
+    "job": "\"Dealer\"",
+    "old_id": "title_1c1fc9e1f6",
+    "public_title": "Сдельщик",
+    "outfit": "/datum/outfit/job/donor/dealer",
+    "new_id": "merchant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/dealer.dm",
+    "job": "\"Dealer\"",
+    "old_id": "title_548b9257d9",
+    "public_title": "Барахольщик",
+    "outfit": "/datum/outfit/job/donor/dealer",
+    "new_id": "philanthropist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/dealer.dm",
+    "job": "\"Dealer\"",
+    "old_id": "title_2fe62dd819",
+    "public_title": "Меценат",
+    "outfit": "/datum/outfit/job/donor/dealer",
+    "new_id": "trader"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/dealer.dm",
+    "job": "\"Dealer\"",
+    "old_id": "title_e4a058f1e6",
+    "public_title": "Коммерсант",
+    "outfit": "/datum/outfit/job/donor/dealer",
+    "new_id": "junk_dealer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/guard.dm",
+    "job": "\"Guard\"",
+    "old_id": "title_80a6d55193",
+    "public_title": "Охранник",
+    "outfit": "/datum/outfit/job/donor/guard",
+    "new_id": "bodyguard"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/guard.dm",
+    "job": "\"Guard\"",
+    "old_id": "title_d56e622369",
+    "public_title": "Сторож Сервиса",
+    "outfit": "/datum/outfit/job/donor/guard",
+    "new_id": "external_guard"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/guard.dm",
+    "job": "\"Guard\"",
+    "old_id": "title_02173d4901",
+    "public_title": "Охранник Сервиса",
+    "outfit": "/datum/outfit/job/donor/guard",
+    "new_id": "technical_guard"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/guard.dm",
+    "job": "\"Guard\"",
+    "old_id": "title_82bdb3534d",
+    "public_title": "Вышибала Сервиса",
+    "outfit": "/datum/outfit/job/donor/guard",
+    "new_id": "personal_guard"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_1d6c0e0483",
+    "public_title": "Маэстро",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "maestro"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_89d350c8f3",
+    "public_title": "Гитарист",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "guitarist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_5369d65484",
+    "public_title": "Барабанщик",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "drummer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_8e41d8e8c6",
+    "public_title": "Пианист",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "pianist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_01a03ad63b",
+    "public_title": "Волынщик",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "piper"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_77f89f1bf1",
+    "public_title": "Скрипач",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "violinist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_0a2f7ed94c",
+    "public_title": "Скоморох",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "jester"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_80547d2c80",
+    "public_title": "Саксофонист",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "saxophonist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_524b7f6098",
+    "public_title": "Солист",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "soloist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_686160ec02",
+    "public_title": "Певец",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "singer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/musican.dm",
+    "job": "\"Musician\"",
+    "old_id": "title_32be51e83f",
+    "public_title": "Гастролер",
+    "outfit": "/datum/outfit/job/donor/musican",
+    "new_id": "touring_musician"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_f095933019",
+    "public_title": "Заключенный",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "prisoner"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_b4b118ef86",
+    "public_title": "Уголовник",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "felon"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_d49f7780c4",
+    "public_title": "Законопреступник",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "lawbreaker"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_3f92b3561f",
+    "public_title": "Пермазаключенный",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "permanent_prisoner"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_ccb8d414fd",
+    "public_title": "Нелегальный Мигрант",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "illegal_migrant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_fb54083629",
+    "public_title": "Нелегальный Работник",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "illegal_worker"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_5aaf5a10d4",
+    "public_title": "Пожизненно-Заключенный",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "lifer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_efc5efc07d",
+    "public_title": "Политический Заключенный",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "political_prisoner"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_12ea21d982",
+    "public_title": "Заключенный Преступник",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "criminal"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_51658087b8",
+    "public_title": "Заключенный Бандит",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "bandit"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_7fd85bb83b",
+    "public_title": "Заключенный Мошенник",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "conman"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_29e731561e",
+    "public_title": "Заключенный Вор",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "thief"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_2c9f46ef15",
+    "public_title": "Заключенный Убийца",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "murderer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_80cc8cd7d4",
+    "public_title": "Заключенный Наркоторговец",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "drug_dealer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_a8be352fd0",
+    "public_title": "Заключенный Рецидивист",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "recidivist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_3c5e9af02c",
+    "public_title": "Заключенный Саботер",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "saboteur"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_f3e52e13db",
+    "public_title": "Заключенный Мучитель",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "torturer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_224ed57414",
+    "public_title": "Заключенный Жулик",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "swindler"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_fa2a83402f",
+    "public_title": "Заключенный Негодяй",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "scoundrel"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_68303ec240",
+    "public_title": "Заключенный Хулиган",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "hooligan"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_c298f2d33f",
+    "public_title": "Заключенный Враг-NT",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "nt_enemy"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_17b4c084eb",
+    "public_title": "Заключенный Мафиози",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "mafioso"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_52e5e8a719",
+    "public_title": "Заключенный Коррупционер",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "corrupt_official"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_af200c4bc2",
+    "public_title": "Заключенный Психопат",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "psychopath"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_3c00350498",
+    "public_title": "Заключенный Фальшивокредитчик",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "counterfeiter"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/prisoner.dm",
+    "job": "JOB_PRISONER",
+    "old_id": "title_1aca9d1c4c",
+    "public_title": "Заключенный Работорговец",
+    "outfit": "/datum/outfit/job/prisoner",
+    "new_id": "slaver"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/representative_tsf.dm",
+    "job": "\"Representative TSF\"",
+    "old_id": "title_ca11487592",
+    "public_title": "Дипломат ТСФ",
+    "outfit": "/datum/outfit/job/donor/representative_tsf",
+    "new_id": "diplomat"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/representative_tsf.dm",
+    "job": "\"Representative TSF\"",
+    "old_id": "title_7f78932f04",
+    "public_title": "Публицист ТСФ",
+    "outfit": "/datum/outfit/job/donor/representative_tsf",
+    "new_id": "publicist"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/representative_ussp.dm",
+    "job": "\"Representative USSP\"",
+    "old_id": "title_30ed7adb53",
+    "public_title": "Дипломат СССП",
+    "outfit": "/datum/outfit/job/donor/representative_ussp",
+    "new_id": "diplomat"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/representative_ussp.dm",
+    "job": "\"Representative USSP\"",
+    "old_id": "title_8e7b375145",
+    "public_title": "Пресс-Секретарь СССП",
+    "outfit": "/datum/outfit/job/donor/representative_ussp",
+    "new_id": "press_secretary"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/seclown.dm",
+    "job": "\"Security Clown\"",
+    "old_id": "title_8cd08702d6",
+    "public_title": "Клоун Службы Безопасности",
+    "outfit": "/datum/outfit/job/donor/seclown",
+    "new_id": "security_clown"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/seclown.dm",
+    "job": "\"Security Clown\"",
+    "old_id": "title_190bf220ef",
+    "public_title": "Клоун-Детектив",
+    "outfit": "/datum/outfit/job/donor/seclown/detective",
+    "new_id": "detective"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/seclown.dm",
+    "job": "\"Security Clown\"",
+    "old_id": "title_a22b40d7a4",
+    "public_title": "Клоун-Смотритель",
+    "outfit": "/datum/outfit/job/donor/seclown/warden",
+    "new_id": "warden"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/seclown.dm",
+    "job": "\"Security Clown\"",
+    "old_id": "title_2384147c33",
+    "public_title": "Хонкектив",
+    "outfit": "/datum/outfit/job/donor/seclown/detective",
+    "new_id": "honkective"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/seclown.dm",
+    "job": "\"Security Clown\"",
+    "old_id": "title_410a1ecab5",
+    "public_title": "Клоун Кадет",
+    "outfit": "/datum/outfit/job/donor/seclown/cadet",
+    "new_id": "cadet"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/tourist_tsf.dm",
+    "job": "\"Tourist TSF\"",
+    "old_id": "title_60a05c3bd2",
+    "public_title": "Посетитель ТСФ",
+    "outfit": "/datum/outfit/job/donor/tourist_tsf",
+    "new_id": "visitor"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/tourist_ussp.dm",
+    "job": "\"Tourist USSP\"",
+    "old_id": "title_7edf192313",
+    "public_title": "Посетитель СССП",
+    "outfit": "/datum/outfit/job/donor/tourist_ussp",
+    "new_id": "visitor"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/uncertain.dm",
+    "job": "\"Uncertain\"",
+    "old_id": "title_56a54c66c1",
+    "public_title": "Безработный Ассистент",
+    "outfit": "/datum/outfit/job/donor/uncertain",
+    "new_id": "unemployed_assistant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/uncertain.dm",
+    "job": "\"Uncertain\"",
+    "old_id": "title_991a8712f0",
+    "public_title": "Свободный Ассистент",
+    "outfit": "/datum/outfit/job/donor/uncertain",
+    "new_id": "free_assistant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/uncertain.dm",
+    "job": "\"Uncertain\"",
+    "old_id": "title_243891c037",
+    "public_title": "Отрабатыващий Ассистент",
+    "outfit": "/datum/outfit/job/donor/uncertain",
+    "new_id": "working_off_debt_assistant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/uncertain.dm",
+    "job": "\"Uncertain\"",
+    "old_id": "title_72948e94fd",
+    "public_title": "Ассистент Технических Тоннелей",
+    "outfit": "/datum/outfit/job/donor/uncertain",
+    "new_id": "maintenance_assistant"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/vip_guest.dm",
+    "job": "\"VIP Corporate Guest\"",
+    "old_id": "title_d99248469b",
+    "public_title": "VIP Гость",
+    "outfit": "/datum/outfit/job/donor/vip_guest",
+    "new_id": "vip_guest"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/vip_guest.dm",
+    "job": "\"VIP Corporate Guest\"",
+    "old_id": "title_b8153714bb",
+    "public_title": "VIP Персона",
+    "outfit": "/datum/outfit/job/donor/vip_guest",
+    "new_id": "vip_person"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/vip_guest.dm",
+    "job": "\"VIP Corporate Guest\"",
+    "old_id": "title_d0f83cbdf0",
+    "public_title": "VIP Гость NT",
+    "outfit": "/datum/outfit/job/donor/vip_guest",
+    "new_id": "nt_vip_guest"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/vip_guest.dm",
+    "job": "\"VIP Corporate Guest\"",
+    "old_id": "title_cc3777df37",
+    "public_title": "VIP Персона NT",
+    "outfit": "/datum/outfit/job/donor/vip_guest",
+    "new_id": "nt_vip_person"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/vip_guest.dm",
+    "job": "\"VIP Corporate Guest\"",
+    "old_id": "title_2a652650f5",
+    "public_title": "Гость Корпорации NT",
+    "outfit": "/datum/outfit/job/donor/vip_guest",
+    "new_id": "nt_corporate_guest"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/waiter.dm",
+    "job": "\"Waiter\"",
+    "old_id": "title_c86b39312d",
+    "public_title": "Хост Сервиса",
+    "outfit": "/datum/outfit/job/donor/waiter",
+    "new_id": "service_host"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/wrestler.dm",
+    "job": "\"Wrestler\"",
+    "old_id": "title_fa0e90435e",
+    "public_title": "Рефери",
+    "outfit": "/datum/outfit/job/donor/wrestler",
+    "new_id": "referee"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/wrestler.dm",
+    "job": "\"Wrestler\"",
+    "old_id": "title_894d7eccc6",
+    "public_title": "Тренер",
+    "outfit": "/datum/outfit/job/donor/wrestler",
+    "new_id": "trainer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/wrestler.dm",
+    "job": "\"Wrestler\"",
+    "old_id": "title_1fac104508",
+    "public_title": "Боксёр",
+    "outfit": "/datum/outfit/job/donor/wrestler",
+    "new_id": "boxer"
+  },
+  {
+    "path": "modular_bandastation/donor_jobs/code/jobs/wrestler.dm",
+    "job": "\"Wrestler\"",
+    "old_id": "title_0b7ca27e25",
+    "public_title": "Спортсмен",
+    "outfit": "/datum/outfit/job/donor/wrestler",
+    "new_id": "athlete"
+  }
+]

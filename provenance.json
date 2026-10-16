@@ -1,0 +1,447 @@
+{
+  "baseline_manifest_sha256": "d3cebe275eefabbe59e18bcb584b24fe139e20c3edfd733faac992be843e27a8",
+  "baseline_head": "7553b3553c80b5b385dab290ca318e23437bb6b5",
+  "test_files": [
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/_tests.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/_tests.dm",
+      "original_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47",
+      "changes": [],
+      "adapted_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
+      "original_sha256": "c317fad02c9c1f79c8cfc2373afeae4566f48c76e6b85ec2c209c362a039e0d8",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "b0f9d0b9f184fa4a2872801f376cb1fc55b5b6aac56a02f28386ae9fc7f5866b"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/equipment.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/equipment.dm",
+      "original_sha256": "1f598defa2f0c6495336d5ec3a6eaef8fba84ded145a93334486d35df8107e4c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
+      "original_sha256": "fac88f49550d149e1c4d5be10448feb3076dff12c0d88a867b8b3bc8cf3f336c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "f92b88f6892d1621a48ce130ad6e3f1fe336933a9714e4b2790ddb21640358a1"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
+      "original_sha256": "4952f89db77ed2ec53c2896880a0f7d43e1e8576a4b4b8ed5def4140153fff4d",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "616e668f95e33369ebf6351fadb0398aef19bba7f881a028dcd9be764bb20f91"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
+      "original_sha256": "d61d0d9e9c9ad07a7f7919c6ae433ae7068bc07483d0bf6f5aa0bc630d509ac6",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "2072f9ae62b3a131fbc356c974ad7f1cd552d4134b81395af664d0883cec6454"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
+      "original_sha256": "8f1a0d89eb04ac5077f9e1f30346c5ce22eec43bcff9bd6ee5ea2026f5a38d4c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "ca20c4b3574d6a5cc3525381303adeaacf720d4549d84b7cae4ad9822d493485"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/id_templates.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/id_templates.dm",
+      "original_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377",
+      "changes": [],
+      "adapted_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/identity_items.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/identity_items.dm",
+      "original_sha256": "22ef2f6f8c2a81dc2294c3110f28dfced6dc9909435b31503cf545e019426f4c",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "966c438ff58e30ce0fa030b40e9930b50038a0e56119cd9d2cf3807fcd4b3933"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
+      "original_sha256": "e20b8eef3732167826aeb79a14b5d0dee86961d0932ad494e4b5a6a8544c3c4a",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "c1e67ccd39b344c9202d146560bec4df4524fa838a0332879620fe908d9bd5ea"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
+      "original_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1",
+      "changes": [],
+      "adapted_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
+      "original_sha256": "ec24138b3591b25945167b5e83763ff3db970c0e2e1852c9f26a5a418f167360",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
+      "original_sha256": "3333fb1c44f7afd105b7d29e1b4919f7f48ddab247b0dc8f3a0bcd016e358f42",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Assert independent requested startup flags and real initialized donor pool before mutating flags; retain all4 internal policy scenarios and original gate/overflow checks"
+      ],
+      "adapted_sha256": "b486701e0a05151a90fcdffc5adb9473d22217c4120a5f4529152c5d9d8caff7"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
+      "original_sha256": "f2bfbf1470aca465d943b8baff60f40bc8560bdde3ba7452a2f5a9f09fdd6036",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "4ac7b3864d7923c35cd29153dc9ce71169a4540c349f000a20ae238bbc903632"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
+      "original_sha256": "1d22a6f2f81ff165cb66f0fb7ecb5ca7a8efb7c4d8531e67f887c00ee540253f",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "0425757bf65b1b666930735a84c6a1e6f3a048568d4c82ed92e2d525b2e8bd28"
+    },
+    {
+      "destination": "modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
+      "source": "baseline/modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
+      "original_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb",
+      "changes": [],
+      "adapted_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb"
+    },
+    {
+      "destination": "modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
+      "source": "baseline/modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
+      "original_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f",
+      "changes": [],
+      "adapted_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f"
+    },
+    {
+      "destination": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
+      "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
+      "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
+      "changes": [],
+      "adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
+    },
+    {
+      "destination": "modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
+      "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
+      "original_sha256": "405cf2012545859381757fe3f930a622cef0d06223ff92f17cbb30f68b12ca58",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Character phase has full native signature; pass latejoin by name to retain original respawn-policy scenarios",
+        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph"
+      ],
+      "adapted_sha256": "ee60d2b2159070348dd359fc8b8286ca3f9249c32348b14b346e489892ff35c3"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
+      "original_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e",
+      "changes": [],
+      "adapted_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/admission.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/admission.dm",
+      "original_sha256": "8f60ce3eb11617ab0256a42b0b5022d38f5ab2bcf022edb6b5b638e34139dec4",
+      "changes": [
+        "Carry prior runner adapter into reviewed fixture bytes: native fake lobby key for priority lifetime ban lookup"
+      ],
+      "adapted_sha256": "cdbf7876e859203679246d5527f6c2f81efc50dbc9e38fc5fabfec368ecc97b0"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/fixtures.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/fixtures.dm",
+      "original_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1",
+      "changes": [],
+      "adapted_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/handover.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/handover.dm",
+      "original_sha256": "36bd02199c12eb3a91047dbb13c0dca9585ccdcbd87899801ceb1fa662a587ee",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
+      ],
+      "adapted_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/handover.dm",
+          "previous_sha256": "c50292c2482dad975289f0f18ae41e1a9cf6d99f52c12c17dc042e1a333e606f",
+          "corrected_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+          "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/latejoin_context.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/latejoin_context.dm",
+      "original_sha256": "ab50b9c8d07c703df96fa77fd739d0834490ab7a89f5d5755b8665065437b277",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "0be26a2e7e5c258e52e00f7aa405299790611a65a2f89d0bd86130afb273cf93"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/prisoner_record.dm",
+      "source": "baseline/modular_bandastation/jobs/code/tests/prisoner_record.dm",
+      "original_sha256": "cdf53f49e2b34735da3d3124869f9fc05d04df7db63bf615dfae67ef905dda53",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "f80fd9d58f8704eb0a1d186af2520e592681c32ca7faa1a33b0ee3c18d0f2f08"
+    },
+    {
+      "destination": "modular_bandastation/objects/code/tests/pda.dm",
+      "source": "baseline/modular_bandastation/objects/code/tests/pda.dm",
+      "original_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33",
+      "changes": [],
+      "adapted_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33"
+    },
+    {
+      "destination": "tools/build/juke/exec.test.js",
+      "source": "baseline/tools/build/juke/exec.test.js",
+      "original_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
+      "changes": [],
+      "adapted_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c"
+    },
+    {
+      "destination": "tools/migrate_job_slots/tests/test_migrate.py",
+      "source": "baseline/tools/migrate_job_slots/tests/test_migrate.py",
+      "original_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7",
+      "changes": [],
+      "adapted_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7"
+    },
+    {
+      "destination": "tools/migrate_job_slots/tests/test_readiness.py",
+      "source": "baseline/tools/migrate_job_slots/tests/test_readiness.py",
+      "original_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320",
+      "changes": [],
+      "adapted_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+      "source": "task_state/20261016-pr11-core-minimum/REGRESSIONS.dm",
+      "original_sha256": "64d6a02fa8e95ad0fd455cf6e08c33fbf0e41ec57d16c0f3d25c99fecc101115",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Replace entry_latejoin_dispatch + removed finish continuation fixture with current contract_public_latejoin native public route fixture",
+        "Replace entry_specialized_body_admission/private body factory fixture with current contract_public_create_character public native route fixture",
+        "Replace entry_ui_dispatch/private UI continuation test with current contract_cleanup_latejoin_authorization, offline route assertion and shared-dispatch source contract",
+        "Replace old continuation-count authorization fixture with current contract_cleanup_latejoin_authorization signal/status/blocked-all-actions assertions",
+        "Legacy action contract now proves deletion/forged dispatch rejection instead of calling removed FALSE stub; same canonical mapping/DTO nonmutation checks",
+        "Storage boundary keeps hostile persisted legacy input and canonical-only load/save assertions; removed field no longer allocated or mutated",
+        "Fix a missed typepath before closing-list-bracket boundary in registry lookup; the allocated class/assertions remain unchanged.",
+        "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+      ],
+      "adapted_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+          "previous_sha256": "9e70ac58ea929eb0bf9e930a8f3580a769c4d164211074c0a5121b1bd0a2938b",
+          "corrected_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+          "reason": "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/core-minimum_regression_late_helpers.dm",
+      "source": "task_state/20261016-pr11-core-minimum/REGRESSION_LATE_HELPERS.dm",
+      "original_sha256": "67d3dc3c59a30cfb2046f9fc9eb0cc92bbf51655d4d24f13e6d2eee93b51ad8a",
+      "changes": [],
+      "adapted_sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
+      "source": "task_state/20261016-pr11-publish-reaudit/AUDIT_REGRESSIONS.dm",
+      "original_sha256": "66912a74547e04634082d7c594af63444e99ffe773020b5c57d2976b3bb1cfab",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "1959ef423608dddf325fc137eca068cb03f0187d7b24be9272fe722e53524f07"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/readability_entry_regressions.dm",
+      "source": "task_state/20261016-pr11-readability/ENTRY_REGRESSIONS.dm",
+      "original_sha256": "dd204930d677ef17b742fa7fffb03d4122deb5bd2917fd5c74ebc3fa00d9d72b",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/readability_jobs_regressions.dm",
+      "source": "task_state/20261016-pr11-readability/JOBS_REGRESSIONS.dm",
+      "original_sha256": "5477980c536c4d7fdf2ae21434f020f7ca014ee45982d0efcb4aad80f0b14e1a",
+      "changes": [
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+      ],
+      "adapted_sha256": "8de4f9d38c9ba60712f2e6b5980119f8464ec08fd0a3f3c5b7c94987ed940a62"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/ENTRY_REGRESSIONS.dm",
+      "original_sha256": "ad585ca4c7d9e7eb4a31fd120b0548fc7a3b9140418ceb04157e10048b4d182f",
+      "changes": [
+        "Use the actual native Medical Doctor datum type for the later Dynamic writer; preserve both rollback assertions unchanged.",
+        "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
+      ],
+      "adapted_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+      "corrected_local_source_sha256": "a8411f1312ff389ade9cb24404aafa24de93f4e05741e33cf5d0f9e0790f4742",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+          "previous_sha256": "c3450400a377c5d1ffcb00d3219dc124d3ad42ee1756bb525062bec8df123ad2",
+          "corrected_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+          "reason": "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/JOBS_REGRESSIONS.dm",
+      "original_sha256": "e357a64d23f408ffe1ee4b997ad1f63e341b6f6ba39abdc293b13dcace17534c",
+      "changes": [
+        "Fixture teardown uses native delete_photos for associative photo entries, matching existing Prisoner fixtures; native BASE Destroy QDEL_LAZYLIST on photo keys is pre-existing. Photo creation and all lifecycle assertions retained."
+      ],
+      "adapted_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+          "previous_sha256": "e357a64d23f408ffe1ee4b997ad1f63e341b6f6ba39abdc293b13dcace17534c",
+          "corrected_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
+          "reason": "Fixture teardown uses native delete_photos for associative photo entries, matching existing Prisoner fixtures; native BASE Destroy QDEL_LAZYLIST on photo keys is pre-existing. Photo creation and all lifecycle assertions retained."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_regressions_prefs.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/REGRESSIONS_PREFS.dm",
+      "original_sha256": "b2ba030387e52abe60e7cfdb1a86e7ac37907f84b7d51c4b46d966759f0d55d7",
+      "changes": [
+        "Keep direct real selected-profile offline guard coverage without overriding a deleted continuation or bypassing native client authorization",
+        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph"
+      ],
+      "adapted_sha256": "13f5896d1cc64af1b2b46266c5a03b27fee57cdca2e0e96842371380a30d6dd4"
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+      "source": "new replay fixture from VARIANT_MIGRATION.json",
+      "original_sha256": null,
+      "changes": [
+        "Three independent legacy-ID expected outputs plus immutable-input/idempotence/unknown preservation/cross-job scoping; root fixture separately verifies all129 IDs and save roundtrip",
+        "Correct only fixture canonical title to the actual unchanged original/current VIP Corporate Guest; expected vip_guest and all migration assertions retained."
+      ],
+      "adapted_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
+      "fixture_runtime_corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+          "previous_sha256": "0ccdda9aba7a33eeee72181c14c686c2936ff8d6422a598ab402e4a217d0e3e3",
+          "corrected_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
+          "reason": "Correct only fixture canonical title to the actual unchanged original/current VIP Corporate Guest; expected vip_guest and all migration assertions retained."
+        }
+      ]
+    },
+    {
+      "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_variant_regressions.dm",
+      "source": "task_state/20261016-pr11-contract-cleanup/VARIANT_REGRESSIONS.dm",
+      "original_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52",
+      "changes": [],
+      "adapted_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52"
+    }
+  ],
+  "support_adaptations": [
+    {
+      "path": "source_invariants.py",
+      "source": "task_state/20261016-pr11-contract-cleanup/source_invariants.py",
+      "changes": [
+        "Portable default checkout is cwd; explicit --repo, --migration and --old-ref remain supported. No invariant changed."
+      ]
+    },
+    {
+      "path": "run.py",
+      "source": "baseline/run.py",
+      "changes": [
+        "Portable settings-relative dependency paths; explicit isolated artifacts; no local.json or machine paths.",
+        "Reviewed tracked/untracked source bytes captured exactly; source integrity checked in finally.",
+        "Four independent flag modes 00/01/10/11 and expected startup markers; baseline policy assertions retained.",
+        "Late module-constant helpers and all unique tests focused only in TEMP; removed private continuation fixtures replaced by real public operations.",
+        "Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import."
+      ]
+    }
+  ],
+  "seal_history": [
+    {
+      "previous_manifest_sha256": "0431d5ac83a3ec9bf27138b681d7948c4de4bfa506f795ca7a2ab097707f05c7",
+      "reason": "First external overlay compile found exactly three undefined fixture input references, while product production/native compilation passed. Correct only those references; no assertions removed or relaxed. Root reruns DM only; prior phase evidence remains tied to identical product bytes."
+    },
+    {
+      "previous_manifest_sha256": "48a548a2e7ff5929e234d24d16d4e7c16839520412956f501bd5d0ef5677e64f",
+      "reason": "First DM00 runtime found four fixture contract/input failures plus native pre-existing photo teardown runtime; correct only external fixtures. Parent reruns DM phase against the same frozen product. No assertions removed; prior Python/Bun/browser/production/native evidence remains bound to unchanged payloads.",
+      "corrections": [
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+          "previous_sha256": "c3450400a377c5d1ffcb00d3219dc124d3ad42ee1756bb525062bec8df123ad2",
+          "corrected_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+          "reason": "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
+        },
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+          "previous_sha256": "9e70ac58ea929eb0bf9e930a8f3580a769c4d164211074c0a5121b1bd0a2938b",
+          "corrected_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+          "reason": "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+        },
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+          "previous_sha256": "0ccdda9aba7a33eeee72181c14c686c2936ff8d6422a598ab402e4a217d0e3e3",
+          "corrected_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
+          "reason": "Correct only fixture canonical title to the actual unchanged original/current VIP Corporate Guest; expected vip_guest and all migration assertions retained."
+        },
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+          "previous_sha256": "e357a64d23f408ffe1ee4b997ad1f63e341b6f6ba39abdc293b13dcace17534c",
+          "corrected_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
+          "reason": "Fixture teardown uses native delete_photos for associative photo entries, matching existing Prisoner fixtures; native BASE Destroy QDEL_LAZYLIST on photo keys is pre-existing. Photo creation and all lifecycle assertions retained."
+        },
+        {
+          "path": "modular_bandastation/jobs/code/tests/handover.dm",
+          "previous_sha256": "c50292c2482dad975289f0f18ae41e1a9cf6d99f52c12c17dc042e1a333e606f",
+          "corrected_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+          "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
+        }
+      ]
+    }
+  ]
+}
