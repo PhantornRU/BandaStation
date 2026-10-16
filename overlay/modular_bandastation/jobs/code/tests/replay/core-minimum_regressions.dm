@@ -96,20 +96,27 @@
 	release_job_player_fixtures()
 	return ..()
 
-/// The canonical protocol has no legacy callable/delegation/variable or DTO field.
+/// Preserve native declarations while only the canonical protocol can mutate assignments.
 /datum/unit_test/native_job_profile_legacy_action/Run()
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	var/datum/preferences/preferences = allocate(/datum/preferences, player)
 	player.prefs = preferences
 	var/datum/preference_middleware/jobs/jobs = locate(/datum/preference_middleware/jobs) in preferences.middleware
 	TEST_ASSERT_NOTNULL(jobs, "Native preferences did not discover jobs middleware")
-	TEST_ASSERT_NULL(jobs.action_delegations["set_job_to_profile"], "A removed legacy action remains delegated")
-	TEST_ASSERT(!hascall(jobs, "set_job_to_profile"), "The removed legacy handler survives as a callable stub")
-	TEST_ASSERT(!("job_assigned_profiles" in preferences.vars), "The removed legacy runtime variable survives")
+	TEST_ASSERT_NULL(jobs.action_delegations["set_job_to_profile"], "A disabled legacy action remains delegated")
+	TEST_ASSERT(hascall(jobs, "set_job_to_profile"), "The restored native handler definition is missing")
+	TEST_ASSERT("job_assigned_profiles" in preferences.vars, "The restored native field declaration is missing")
+	TEST_ASSERT_EQUAL(length(preferences.job_assigned_profiles), 0, "The compatibility field contains active assignments")
 	var/datum/job/job = SSjob.get_job_type(/datum/job/assistant)
 	preferences.job_preferences = list(job.title = JP_MEDIUM)
 	preferences.pref_job_slots = list(job.title = 2, "Canonical profile only" = 999)
+	TEST_ASSERT(preferences.job_assigned_profiles != preferences.pref_job_slots, "Legacy and canonical assignment maps alias")
 	var/canonical_before = json_encode(preferences.pref_job_slots)
+	var/legacy_before = json_encode(preferences.job_assigned_profiles)
+	for(var/profile_value in list(1, 0, -1, "forged"))
+		TEST_ASSERT(!jobs.set_job_to_profile(list("job" = job.title, "profile" = profile_value), null), "A direct legacy call revived the disabled protocol")
+		TEST_ASSERT_EQUAL(json_encode(preferences.pref_job_slots), canonical_before, "A direct legacy call changed canonical assignments")
+		TEST_ASSERT_EQUAL(json_encode(preferences.job_assigned_profiles), legacy_before, "A direct legacy call changed compatibility state")
 	// Exercise the real dispatcher after native UI authorization, not datum/ui_act with no UI.
 	var/mob/dead/new_player/owner = allocate(/mob/dead/new_player)
 	owner.mock_client = player
@@ -118,6 +125,7 @@
 	action_ui.status = UI_INTERACTIVE
 	TEST_ASSERT(!preferences.ui_act("set_job_to_profile", list("job" = job.title, "profile" = 1), action_ui, GLOB.always_state), "Forged legacy input was handled")
 	TEST_ASSERT_EQUAL(json_encode(preferences.pref_job_slots), canonical_before, "Forged legacy input changed canonical assignments")
+	TEST_ASSERT_EQUAL(json_encode(preferences.job_assigned_profiles), legacy_before, "Forged legacy input changed compatibility state")
 	var/list/data = jobs.get_ui_data(null)
 	var/list/priorities = data["job_preferences"]
 	TEST_ASSERT_EQUAL(length(priorities), 1, "An assignment-only row entered priorities")
@@ -127,9 +135,21 @@
 	TEST_ASSERT_EQUAL(row["priority"], JP_MEDIUM, "Native priority changed")
 	TEST_ASSERT(!("assigned_profile_slot" in row), "A legacy assignment field reached UI")
 	TEST_ASSERT_EQUAL(json_encode(preferences.pref_job_slots), canonical_before, "UI serialization changed canonical assignments")
+	TEST_ASSERT_EQUAL(json_encode(preferences.job_assigned_profiles), legacy_before, "UI serialization changed compatibility state")
 
 /datum/unit_test/native_job_profile_legacy_action/Destroy()
 	release_job_player_fixtures()
+	return ..()
+
+/// Observe the real native flush without replacing load/save or its data construction.
+/datum/json_savefile/core_minimum_job_profile_storage
+	var/flushes = 0
+	var/flushed_legacy_key = FALSE
+
+/datum/json_savefile/core_minimum_job_profile_storage/save()
+	flushes++
+	if("job_assigned_profiles" in get_entry())
+		flushed_legacy_key = TRUE
 	return ..()
 
 /// Both native phase hooks must use only the canonical format, including keybinding-triggered saves.
@@ -140,24 +160,42 @@
 	preferences.load_and_save = FALSE
 	preferences.path = null
 	QDEL_NULL(preferences.savefile)
-	preferences.savefile = allocate(/datum/json_savefile)
+	var/datum/json_savefile/core_minimum_job_profile_storage/storage = allocate(/datum/json_savefile/core_minimum_job_profile_storage)
+	preferences.savefile = storage
 	preferences.max_save_slots = 3
 	preferences.default_slot = 1
 	TEST_ASSERT(preferences.save_preferences(), "Could not initialize native preference metadata")
 	var/list/character = list("real_name" = "Preserved Character", "age" = 44)
 	preferences.savefile.set_entry("character2", character)
 	preferences.savefile.set_entry("unrelated_setting", "keep")
-	var/list/canonical = list("Assistant" = -1, "Temporarily unavailable job" = 999)
+	var/list/canonical = list("Assistant" = -1, JOB_CARGO_TECHNICIAN = 0, "Temporarily unavailable job" = 999)
+	var/canonical_before = json_encode(canonical)
 	preferences.savefile.set_entry("pref_job_slots", canonical)
-	preferences.savefile.set_entry("job_assigned_profiles", list("Assistant" = 3, "Legacy only" = 2))
+	preferences.savefile.set_entry("job_assigned_profiles", list("Assistant" = 3, JOB_CARGO_TECHNICIAN = 2, "Legacy only" = 2))
+	storage.flushes = 0
 	TEST_ASSERT(preferences.load_preferences(), "The native preference loader failed")
-	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 2, "The native loader merged legacy assignments")
+	TEST_ASSERT_EQUAL(storage.flushes, 1, "Keybinding-triggered preference saving did not use one native flush")
+	TEST_ASSERT(!storage.flushed_legacy_key, "The nested native save flushed a legacy key before adaptation")
+	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 2, "The native loader merged legacy assignments or retained a redundant current marker")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Assistant"], -1, "Legacy storage overrode canonical randomization")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Temporarily unavailable job"], 999, "Native legacy sanitation erased an unavailable canonical assignment")
-	TEST_ASSERT(!("job_assigned_profiles" in preferences.vars), "The legacy runtime variable was reintroduced")
+	TEST_ASSERT("job_assigned_profiles" in preferences.vars, "The native compatibility declaration was removed")
+	TEST_ASSERT_EQUAL(length(preferences.job_assigned_profiles), 0, "Native loading activated the legacy assignment field")
+	TEST_ASSERT(preferences.job_assigned_profiles != preferences.pref_job_slots, "Native sanitation received a canonical map alias")
+	TEST_ASSERT(preferences.pref_job_slots != canonical, "Canonical runtime assignments alias the loaded source map")
+	TEST_ASSERT_EQUAL(json_encode(canonical), canonical_before, "Native sanitation mutated the canonical input map")
+	TEST_ASSERT(!(JOB_CARGO_TECHNICIAN in preferences.pref_job_slots), "Explicit current was replaced with a legacy positive assignment")
+	var/datum/job/current_job = SSjob.get_job_type(/datum/job/cargo_technician)
+	var/datum/job_character_selection/current_selection = preferences.select_job_character(current_job)
+	TEST_ASSERT_EQUAL(current_selection.slot, preferences.default_slot, "An explicit canonical current selection no longer uses the active profile")
+	TEST_ASSERT(!current_selection.randomized, "An explicit current selection became random")
+	qdel(current_selection)
 	TEST_ASSERT(!("job_assigned_profiles" in preferences.savefile.get_entry()), "A keybinding-triggered save retained the legacy root key")
 	TEST_ASSERT_EQUAL(preferences.savefile.get_entry("pref_job_slots")["Temporarily unavailable job"], 999, "Native sanitation mutated the saved canonical map")
+	var/flushes_before = storage.flushes
 	TEST_ASSERT(preferences.save_preferences(), "The native preference saver failed")
+	TEST_ASSERT_EQUAL(storage.flushes, flushes_before + 1, "The native saver flushed more than once")
+	TEST_ASSERT(!storage.flushed_legacy_key, "The native saver flushed a transient legacy format")
 	TEST_ASSERT(!("job_assigned_profiles" in preferences.savefile.get_entry()), "The native saver wrote the legacy format")
 	TEST_ASSERT_EQUAL(preferences.savefile.get_entry("pref_job_slots")["Assistant"], -1, "Saving used dormant native assignments")
 	preferences.savefile.remove_entry("pref_job_slots")
@@ -165,6 +203,7 @@
 	preferences.pref_job_slots = list("Previously loaded" = 2)
 	TEST_ASSERT(preferences.load_preferences(), "The native loader rejected an absent canonical map")
 	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 0, "An absent canonical map used legacy or in-memory fallback")
+	TEST_ASSERT_EQUAL(length(preferences.job_assigned_profiles), 0, "An absent canonical map activated legacy runtime assignments")
 	TEST_ASSERT(!("job_assigned_profiles" in preferences.savefile.get_entry()), "Saving an absent canonical map retained the legacy format")
 	TEST_ASSERT_EQUAL(json_encode(preferences.savefile.get_entry("character2")), json_encode(character), "Preference IO changed a saved character")
 	TEST_ASSERT_EQUAL(preferences.savefile.get_entry("unrelated_setting"), "keep", "Preference IO changed an unrelated setting")
@@ -327,7 +366,9 @@
 
 /datum/unit_test/job_character_greeting_entrypoint/Run()
 	var/datum/job/ordinary = allocate(/datum/job/assistant)
-	TEST_ASSERT_EQUAL(ordinary.get_spawn_message(null), ordinary.get_spawn_message(), "The alternate greeting changed an ordinary native job")
+	var/native_message = ordinary.get_spawn_message()
+	TEST_ASSERT_EQUAL(length(ordinary.get_additional_spawn_information(null)), 0, "An ordinary native job received extra module instructions")
+	TEST_ASSERT_EQUAL(ordinary.get_spawn_message(), native_message, "Additional instructions changed an ordinary native greeting")
 	// Actor variant resolution and spawn context do not depend on startup donor admission flags.
 	var/datum/job/donor/actor/job = allocate(/datum/job/donor/actor)
 	var/datum/client_interface/player = allocate(/datum/client_interface)
@@ -336,7 +377,7 @@
 	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/job_outfit_variants], list("Actor" = "painter")), "Could not select the painter variant")
 	job.prepare_spawn_character(body, player.prefs)
 	TEST_ASSERT(player.prefs.write_preference(GLOB.preference_entries[/datum/preference/job_outfit_variants], list("Actor" = "default")), "Could not change the subsequently active variant")
-	var/message = job.get_spawn_message(body)
+	var/message = jointext(job.get_additional_spawn_information(body), "\n")
 	TEST_ASSERT(findtext(message, job.variant_information[/datum/outfit/job/donor/actor/painter]), "The greeting did not receive the body's committed painter context")
 	TEST_ASSERT(!findtext(message, job.important_information), "The greeting used the subsequently active variant instead of the created body")
 
@@ -369,7 +410,7 @@
 		requester.prefs.job_preferences -= possible_job.title
 	return eligibility_result
 
-/datum/controller/subsystem/job/random_preference_boundary_test/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE, is_debug_dummy = FALSE)
+/datum/controller/subsystem/job/random_preference_boundary_test/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE)
 	assignment_calls++
 	return TRUE
 
@@ -437,48 +478,80 @@
 		lobby.mind.set_current(lobby)
 		lobby.mind.active = FALSE
 		lobby.mind.set_assigned_role(SSjob.get_job_type(/datum/job/cargo_technician))
+		var/datum/mind/created_mind = lobby.mind
 		lobby.mind.transfer_to(body)
 		lobby.new_character = body
 		lobby.assigned_character = allocate(/datum/job_character_selection)
 		lobby.assigned_character.slot = 2
+		lobby.assigned_character.job_type = created_mind.assigned_role.type
+		lobby.assigned_character.created_body = body
+		lobby.assigned_character.created_mind = created_mind
+		// Headless: supply the result of native creation, which now owns the history append.
+		connection.joined_as_slots = list("2", "1", "2")
+		var/prior_history = json_encode(connection.joined_as_slots)
+		LAZYADD(connection.joined_as_slots, "2")
+		lobby.assigned_character.history_connection = connection
+		lobby.assigned_character.history_index = length(connection.joined_as_slots)
 		connection.set_client(null)
 		TEST_ASSERT_NULL(connection.client, "The handover fixture did not disconnect its player")
-		TEST_ASSERT_NULL(connection.joined_as_slots, "Construction wrote history before handover")
+		TEST_ASSERT_EQUAL(length(connection.joined_as_slots), 4, "The native creation receipt did not retain prior history")
 		TEST_ASSERT_EQUAL(lobby.transfer_character(), body, "The real native handover did not return its prepared body")
-		TEST_ASSERT(QDELETED(lobby), "History was not committed after native lobby destruction")
+		TEST_ASSERT(QDELETED(lobby), "The native handover did not destroy the lobby")
 		TEST_ASSERT_NULL(lobby.transfer_character(), "A repeated handover returned an already transferred character")
-		TEST_ASSERT_EQUAL(length(connection.joined_as_slots), 1, "A repeated handover committed history twice")
-		TEST_ASSERT_EQUAL(connection.joined_as_slots[1], "2", "History did not use the committed character slot")
+		TEST_ASSERT_EQUAL(length(connection.joined_as_slots), 4, "A repeated handover committed history twice")
+		TEST_ASSERT_EQUAL(json_encode(connection.joined_as_slots.Copy(1, 4)), prior_history, "Handover changed earlier profile visits")
+		TEST_ASSERT_EQUAL(connection.joined_as_slots[4], "2", "History did not use the committed character slot")
 		body.key = null
 		var/mob/dead/new_player/cancelled_lobby = allocate(/mob/dead/new_player)
 		connection.set_mob(cancelled_lobby)
+		var/datum/job/job = SSjob.get_job_type(/datum/job/cargo_technician)
+		var/positions_before = job.current_positions
+		cancelled_lobby.mind = allocate(/datum/mind)
+		cancelled_lobby.mind.set_current(cancelled_lobby)
+		cancelled_lobby.mind.active = FALSE
+		cancelled_lobby.mind.set_assigned_role(job)
+		var/datum/mind/cancelled_mind = cancelled_lobby.mind
 		cancelled_lobby.assigned_character = allocate(/datum/job_character_selection)
 		cancelled_lobby.assigned_character.slot = 3
+		cancelled_lobby.assigned_character.job_type = job.type
 		cancelled_lobby.new_character = allocate(/mob/living/carbon/human/consistent)
-		cancelled_lobby.cancel_character_spawn()
+		cancelled_mind.transfer_to(cancelled_lobby.new_character)
+		cancelled_lobby.assigned_character.created_body = cancelled_lobby.new_character
+		cancelled_lobby.assigned_character.created_mind = cancelled_mind
+		var/completed_history = json_encode(connection.joined_as_slots)
+		LAZYADD(connection.joined_as_slots, "3")
+		cancelled_lobby.assigned_character.history_connection = connection
+		cancelled_lobby.assigned_character.history_index = length(connection.joined_as_slots)
+		job.current_positions++
+		TEST_ASSERT(cancelled_lobby.cancel_character_spawn(), "Owned native construction could not be cancelled")
 		TEST_ASSERT_NULL(cancelled_lobby.new_character, "Rollback retained a character pending handover")
+		TEST_ASSERT_EQUAL(cancelled_lobby.mind, cancelled_mind, "Rollback lost the captured mind")
+		TEST_ASSERT_EQUAL(cancelled_mind.current, cancelled_lobby, "Rollback left the mind in a discarded body")
+		TEST_ASSERT_EQUAL(job.current_positions, positions_before, "Rollback did not release precisely its vacancy")
+		TEST_ASSERT_EQUAL(json_encode(connection.joined_as_slots), completed_history, "Rollback removed a prior or completed history entry")
+		TEST_ASSERT(!cancelled_lobby.cancel_character_spawn(), "Repeated rollback still owned a cancelled assignment")
 		TEST_ASSERT_NULL(cancelled_lobby.transfer_character(), "Rollback still allowed a character handover")
-		TEST_ASSERT_EQUAL(length(connection.joined_as_slots), 1, "Rollback wrote another history entry")
+		TEST_ASSERT_EQUAL(json_encode(connection.joined_as_slots), completed_history, "Repeated rollback changed history")
 
 /datum/unit_test/entry_history_handover_once/Destroy()
 	release_job_player_fixtures()
 	return ..()
 
+/// Observe the native default read/update; do not replace its dispatcher, picker or operation.
 /datum/preferences/core_minimum_color_fixture
-	var/color_calls = 0
-	var/color_result = TRUE
-	var/list/color_params
-	var/datum/tgui/color_ui
+	var/color_reads = 0
+	var/color_updates = 0
+	var/last_color_preference
 
-/datum/preferences/core_minimum_color_fixture/set_character_color(list/params, datum/tgui/ui)
-	color_calls++
-	color_params = params
-	color_ui = ui
-	return color_result
+/datum/preferences/core_minimum_color_fixture/read_preference(preference_type)
+	. = ..()
+	if(preference_type == /datum/preference/color/hair_color)
+		color_reads++
+		last_color_preference = preference_type
 
-/datum/preferences/core_minimum_color_fixture/Destroy()
-	color_params = null
-	color_ui = null
+/datum/preferences/core_minimum_color_fixture/update_preference(datum/preference/preference, preference_value)
+	if(istype(preference, /datum/preference/color))
+		color_updates++
 	return ..()
 
 /// Native preferences construction discovers this middleware exactly like product middleware.
@@ -517,32 +590,40 @@
 	var/datum/preference_middleware/core_minimum_color_probe/probe = locate(/datum/preference_middleware/core_minimum_color_probe) in preferences.middleware
 	TEST_ASSERT_NOTNULL(probe, "The real preferences constructor did not register the action probe")
 	RegisterSignal(preferences, COMSIG_UI_ACT, PROC_REF(observe_action))
-	var/list/params = list("preference" = "not_a_registered_preference")
+	var/datum/preference/color/color_preference = GLOB.preference_entries_by_key["hair_color"]
+	TEST_ASSERT_EQUAL(color_preference.type, /datum/preference/color/hair_color, "The native color fixture selected another preference")
+	var/color_before = preferences.read_preference(color_preference.type)
+	preferences.color_reads = 0
+	preferences.color_updates = 0
+	var/list/params = list("preference" = color_preference.savefile_key)
 
+	// Native tgui_color_picker receives usr=null in headless tests and cancels without opening a modal.
+	// Positive connected modal completion is not covered; the operation itself stays native.
+	TEST_ASSERT_NULL(usr, "This noninteractive native picker fixture requires a headless caller")
 	ui.status = UI_INTERACTIVE
-	TEST_ASSERT(preferences.ui_act("set_color_preference", params, ui, ui.state), "Interactive color input did not reach the modular helper")
+	TEST_ASSERT(!preferences.ui_act("set_color_preference", params, ui, ui.state), "A cancelled native picker did not return FALSE")
 	TEST_ASSERT_EQUAL(signals_received, 1, "Interactive color input did not emit exactly one native signal")
 	TEST_ASSERT_EQUAL(last_action, "set_color_preference", "The native signal received a renamed color action")
-	TEST_ASSERT_EQUAL(preferences.color_calls, 1, "Interactive color input did not call the helper exactly once")
-	TEST_ASSERT_EQUAL(preferences.color_params, params, "Color dispatch changed the payload")
-	TEST_ASSERT_EQUAL(preferences.color_ui, ui, "Color dispatch lost the originating UI")
+	TEST_ASSERT_EQUAL(preferences.color_reads, 1, "Interactive color input did not enter the native color branch exactly once")
+	TEST_ASSERT_EQUAL(preferences.last_color_preference, color_preference.type, "Native color lookup lost the requested preference")
+	TEST_ASSERT_EQUAL(preferences.color_updates, 0, "A cancelled native picker updated preferences")
 	TEST_ASSERT_EQUAL(probe.calls, 0, "Color input leaked into middleware delegation")
 
-	preferences.color_result = FALSE
-	TEST_ASSERT(!preferences.ui_act("set_color_preference", params, ui, ui.state), "Color dispatch lost the helper's FALSE result")
+	TEST_ASSERT(!preferences.ui_act("set_color_preference", params, ui, ui.state), "Repeated native picker cancellation lost its FALSE result")
 	TEST_ASSERT_EQUAL(signals_received, 2, "Rejected color input did not emit exactly one additional signal")
-	TEST_ASSERT_EQUAL(preferences.color_calls, 2, "Rejected color input did not call the helper exactly once")
+	TEST_ASSERT_EQUAL(preferences.color_reads, 2, "Repeated color input did not enter the native branch exactly once")
+	TEST_ASSERT_EQUAL(preferences.color_updates, 0, "Repeated picker cancellation wrote a color")
 
 	for(var/blocked_status in list(UI_CLOSE, UI_DISABLED, UI_UPDATE))
 		ui.status = blocked_status
 		var/signals_before = signals_received
 		TEST_ASSERT(preferences.ui_act("set_color_preference", params, ui, ui.state), "A blocked UI did not preserve the native handled result")
 		TEST_ASSERT_EQUAL(signals_received, signals_before + 1, "A blocked UI did not preserve one native signal")
-		TEST_ASSERT_EQUAL(preferences.color_calls, 2, "A blocked UI entered the modal helper")
+		TEST_ASSERT_EQUAL(preferences.color_reads, 2, "A blocked UI entered the native color branch")
 	var/signals_before = signals_received
 	TEST_ASSERT(preferences.ui_act("set_color_preference", params, null, null), "A missing UI bypassed native authorization")
 	TEST_ASSERT_EQUAL(signals_received, signals_before + 1, "A missing UI did not preserve one native signal")
-	TEST_ASSERT_EQUAL(preferences.color_calls, 2, "A missing UI entered the modal helper")
+	TEST_ASSERT_EQUAL(preferences.color_reads, 2, "A missing UI entered the native color branch")
 
 	ui.status = UI_INTERACTIVE
 	signals_before = signals_received
@@ -551,19 +632,31 @@
 	TEST_ASSERT_EQUAL(last_action, "core_minimum_parent_probe", "An unrelated action was changed before the native signal")
 	TEST_ASSERT_EQUAL(probe.calls, 1, "An unrelated action was not delegated exactly once")
 	TEST_ASSERT_EQUAL(probe.received_params, params, "Native delegation changed an unrelated payload")
-	TEST_ASSERT_EQUAL(preferences.color_calls, 2, "An unrelated action entered the modal helper")
+	TEST_ASSERT_EQUAL(preferences.color_reads, 2, "An unrelated action entered the native color branch")
 
 	signals_before = signals_received
 	TEST_ASSERT(!preferences.ui_act("core_minimum_unknown_action", params, ui, ui.state), "An unknown action lost the native FALSE result")
 	TEST_ASSERT_EQUAL(signals_received, signals_before + 1, "An unknown action did not call its native parent exactly once")
 	TEST_ASSERT_EQUAL(probe.calls, 1, "An unknown action reached unrelated middleware delegation")
-	TEST_ASSERT_EQUAL(preferences.color_calls, 2, "An unknown action entered the modal helper")
+	TEST_ASSERT_EQUAL(preferences.color_reads, 2, "An unknown action entered the native color branch")
 
 	ui.status = UI_UPDATE
 	signals_before = signals_received
 	TEST_ASSERT(preferences.ui_act("core_minimum_parent_probe", params, ui, ui.state), "A blocked unrelated action lost native authorization")
 	TEST_ASSERT_EQUAL(signals_received, signals_before + 1, "A blocked unrelated action did not preserve one native signal")
 	TEST_ASSERT_EQUAL(probe.calls, 1, "A blocked unrelated action reached middleware delegation")
+
+	// These are genuine negative guard cases, not a simulated connected client.
+	TEST_ASSERT(!preferences.is_color_preference_context_current(color_preference, preferences.default_slot, null), "A missing UI passed the post-wait color guard")
+	TEST_ASSERT(!preferences.is_color_preference_context_current(color_preference, preferences.default_slot, ui), "A disabled UI passed the post-wait color guard")
+	ui.status = UI_INTERACTIVE
+	TEST_ASSERT(!preferences.is_color_preference_context_current(color_preference, preferences.default_slot, ui), "A headless owner passed the connected-client post-wait guard")
+	var/original_slot = preferences.default_slot
+	preferences.default_slot = original_slot + 1
+	TEST_ASSERT(!preferences.is_color_preference_context_current(color_preference, original_slot, ui), "A stale headless character context passed the post-wait guard")
+	preferences.default_slot = original_slot
+	TEST_ASSERT_EQUAL(preferences.color_updates, 0, "A rejected color context updated preferences")
+	TEST_ASSERT_EQUAL(preferences.read_preference(color_preference.type), color_before, "Cancelled or blocked color input changed its native value")
 
 /datum/unit_test/core_minimum_color_entrypoint/Destroy()
 	if(preferences)
@@ -584,6 +677,35 @@
 	TEST_ASSERT_EQUAL(get_job_unavailable_error_message(-12345, job_title), GENERIC_JOB_UNAVAILABLE_ERROR, "An unknown rejection lost the generic fallback")
 
 // External overlay only, after the pinned job-player and roundstart-cancellation fixtures.
+
+// The job only arms a pending cache; SSjob and retrieve_ban_cache perform the actual admission/wait.
+/datum/job/dynamic_candidate_wait_test
+	title = "External Dynamic wait fixture"
+	job_flags = NONE
+	spawn_positions = 1
+	var/eligibility_checks = 0
+	var/datum/callback/before_ban_lookup
+
+/datum/job/dynamic_candidate_wait_test/config_check()
+	return FALSE
+
+/datum/job/dynamic_candidate_wait_test/required_playtime_remaining(client/player)
+	. = ..()
+	eligibility_checks++
+	before_ban_lookup?.Invoke()
+
+/datum/job/dynamic_candidate_wait_test/retry
+	title = "External Dynamic retry fixture"
+
+/datum/unit_test/dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint
+	var/list/joinable_before
+	var/mob/dead/new_player/waiting_lobby
+	var/datum/client_interface/waiting_requester
+	var/datum/client_interface/replacement_requester
+	var/datum/job/dynamic_candidate_wait_test/waiting_job
+	var/wait_on_check
+	var/replacement_kind
+	var/lookup_completed = FALSE
 
 /datum/unit_test/dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint/Run()
 	allow_job_fixture_species(list(/datum/species/plasmaman))
@@ -607,25 +729,80 @@
 	TEST_ASSERT(preferences.write_preference(GLOB.preference_entries[/datum/preference/toggle/round_start_always_join_current_slot], FALSE), "Could not select the assigned host profile")
 	TEST_ASSERT(preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_PLASMAMAN), "Could not set the active bloodless profile")
 	preferences.savefile.set_entry("character2", list("real_name" = "Selected Human Host", "age" = 35, "species" = SPECIES_HUMAN))
-	TEST_ASSERT(ruleset.is_valid_candidate(player, requester), "The dormant native active-profile veto rejected an assigned human host")
+	TEST_ASSERT(ruleset.is_valid_candidate(player, requester), "The native trait check ignored the selected human host species")
 	TEST_ASSERT_EQUAL(preferences.default_slot, 1, "Candidate admission switched the active character")
 	TEST_ASSERT_EQUAL(preferences.read_preference(/datum/preference/choiced/species), /datum/species/plasmaman, "Candidate admission changed the active species")
 	var/datum/dynamic_ruleset/roundstart/traitor/other_ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor)
 	other_ruleset.selected_minds = list(player.mind)
 	SSdynamic.queued_rulesets = list(other_ruleset)
-	TEST_ASSERT(!ruleset.is_valid_candidate(player, requester), "Concrete ancestor dispatch skipped the native queued-candidate veto")
+	TEST_ASSERT(!ruleset.is_valid_candidate(player, requester), "The native queued-candidate veto was bypassed")
 	SSdynamic.queued_rulesets = list()
 	var/datum/mind/saved_mind = player.mind
 	player.mind = null
 	var/mindless_accepted = ruleset.is_valid_candidate(player, requester)
 	player.mind = saved_mind
-	TEST_ASSERT(!mindless_accepted, "Concrete ancestor dispatch skipped the native missing-mind veto")
+	TEST_ASSERT(!mindless_accepted, "The native missing-mind veto was bypassed")
 	preferences.job_preferences = list()
-	TEST_ASSERT(!ruleset.is_valid_candidate(player, requester), "Concrete ancestor dispatch skipped the modular roundstart crew-preference veto")
+	TEST_ASSERT(!ruleset.is_valid_candidate(player, requester), "The roundstart crew-preference veto was bypassed")
 	preferences.job_preferences = list(job.title = JP_HIGH)
 	TEST_ASSERT(preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_HUMAN), "Could not restore the active human profile")
 	preferences.savefile.set_entry("character2", list("real_name" = "Selected Bloodless Host", "age" = 35, "species" = SPECIES_PLASMAMAN))
 	TEST_ASSERT(!ruleset.is_valid_candidate(player, requester), "The active human profile bypassed the assigned bloodless-host veto")
+	joinable_before = SSjob.joinable_occupations
+	// Check both the general crew search and the second lookup supplying Blood Worm's species input.
+	for(var/check_number in list(1, 2))
+		for(var/kind in list("client", "mind"))
+			wait_on_check = check_number
+			replacement_kind = kind
+			lookup_completed = FALSE
+			waiting_job = allocate(/datum/job/dynamic_candidate_wait_test)
+			var/datum/job/dynamic_candidate_wait_test/retry/retry_job = allocate(/datum/job/dynamic_candidate_wait_test/retry)
+			SSjob.joinable_occupations = list(waiting_job, retry_job)
+			var/datum/dynamic_ruleset/roundstart/blood_worm/waiting_ruleset = allocate(/datum/dynamic_ruleset/roundstart/blood_worm)
+			waiting_ruleset.max_antag_cap = 1
+			waiting_lobby = make_player(waiting_ruleset.pref_flag, waiting_job)
+			waiting_requester = waiting_lobby.mock_client
+			waiting_requester.prefs.job_preferences[retry_job.title] = JP_HIGH
+			replacement_requester = allocate(/datum/client_interface/roundstart_selection_test)
+			replacement_requester.prefs = allocate(/datum/preferences, replacement_requester)
+			replacement_requester.ban_cache = list()
+			replacement_requester.prefs.job_preferences = waiting_requester.prefs.job_preferences.Copy()
+			replacement_requester.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_HUMAN)
+			TEST_ASSERT_EQUAL(GLOB.directory[waiting_lobby.ckey], waiting_requester, "The SQL-wait fixture has no registered ban-cache owner")
+			waiting_job.before_ban_lookup = new(src, PROC_REF(arm_candidate_ban_lookup))
+			TEST_ASSERT(!waiting_ruleset.prepare_execution(1, list(waiting_lobby)), "Native preparation accepted a replaced [kind] in profile lookup [check_number]")
+			TEST_ASSERT(lookup_completed, "The candidate fixture did not reach the real ban-cache wait")
+			TEST_ASSERT_EQUAL(waiting_job.eligibility_checks, check_number, "The fixture armed the wrong profile lookup")
+			TEST_ASSERT_EQUAL(retry_job.eligibility_checks, 0, "A replaced request continued with a different job")
+			TEST_ASSERT_EQUAL(length(waiting_ruleset.selected_minds), 0, "A rejected request acquired an antagonist assignment")
+			// Callbacks follow reference lifetime; their native Destroy explicitly forbids qdel.
+			waiting_job.before_ban_lookup = null
+			if(kind == "client")
+				TEST_ASSERT(!waiting_ruleset.is_valid_candidate(waiting_lobby, waiting_requester), "A stale candidate_client argument was accepted for a replacement client")
+
+/datum/unit_test/dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint/proc/arm_candidate_ban_lookup()
+	if(waiting_job.eligibility_checks != wait_on_check)
+		return
+	waiting_requester.ban_cache = null
+	waiting_requester.ban_cache_start = REALTIMEOFDAY + 1 MINUTES
+	addtimer(CALLBACK(src, PROC_REF(complete_candidate_ban_lookup)), 1)
+
+/datum/unit_test/dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint/proc/complete_candidate_ban_lookup()
+	if(replacement_kind == "client")
+		waiting_requester.mob = null
+		waiting_lobby.mock_client = replacement_requester
+		replacement_requester.mob = waiting_lobby
+	else
+		waiting_lobby.mind.set_current(null)
+		waiting_lobby.mind = allocate(/datum/mind)
+		waiting_lobby.mind.set_current(waiting_lobby)
+	waiting_requester.ban_cache = list()
+	lookup_completed = TRUE
+
+/datum/unit_test/dynamic_roundstart_cancellation/blood_worm_selected_profile_entrypoint/Destroy()
+	if(joinable_before)
+		SSjob.joinable_occupations = joinable_before
+	return ..()
 
 // This job stays outside the live registries and uses the real SSjob eligibility parent.
 /datum/job/eligibility_entrypoint_test
@@ -717,6 +894,8 @@
 	TEST_ASSERT(preferences.write_preference(GLOB.preference_entries[/datum/preference/toggle/round_start_always_join_current_slot], FALSE), "Could not restore the assigned profile")
 	replacement = allocate(/datum/client_interface)
 	replacement.prefs = allocate(/datum/preferences, replacement)
+	// The native age branch runs before the wrapper identity guard; keep this case eligible there.
+	TEST_ASSERT(replacement.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/age], 40), "Could not set the replacement requester's adult profile")
 	replacement.ban_cache = list()
 	// Exercise the real native ban-cache wait, simulating an in-flight DB request without a DB server.
 	requester.ban_cache = null

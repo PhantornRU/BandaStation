@@ -142,6 +142,7 @@
 	var/mob/dead/new_player/lobby = allocate(/mob/dead/new_player)
 	lobby.mock_client = player
 	player.mob = lobby
+	player.persistent_client.set_mob(lobby)
 	lobby.mind = allocate(/datum/mind)
 	lobby.mind.set_current(lobby)
 	player.persistent_client.joined_as_slots = list("2")
@@ -160,21 +161,22 @@
 	TEST_ASSERT(lobby.spawning, "A repeated request released the first attempt's guard")
 	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "A repeated request produced another localhost notification")
 	lobby.spawning = FALSE
-	// Use an invalid job to exercise actual preflight without creating a body or waiting for a shuttle.
+	// The native client?.is_localhost() branch needs a real BYOND client: NOT COVERED by this headless fixture.
+	// The eligibility assertions above exercise mock localhost policy; actual attempts below exercise clientless preflight.
+	// A separate source contract checks the native localhost branch and its respawn-mode guard against BASE.
+	TEST_ASSERT_NULL(lobby.client, "The headless notification assertions require an actual clientless lobby")
 	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid job spawned a character")
-	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 1, "An actual localhost attempt did not produce exactly one upstream admin log")
-	TEST_ASSERT(findtext(GLOB.admin_activities[length(GLOB.admin_activities)], "пропускает повторное присоединение"), "The attempt logged a different admin event")
-	// Upstream currently notifies every localhost attempt in this mode, even with an unused slot.
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "A clientless attempt treated mock localhost as a native client")
 	player.persistent_client.joined_as_slots = list()
 	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid job with an unused profile spawned")
-	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 2, "The unused-slot attempt changed upstream localhost notification policy")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "A clientless unused-slot attempt produced a localhost admin log")
 	player.localhost_connection = FALSE
-	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid remote attempt spawned")
-	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 2, "A remote attempt produced a localhost admin log")
+	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid headless attempt with remote mock policy spawned")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "A clientless attempt with remote mock policy produced a localhost admin log")
 	player.localhost_connection = TRUE
 	CONFIG_SET(flag/allow_respawn, RESPAWN_FLAG_FREE)
 	TEST_ASSERT(!lobby.AttemptLateSpawn("Not a canonical job"), "An invalid attempt in another respawn mode spawned")
-	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before + 2, "Another respawn mode produced a localhost exception log")
+	TEST_ASSERT_EQUAL(length(GLOB.admin_activities), logs_before, "Another respawn mode produced a localhost exception log")
 	TEST_ASSERT_EQUAL(preferences.default_slot, 1, "Respawn eligibility changed the current profile")
 
 /datum/unit_test/job_character_respawn_policy/Destroy()

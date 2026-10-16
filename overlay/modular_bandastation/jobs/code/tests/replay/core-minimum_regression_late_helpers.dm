@@ -8,3 +8,6 @@
 
 /datum/unit_test/proc/expected_job_lock_error()
 	return JOB_UNAVAILABLE_JOB_LOCK
+
+/datum/unit_test/proc/expected_roundstart_character_signal()
+	return COMSIG_MIND_ROUNDSTART_CHARACTER_CREATED

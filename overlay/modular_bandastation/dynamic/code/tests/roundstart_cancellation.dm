@@ -10,6 +10,8 @@
 		return null
 	mind.transfer_to(character_to_create)
 	new_character = character_to_create
+	assigned_character.created_mind = new_character.mind
+	assigned_character.created_body = new_character
 	character_to_create = null
 	return new_character
 
@@ -19,6 +21,7 @@
 	var/list/forced_before
 	var/list/lobby_before
 	var/list/spawns_before
+	var/list/joined_before
 	var/list/positions_before = list()
 	var/datum/job/ai/fixture_ai
 
@@ -35,11 +38,13 @@
 	forced_before = SSjob.forced_occupations
 	lobby_before = GLOB.new_player_list
 	spawns_before = GLOB.jobspawn_overrides
+	joined_before = GLOB.joined_player_list
 	SSdynamic.queued_rulesets = list()
 	SSjob.prevented_occupations = list()
 	SSjob.forced_occupations = list()
 	GLOB.new_player_list = list()
 	GLOB.jobspawn_overrides = list()
+	GLOB.joined_player_list = list()
 	for(var/ruleset_type in list(/datum/dynamic_ruleset, /datum/dynamic_ruleset/midround, /datum/dynamic_ruleset/latejoin))
 		var/datum/dynamic_ruleset/ruleset = allocate(ruleset_type)
 		TEST_ASSERT(!("prepared_job_changes" in ruleset.vars), "[ruleset.type] stores a roundstart-only cancellation receipt")
@@ -119,6 +124,62 @@
 		TEST_ASSERT(!(ruleset in SSdynamic.executed_rulesets), "An empty cancelled ruleset was marked executed")
 		TEST_ASSERT(!SSdynamic.cancel_roundstart_assignment(candidate), "The cancelled selection was cancelled twice")
 		GLOB.new_player_list = list()
+	check_stale_roundstart_receipts()
+
+/// Exercise the real receipt helpers; this headless fixture does not claim connected construction.
+/datum/unit_test/dynamic_roundstart_cancellation/proc/check_stale_roundstart_receipts()
+	var/datum/job/job = SSjob.get_job_type(/datum/job/assistant)
+	TEST_ASSERT_NOTNULL(job, "The receipt fixture has no canonical Assistant job")
+	if(!(job in positions_before))
+		positions_before[job] = job.current_positions
+	for(var/captured_state in list("replaced", "deleted"))
+		for(var/new_state in list("assignment", "body"))
+			var/datum/dynamic_ruleset/roundstart/traitor/ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor)
+			ruleset.max_antag_cap = 1
+			ruleset.blacklisted_roles = list(JOB_CARGO_TECHNICIAN)
+			SSdynamic.queued_rulesets = list(ruleset)
+			var/mob/dead/new_player/lobby = make_player(ruleset.pref_flag, job)
+			var/datum/mind/candidate = lobby.mind
+			TEST_ASSERT(ruleset.prepare_execution(1, list(lobby)), "The receipt fixture could not prepare its native Dynamic assignment")
+			TEST_ASSERT(SSjob.assign_role(lobby, job, do_eligibility_checks = FALSE), "The receipt fixture could not reserve its native job")
+			var/positions_reserved = job.current_positions
+			// Model a manual role with no module snapshot, keeping the real native reservation.
+			QDEL_NULL(lobby.assigned_character)
+			TEST_ASSERT_NULL(lobby.assigned_character, "The initial-null setup retained a profile snapshot")
+			GLOB.joined_player_list = list("previous player", lobby.ckey)
+			var/datum/roundstart_character_attempt/attempt = SSticker.capture_roundstart_character(lobby)
+			var/datum/job_character_selection/captured = lobby.assigned_character
+			TEST_ASSERT_NOTNULL(captured, "Initial-null capture did not fix the manual role's profile")
+			TEST_ASSERT_EQUAL(attempt.selection, captured, "The receipt did not capture the fixed selection")
+			TEST_ASSERT_EQUAL(captured.job_type, job.type, "Capture selected a different canonical job")
+			GLOB.joined_player_list += lobby.ckey // The single native append owned by this receipt.
+			var/datum/job_character_selection/replacement = lobby.mock_client.prefs.select_job_character(job)
+			replacement.created_mind = candidate
+			lobby.assigned_character = replacement
+			var/mob/living/body
+			if(new_state == "body")
+				body = allocate(/mob/living/basic)
+				candidate.transfer_to(body)
+				lobby.new_character = body
+				replacement.created_body = body
+			if(captured_state == "deleted")
+				del(captured)
+				TEST_ASSERT_NULL(attempt.selection, "Hard deletion did not clear the captured receipt reference")
+			TEST_ASSERT(!SSticker.validate_roundstart_character(lobby, body, attempt), "A [captured_state] receipt accepted a newer [new_state]")
+			TEST_ASSERT_EQUAL(lobby.assigned_character, replacement, "A [captured_state] receipt cancelled the newer profile")
+			TEST_ASSERT_EQUAL(candidate.assigned_role, job, "A [captured_state] receipt cleared the newer role")
+			TEST_ASSERT_EQUAL(job.current_positions, positions_reserved, "A [captured_state] receipt released the newer position")
+			TEST_ASSERT(candidate in ruleset.selected_minds, "A [captured_state] receipt cancelled the newer Dynamic assignment")
+			TEST_ASSERT(JOB_CARGO_TECHNICIAN in SSjob.prevented_occupations[candidate], "A stale receipt removed the active Dynamic restriction")
+			TEST_ASSERT_EQUAL(lobby.new_character, body, "A stale receipt replaced or cleared the newer body")
+			TEST_ASSERT_EQUAL(candidate.current, body || lobby, "A stale receipt moved the newer mind")
+			if(body)
+				TEST_ASSERT(!QDELETED(body), "A stale receipt deleted the newer body")
+				TEST_ASSERT_EQUAL(body.mind, candidate, "A stale receipt removed the newer body's mind")
+			TEST_ASSERT_EQUAL(length(GLOB.joined_player_list), 2, "Receipt rollback did not remove exactly its own append")
+			TEST_ASSERT_EQUAL(GLOB.joined_player_list[1], "previous player", "Receipt rollback removed previous history")
+			TEST_ASSERT_EQUAL(GLOB.joined_player_list[2], lobby.ckey, "Receipt rollback removed a pre-existing duplicate ckey")
+			qdel(captured)
 
 /datum/unit_test/dynamic_roundstart_cancellation/proc/make_player(antag_flag, datum/job/job)
 	var/datum/client_interface/player = allocate(/datum/client_interface/roundstart_selection_test)
@@ -144,6 +205,8 @@
 		SSjob.forced_occupations = forced_before
 		GLOB.new_player_list = lobby_before
 		GLOB.jobspawn_overrides = spawns_before
+	if(joined_before)
+		GLOB.joined_player_list = joined_before
 	for(var/datum/job/job as anything in positions_before)
 		job.current_positions = positions_before[job]
 	release_job_player_fixtures()

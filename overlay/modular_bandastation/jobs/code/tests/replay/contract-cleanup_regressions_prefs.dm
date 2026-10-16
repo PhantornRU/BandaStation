@@ -1,10 +1,10 @@
-/// This fixture replaces one selected operation, never the dispatcher or authorization.
+/// Observe the actual native selection boundary, never replace its dispatcher or authorization.
 /datum/latejoin_menu/contract_cleanup_fixture
 	var/selection_calls = 0
 
-/datum/latejoin_menu/contract_cleanup_fixture/handle_job_selection(mob/dead/new_player/owner, list/params)
+/datum/latejoin_menu/contract_cleanup_fixture/is_latejoin_selection_current(mob/dead/new_player/owner, list/params, datum/latejoin_profile_snapshot/context)
 	selection_calls++
-	return TRUE
+	return ..()
 
 /datum/unit_test/contract_cleanup_latejoin_authorization
 	var/datum/latejoin_menu/contract_cleanup_fixture/menu
@@ -88,11 +88,18 @@
 	player.prefs = preferences
 	var/datum/preference_middleware/jobs/middleware = locate(/datum/preference_middleware/jobs) in preferences.middleware
 	TEST_ASSERT_NOTNULL(middleware, "Native preferences did not register its jobs middleware")
-	TEST_ASSERT(!("set_job_to_profile" in middleware.action_delegations), "The deleted legacy action is still delegated")
-	TEST_ASSERT(!hascall(middleware, "set_job_to_profile"), "The deleted legacy action still has a compatibility endpoint")
-	TEST_ASSERT(!("job_assigned_profiles" in preferences.vars), "Preferences still owns a second runtime assignment map")
+	TEST_ASSERT(!("set_job_to_profile" in middleware.action_delegations), "The disabled legacy action is still delegated")
+	TEST_ASSERT(hascall(middleware, "set_job_to_profile"), "The native handler definition was not preserved")
+	TEST_ASSERT("job_assigned_profiles" in preferences.vars, "The native assignment declaration was not preserved")
+	TEST_ASSERT_EQUAL(length(preferences.job_assigned_profiles), 0, "The compatibility field owns active assignments")
 	preferences.job_preferences = list("Assistant" = JP_HIGH)
 	preferences.pref_job_slots = list("Assistant" = 2)
+	TEST_ASSERT(preferences.job_assigned_profiles != preferences.pref_job_slots, "Compatibility and canonical assignments alias")
+	var/canonical_before = json_encode(preferences.pref_job_slots)
+	var/legacy_before = json_encode(preferences.job_assigned_profiles)
+	TEST_ASSERT(!middleware.set_job_to_profile(list("job" = "Assistant", "profile" = 3), null), "A direct old handler call was accepted")
+	TEST_ASSERT_EQUAL(json_encode(preferences.pref_job_slots), canonical_before, "A direct old handler call changed canonical assignments")
+	TEST_ASSERT_EQUAL(json_encode(preferences.job_assigned_profiles), legacy_before, "A direct old handler call changed compatibility state")
 	var/list/data = middleware.get_ui_data(null)
 	var/list/rows = data["job_preferences"]
 	TEST_ASSERT_EQUAL(length(rows), 1, "Canonical priority serialization added a legacy-only row")
@@ -102,10 +109,13 @@
 	TEST_ASSERT(!("assigned_profile_slot" in row), "The UI protocol still emits a legacy profile field")
 
 	var/mob/dead/new_player/user = allocate(/mob/dead/new_player)
+	user.mock_client = player
+	player.mob = user
 	var/datum/tgui/ui = allocate(/datum/tgui, user, preferences, "PreferencesMenu")
 	ui.status = UI_INTERACTIVE
 	TEST_ASSERT(!preferences.ui_act("set_job_to_profile", list("job" = "Assistant", "profile" = 3), ui, ui.state), "A forged legacy action was accepted")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Assistant"], 2, "A forged legacy action changed canonical assignments")
+	TEST_ASSERT_EQUAL(json_encode(preferences.job_assigned_profiles), legacy_before, "A forged legacy action activated compatibility state")
 
 /datum/unit_test/contract_cleanup_canonical_job_protocol/Destroy()
 	release_job_player_fixtures()
@@ -114,6 +124,8 @@
 /datum/unit_test/contract_cleanup_latejoin_offline_selection/Run()
 	var/mob/dead/new_player/owner = allocate(/mob/dead/new_player)
 	var/datum/latejoin_menu/menu = allocate(/datum/latejoin_menu)
-	TEST_ASSERT(menu.handle_job_selection(owner, list("job" = "Random")), "The actual selected-profile operation did not reject an offline lobby")
+	var/datum/tgui/ui = allocate(/datum/tgui, owner, menu, "JobSelection")
+	ui.status = UI_INTERACTIVE
+	TEST_ASSERT(menu.ui_act("select_job", list("job" = "Random"), ui, GLOB.new_player_state), "The native selected-profile dispatcher did not reject an offline lobby")
 	TEST_ASSERT(!owner.spawning, "Offline selected-profile input entered spawning")
 	TEST_ASSERT_NULL(owner.assigned_character, "Offline selected-profile input committed a character")

@@ -1,11 +1,31 @@
+// Observe the real native availability and assign_role eligibility passes; do not replace either one.
+/datum/job/cargo_technician/latejoin_profile_context_test
+	title = "External latejoin profile context fixture"
+	var/mob/dead/new_player/latejoin_profile_context_test/fixture_player
+	var/atom/fixture_destination
+
+/datum/job/cargo_technician/latejoin_profile_context_test/config_check()
+	return FALSE
+
+/datum/job/cargo_technician/latejoin_profile_context_test/required_playtime_remaining(client/player)
+	. = ..()
+	fixture_player.change_profile_at_eligibility(title)
+
+/datum/job/cargo_technician/latejoin_profile_context_test/get_latejoin_spawn_point()
+	return fixture_destination
+
 /mob/dead/new_player/latejoin_profile_context_test
 	var/availability_calls = 0
+	var/eligibility_calls = 0
 	var/change_on_call
 	var/change_kind
 
 /mob/dead/new_player/latejoin_profile_context_test/IsJobUnavailable(rank, latejoin = FALSE)
-	. = ..()
-	if(++availability_calls != change_on_call)
+	availability_calls++
+	return ..()
+
+/mob/dead/new_player/latejoin_profile_context_test/proc/change_profile_at_eligibility(rank)
+	if(++eligibility_calls != change_on_call)
 		return
 	var/client/player = GET_CLIENT(src)
 	switch(change_kind)
@@ -17,7 +37,7 @@
 			player.prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/late_join_always_current_slot], TRUE)
 
 /datum/unit_test/latejoin_profile_context
-	var/datum/job/job
+	var/datum/job/cargo_technician/latejoin_profile_context_test/job
 	var/positions_before
 	var/total_before
 	var/state_before
@@ -43,7 +63,10 @@
 	CONFIG_SET(flag/arrivals_shuttle_require_safe_latejoin, FALSE)
 	CONFIG_SET(number/hard_popcap, 0)
 	CONFIG_SET(number/extreme_popcap, 0)
-	job = SSjob.get_job_type(/datum/job/cargo_technician)
+	job = allocate(/datum/job/cargo_technician/latejoin_profile_context_test)
+	job.fixture_destination = run_loc_floor_bottom_left
+	SSjob.type_occupations[job.type] = job
+	SSjob.name_occupations[job.title] = job
 	positions_before = job.current_positions
 	total_before = job.total_positions
 	job.total_positions = -1
@@ -75,7 +98,9 @@
 			var/mob/dead/new_player/latejoin_profile_context_test/lobby = allocate(/mob/dead/new_player/latejoin_profile_context_test)
 			lobby.mock_client = player
 			player.mob = lobby
-			lobby.key = player.key
+			lobby.PossessByPlayer(player.key)
+			player.persistent_client.set_mob(lobby)
+			job.fixture_player = lobby
 			lobby.mind = allocate(/datum/mind)
 			lobby.mind.set_current(lobby)
 			lobby.change_on_call = boundary
@@ -83,7 +108,8 @@
 			var/datum/latejoin_profile_snapshot/unchanged_context = preferences.capture_latejoin_profile(job.title)
 			TEST_ASSERT(preferences.is_latejoin_profile_current(job.title, unchanged_context), "An unchanged request became stale")
 			TEST_ASSERT(!lobby.AttemptLateSpawn(job.title), "A stale request spawned a different profile: [change_kind]/[boundary]")
-			TEST_ASSERT_EQUAL(lobby.availability_calls, boundary, "The test did not reach its intended eligibility boundary")
+			TEST_ASSERT_EQUAL(lobby.availability_calls, 1, "The native attempt skipped or repeated availability dispatch")
+			TEST_ASSERT_EQUAL(lobby.eligibility_calls, boundary, "The test did not reach its intended native eligibility boundary")
 			TEST_ASSERT(!preferences.is_latejoin_profile_current(job.title, unchanged_context), "The changed context was not detected")
 			TEST_ASSERT_NULL(lobby.assigned_character, "A rejected request committed a profile")
 			TEST_ASSERT_NULL(lobby.new_character, "A rejected request created a body")
@@ -93,6 +119,9 @@
 
 /datum/unit_test/latejoin_profile_context/Destroy()
 	if(job)
+		SSjob.type_occupations -= job.type
+		SSjob.name_occupations -= job.title
+		job.fixture_player = null
 		job.current_positions = positions_before
 		job.total_positions = total_before
 	if(!isnull(state_before))

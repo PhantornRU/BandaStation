@@ -161,20 +161,41 @@
 /datum/client_interface/entry_admission_test
 	var/datum/admins/holder
 
+// Both native eligibility passes call this job operation before the potentially yielding ban lookup.
+/datum/job/cargo_technician/entry_admission_change_test
+	title = "External latejoin admission fixture"
+	var/mob/dead/new_player/entry_admission_change_test/fixture_player
+	var/atom/fixture_destination
+
+/datum/job/cargo_technician/entry_admission_change_test/config_check()
+	return FALSE
+
+/datum/job/cargo_technician/entry_admission_change_test/required_playtime_remaining(client/player)
+	. = ..()
+	fixture_player.change_admission_at_eligibility()
+
+/datum/job/cargo_technician/entry_admission_change_test/get_latejoin_spawn_point()
+	return fixture_destination
+
 /mob/dead/new_player/entry_admission_change_test
 	var/availability_calls = 0
+	var/eligibility_calls = 0
 	var/mob/dead/new_player/next_in_queue
 
 /mob/dead/new_player/entry_admission_change_test/IsJobUnavailable(rank, latejoin = FALSE)
-	if(++availability_calls == 2)
-		if(next_in_queue)
-			SSticker.queued_players = list(next_in_queue)
-		else
-			SSlag_switch.measures[DISABLE_NON_OBSJOBS] = TRUE
-	return JOB_AVAILABLE
+	availability_calls++
+	return ..()
+
+/mob/dead/new_player/entry_admission_change_test/proc/change_admission_at_eligibility()
+	eligibility_calls++
+	// Queue ownership is checked before native dequeue; lag is checked after assign_role's SQL boundary.
+	if(next_in_queue && eligibility_calls == 1)
+		SSticker.queued_players = list(next_in_queue)
+	else if(!next_in_queue && eligibility_calls == 2)
+		SSlag_switch.measures[DISABLE_NON_OBSJOBS] = TRUE
 
 /datum/unit_test/native_latejoin_admission_recheck
-	var/datum/job/job
+	var/datum/job/cargo_technician/entry_admission_change_test/job
 	var/positions_before
 	var/total_before
 	var/role_changes = 0
@@ -199,7 +220,10 @@
 	CONFIG_SET(flag/arrivals_shuttle_require_safe_latejoin, FALSE)
 	CONFIG_SET(number/hard_popcap, 0)
 	CONFIG_SET(number/extreme_popcap, 0)
-	job = SSjob.get_job_type(/datum/job/cargo_technician)
+	job = allocate(/datum/job/cargo_technician/entry_admission_change_test)
+	job.fixture_destination = run_loc_floor_bottom_left
+	SSjob.type_occupations[job.type] = job
+	SSjob.name_occupations[job.title] = job
 	positions_before = job.current_positions
 	total_before = job.total_positions
 	job.total_positions = -1
@@ -208,9 +232,15 @@
 		SSticker.queued_players = list()
 		var/mob/dead/new_player/entry_admission_change_test/lobby = allocate(/mob/dead/new_player/entry_admission_change_test)
 		var/datum/client_interface/player = allocate(/datum/client_interface/entry_admission_test)
+		player.ban_cache = list()
 		player.prefs = allocate(/datum/preferences, player)
+		player.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/age], 40)
+		player.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_HUMAN)
 		player.mob = lobby
 		lobby.mock_client = player
+		lobby.PossessByPlayer(player.key)
+		player.persistent_client.set_mob(lobby)
+		job.fixture_player = lobby
 		lobby.mind = allocate(/datum/mind)
 		lobby.mind.set_current(lobby)
 		RegisterSignal(lobby, COMSIG_MOB_MIND_SET_ROLE, PROC_REF(note_role_change))
@@ -222,7 +252,8 @@
 		TEST_ASSERT_EQUAL(lobby.availability_calls, 0, "A repeated request reached eligibility checks")
 		lobby.spawning = FALSE
 		TEST_ASSERT(!lobby.AttemptLateSpawn(job.title), "A changed queue or load restriction was ignored after eligibility recheck")
-		TEST_ASSERT_EQUAL(lobby.availability_calls, 2, "The attempt did not reach the final eligibility boundary")
+		TEST_ASSERT_EQUAL(lobby.availability_calls, 1, "The native attempt skipped or repeated availability dispatch")
+		TEST_ASSERT_EQUAL(lobby.eligibility_calls, queue_changes ? 1 : 2, "The attempt did not reach its intended native eligibility boundary")
 		TEST_ASSERT_EQUAL(role_changes, 0, "A rejected attempt assigned a job before cancelling its spawn")
 		TEST_ASSERT(!lobby.spawning, "A rejected attempt retained its spawning state")
 		TEST_ASSERT_NULL(lobby.new_character, "A rejected attempt created a partial character")
@@ -235,6 +266,9 @@
 
 /datum/unit_test/native_latejoin_admission_recheck/Destroy()
 	if(job)
+		SSjob.type_occupations -= job.type
+		SSjob.name_occupations -= job.title
+		job.fixture_player = null
 		job.current_positions = positions_before
 		job.total_positions = total_before
 	if(!isnull(state_before))
@@ -276,7 +310,8 @@
 	ordinary.total_positions = 1
 	ordinary.current_positions = 1
 	var/datum/job/donor/alternative = allocate(/datum/job/donor/vip_guest)
-	alternative.total_positions = -1
+	alternative.total_positions = 1
+	alternative.current_positions = 0
 	SSjob.joinable_occupations = list(assistant, ordinary, alternative)
 	var/datum/client_interface/assistant_overflow_test/player = allocate(/datum/client_interface/assistant_overflow_test)
 	player.ban_cache = list()
@@ -303,6 +338,17 @@
 			TEST_ASSERT_EQUAL(assistant.current_positions, 2, "Assistant admission did not use the native position counter")
 			lobby.cancel_character_spawn()
 		TEST_ASSERT_EQUAL(assistant.current_positions, 1, "Assistant rejection or cancellation changed another occupied position")
+	// Preserve BASE's exact comparison: an unlimited alternative is not a finite vacant slot.
+	alternative.total_positions = -1
+	CONFIG_SET(flag/donor_jobs_enabled, TRUE)
+	player.donator_level = DONATOR_TIER_5
+	player.player_age = 30
+	TEST_ASSERT_EQUAL(lobby.IsJobUnavailable(assistant.title, latejoin = TRUE), JOB_AVAILABLE, "Native Assistant admission changed its -1 alternative comparison")
+	TEST_ASSERT(!lobby.IsJobSlotUnavailable(assistant), "Final Assistant capacity changed the native -1 alternative comparison")
+	TEST_ASSERT(SSjob.assign_role(lobby, assistant, latejoin = TRUE, do_eligibility_checks = FALSE), "Final assignment disagreed with native unlimited-alternative capacity")
+	TEST_ASSERT_EQUAL(assistant.current_positions, 2, "Native unlimited-alternative assignment did not occupy one position")
+	TEST_ASSERT(lobby.cancel_character_spawn(), "The unlimited-alternative assignment could not be cancelled")
+	TEST_ASSERT_EQUAL(assistant.current_positions, 1, "Unlimited-alternative rollback changed another occupied position")
 
 /datum/unit_test/donor_assistant_overflow/Destroy()
 	if(assistant)

@@ -59,6 +59,12 @@
 	TEST_ASSERT_EQUAL(lobby.prepare_calls, 1, "Public create_character did not call profile preparation once")
 	TEST_ASSERT_EQUAL(job.construction_calls, 0, "A rejected profile reached construction")
 	TEST_ASSERT(lobby.mind.active, "Profile rejection occurred after native mind deactivation")
+	// Only four audited TEMP input reads accept this mock. Native constructor and
+	// final connected-client checks remain unchanged and must reject the body.
+	var/datum/client_interface/requester = allocate(/datum/client_interface)
+	requester.prefs = allocate(/datum/preferences, requester)
+	requester.mob = lobby
+	lobby.mock_client = requester
 	lobby.allow_profile = TRUE
 	job.fixture_body = allocate(/mob/living/basic)
 	TEST_ASSERT_NULL(lobby.create_character(run_loc_floor_bottom_left), "A disconnected specialized body passed admission")
@@ -88,7 +94,7 @@
 	var/received_forced_slot
 	var/mob/living/fixture_body
 
-/mob/dead/new_player/contract_attempt_fixture/begin_latejoin_attempt(rank, client/requester)
+/mob/dead/new_player/contract_attempt_fixture/capture_latejoin_request(rank)
 	begin_calls++
 	if(failure_stage == "begin")
 		return null
@@ -98,7 +104,7 @@
 	availability_calls++
 	return JOB_AVAILABLE
 
-/mob/dead/new_player/contract_attempt_fixture/validate_latejoin(rank, client/requester, datum/latejoin_profile_snapshot/context)
+/mob/dead/new_player/contract_attempt_fixture/validate_latejoin_request(rank, check_queue = TRUE)
 	validation_calls++
 	if(failure_stage == "validation")
 		return reject_late_spawn()
@@ -108,10 +114,13 @@
 	creation_calls++
 	received_forced_slot = forced_slot
 	if(failure_stage == "creation")
+		assigned_character.spawn_rejection = "Controlled profile rejection"
 		return null
 	mind.active = FALSE
 	mind.transfer_to(fixture_body)
 	new_character = fixture_body
+	assigned_character.created_body = fixture_body
+	assigned_character.created_mind = fixture_body.mind
 	return fixture_body
 
 /mob/dead/new_player/contract_attempt_fixture/transfer_character()
@@ -168,24 +177,27 @@
 		player.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_HUMAN)
 		player.mob = lobby
 		lobby.mock_client = player
+		lobby.PossessByPlayer(player.key)
 		player.persistent_client.set_mob(lobby)
 		lobby.mind = allocate(/datum/mind)
+		lobby.mind.key = player.key
 		lobby.mind.set_current(lobby)
 		lobby.fixture_body = allocate(/mob/living/basic)
 		lobby.failure_stage = stage
 		var/success = stage == "success"
 		TEST_ASSERT_EQUAL(lobby.AttemptLateSpawn(job.title), success, "Incorrect public latejoin result at [stage]")
 		TEST_ASSERT_EQUAL(lobby.begin_calls, 1, "Native entry did not prepare exactly one request at [stage]")
-		TEST_ASSERT_EQUAL(lobby.validation_calls, stage == "begin" ? 0 : 1, "Final admission ran at the wrong phase: [stage]")
+		TEST_ASSERT_EQUAL(lobby.validation_calls, stage == "begin" ? 0 : (stage == "validation" ? 1 : 2), "Wait/assignment request checks ran at the wrong phase: [stage]")
 		TEST_ASSERT_EQUAL(lobby.creation_calls, (stage in list("creation", "handover", "success")) ? 1 : 0, "Construction ran at the wrong phase: [stage]")
 		TEST_ASSERT_EQUAL(lobby.handover_calls, (stage in list("handover", "success")) ? 1 : 0, "Handover ran at the wrong phase: [stage]")
 		TEST_ASSERT_EQUAL(job.equipment_calls, success ? 1 : 0, "Native equipment did not run exactly once after handover: [stage]")
 		TEST_ASSERT_EQUAL(job.latejoin_calls, success ? 1 : 0, "Native post-spawn bookkeeping was skipped or duplicated: [stage]")
-		TEST_ASSERT_NULL(lobby.received_forced_slot, "The replaced current-profile prelude still forced the editing slot")
+		if(lobby.creation_calls)
+			TEST_ASSERT_EQUAL(lobby.received_forced_slot, 1, "Native create did not receive the committed selected slot")
 		TEST_ASSERT_EQUAL(job.current_positions, success ? 1 : 0, "Public entry leaked or double-freed a vacancy: [stage]")
 		if(success)
 			TEST_ASSERT(QDELETED(lobby), "The complete native tail did not survive actual lobby destruction")
-			TEST_ASSERT_EQUAL(length(player.persistent_client.joined_as_slots), 1, "Successful native handover did not record the profile once")
+			TEST_ASSERT_EQUAL(length(player.persistent_client.joined_as_slots), 0, "The latejoin caller duplicated history owned by the constructor seam")
 
 /datum/unit_test/contract_public_latejoin/Destroy()
 	if(job)
@@ -262,20 +274,37 @@
 	var/mob/dead/new_player/player = allocate(/mob/dead/new_player)
 	candidate.set_current(player)
 	player.mind = candidate
+	var/datum/job/job = SSjob.get_job_type(/datum/job/assistant)
+	var/datum/client_interface/requester = allocate(/datum/client_interface/roundstart_selection_test)
+	requester.ban_cache = list()
+	requester.prefs = allocate(/datum/preferences, requester)
+	requester.prefs.job_preferences = list(job.title = JP_HIGH)
+	requester.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/jobless_role], RETURNTOLOBBY)
+	requester.prefs.write_preference(GLOB.preference_entries[/datum/preference/choiced/species], SPECIES_HUMAN)
+	requester.prefs.write_preference(GLOB.preference_entries[/datum/preference/numeric/age], 35)
+	player.mock_client = requester
+	requester.mob = player
+	player.key = requester.key
 	var/datum/dynamic_ruleset/roundstart/contract_constraints_fixture/first = allocate(/datum/dynamic_ruleset/roundstart/contract_constraints_fixture)
 	var/datum/dynamic_ruleset/roundstart/contract_constraints_fixture/second = allocate(/datum/dynamic_ruleset/roundstart/contract_constraints_fixture)
+	first.max_antag_cap = 1
+	second.max_antag_cap = 1
 	first.blacklisted_roles = list(JOB_CARGO_TECHNICIAN)
 	second.blacklisted_roles = list(JOB_MEDICAL_DOCTOR)
 	first.fixture_forced_job = /datum/job/ai
 	second.fixture_forced_job = /datum/job/doctor
 	SSjob.prevented_occupations[candidate] = list(JOB_PRISONER)
-	first.prepare_job_constraints(candidate)
-	first.selected_minds += candidate
+	TEST_ASSERT(first.prepare_execution(1, list(player)), "Native preparation could not select the first assignment")
+	TEST_ASSERT(candidate in first.selected_minds, "Native preparation did not select the candidate")
+	TEST_ASSERT(JOB_CARGO_TECHNICIAN in SSjob.prevented_occupations[candidate], "The original native blocker operation did not run")
+	TEST_ASSERT_EQUAL(SSjob.forced_occupations[candidate], /datum/job/ai, "The native prepare_for_role operation did not run")
 	SSdynamic.queued_rulesets += first
-	TEST_ASSERT(!second.is_valid_candidate(player, null), "The normal queue admitted the same mind to two roundstart rulesets")
-	// Bypass candidate selection only to verify that rollback preserves a later independent writer.
-	second.prepare_job_constraints(candidate)
-	second.selected_minds += candidate
+	TEST_ASSERT(!second.prepare_execution(1, list(player)), "The native queue admitted the same mind to two roundstart rulesets")
+	TEST_ASSERT_EQUAL(length(second.selected_minds), 0, "A native queued-mind veto still prepared an assignment")
+	// Model a later independent writer outside the queue, using the same native caller.
+	SSdynamic.queued_rulesets = list()
+	TEST_ASSERT(second.prepare_execution(1, list(player)), "Native preparation could not perform the later independent write")
+	TEST_ASSERT(candidate in second.selected_minds, "The independent writer was not selected by the native caller")
 	TEST_ASSERT(first.cancel_assignment(candidate), "The first prepared assignment could not cancel")
 	TEST_ASSERT(!(JOB_CARGO_TECHNICIAN in SSjob.prevented_occupations[candidate]), "Cancellation retained its own added blocker")
 	TEST_ASSERT(JOB_MEDICAL_DOCTOR in SSjob.prevented_occupations[candidate], "Cancellation removed a later independent blocker")

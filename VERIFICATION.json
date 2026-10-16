@@ -1,0 +1,223 @@
+{
+  "schema": 1,
+  "product_head": "b9feef39fdc825cfe3992f3f5251d19f16a1e119",
+  "product_tree": "de50353062327c9c7b695a87559bfdff41635e46",
+  "base": "820de7f6ef9235d8417250cb01eec15da6735b18",
+  "published_manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
+  "executed_manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
+  "canonical_manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
+  "canonical_manifest_file": "CANONICAL_MANIFEST.json",
+  "source_revision": "705c370f528aa001e5857389b6cc766a231e8b5c",
+  "source_patch_sha256": "62c899158c4dc5bcc06f835ecf03b199fa5bd7015f63e4a84dee6451cc8bb5d9",
+  "source_checkout_unchanged": true,
+  "source_integrity": {
+    "head_unchanged": true,
+    "status_unchanged": true,
+    "patch_bytes_unchanged": true,
+    "untracked_bytes_unchanged": true,
+    "final_patch_sha256": "62c899158c4dc5bcc06f835ecf03b199fa5bd7015f63e4a84dee6451cc8bb5d9"
+  },
+  "source_contract": {
+    "status": "PASS",
+    "native_files": 14,
+    "hunks": 62,
+    "single_line_replacements": 18,
+    "removed_definitions": 0,
+    "removed_multiline_blocks": 0,
+    "native_jobs_middleware": "exact BASE"
+  },
+  "native_contract_sha256": "90a4edf624b5c981db63778f02038da6de9cc0542f223b8565e97c56336a34c9",
+  "evidence_run": {
+    "root": "bandastation-external-tests-svzocukm",
+    "suite": "all",
+    "status": "PASS",
+    "whole_run_passed": true,
+    "result_sha256": "156d6cba8d57a4ee0d57cc1c9f6ad936bbfe60282d5f7568828798bb41b21531",
+    "source_revision": "705c370f528aa001e5857389b6cc766a231e8b5c",
+    "product_tree": "de50353062327c9c7b695a87559bfdff41635e46",
+    "manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
+    "started_utc": "2026-10-16T13:37:40.235338+00:00",
+    "finished_utc": "2026-10-16T13:52:02.075355+00:00"
+  },
+  "production": {
+    "command": "tools/build/build.bat build -Werror",
+    "dmb_sha256": "288f9918475e36424eb68c1735fdc043ea154b06be968a64ad5db3534b51b34a",
+    "dme_sha256": "e66b8dde69de2e7e4e98d7e03533e3f2380e6513246a5cf539029a8cc2ac672d",
+    "external_tests_injected": false
+  },
+  "native_harness_compile": {
+    "external_tests_injected": false,
+    "dmb_sha256": "65f7bc7b7c7f269797f23c7bc02fb4f06d809c3f182d541860f07b9f31eb5e6f"
+  },
+  "native_harness_binary_scope": "DMB digest recorded by completed all-run; intermediate native DMB was overwritten by external compile, so no preserved native binary is independently rehashed.",
+  "dm_compile": {
+    "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742"
+  },
+  "dm_count": 80,
+  "dm_modes": {
+    "00": {
+      "passed": 80,
+      "clean_run": true,
+      "runtime_errors": 0,
+      "startup_flags": {
+        "donor_jobs_enabled": 0,
+        "donor_prisoner_gate": 0
+      },
+      "runtime": "runtime-00",
+      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
+      "log_sha256": "25b85493a7afbac77aa2b5230d159227358fd5074ebed289e84db3d363dde24a",
+      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
+      "config_sha256": "f3fd07195976d8702dfac817b3281c25093de17813cd07ebfe452053e151ce74",
+      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
+      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
+      "dll_sha256": {
+        "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
+        "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
+      }
+    },
+    "01": {
+      "passed": 80,
+      "clean_run": true,
+      "runtime_errors": 0,
+      "startup_flags": {
+        "donor_jobs_enabled": 0,
+        "donor_prisoner_gate": 1
+      },
+      "runtime": "runtime-01",
+      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
+      "log_sha256": "2d4e332460b4c41a389fdfe6ae77444d1aedc63f0158d1835bcd787d9e25f73f",
+      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
+      "config_sha256": "2d9c42aa95f54d79d7a017dd656fbb2ce8f79d1185556de963cd22fcd495b9ac",
+      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
+      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
+      "dll_sha256": {
+        "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
+        "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
+      }
+    },
+    "10": {
+      "passed": 80,
+      "clean_run": true,
+      "runtime_errors": 0,
+      "startup_flags": {
+        "donor_jobs_enabled": 1,
+        "donor_prisoner_gate": 0
+      },
+      "runtime": "runtime-10",
+      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
+      "log_sha256": "51edd8e9a3ecae832ba97ae8c1a81da8b2c20878f4aa24c76d7b22e65cb59226",
+      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
+      "config_sha256": "9ed78da8051c52a7445001445ad43cb95a8a6047a97ea5db814d868abcf81e7c",
+      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
+      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
+      "dll_sha256": {
+        "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
+        "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
+      }
+    },
+    "11": {
+      "passed": 80,
+      "clean_run": true,
+      "runtime_errors": 0,
+      "startup_flags": {
+        "donor_jobs_enabled": 1,
+        "donor_prisoner_gate": 1
+      },
+      "runtime": "runtime-11",
+      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
+      "log_sha256": "ca1f23879da6cf18d4f20b25e8ea483f6c5413548b9fa109e4bf1f939ee011f2",
+      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
+      "config_sha256": "628e704869e4f6129f7b9c7c6f493865014e49e32a08eab848bb547dc47eb8e2",
+      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
+      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
+      "dll_sha256": {
+        "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
+        "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
+      }
+    }
+  },
+  "python_passed": 21,
+  "bun_passed": 1,
+  "compile_and_test_log_sha256": {
+    "production.log": "eaa2b46ddd911ed5007e80f9bb906afa642a212abedf25e9672db24a62d267aa",
+    "native-harness-compile.log": "56d9628772580c53b8d1f34df584e4a50582275b16ccb260d648ba37feb15f54",
+    "dm-compile.log": "9a1f9d1f0b22d096b9fb435402d5c7b196b693d1891fc7410268c14bcf3eb485",
+    "python.log": "19f0c6aa0107ee53d238d84c35894865f1842b4f3d1b3eaf6545adc912fa1974",
+    "bun.log": "77a54f64d2687244766887d3ae602e03d83c4a6c442c6f13872497fc4c0a6e5f"
+  },
+  "sealed_files": 59,
+  "publication_changes": [],
+  "publication_files": [
+    ".gitattributes",
+    "CANONICAL_MANIFEST.json",
+    "EXECUTED_MANIFEST.json",
+    "LICENSE",
+    "NATIVE_CONTRACTS.json",
+    "README.md",
+    "README_RU.md",
+    "SOURCE_INPUTS.json",
+    "VARIANT_MIGRATION.json",
+    "VERIFICATION.json",
+    "browser/README.md",
+    "browser/bind_sources.py",
+    "browser/browser-checks.js",
+    "browser/browser.tsx",
+    "browser/data.json",
+    "browser/serve.ts",
+    "client_fixture_adapter.py",
+    "includes.dm",
+    "late_includes.dm",
+    "manifest.json",
+    "native_preservation.py",
+    "overlay/modular_bandastation/donor_jobs/code/tests/_tests.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/equipment.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/id_templates.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/identity_items.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
+    "overlay/modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
+    "overlay/modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
+    "overlay/modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
+    "overlay/modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
+    "overlay/modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
+    "overlay/modular_bandastation/jobs/code/tests/admission.dm",
+    "overlay/modular_bandastation/jobs/code/tests/fixtures.dm",
+    "overlay/modular_bandastation/jobs/code/tests/handover.dm",
+    "overlay/modular_bandastation/jobs/code/tests/latejoin_context.dm",
+    "overlay/modular_bandastation/jobs/code/tests/prisoner_record.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/contract-cleanup_regressions_prefs.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/contract-cleanup_variant_regressions.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/core-minimum_regression_late_helpers.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/readability_entry_regressions.dm",
+    "overlay/modular_bandastation/jobs/code/tests/replay/readability_jobs_regressions.dm",
+    "overlay/modular_bandastation/objects/code/tests/pda.dm",
+    "overlay/tools/build/juke/exec.test.js",
+    "overlay/tools/migrate_job_slots/tests/test_migrate.py",
+    "overlay/tools/migrate_job_slots/tests/test_readiness.py",
+    "provenance.json",
+    "run.py",
+    "seal.py",
+    "settings.example.json",
+    "source_invariants.py"
+  ],
+  "limits": [
+    "Headless mock fixtures; connected BYOND client, actual localhost notification, live SQL and interactive/visual flows not exercised.",
+    "Browser harness and full native unit runtime not run in this all-run.",
+    "Production launcher/cwd/save root and actual deployment migration/readiness unverified; no real player saves accessed.",
+    "No donor DMM placements added; native fallback spawn remains."
+  ]
+}

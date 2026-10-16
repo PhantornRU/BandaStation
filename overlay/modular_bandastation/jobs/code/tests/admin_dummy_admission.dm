@@ -24,9 +24,10 @@
 	TEST_ASSERT_EQUAL(job.current_positions, positions_before, "A denied ordinary assignment occupied a vacancy")
 	TEST_ASSERT(dummy in SSjob.unassigned, "A denied ordinary assignment removed its lobby from unassigned")
 
-	// The built-in admin command creates a new lobby and initializes its mind,
-	// then opts in once. It does not manufacture a preferences/client datum.
-	TEST_ASSERT(SSjob.assign_role(dummy, job, do_eligibility_checks = FALSE, is_debug_dummy = TRUE), "The explicit native admin dummy could not receive its job")
+	// The built-in admin command explicitly marks its fresh lobby. It does not
+	// manufacture a preferences/client datum or alter the assign_role arguments.
+	dummy.is_admin_job_dummy = TRUE
+	TEST_ASSERT(SSjob.assign_role(dummy, job, do_eligibility_checks = FALSE), "The explicit native admin dummy could not receive its job")
 	TEST_ASSERT_EQUAL(dummy.mind.assigned_role, job, "The explicit admin assignment did not set the native role")
 	TEST_ASSERT_EQUAL(job.current_positions, positions_before + 1, "The explicit admin assignment did not occupy exactly one vacancy")
 	TEST_ASSERT(!(dummy in SSjob.unassigned), "The explicit admin assignment retained its lobby in unassigned")
@@ -36,6 +37,7 @@
 	// take an existing selected profile, or enter through the latejoin path.
 	for(var/scenario in list("latejoin", "spawning", "profile_bound", "offline_player"))
 		var/mob/dead/new_player/rejected = new_lobby()
+		rejected.is_admin_job_dummy = TRUE
 		switch(scenario)
 			if("spawning")
 				rejected.spawning = TRUE
@@ -49,7 +51,7 @@
 				TEST_ASSERT_NOTNULL(rejected.key, "The offline player fixture lost its native key")
 		var/datum/job_character_selection/selection_before = rejected.assigned_character
 		var/spawning_before = rejected.spawning
-		TEST_ASSERT(!SSjob.assign_role(rejected, job, latejoin = (scenario == "latejoin"), do_eligibility_checks = FALSE, is_debug_dummy = TRUE), "An explicit dummy flag admitted the [scenario] player context")
+		TEST_ASSERT(!SSjob.assign_role(rejected, job, latejoin = (scenario == "latejoin"), do_eligibility_checks = FALSE), "An explicit dummy flag admitted the [scenario] player context")
 		TEST_ASSERT_EQUAL(rejected.mind.assigned_role, unassigned_job, "The denied [scenario] context changed its canonical role")
 		TEST_ASSERT_EQUAL(job.current_positions, positions_before + 1, "The denied [scenario] context changed occupied vacancies")
 		TEST_ASSERT(rejected in SSjob.unassigned, "The denied [scenario] context was removed from unassigned")

@@ -1,6 +1,13 @@
 // External overlay only; append after the pinned job fixtures.
 
+/datum/unit_test/donor_greeting_committed_outfit
+	var/prisoner_gate_before
+
+/datum/unit_test/donor_greeting_committed_outfit/proc/get_additional_message(datum/job/job, mob/body)
+	return jointext(job.get_additional_spawn_information(body), "\n")
+
 /datum/unit_test/donor_greeting_committed_outfit/Run()
+	prisoner_gate_before = CONFIG_GET(flag/donor_prisoner_gate)
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	player.prefs = allocate(/datum/preferences, player)
 	var/datum/preference/preference = GLOB.preference_entries[/datum/preference/job_outfit_variants]
@@ -14,14 +21,15 @@
 	cargo.prepare_spawn_character(cargo_body, player.prefs)
 	TEST_ASSERT_NOTNULL(actor_body.job_variant_context, "The Actor did not capture a spawn context")
 	TEST_ASSERT_NOTNULL(cargo_body.job_variant_context, "The Cargo Technician did not capture a spawn context")
-	var/actor_message = actor.get_spawn_message(actor_body)
-	var/cargo_message = cargo.get_spawn_message(cargo_body)
+	var/actor_message = get_additional_message(actor, actor_body)
+	var/cargo_message = get_additional_message(cargo, cargo_body)
 	TEST_ASSERT(findtext(actor_message, actor.variant_information[/datum/outfit/job/donor/actor/painter]), "The initial greeting did not describe the committed painter")
 	TEST_ASSERT(findtext(cargo_message, cargo.important_information), "The initial greeting did not describe the committed deliverer")
-	var/actor_default_message = actor.get_spawn_message(unprepared_body)
-	var/cargo_default_message = cargo.get_spawn_message(unprepared_body)
+	var/actor_default_message = get_additional_message(actor, unprepared_body)
+	var/cargo_default_message = get_additional_message(cargo, unprepared_body)
 	TEST_ASSERT(findtext(actor_default_message, actor.important_information), "An Actor without a context lost the ordinary default greeting")
 	TEST_ASSERT(!findtext(cargo_default_message, cargo.important_information), "A Cargo Technician without a context received deliverer-only instructions")
+	TEST_ASSERT_EQUAL(length(cargo.get_additional_spawn_information(unprepared_body)), 0, "A vanilla Cargo Technician received a donor notice")
 
 	// Change current preferences and remove the chosen IDs from these isolated jobs' registries.
 	var/datum/job_variant/painter = actor.resolve_job_variant("painter")
@@ -31,19 +39,29 @@
 	TEST_ASSERT(player.prefs.write_preference(preference, list("Actor" = "default", JOB_CARGO_TECHNICIAN = "default")), "Could not change the active outfit preferences")
 	actor.job_variants = list("default" = default_actor)
 	cargo.job_variants = list("default" = default_cargo)
-	TEST_ASSERT_EQUAL(actor.get_spawn_message(actor_body), actor_message, "A registry or preference change replaced the committed painter greeting")
-	TEST_ASSERT_EQUAL(cargo.get_spawn_message(cargo_body), cargo_message, "A registry or preference change replaced the committed deliverer greeting")
+	TEST_ASSERT_EQUAL(get_additional_message(actor, actor_body), actor_message, "A registry or preference change replaced the committed painter greeting")
+	TEST_ASSERT_EQUAL(get_additional_message(cargo, cargo_body), cargo_message, "A registry or preference change replaced the committed deliverer greeting")
 	TEST_ASSERT_EQUAL(actor.get_spawn_outfit(actor_body, player.prefs, FALSE, FALSE), /datum/outfit/job/donor/actor/painter, "A registry or preference change replaced the committed painter outfit")
 	TEST_ASSERT_EQUAL(cargo.get_spawn_outfit(cargo_body, player.prefs, FALSE, FALSE), /datum/outfit/job/cargo_tech/deliverer, "A registry or preference change replaced the committed deliverer outfit")
-	TEST_ASSERT_EQUAL(actor.get_spawn_message(unprepared_body), actor_default_message, "Removing a nondefault variant changed the no-context Actor greeting")
-	TEST_ASSERT_EQUAL(cargo.get_spawn_message(unprepared_body), cargo_default_message, "Removing a nondefault variant changed the no-context Cargo greeting")
+	TEST_ASSERT_EQUAL(get_additional_message(actor, unprepared_body), actor_default_message, "Removing a nondefault variant changed the no-context Actor greeting")
+	TEST_ASSERT_EQUAL(get_additional_message(cargo, unprepared_body), cargo_default_message, "Removing a nondefault variant changed the no-context Cargo greeting")
 
 	// Preserve default lookup semantics for callers that have no committed context, even if the default changes.
 	actor.job_variants = list("default" = painter)
 	cargo.job_variants = list("default" = deliverer)
-	TEST_ASSERT_EQUAL(actor.get_spawn_message(unprepared_body), actor_message, "The no-context Actor greeting no longer resolves the current default")
-	TEST_ASSERT_EQUAL(cargo.get_spawn_message(unprepared_body), cargo_message, "The no-context Cargo greeting no longer resolves the current default")
+	TEST_ASSERT_EQUAL(get_additional_message(actor, unprepared_body), actor_message, "The no-context Actor greeting no longer resolves the current default")
+	TEST_ASSERT_EQUAL(get_additional_message(cargo, unprepared_body), cargo_message, "The no-context Cargo greeting no longer resolves the current default")
+
+	var/datum/job/prisoner/prisoner = allocate(/datum/job/prisoner)
+	CONFIG_SET(flag/donor_prisoner_gate, FALSE)
+	TEST_ASSERT_EQUAL(length(prisoner.get_additional_spawn_information(unprepared_body)), 0, "An ungated Prisoner received donor-only instructions")
+	CONFIG_SET(flag/donor_prisoner_gate, TRUE)
+	var/list/prisoner_information = prisoner.get_additional_spawn_information(unprepared_body)
+	TEST_ASSERT_EQUAL(length(prisoner_information), 2, "The gated Prisoner lost its notice or instructions")
+	TEST_ASSERT_EQUAL(prisoner_information[2], prisoner.important_information, "The gated Prisoner received another role's instructions")
+	CONFIG_SET(flag/donor_prisoner_gate, prisoner_gate_before)
 
 /datum/unit_test/donor_greeting_committed_outfit/Destroy()
+	CONFIG_SET(flag/donor_prisoner_gate, prisoner_gate_before)
 	release_job_player_fixtures()
 	return ..()

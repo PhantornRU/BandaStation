@@ -50,6 +50,8 @@ def main():
     provenance_path = BUNDLE / 'provenance.json'
     provenance = json.loads(provenance_path.read_text(encoding='utf-8'))
     provenance['support_adaptations'] = [
+        {'path': 'client_fixture_adapter.py', 'source': 'preserve-native external input adapter', 'changes': ['Five exact TEMP substitutions/six reads bridge only mock prefs/history/account age input; full source hashes/counts/scopes checked before writes. Constructor, real-client admission and consumers unchanged; never used by production/native compile.']},
+        {'path': 'native_preservation.py', 'source': 'preserve-native reviewed native contract', 'changes': ['All native definitions and multiline blocks retained; every current native insertion/single-line replacement reviewed with owner and reason in NATIVE_CONTRACTS.json. Read-only BASE comparison before TEMP overlays.']},
         {'path': 'source_invariants.py', 'source': 'task_state/20261016-pr11-contract-cleanup/source_invariants.py',
          'changes': ['Portable default checkout is cwd; explicit --repo, --migration and --old-ref remain supported. No invariant changed.']},
         {'path': 'run.py', 'source': 'baseline/run.py', 'changes': [
@@ -57,7 +59,9 @@ def main():
             'Reviewed tracked/untracked source bytes captured exactly; source integrity checked in finally.',
             'Four independent flag modes 00/01/10/11 and expected startup markers; baseline policy assertions retained.',
             'Late module-constant helpers and all unique tests focused only in TEMP; removed private continuation fixtures replaced by real public operations.',
-            'Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.']},
+            'Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.',
+            'Before any TEMP overlay, native_preservation checks every code/ hunk against NATIVE_CONTRACTS.json; canonical mode never stages external tests.',
+            'Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded.']},
     ]
     test_files = []
     dm_names, python_count, bun_count = [], 0, 0

@@ -1,0 +1,2 @@
+# Preserve sealed replay source bytes independently of core.autocrlf.
+* -text

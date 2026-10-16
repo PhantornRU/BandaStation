@@ -11,6 +11,9 @@ import subprocess
 import sys
 import tempfile
 
+import native_preservation
+from client_fixture_adapter import apply as apply_client_fixture_adapter
+
 BUNDLE = Path(__file__).resolve().parent
 
 
@@ -43,7 +46,8 @@ def stage_tests(worktree, manifest):
             raise RuntimeError(f'Test overlay would overwrite a product file: {item["path"]}')
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(BUNDLE / 'overlay' / item['path'], destination)
-    fixture_adaptations = manifest["adaptations"]
+    fixture_adaptations = list(manifest["adaptations"])
+    fixture_adaptations.append({"TEMP_mock_input_adapter": apply_client_fixture_adapter(worktree)})
     unit_file = worktree / 'code/modules/unit_tests/_unit_tests.dm'
     contents = unit_file.read_text(encoding='utf-8')
     anchor = '#undef TEST_ASSERT\n'
@@ -185,7 +189,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--settings', type=Path, default=default_settings)
     parser.add_argument('--repository', type=Path)
-    parser.add_argument('--suite', choices=('all', 'production', 'native', 'dm', 'python', 'bun'), default='all')
+    parser.add_argument('--suite', choices=('all', 'canonical', 'production', 'native', 'dm', 'python', 'bun'), default='all')
     parser.add_argument('--artifacts', type=Path, help='Parent directory for a new isolated run; defaults to the OS TEMP directory')
     parser.add_argument('--include-worktree', action='store_true',
                         help='Capture tracked and untracked product bytes on HEAD in the isolated TEMP worktree')
@@ -257,13 +261,14 @@ def main():
         report['snapshot_staged_patch_sha256'] = hashlib.sha256(staged_patch).hexdigest()
         if not report['snapshot_applied_exactly']:
             raise RuntimeError('TEMP index or tracked working tree differs from the captured source snapshot')
-        if args.suite in ('all', 'production', 'native', 'dm'):
+        report['results']['native_preservation'] = native_preservation.run(worktree)
+        if args.suite in ('all', 'canonical', 'production', 'native', 'dm'):
             isolate_bootstrap_log(worktree)
             seed_cutter(worktree, settings)
             report['temp_environment_adjustment'] = 'python bootstrap: per-process log name to avoid Windows writer collision'
             report['cutter_sha256'] = settings['cutter_sha256']
         build = str(worktree / 'tools/build/build.bat')
-        if args.suite in ('all', 'production'):
+        if args.suite in ('all', 'canonical', 'production'):
             execute([build, 'build', '-Werror'], worktree, run_root / 'production.log', env)
             artifacts = run_root / 'production-artifacts'
             artifacts.mkdir()
@@ -272,12 +277,12 @@ def main():
             report['results']['production'] = {'command': 'tools/build/build.bat build -Werror',
                 'dmb_sha256': digest(artifacts / 'tgstation.dmb'), 'dme_sha256': digest(worktree / 'tgstation.dme'),
                 'external_tests_injected': False}
-        if args.suite in ('all', 'native'):
+        if args.suite in ('all', 'canonical', 'native'):
             execute([build, 'dm', '-DCIBUILDING', '-Werror', '-ITG0001', '-Iloop_checks'],
                      worktree, run_root / 'native-harness-compile.log', env)
             report['results']['native_harness_compile'] = {
                 'external_tests_injected': False, 'dmb_sha256': digest(worktree / 'tgstation.dmb')}
-        if args.suite not in ('production', 'native'):
+        if args.suite not in ('canonical', 'production', 'native'):
             report['test_fixture_adaptations'] = stage_tests(worktree, manifest)
         if args.suite in ('all', 'python'):
             execute([sys.executable, '-B', '-m', 'unittest', 'discover', '-s',

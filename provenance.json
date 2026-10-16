@@ -7,7 +7,8 @@
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/_tests.dm",
       "original_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47",
       "changes": [],
-      "adapted_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47"
+      "adapted_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47",
+      "parent_adapted_sha256": "270b55e7f5d300aabf72fde579b6e41c6911ce9319f5c8e7c732515c27fa4c47"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/dealer_stock.dm",
@@ -16,7 +17,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "b0f9d0b9f184fa4a2872801f376cb1fc55b5b6aac56a02f28386ae9fc7f5866b"
+      "adapted_sha256": "b0f9d0b9f184fa4a2872801f376cb1fc55b5b6aac56a02f28386ae9fc7f5866b",
+      "parent_adapted_sha256": "b0f9d0b9f184fa4a2872801f376cb1fc55b5b6aac56a02f28386ae9fc7f5866b"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/equipment.dm",
@@ -25,7 +27,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199"
+      "adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199",
+      "parent_adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/extension_hooks.dm",
@@ -34,7 +37,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "f92b88f6892d1621a48ce130ad6e3f1fe336933a9714e4b2790ddb21640358a1"
+      "adapted_sha256": "f92b88f6892d1621a48ce130ad6e3f1fe336933a9714e4b2790ddb21640358a1",
+      "parent_adapted_sha256": "f92b88f6892d1621a48ce130ad6e3f1fe336933a9714e4b2790ddb21640358a1"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/faction_outfits.dm",
@@ -43,7 +47,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "616e668f95e33369ebf6351fadb0398aef19bba7f881a028dcd9be764bb20f91"
+      "adapted_sha256": "616e668f95e33369ebf6351fadb0398aef19bba7f881a028dcd9be764bb20f91",
+      "parent_adapted_sha256": "616e668f95e33369ebf6351fadb0398aef19bba7f881a028dcd9be764bb20f91"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/faction_uniform_overlays.dm",
@@ -52,7 +57,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "2072f9ae62b3a131fbc356c974ad7f1cd552d4134b81395af664d0883cec6454"
+      "adapted_sha256": "2072f9ae62b3a131fbc356c974ad7f1cd552d4134b81395af664d0883cec6454",
+      "parent_adapted_sha256": "2072f9ae62b3a131fbc356c974ad7f1cd552d4134b81395af664d0883cec6454"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/icons_landmarks.dm",
@@ -61,14 +67,16 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "ca20c4b3574d6a5cc3525381303adeaacf720d4549d84b7cae4ad9822d493485"
+      "adapted_sha256": "ca20c4b3574d6a5cc3525381303adeaacf720d4549d84b7cae4ad9822d493485",
+      "parent_adapted_sha256": "ca20c4b3574d6a5cc3525381303adeaacf720d4549d84b7cae4ad9822d493485"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/id_templates.dm",
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/id_templates.dm",
       "original_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377",
       "changes": [],
-      "adapted_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377"
+      "adapted_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377",
+      "parent_adapted_sha256": "3a27c01c5cc905fd27a7103148ac0eb18351388693f8cc3b115f6866faf6c377"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/identity_items.dm",
@@ -77,7 +85,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "966c438ff58e30ce0fa030b40e9930b50038a0e56119cd9d2cf3807fcd4b3933"
+      "adapted_sha256": "966c438ff58e30ce0fa030b40e9930b50038a0e56119cd9d2cf3807fcd4b3933",
+      "parent_adapted_sha256": "966c438ff58e30ce0fa030b40e9930b50038a0e56119cd9d2cf3807fcd4b3933"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/preferences_regressions.dm",
@@ -86,14 +95,16 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "c1e67ccd39b344c9202d146560bec4df4524fa838a0332879620fe908d9bd5ea"
+      "adapted_sha256": "c1e67ccd39b344c9202d146560bec4df4524fa838a0332879620fe908d9bd5ea",
+      "parent_adapted_sha256": "c1e67ccd39b344c9202d146560bec4df4524fa838a0332879620fe908d9bd5ea"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_override_lifecycle.dm",
       "original_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1",
       "changes": [],
-      "adapted_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1"
+      "adapted_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1",
+      "parent_adapted_sha256": "049cf890fabadf6cc153add35f2e5889740c5ef0d9ca0e1ec3f51a9437561cc1"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
@@ -102,7 +113,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a"
+      "adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a",
+      "parent_adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/profile_selection.dm",
@@ -112,7 +124,8 @@
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
         "Assert independent requested startup flags and real initialized donor pool before mutating flags; retain all4 internal policy scenarios and original gate/overflow checks"
       ],
-      "adapted_sha256": "b486701e0a05151a90fcdffc5adb9473d22217c4120a5f4529152c5d9d8caff7"
+      "adapted_sha256": "b486701e0a05151a90fcdffc5adb9473d22217c4120a5f4529152c5d9d8caff7",
+      "parent_adapted_sha256": "b486701e0a05151a90fcdffc5adb9473d22217c4120a5f4529152c5d9d8caff7"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/seclown_equipment.dm",
@@ -121,7 +134,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "4ac7b3864d7923c35cd29153dc9ce71169a4540c349f000a20ae238bbc903632"
+      "adapted_sha256": "4ac7b3864d7923c35cd29153dc9ce71169a4540c349f000a20ae238bbc903632",
+      "parent_adapted_sha256": "4ac7b3864d7923c35cd29153dc9ce71169a4540c349f000a20ae238bbc903632"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/tsf_clothing.dm",
@@ -130,28 +144,34 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "0425757bf65b1b666930735a84c6a1e6f3a048568d4c82ed92e2d525b2e8bd28"
+      "adapted_sha256": "0425757bf65b1b666930735a84c6a1e6f3a048568d4c82ed92e2d525b2e8bd28",
+      "parent_adapted_sha256": "0425757bf65b1b666930735a84c6a1e6f3a048568d4c82ed92e2d525b2e8bd28"
     },
     {
       "destination": "modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/ussp_clothing.dm",
       "original_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb",
       "changes": [],
-      "adapted_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb"
+      "adapted_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb",
+      "parent_adapted_sha256": "4d8261e4c77c80485301ea6dc0e1fa5d723ef859363f7f120eb2b0062e3a19eb"
     },
     {
       "destination": "modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
       "source": "baseline/modular_bandastation/dynamic/code/tests/roundstart_cancellation.dm",
       "original_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f",
-      "changes": [],
-      "adapted_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f"
+      "changes": [
+        "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams."
+      ],
+      "adapted_sha256": "120a48e5d7c8cc718f378e09ff8dc8f911ef1fecf563643b32361dbee5bc7a8a",
+      "parent_adapted_sha256": "9b84b0dbd2246e03c34cd12c95b50e25d680105d962ada28661bc4fd3f062d0f"
     },
     {
       "destination": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
       "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
       "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
       "changes": [],
-      "adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
+      "adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
+      "parent_adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
     },
     {
       "destination": "modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
@@ -160,32 +180,39 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
         "Character phase has full native signature; pass latejoin by name to retain original respawn-policy scenarios",
-        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph"
+        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph",
+        "Runtime fixture correction: connect the mock persistent client to lobby. Headless public invalid-job attempts assert clientless behavior; helper localhost policy/menu/reentry assertions retained. The unchanged real-client localhost branch is checked statically, and connected-client notification remains NOT RUN."
       ],
-      "adapted_sha256": "ee60d2b2159070348dd359fc8b8286ca3f9249c32348b14b346e489892ff35c3"
+      "adapted_sha256": "a7fe43820a3b031e33e7380107a4fd825b5b0cbadd80256ee5de71f9485f9f85",
+      "parent_adapted_sha256": "ee60d2b2159070348dd359fc8b8286ca3f9249c32348b14b346e489892ff35c3"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
       "source": "baseline/modular_bandastation/jobs/code/tests/admin_dummy_admission.dm",
       "original_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e",
       "changes": [],
-      "adapted_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e"
+      "adapted_sha256": "7720525eadbfd6b56a8bf618f62cc946e4b9271f4f6e6e924346803c49d9655f",
+      "parent_adapted_sha256": "a0acbac5917f60323a392424643667edc34acabd47afeb3b33c1806318a2dd2e"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/admission.dm",
       "source": "baseline/modular_bandastation/jobs/code/tests/admission.dm",
       "original_sha256": "8f60ce3eb11617ab0256a42b0b5022d38f5ab2bcf022edb6b5b638e34139dec4",
       "changes": [
-        "Carry prior runner adapter into reviewed fixture bytes: native fake lobby key for priority lifetime ban lookup"
+        "Carry prior runner adapter into reviewed fixture bytes: native fake lobby key for priority lifetime ban lookup",
+        "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
+        "Runtime fixture correction: provide mock key/persistent state and controlled spawn point; mutate queue/load at the actual native eligibility passes, preserving all rejection/no-role/no-vacancy/no-body assertions. Native availability is called once; assignment has a separate real eligibility pass."
       ],
-      "adapted_sha256": "cdbf7876e859203679246d5527f6c2f81efc50dbc9e38fc5fabfec368ecc97b0"
+      "adapted_sha256": "9d5f80dc7a60077ffa304b1d466cc47401fac088ec8e32d1ac8ac653a2ff9b48",
+      "parent_adapted_sha256": "cdbf7876e859203679246d5527f6c2f81efc50dbc9e38fc5fabfec368ecc97b0"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/fixtures.dm",
       "source": "baseline/modular_bandastation/jobs/code/tests/fixtures.dm",
       "original_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1",
       "changes": [],
-      "adapted_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1"
+      "adapted_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1",
+      "parent_adapted_sha256": "300b21224936878646d6da881764ec004fbe4175b83944253c0ba7b7773256a1"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/handover.dm",
@@ -193,9 +220,11 @@
       "original_sha256": "36bd02199c12eb3a91047dbb13c0dca9585ccdcbd87899801ceb1fa662a587ee",
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
-        "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
+        "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture.",
+        "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
+        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied."
       ],
-      "adapted_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
+      "adapted_sha256": "5bf4eaf6344fbec4579ae227f2ea39ab9a897a644b1ce3afa705e015d8310976",
       "fixture_runtime_corrections": [
         {
           "path": "modular_bandastation/jobs/code/tests/handover.dm",
@@ -203,16 +232,19 @@
           "corrected_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268",
           "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
         }
-      ]
+      ],
+      "parent_adapted_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/latejoin_context.dm",
       "source": "baseline/modular_bandastation/jobs/code/tests/latejoin_context.dm",
       "original_sha256": "ab50b9c8d07c703df96fa77fd739d0834490ab7a89f5d5755b8665065437b277",
       "changes": [
-        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Runtime fixture correction: active-slot/map/toggle mutations run at both actual native eligibility boundaries via fixture job required_playtime_remaining, not a nonexistent second IsJobUnavailable call. Mock key/persistent state and controlled destination supplied; all stale-profile rejection assertions retained."
       ],
-      "adapted_sha256": "0be26a2e7e5c258e52e00f7aa405299790611a65a2f89d0bd86130afb273cf93"
+      "adapted_sha256": "d993456312dbd8dda0d434708082d77094621f75ee15addb45840b2b753db7b2",
+      "parent_adapted_sha256": "0be26a2e7e5c258e52e00f7aa405299790611a65a2f89d0bd86130afb273cf93"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/prisoner_record.dm",
@@ -221,35 +253,40 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "f80fd9d58f8704eb0a1d186af2520e592681c32ca7faa1a33b0ee3c18d0f2f08"
+      "adapted_sha256": "f80fd9d58f8704eb0a1d186af2520e592681c32ca7faa1a33b0ee3c18d0f2f08",
+      "parent_adapted_sha256": "f80fd9d58f8704eb0a1d186af2520e592681c32ca7faa1a33b0ee3c18d0f2f08"
     },
     {
       "destination": "modular_bandastation/objects/code/tests/pda.dm",
       "source": "baseline/modular_bandastation/objects/code/tests/pda.dm",
       "original_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33",
       "changes": [],
-      "adapted_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33"
+      "adapted_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33",
+      "parent_adapted_sha256": "74968214634558bcdc600d66084b391f7c7b8e7f99bd78c4510403155b8daa33"
     },
     {
       "destination": "tools/build/juke/exec.test.js",
       "source": "baseline/tools/build/juke/exec.test.js",
       "original_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
       "changes": [],
-      "adapted_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c"
+      "adapted_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
+      "parent_adapted_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c"
     },
     {
       "destination": "tools/migrate_job_slots/tests/test_migrate.py",
       "source": "baseline/tools/migrate_job_slots/tests/test_migrate.py",
       "original_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7",
       "changes": [],
-      "adapted_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7"
+      "adapted_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7",
+      "parent_adapted_sha256": "9627746da9282857659a7fa126b9165292058379995667895cfc03f448224ce7"
     },
     {
       "destination": "tools/migrate_job_slots/tests/test_readiness.py",
       "source": "baseline/tools/migrate_job_slots/tests/test_readiness.py",
       "original_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320",
       "changes": [],
-      "adapted_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320"
+      "adapted_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320",
+      "parent_adapted_sha256": "811c288ce174cd0971f34566f18c387ddfb4f49fa001577ade64fae6d308f320"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
@@ -261,12 +298,15 @@
         "Replace entry_specialized_body_admission/private body factory fixture with current contract_public_create_character public native route fixture",
         "Replace entry_ui_dispatch/private UI continuation test with current contract_cleanup_latejoin_authorization, offline route assertion and shared-dispatch source contract",
         "Replace old continuation-count authorization fixture with current contract_cleanup_latejoin_authorization signal/status/blocked-all-actions assertions",
-        "Legacy action contract now proves deletion/forged dispatch rejection instead of calling removed FALSE stub; same canonical mapping/DTO nonmutation checks",
-        "Storage boundary keeps hostile persisted legacy input and canonical-only load/save assertions; removed field no longer allocated or mutated",
+        "Legacy native handler/field restored; module instance delegation and direct handler disable old protocol. Assertions prove canonical/compatibility state never aliases or mutates through forged actions.",
+        "Storage boundary keeps hostile persisted legacy input: native field exists but stays empty, canonical map independently loaded before nested save and native sanitize; final persisted output canonical only.",
         "Fix a missed typepath before closing-list-bracket boundary in registry lookup; the allocated class/assertions remain unchanged.",
-        "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+        "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved.",
+        "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
+        "Runtime fixture correction: release callback reference by assigning null; native callback explicitly forbids qdel. All four yielding client/mind scenarios and all eighteen assertions retained.",
+        "Native eligibility boundary fixture now explicitly sets replacement age40 (native informed default is random21..50, fixture threshold30). Real ban-cache wait/requester swap and all215 prior assertions retained; parent refusal precedence unchanged."
       ],
-      "adapted_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
+      "adapted_sha256": "216c95212ec7714bac3f004b2a685ef6c1c0642ce8990a843ede9980cebe7f42",
       "fixture_runtime_corrections": [
         {
           "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
@@ -274,14 +314,18 @@
           "corrected_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
           "reason": "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
         }
-      ]
+      ],
+      "parent_adapted_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/core-minimum_regression_late_helpers.dm",
       "source": "task_state/20261016-pr11-core-minimum/REGRESSION_LATE_HELPERS.dm",
       "original_sha256": "67d3dc3c59a30cfb2046f9fc9eb0cc92bbf51655d4d24f13e6d2eee93b51ad8a",
-      "changes": [],
-      "adapted_sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5"
+      "changes": [
+        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied."
+      ],
+      "adapted_sha256": "bb673e0c7a863eea5d08d6a66a3f9d414294f07b38b228935a75639975aaa8d4",
+      "parent_adapted_sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
@@ -290,16 +334,20 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "1959ef423608dddf325fc137eca068cb03f0187d7b24be9272fe722e53524f07"
+      "adapted_sha256": "5205fe3ddbf2f80c4929d71ad714f51bd432a430b5581155f204531de90c499e",
+      "parent_adapted_sha256": "1959ef423608dddf325fc137eca068cb03f0187d7b24be9272fe722e53524f07"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/readability_entry_regressions.dm",
       "source": "task_state/20261016-pr11-readability/ENTRY_REGRESSIONS.dm",
       "original_sha256": "dd204930d677ef17b742fa7fffb03d4122deb5bd2917fd5c74ebc3fa00d9d72b",
       "changes": [
-        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "Append-only native_latejoin_harddelete_ui regression calls retained fallback/random available/random rejected/dynamic/static routes. Only eligibility hard-delete seam and documented mock random predicate are substituted. Checks actual caller null reference, no second availability query and safe direct postmodal adapters; not live client/SQL/input coverage.",
+        "Runtime fixture correction: direct del bypassed native Destroy and polluted mob registries with null. Use actual qdel->parent Destroy->QDEL_HINT_HARDDEL_NOW, preserving all five routes and hard-delete assertions; assert one native cleanup and no null in the three native registries. Product code unchanged."
       ],
-      "adapted_sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f"
+      "adapted_sha256": "0c6d519eff792a8461fb9a81be331893e845be9563c03a33063d6625b48d7a2a",
+      "parent_adapted_sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/readability_jobs_regressions.dm",
@@ -308,7 +356,8 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
       ],
-      "adapted_sha256": "8de4f9d38c9ba60712f2e6b5980119f8464ec08fd0a3f3c5b7c94987ed940a62"
+      "adapted_sha256": "075e1b6a8ad00183314487cf34820fe3f7627800a59bdc1e62a955730aa13fd1",
+      "parent_adapted_sha256": "8de4f9d38c9ba60712f2e6b5980119f8464ec08fd0a3f3c5b7c94987ed940a62"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
@@ -316,9 +365,11 @@
       "original_sha256": "ad585ca4c7d9e7eb4a31fd120b0548fc7a3b9140418ceb04157e10048b4d182f",
       "changes": [
         "Use the actual native Medical Doctor datum type for the later Dynamic writer; preserve both rollback assertions unchanged.",
-        "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
+        "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged.",
+        "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
+        "Runtime fixture correction: provide public AttemptLateSpawn with a synthetic key and linked persistent client/mind. The constructor seam still owns its own side effects; actual transfer/equipment/latejoin tail and rollback assertions retained."
       ],
-      "adapted_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
+      "adapted_sha256": "1fdcdf045675c4366454b6bcef4c3a59c0352824a77948e2d950900cd332d497",
       "corrected_local_source_sha256": "a8411f1312ff389ade9cb24404aafa24de93f4e05741e33cf5d0f9e0790f4742",
       "fixture_runtime_corrections": [
         {
@@ -327,7 +378,8 @@
           "corrected_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937",
           "reason": "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
         }
-      ]
+      ],
+      "parent_adapted_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
@@ -344,7 +396,8 @@
           "corrected_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4",
           "reason": "Fixture teardown uses native delete_photos for associative photo entries, matching existing Prisoner fixtures; native BASE Destroy QDEL_LAZYLIST on photo keys is pre-existing. Photo creation and all lifecycle assertions retained."
         }
-      ]
+      ],
+      "parent_adapted_sha256": "6b29b28e115381e919bbc6c2d954dae1968faabe376956cee5644410720734f4"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_regressions_prefs.dm",
@@ -352,9 +405,11 @@
       "original_sha256": "b2ba030387e52abe60e7cfdb1a86e7ac37907f84b7d51c4b46d966759f0d55d7",
       "changes": [
         "Keep direct real selected-profile offline guard coverage without overriding a deleted continuation or bypassing native client authorization",
-        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph"
+        "Resolve module-owned admission constants through late fixture helpers; native assertion macros execute earlier in include graph",
+        "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams."
       ],
-      "adapted_sha256": "13f5896d1cc64af1b2b46266c5a03b27fee57cdca2e0e96842371380a30d6dd4"
+      "adapted_sha256": "173dd24a5ec5c5fd7507cb9b15fe57945cfbb3e9833a1a59d204c4df1998f2a7",
+      "parent_adapted_sha256": "13f5896d1cc64af1b2b46266c5a03b27fee57cdca2e0e96842371380a30d6dd4"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/persisted_variant_ids.dm",
@@ -372,17 +427,33 @@
           "corrected_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27",
           "reason": "Correct only fixture canonical title to the actual unchanged original/current VIP Corporate Guest; expected vip_guest and all migration assertions retained."
         }
-      ]
+      ],
+      "parent_adapted_sha256": "527309ed2e32f1826f057d02311fcbd94174f5593570c8bc6151576a1c17ab27"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_variant_regressions.dm",
       "source": "task_state/20261016-pr11-contract-cleanup/VARIANT_REGRESSIONS.dm",
       "original_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52",
       "changes": [],
-      "adapted_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52"
+      "adapted_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52",
+      "parent_adapted_sha256": "b5adedc3fb227ea9fb153e2bea55203fdc5c912d6de626f0aa5c88b668c83b52"
     }
   ],
   "support_adaptations": [
+    {
+      "path": "client_fixture_adapter.py",
+      "source": "preserve-native external input adapter",
+      "changes": [
+        "Five exact TEMP substitutions/six reads bridge only mock prefs/history/account age input; full source hashes/counts/scopes checked before writes. Constructor, real-client admission and consumers unchanged; never used by production/native compile."
+      ]
+    },
+    {
+      "path": "native_preservation.py",
+      "source": "preserve-native reviewed native contract",
+      "changes": [
+        "All native definitions and multiline blocks retained; every current native insertion/single-line replacement reviewed with owner and reason in NATIVE_CONTRACTS.json. Read-only BASE comparison before TEMP overlays."
+      ]
+    },
     {
       "path": "source_invariants.py",
       "source": "task_state/20261016-pr11-contract-cleanup/source_invariants.py",
@@ -398,7 +469,9 @@
         "Reviewed tracked/untracked source bytes captured exactly; source integrity checked in finally.",
         "Four independent flag modes 00/01/10/11 and expected startup markers; baseline policy assertions retained.",
         "Late module-constant helpers and all unique tests focused only in TEMP; removed private continuation fixtures replaced by real public operations.",
-        "Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import."
+        "Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.",
+        "Before any TEMP overlay, native_preservation checks every code/ hunk against NATIVE_CONTRACTS.json; canonical mode never stages external tests.",
+        "Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded."
       ]
     }
   ],
@@ -442,6 +515,19 @@
           "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
         }
       ]
+    },
+    {
+      "previous_manifest_sha256": "10960c81793ab771fd2d3949f07b132f408a8156df7dee4ade2e1f198cfe118e",
+      "reason": "Additional native preservation after user review: restore original greeting signatures/calls, native IsJobUnavailable call, native random eligibility if/continue and four-argument assign_role API; module state and parent extensions retain behavior. All product phases rerun against newly sealed frozen tree.",
+      "corrections": [
+        "Greeting fixtures call actual restored parent and module additional-information hook; original assertions preserved and expanded.",
+        "Append latejoin state-entry test: 9 real admission calls, 35 assertions; original fixture prefix preserved.",
+        "Replace is_debug_dummy argument in two fixtures with explicit module-owned is_admin_job_dummy state; positive and negative assertions retained.",
+        "Refresh exactly two full-input hashes in client_fixture_adapter; scopes, five substitutions and six reads unchanged. Production/native compiles remain unadapted.",
+        "Rejected random-menu availability replacement and own appended fixture removed; original 16173-byte fixture restored exactly."
+      ]
     }
-  ]
+  ],
+  "parent_reviewed_head": "705c370f528aa001e5857389b6cc766a231e8b5c",
+  "parent_bundle_manifest_sha256": "5bb0391e779890b32357137dbbdb178fa2b458db21488a38738ee43d6a611acc"
 }

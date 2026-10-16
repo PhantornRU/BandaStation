@@ -105,14 +105,21 @@
 	title = "External publish greeting fixture"
 	job_flags = NONE
 	var/greeting_reads = 0
+	var/additional_reads = 0
+	var/native_reads_before_additional = 0
 	var/mob/greeted_body
 
 /datum/job/publish_audit_greeting/config_check()
 	return FALSE
 
-/datum/job/publish_audit_greeting/get_spawn_message_information(mob/spawned)
+/datum/job/publish_audit_greeting/get_spawn_message_information()
 	. = ..()
 	greeting_reads++
+
+/datum/job/publish_audit_greeting/get_additional_spawn_information(mob/spawned)
+	. = ..()
+	additional_reads++
+	native_reads_before_additional = greeting_reads
 	greeted_body = spawned
 	. += "Committed body: [spawned?.real_name]"
 
@@ -147,19 +154,23 @@
 	TEST_ASSERT_EQUAL(character_mind.set_assigned_role_with_greeting(greeting_job, null), fallback_job, "The replacement lost the native previous-role return")
 	TEST_ASSERT_EQUAL(target_signals, 1, "A single assignment emitted duplicate or missing target-role signals")
 	TEST_ASSERT_EQUAL(greeting_job.greeting_reads, 1, "A single assignment constructed duplicate or missing greetings")
+	TEST_ASSERT_EQUAL(greeting_job.additional_reads, 1, "A single assignment constructed duplicate or missing additional instructions")
+	TEST_ASSERT_EQUAL(greeting_job.native_reads_before_additional, 1, "Additional instructions ran before the native greeting")
 	TEST_ASSERT_EQUAL(greeting_job.greeted_body, body, "The greeting did not receive the committed mind body")
-	var/message = greeting_job.get_spawn_message(body)
+	var/message = jointext(greeting_job.get_additional_spawn_information(body), "\n")
 	TEST_ASSERT(findtext(message, body.real_name), "The greeting formatter discarded the committed body's information")
 	character_mind.set_assigned_role(fallback_job)
 	target_signals = 0
 	fallback_signals = 0
 	change_role_on_signal = TRUE
 	var/reads_before = greeting_job.greeting_reads
+	var/additional_reads_before = greeting_job.additional_reads
 	TEST_ASSERT_EQUAL(character_mind.set_assigned_role_with_greeting(greeting_job, null), fallback_job, "A reentrant role change lost the original return value")
 	TEST_ASSERT_EQUAL(target_signals, 1, "The replacement assigned the requested role more than once")
 	TEST_ASSERT_EQUAL(fallback_signals, 1, "The fixture did not execute the real reentrant role setter")
 	TEST_ASSERT_EQUAL(character_mind.assigned_role, fallback_job, "The greeting replacement undid a listener's role veto")
 	TEST_ASSERT_EQUAL(greeting_job.greeting_reads, reads_before, "A vetoed role still constructed its greeting")
+	TEST_ASSERT_EQUAL(greeting_job.additional_reads, additional_reads_before, "A vetoed role still constructed additional instructions")
 
 /datum/unit_test/publish_audit_committed_body_greeting/Destroy()
 	if(body)
