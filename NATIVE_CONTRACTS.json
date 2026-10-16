@@ -108,7 +108,7 @@
           "old_start": 471,
           "new_start": 472,
           "before": "",
-          "after": "\t\t\t\tqdel(attempt) // BANDASTATION EDIT - No construction receipt is needed on this native path.\n",
+          "after": "\t\t\t\tqdel(attempt) // BANDASTATION EDIT - Release the roundstart snapshot when no spawn point exists.\n",
           "owner": "jobs / dynamic",
           "reason": "Освобождение снимка на штатном missing-destination continue; native ветка сохраняется."
         },
@@ -144,7 +144,7 @@
           "before": "\t\t\tinject(readied_player.new_character)\n",
           "after": "\t\t\tinject(readied_player.new_character, initial_job_record = TRUE) // BANDASTATION EDIT - Initial job record callback\n",
           "owner": "jobs: initial record",
-          "reason": "Roundstart помечает первоначальную job-запись; последующие identity updates не повторяют стартовые эффекты."
+          "reason": "Первоначальная job-запись явно отмечается только в штатных spawn маршрутах; произвольный inject без подготовленного тела не запускает job effects. Повторы дополнительно защищены состоянием потребителя."
         },
         {
           "old_start": 106,
@@ -152,7 +152,7 @@
           "before": "/datum/manifest/proc/inject(mob/living/carbon/human/person, atom/appearance_proxy)\n",
           "after": "/datum/manifest/proc/inject(mob/living/carbon/human/person, atom/appearance_proxy, initial_job_record = FALSE) // BANDASTATION EDIT - Initial job record callback\n",
           "owner": "jobs: initial record",
-          "reason": "Явный initial_job_record контекст в общей сигнатуре; обычные вызовы сохраняют FALSE."
+          "reason": "Первоначальная job-запись явно отмечается только в штатных spawn маршрутах; произвольный inject без подготовленного тела не запускает job effects. Повторы дополнительно защищены состоянием потребителя."
         },
         {
           "old_start": 141,
@@ -168,7 +168,7 @@
           "before": "",
           "after": "\tif(initial_job_record) // BANDASTATION EDIT - Initial record callbacks do not run for identity changes.\n\t\tperson.mind.assigned_role.on_initial_crew_record(person, new_record)\n",
           "owner": "jobs: initial record",
-          "reason": "Callback получает точный record сразу после создания. Lookup по имени во внешнем wrapper неоднозначен."
+          "reason": "Первоначальная job-запись явно отмечается только в штатных spawn маршрутах; произвольный inject без подготовленного тела не запускает job effects. Повторы дополнительно защищены состоянием потребителя."
         }
       ]
     },
@@ -213,17 +213,17 @@
           "old_start": 255,
           "new_start": 255,
           "before": "",
-          "after": "\tload_job_character_slots() // BANDASTATION ADD - Canonical slots before nested saves and native sanitation.\n",
+          "after": "\tload_job_profile_assignments() // BANDASTATION ADD - Convert profile assignments before nested saves and native sanitation.\n",
           "owner": "job_slots_preferences",
-          "reason": "Load hook до вложенного check_keybindings/save; save hook после native set_entry до единственного flush. Post-wrapper не обеспечивает нужный I/O порядок."
+          "reason": "Конверсия legacy/canonical до вложенного keybindings save; повреждённые entries сохраняются. Post-wrapper уже опоздал бы к первому flush."
         },
         {
           "old_start": 349,
           "new_start": 350,
           "before": "",
-          "after": "\tsave_job_character_slots() // BANDASTATION ADD - Canonical format before the single native flush.\n",
+          "after": "\twrite_job_profile_assignments() // BANDASTATION ADD - Stage profile assignments before the single native flush.\n",
           "owner": "job_slots_preferences",
-          "reason": "Load hook до вложенного check_keybindings/save; save hook после native set_entry до единственного flush. Post-wrapper не обеспечивает нужный I/O порядок."
+          "reason": "Canonical запись или восстановление повреждённых entries после native set_entry и до единственного flush; parent I/O сохранён."
         }
       ]
     },
@@ -313,32 +313,8 @@
           "reason": "Подстановка species назначенного профиля без load; штатные config/trait проверки выполняются дальше."
         },
         {
-          "old_start": 32,
-          "new_start": 32,
-          "before": "",
-          "after": "\tvar/datum/choice_context = user.capture_latejoin_request() // BANDASTATION EDIT - Preserve identity across the modal.\n",
-          "owner": "jobs: latejoin UI",
-          "reason": "Снимок requester/profile до fallback eligibility и input. Singleton меню не хранит состояние игрока."
-        },
-        {
-          "old_start": 35,
-          "new_start": 36,
-          "before": "",
-          "after": "\n\tjobs = prepare_latejoin_job_choices(user, jobs, choice_context) // BANDASTATION EDIT - Decorate canonical choices.\n\tif(isnull(jobs))\n\t\treturn\n",
-          "owner": "jobs: latejoin UI",
-          "reason": "Модуль преобразует список canonical titles в labels; native цикл и input остаются на месте."
-        },
-        {
-          "old_start": 41,
-          "new_start": 46,
-          "before": "",
-          "after": "\tinput_contents = resolve_latejoin_job_choice(user, input_contents, jobs, choice_context) // BANDASTATION EDIT - Resolve the label only for the same request.\n\tif(!input_contents)\n\t\treturn\n",
-          "owner": "jobs: latejoin UI",
-          "reason": "Разрешение label обратно в job только для того же requester/profile после input; native Attempt вызов сохранён."
-        },
-        {
           "old_start": 66,
-          "new_start": 74,
+          "new_start": 66,
           "before": "",
           "after": "\tvar/client/requester = owner.client // BANDASTATION EDIT - Preserve the requester across eligibility waits.\n",
           "owner": "jobs: latejoin UI",
@@ -346,7 +322,7 @@
         },
         {
           "old_start": 97,
-          "new_start": 106,
+          "new_start": 98,
           "before": "",
           "after": "\t\t\tif(QDELETED(owner) || owner.client != requester) // BANDASTATION EDIT - Eligibility may yield.\n\t\t\t\treturn list()\n",
           "owner": "jobs: latejoin UI",
@@ -354,7 +330,7 @@
         },
         {
           "old_start": 99,
-          "new_start": 110,
+          "new_start": 102,
           "before": "",
           "after": "\t\t\t\t\"availability\" = job_availability, // BANDASTATION EDIT - Reuse the computed result in module presentation.\n",
           "owner": "jobs: latejoin UI",
@@ -362,7 +338,7 @@
         },
         {
           "old_start": 137,
-          "new_start": 149,
+          "new_start": 141,
           "before": "",
           "after": "\t\t\tif(QDELETED(owner)) // BANDASTATION EDIT - A previous eligibility check may have deleted the lobby.\n\t\t\t\treturn list(\"departments_static\" = departments)\n",
           "owner": "jobs: latejoin UI",
@@ -370,7 +346,7 @@
         },
         {
           "old_start": 154,
-          "new_start": 168,
+          "new_start": 160,
           "before": "",
           "after": "\tif(.) // BANDASTATION EDIT - Respect the native parent authorization result.\n\t\treturn\n",
           "owner": "jobs: latejoin UI",
@@ -378,7 +354,7 @@
         },
         {
           "old_start": 164,
-          "new_start": 180,
+          "new_start": 172,
           "before": "",
           "after": "\t\t\tvar/datum/selection_context = owner.capture_latejoin_request() // BANDASTATION EDIT - Keep modal replies tied to this profile.\n\t\t\tif(!is_latejoin_selection_current(owner, params, selection_context))\n\t\t\t\treturn TRUE\n",
           "owner": "jobs: latejoin UI",
@@ -386,7 +362,7 @@
         },
         {
           "old_start": 170,
-          "new_start": 189,
+          "new_start": 181,
           "before": "",
           "after": "\n\t\t\tif(!is_latejoin_selection_current(owner, params, selection_context)) // BANDASTATION EDIT - Random selection may yield.\n\t\t\t\treturn TRUE\n",
           "owner": "jobs: latejoin UI",
@@ -394,7 +370,7 @@
         },
         {
           "old_start": 220,
-          "new_start": 242,
+          "new_start": 234,
           "before": "",
           "after": "\tvar/datum/choice_context = owner.capture_latejoin_request() // BANDASTATION EDIT - SQL and confirmation may yield.\n\tif(!owner?.is_latejoin_request_current(choice_context))\n\t\treturn\n",
           "owner": "jobs: latejoin UI",
@@ -402,7 +378,7 @@
         },
         {
           "old_start": 224,
-          "new_start": 249,
+          "new_start": 241,
           "before": "",
           "after": "\t\t\tif(!is_latejoin_random_job_allowed(owner, job_datum)) // BANDASTATION EDIT - Explicit roles are opt-in.\n\t\t\t\tcontinue\n",
           "owner": "jobs: latejoin UI",
@@ -410,7 +386,7 @@
         },
         {
           "old_start": 225,
-          "new_start": 252,
+          "new_start": 244,
           "before": "",
           "after": "\t\t\t\tcontinue\n\t\t\tif(!owner?.is_latejoin_request_current(choice_context)) // BANDASTATION EDIT - Eligibility may yield.\n\t\t\t\treturn\n\t\t\tif(!is_latejoin_random_job_allowed(owner, job_datum))\n",
           "owner": "jobs: latejoin UI",
@@ -418,7 +394,7 @@
         },
         {
           "old_start": 228,
-          "new_start": 259,
+          "new_start": 251,
           "before": "",
           "after": "\tif(!owner?.is_latejoin_request_current(choice_context)) // BANDASTATION EDIT - Also cover a rejected final SQL result.\n\t\treturn\n",
           "owner": "jobs: latejoin UI",
@@ -426,7 +402,7 @@
         },
         {
           "old_start": 240,
-          "new_start": 273,
+          "new_start": 265,
           "before": "",
           "after": "\t\tif(!is_latejoin_random_job_allowed(owner, SSjob.get_job(random))) // BANDASTATION EDIT - Preferences may change between rerolls.\n\t\t\tcontinue\n",
           "owner": "jobs: latejoin UI",
@@ -434,7 +410,7 @@
         },
         {
           "old_start": 242,
-          "new_start": 277,
+          "new_start": 269,
           "before": "\t\trandom_job = tgui_alert(owner, \"[job_title_ru(random)]?\", \"Случайная должность\", random_job_options)\n",
           "after": "\t\trandom_job = tgui_alert(owner, \"[get_latejoin_job_label(owner, random)]?\", \"Случайная должность\", random_job_options)\n",
           "owner": "jobs: latejoin UI",
@@ -442,19 +418,11 @@
         },
         {
           "old_start": 244,
-          "new_start": 279,
+          "new_start": 271,
           "before": "",
           "after": "\t\tif(!owner?.is_latejoin_request_current(choice_context)) // BANDASTATION EDIT - Reject a stale modal reply.\n\t\t\treturn\n",
           "owner": "jobs: latejoin UI",
           "reason": "После modal принимается ответ только прежнего requester/profile; безопасный receiver после hard-delete."
-        },
-        {
-          "old_start": 247,
-          "new_start": 284,
-          "before": "",
-          "after": "\t\t\tif(!is_latejoin_random_job_allowed(owner, SSjob.get_job(random))) // BANDASTATION EDIT - Recheck explicit opt-in after confirmation.\n\t\t\t\treturn\n",
-          "owner": "jobs: latejoin UI",
-          "reason": "Подтверждение не обходит снятый explicit opt-in; исходный return canonical job сохранён."
         }
       ]
     },
@@ -567,6 +535,5 @@
         }
       ]
     }
-  ],
-  "review": "Each native replacement is one input/signature/guard line, no pure deletion; all original definitions retained. See per-hunk owner and reason."
+  ]
 }

@@ -61,7 +61,8 @@ def main():
             'Late module-constant helpers and all unique tests focused only in TEMP; removed private continuation fixtures replaced by real public operations.',
             'Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.',
             'Before any TEMP overlay, native_preservation checks every code/ hunk against NATIVE_CONTRACTS.json; canonical mode never stages external tests.',
-            'Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded.']},
+            'Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded.',
+            'Final cleanup: Bun timeout is explicitly bounded at 30000ms after the unchanged subprocess-output regression exceeded the default 5000ms on Windows. Assertions and product build helper remain unchanged.']},
     ]
     test_files = []
     dm_names, python_count, bun_count = [], 0, 0

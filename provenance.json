@@ -169,8 +169,11 @@
       "destination": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
       "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
       "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
-      "changes": [],
-      "adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
+      "changes": [
+        "Final cleanup: malformed format tests now require raw entry preservation instead of sanitizing deletion; renamed storage hooks. Add two native load/save regressions covering six supported conversion cases and ten malformed maps, every nested flush, idempotence, unrelated saves and rejected set/reset actions.",
+        "Independent fixture review: freeze malformed expected JSON before storage/loading so mutation through an alias cannot weaken assertions. Product source unchanged; repeat DM suite only."
+      ],
+      "adapted_sha256": "2ada213eb9f3dd02a65404c2bd0d4fefaaa7ef22998599e3a2ed8e2a07ff489a",
       "parent_adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
     },
     {
@@ -304,15 +307,22 @@
         "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved.",
         "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
         "Runtime fixture correction: release callback reference by assigning null; native callback explicitly forbids qdel. All four yielding client/mind scenarios and all eighteen assertions retained.",
-        "Native eligibility boundary fixture now explicitly sets replacement age40 (native informed default is random21..50, fixture threshold30). Real ban-cache wait/requester swap and all215 prior assertions retained; parent refusal precedence unchanged."
+        "Native eligibility boundary fixture now explicitly sets replacement age40 (native informed default is random21..50, fixture threshold30). Real ban-cache wait/requester swap and all215 prior assertions retained; parent refusal precedence unchanged.",
+        "Final cleanup storage policy: replace obsolete rejection of supported legacy assignments with safe legacy-only and mixed conversion. Assert canonical -1/0 precedence, preservation of non-conflicting legacy entries in runtime and persisted output, independent source maps, unchanged inputs, empty native compatibility state, and exactly one native nested flush. Other test bodies and all prior admission/UI checks remain unchanged; product source unchanged."
       ],
-      "adapted_sha256": "216c95212ec7714bac3f004b2a685ef6c1c0642ce8990a843ede9980cebe7f42",
+      "adapted_sha256": "f83a3275dda8eb4144043c087072096efc5778449d2c30aa04eaab95dd41dd31",
       "fixture_runtime_corrections": [
         {
           "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
           "previous_sha256": "9e70ac58ea929eb0bf9e930a8f3580a769c4d164211074c0a5121b1bd0a2938b",
           "corrected_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
           "reason": "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+        },
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+          "previous_sha256": "216c95212ec7714bac3f004b2a685ef6c1c0642ce8990a843ede9980cebe7f42",
+          "corrected_sha256": "f83a3275dda8eb4144043c087072096efc5778449d2c30aa04eaab95dd41dd31",
+          "reason": "Final cleanup storage policy: replace obsolete rejection of supported legacy assignments with safe legacy-only and mixed conversion. Assert canonical -1/0 precedence, preservation of non-conflicting legacy entries in runtime and persisted output, independent source maps, unchanged inputs, empty native compatibility state, and exactly one native nested flush. Other test bodies and all prior admission/UI checks remain unchanged; product source unchanged."
         }
       ],
       "parent_adapted_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130"
@@ -344,9 +354,10 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
         "Append-only native_latejoin_harddelete_ui regression calls retained fallback/random available/random rejected/dynamic/static routes. Only eligibility hard-delete seam and documented mock random predicate are substituted. Checks actual caller null reference, no second availability query and safe direct postmodal adapters; not live client/SQL/input coverage.",
-        "Runtime fixture correction: direct del bypassed native Destroy and polluted mob registries with null. Use actual qdel->parent Destroy->QDEL_HINT_HARDDEL_NOW, preserving all five routes and hard-delete assertions; assert one native cleanup and no null in the three native registries. Product code unchanged."
+        "Runtime fixture correction: direct del bypassed native Destroy and polluted mob registries with null. Use actual qdel->parent Destroy->QDEL_HINT_HARDDEL_NOW, preserving all five routes and hard-delete assertions; assert one native cleanup and no null in the three native registries. Product code unchanged.",
+        "Final cleanup: native fallback restored exactly to BASE, so remove obsolete fallback eligibility route and its two deleted helper calls. Four real native hard-delete routes and public selection/null-owner checks retained. No claim of live-modal YES coverage."
       ],
-      "adapted_sha256": "0c6d519eff792a8461fb9a81be331893e845be9563c03a33063d6625b48d7a2a",
+      "adapted_sha256": "2ae0c3671fdef82cb6322d304362c8f9c485e4e90cab106ea406517ed04ce17f",
       "parent_adapted_sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f"
     },
     {
@@ -471,7 +482,8 @@
         "Late module-constant helpers and all unique tests focused only in TEMP; removed private continuation fixtures replaced by real public operations.",
         "Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.",
         "Before any TEMP overlay, native_preservation checks every code/ hunk against NATIVE_CONTRACTS.json; canonical mode never stages external tests.",
-        "Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded."
+        "Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded.",
+        "Final cleanup: Bun timeout is explicitly bounded at 30000ms after the unchanged subprocess-output regression exceeded the default 5000ms on Windows. Assertions and product build helper remain unchanged."
       ]
     }
   ],

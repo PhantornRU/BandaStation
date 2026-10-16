@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "sealed_utc": "2026-10-16T13:37:31.640137+00:00",
+  "sealed_utc": "2026-10-16T22:30:40.983690+00:00",
   "upstream_base": "820de7f6ef9235d8417250cb01eec15da6735b18",
-  "source_head_at_seal": "705c370f528aa001e5857389b6cc766a231e8b5c",
-  "source_patch_sha256_at_seal": "62c899158c4dc5bcc06f835ecf03b199fa5bd7015f63e4a84dee6451cc8bb5d9",
+  "source_head_at_seal": "b9feef39fdc825cfe3992f3f5251d19f16a1e119",
+  "source_patch_sha256_at_seal": "37a7f7ac24f087d597a4fa21ed8277ba4be0c8ccb1ca050cc9b95a8ed2ca45c7",
   "files": [
     {
       "path": ".github/workflows/run_linters.yml",
@@ -27,7 +27,7 @@
     },
     {
       "path": "code/controllers/subsystem/ticker.dm",
-      "sha256": "d3cde2980cf934c0aa165b32db36bce42cc1345d0d79dc8885d00f280a32158b"
+      "sha256": "1552302a173c0913da5c3e96ea769d0c1a373f558e5ea22877f674efe35483c2"
     },
     {
       "path": "code/datums/outfit.dm",
@@ -47,7 +47,7 @@
     },
     {
       "path": "code/modules/client/preferences_savefile.dm",
-      "sha256": "39f710e84a2e57fdf9913f4f2a525d3a9ec72c7cf32378569a141f237308dc02"
+      "sha256": "039745753504c64cae1d367b03960c72768c8e1219c1859d426f665e40d404a3"
     },
     {
       "path": "code/modules/jobs/job_types/_job.dm",
@@ -59,7 +59,7 @@
     },
     {
       "path": "code/modules/mob/dead/new_player/latejoin_menu.dm",
-      "sha256": "7272e39038a94962a008c9dfebb129beb3097c61899ce46da12148891b18ef45"
+      "sha256": "e48bc426fff4ab2f28fd654a4f9bc035cbda173ac28edbbdfd42dcb7ff010b68"
     },
     {
       "path": "code/modules/mob/dead/new_player/new_player.dm",
@@ -87,7 +87,7 @@
     },
     {
       "path": "modular_bandastation/donor_jobs/CORE_BOUNDARY.md",
-      "sha256": "2b16204d5f20d2392c27bcc43547ac780c9210a9713d56cf70f0da87c507d5a1"
+      "sha256": "9eb0028633748149042a58fdd97f729c326e3f45af2af8038831edd3c43c1b07"
     },
     {
       "path": "modular_bandastation/donor_jobs/FACTION_CLOTHING.md",
@@ -99,7 +99,7 @@
     },
     {
       "path": "modular_bandastation/donor_jobs/README.md",
-      "sha256": "fa6782918c40654098e7e0221c7eeaa8e1d38de7c8198f9d9de34e3cf2af5db1"
+      "sha256": "1e743328fdcd7d89df24f1788832280258f9a88827fe1d71b07c9dd35ecc2fee"
     },
     {
       "path": "modular_bandastation/donor_jobs/_donor_jobs.dm",
@@ -487,11 +487,11 @@
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/job_slots_preferences.dm",
-      "sha256": "dbbae8192aa9c621d31738dea4417db2a50ca881b281ab806cd4bb6fcbeba7ce"
+      "sha256": "63b12808fda7f53cb0f487188a6778cf428782c032fb3dc55a61e3c3629c1c18"
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/job_slots_savefile.dm",
-      "sha256": "e71e6f793b1482e717c8f67c8d235db8dc0d9c8401f33816bb6ed4a8ee2033bd"
+      "sha256": "709344d6b46daf79403e949d726a30488ef90fcd5f91b928d496e33d0b2cf700"
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/latejoin_context.dm",
@@ -499,7 +499,7 @@
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/pref_job_slots_middleware.dm",
-      "sha256": "cd48de9c0baf0a6d05816b6614015f9a5d6111c99498a98c7caf375b02e347cb"
+      "sha256": "b2bb753454ccc168247c0fa24096c30c3a3b966a3a91b4b21aa3cfd1c9f6d518"
     },
     {
       "path": "modular_bandastation/jobs/VARIANT_MIGRATION.md",
@@ -515,7 +515,7 @@
     },
     {
       "path": "modular_bandastation/jobs/code/controller/admission.dm",
-      "sha256": "f9e04f9f10fec989f719fb1caebdee0f1cbd91463777e66b3a4ebe7de0d07d29"
+      "sha256": "c1e11a907e57d32ef4bd9907342d813b4a4ce31b44d860a8638fb733462da3b6"
     },
     {
       "path": "modular_bandastation/jobs/code/controller/assignment.dm",
@@ -531,7 +531,7 @@
     },
     {
       "path": "modular_bandastation/jobs/code/extension_hooks.dm",
-      "sha256": "6a3a050d6bfac6427e836159c944d801d89a2c7a1a6be94ccccaed3b0e0980b9"
+      "sha256": "4966bceb2ce98ca704a05a24706b683cc9a392a5c87c6d0a0059f9fbbc74c05c"
     },
     {
       "path": "modular_bandastation/jobs/code/initial_crew_records.dm",
@@ -571,11 +571,11 @@
     },
     {
       "path": "modular_bandastation/jobs/code/ui/latejoin_job_menu.dm",
-      "sha256": "578df07e921fdf463c870da95a1d02abf130e1135d585a178a48ac623c1d393c"
+      "sha256": "7f9fa56b7a56378fe2b21f39b075c7e0488f31f6ffb8a173530fbad5eb2735ea"
     },
     {
       "path": "modular_bandastation/jobs/code/variants/character_variant_context.dm",
-      "sha256": "33c536a5fa183ed2a64417ab93ad4bf25bef5ea5797ede7d59a9252c3f342099"
+      "sha256": "fdaef264dbc05dfc7b0a4745aba81398072eb451396c8f833924162b3fb55cd6"
     },
     {
       "path": "modular_bandastation/jobs/code/variants/job_variant_icons.dm",
@@ -839,7 +839,7 @@
     },
     {
       "path": "tools/migrate_job_slots/README.md",
-      "sha256": "eef62fc56a6d0eb40bcda689b0aa94c8951a7b2188592f08d9e1f7c2ae5e6555"
+      "sha256": "3f6f04d6fb0cde6f67abd924d1d81d56ad476516f3472bc92db0136bcb176fcd"
     },
     {
       "path": "tools/migrate_job_slots/migrate.py",

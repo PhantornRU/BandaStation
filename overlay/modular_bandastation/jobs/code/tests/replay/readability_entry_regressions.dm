@@ -72,7 +72,7 @@
 
 // External TEMP-only regression for retained native menu continuations.
 // Run with the normal early unit-test assertion include; no module-owned macros are used.
-// Calls the retained native fallback/random/ui_data/ui_static_data procedures.
+// Calls the retained native random/ui_data/ui_static_data procedures.
 // An eligibility seam hard-deletes the lobby at the point where SQL could resume.
 // This is not a live client, real SQL wait, or an interactive modal replay.
 
@@ -151,7 +151,7 @@
 	SSjob.prioritized_jobs = list()
 	var/datum/latejoin_menu/latejoin_harddelete_fixture/menu = allocate(/datum/latejoin_menu/latejoin_harddelete_fixture)
 
-	for(var/route in list("fallback", "random_available", "random_rejected", "dynamic", "static"))
+	for(var/route in list("random_available", "random_rejected", "dynamic", "static"))
 		var/datum/client_interface/latejoin_harddelete_fixture/player = allocate(/datum/client_interface/latejoin_harddelete_fixture)
 		player.prefs = allocate(/datum/preferences, player)
 		player.prefs.load_and_save = FALSE
@@ -169,8 +169,6 @@
 		eligibility_result = route == "random_available" ? JOB_AVAILABLE : JOB_UNAVAILABLE_GENERIC
 		var/result
 		switch(route)
-			if("fallback")
-				result = menu.fallback_ui(owner)
 			if("random_available", "random_rejected")
 				result = menu.get_random_job(owner)
 			if("dynamic")
@@ -190,10 +188,8 @@
 		else
 			TEST_ASSERT_NULL(result, "The [route] route accepted a hard-deleted lobby")
 		if(context)
-			// Replay the post-modal adapters directly: headless input cannot supply a reply.
-			TEST_ASSERT_NULL(menu.resolve_latejoin_job_choice(owner, "reply", list("reply" = first_job.title), context), "A stale modal reply resolved after lobby deletion")
+			// Replay the public selection guard directly: headless input cannot supply a reply.
 			TEST_ASSERT(!menu.is_latejoin_selection_current(owner, list("edit_slot" = context.editing_slot), context), "A selected-job reply retained a deleted owner")
-			TEST_ASSERT_NULL(menu.prepare_latejoin_job_choices(owner, list(first_job.title), context), "Choice preparation accepted a deleted owner")
 		TEST_ASSERT(!menu.is_latejoin_random_job_allowed(owner, first_job), "The production random predicate accepted a null owner")
 
 /datum/unit_test/native_latejoin_harddelete_ui/Destroy()

@@ -189,30 +189,162 @@
 		"Text job" = "2",
 		"Null job" = null,
 	)
+	var/input_before = json_encode(input)
 	preferences.savefile.set_entry("pref_job_slots", input)
 	TEST_ASSERT(preferences.load_preferences(), "Could not load the job slot format through the native loader")
+	TEST_ASSERT_NOTNULL(preferences.invalid_job_profile_assignment_entries, "Malformed source entries were accepted as a convertible format")
 	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 3, "The format loader retained malformed or current-slot entries")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Saved job"], 2, "The format loader lost a saved profile")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Random job"], -1, "The format loader lost randomization")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Temporarily unavailable job"], 999, "The format loader erased a temporarily unavailable job or slot")
-	TEST_ASSERT(preferences.save_preferences(), "Could not save sanitized assignments")
+	TEST_ASSERT_EQUAL(json_encode(preferences.savefile.get_entry("pref_job_slots")), input_before, "The nested native load/save dropped malformed source entries")
+	TEST_ASSERT(!preferences.set_job_character_slot("Saved job", 3), "An assignment edit accepted a malformed source format")
+	TEST_ASSERT(!preferences.reset_job_slots(), "A reset accepted a malformed source format")
+	TEST_ASSERT(preferences.save_preferences(), "Malformed assignments blocked saving unrelated preferences")
+	TEST_ASSERT_EQUAL(json_encode(preferences.savefile.get_entry("pref_job_slots")), input_before, "Saving unrelated preferences changed malformed source entries")
 	preferences.pref_job_slots = list()
-	TEST_ASSERT(preferences.load_preferences(), "Could not reload sanitized assignments")
-	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 3, "Reload changed the sanitized assignment map")
+	TEST_ASSERT(preferences.load_preferences(), "Could not reload the preserved assignment source")
+	TEST_ASSERT_NOTNULL(preferences.invalid_job_profile_assignment_entries, "Reload lost the malformed-source state")
+	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 3, "Reload changed the valid runtime subset")
 	TEST_ASSERT_EQUAL(preferences.pref_job_slots["Temporarily unavailable job"], 999, "Reload erased a temporarily unavailable assignment")
 	TEST_ASSERT_EQUAL(json_encode(preferences.savefile.get_entry("character2")), json_encode(character), "Loading assignments changed a character section")
 	TEST_ASSERT_EQUAL(preferences.savefile.get_entry("unrelated_setting"), "keep", "Loading assignments changed another setting")
 	for(var/invalid_map in list(null, "not a map", 1000))
+		var/invalid_map_before = json_encode(invalid_map)
 		preferences.savefile.set_entry("pref_job_slots", invalid_map)
-		preferences.load_job_character_slots()
+		preferences.load_job_profile_assignments()
 		TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 0, "A non-list saved value became assignments")
+		TEST_ASSERT_EQUAL(isnull(preferences.invalid_job_profile_assignment_entries), isnull(invalid_map), "Non-list format validation did not distinguish null from malformed values")
+		TEST_ASSERT_EQUAL(json_encode(preferences.savefile.get_entry("pref_job_slots")), invalid_map_before, "Reading a malformed source mutated it")
 	preferences.savefile.set_entry("pref_job_slots", list(2, "Saved job"))
-	preferences.load_job_character_slots()
+	preferences.load_job_profile_assignments()
 	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 0, "Plain list entries became assignments")
+	TEST_ASSERT_NOTNULL(preferences.invalid_job_profile_assignment_entries, "A plain list became a valid assignment map")
 	preferences.savefile.remove_entry("pref_job_slots")
-	preferences.load_job_character_slots()
+	preferences.load_job_profile_assignments()
 	TEST_ASSERT_EQUAL(length(preferences.pref_job_slots), 0, "A missing assignment key retained old in-memory entries")
+	TEST_ASSERT_NULL(preferences.invalid_job_profile_assignment_entries, "A supported source did not clear the prior malformed-source state")
 
 /datum/unit_test/job_slot_saved_format/Destroy()
+	release_job_player_fixtures()
+	return ..()
+
+/// Observe every real native flush; all savefiles below have a null path.
+/datum/json_savefile/final_profile_assignment_fixture
+	var/list/flushes = list()
+
+/datum/json_savefile/final_profile_assignment_fixture/save()
+	flushes += list(json_decode(json_encode(get_entry())))
+	return ..()
+
+/datum/unit_test/final_profile_assignment_conversion/Run()
+	var/datum/client_interface/player = allocate(/datum/client_interface)
+	var/datum/preferences/preferences = allocate(/datum/preferences, player)
+	player.prefs = preferences
+	preferences.path = null
+	preferences.load_and_save = FALSE
+	preferences.max_save_slots = 1
+	var/list/cases = list(
+		list("name" = "legacy only", "has_legacy" = TRUE, "legacy" = list("Assistant" = 2, "Temporarily unavailable job" = 19), "expected" = list("Assistant" = 2, "Temporarily unavailable job" = 19)),
+		list("name" = "mixed conflicts", "has_legacy" = TRUE, "legacy" = list("Assistant" = 2, "Current override" = 3, "Random override" = 4, "Legacy-only role" = 8), "has_canonical" = TRUE, "canonical" = list("Assistant" = 7, "Current override" = 0, "Random override" = -1), "expected" = list("Assistant" = 7, "Random override" = -1, "Legacy-only role" = 8)),
+		list("name" = "canonical only", "has_canonical" = TRUE, "canonical" = list("Current role" = 0, "Random role" = -1, "Unavailable role" = 23), "expected" = list("Random role" = -1, "Unavailable role" = 23)),
+		list("name" = "empty list", "has_legacy" = TRUE, "legacy" = list(), "has_canonical" = TRUE, "canonical" = list(), "expected" = list()),
+		list("name" = "null entries", "has_legacy" = TRUE, "legacy" = null, "has_canonical" = TRUE, "canonical" = null, "expected" = list()),
+		list("name" = "absent entries", "expected" = list()),
+	)
+	for(var/list/scenario as anything in cases)
+		QDEL_NULL(preferences.savefile)
+		var/datum/json_savefile/final_profile_assignment_fixture/savefile = allocate(/datum/json_savefile/final_profile_assignment_fixture)
+		preferences.savefile = savefile
+		savefile.set_entry("version", 53)
+		savefile.set_entry("default_slot", 1)
+		savefile.set_entry("unrelated_field", "keep")
+		var/list/character = list("version" = 53, "real_name" = "Unchanged saved character", "age" = 44)
+		savefile.set_entry("character1", character)
+		var/character_before = json_encode(character)
+		if(scenario["has_legacy"])
+			savefile.set_entry("job_assigned_profiles", scenario["legacy"])
+		if(scenario["has_canonical"])
+			savefile.set_entry("pref_job_slots", scenario["canonical"])
+		var/scenario_name = scenario["name"]
+		TEST_ASSERT(preferences.load_preferences(), "Native preferences loading failed: [scenario_name]")
+		TEST_ASSERT_NULL(preferences.invalid_job_profile_assignment_entries, "Supported maps were rejected: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(preferences.job_assigned_profiles), 0, "Compatibility field owns assignments: [scenario_name]")
+		TEST_ASSERT_EQUAL(json_encode(preferences.pref_job_slots), json_encode(scenario["expected"]), "Wrong merged runtime assignments: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(savefile.flushes), 1, "Native loading did not make its single keybinding flush: [scenario_name]")
+		var/list/first_flush = savefile.flushes[1]
+		TEST_ASSERT(!("job_assigned_profiles" in first_flush), "First nested flush retained the legacy format: [scenario_name]")
+		TEST_ASSERT_EQUAL(json_encode(first_flush["pref_job_slots"]), json_encode(scenario["expected"]), "First nested flush lost assignments: [scenario_name]")
+		TEST_ASSERT_EQUAL(first_flush["unrelated_field"], "keep", "Conversion changed unrelated root data: [scenario_name]")
+		TEST_ASSERT_EQUAL(json_encode(first_flush["character1"]), character_before, "Conversion changed a saved character: [scenario_name]")
+		TEST_ASSERT(preferences.load_preferences(), "Idempotent reload failed: [scenario_name]")
+		TEST_ASSERT_EQUAL(json_encode(preferences.pref_job_slots), json_encode(scenario["expected"]), "Reload changed converted assignments: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(savefile.flushes), 2, "Reload added an unexpected extra flush: [scenario_name]")
+
+/datum/unit_test/final_profile_assignment_conversion/Destroy()
+	release_job_player_fixtures()
+	return ..()
+
+/datum/unit_test/final_profile_assignment_malformed_preservation/Run()
+	var/datum/client_interface/player = allocate(/datum/client_interface)
+	var/datum/preferences/preferences = allocate(/datum/preferences, player)
+	player.prefs = preferences
+	preferences.path = null
+	preferences.load_and_save = FALSE
+	preferences.max_save_slots = 3
+	var/mob/dead/new_player/user = allocate(/mob/dead/new_player)
+	user.mock_client = player
+	player.mob = user
+	var/datum/preference_middleware/pref_job_slots/slot_ui = allocate(/datum/preference_middleware/pref_job_slots, preferences)
+	var/datum/job/job = SSjob.get_job_type(/datum/job/assistant)
+	TEST_ASSERT_NOTNULL(job, "The real Assistant job is unavailable")
+	var/list/cases = list(
+		list("name" = "legacy scalar", "has_legacy" = TRUE, "legacy" = "malformed"),
+		list("name" = "canonical scalar", "has_canonical" = TRUE, "canonical" = "malformed"),
+		list("name" = "legacy array", "has_legacy" = TRUE, "legacy" = list(2, 3), "has_canonical" = TRUE, "canonical" = list("Assistant" = -1)),
+		list("name" = "canonical array", "has_legacy" = TRUE, "legacy" = list("Assistant" = 2), "has_canonical" = TRUE, "canonical" = list(2, 3)),
+		list("name" = "fractional slot", "has_legacy" = TRUE, "legacy" = list("Assistant" = 2.5)),
+		list("name" = "invalid legacy minimum", "has_legacy" = TRUE, "legacy" = list("Assistant" = 0), "has_canonical" = TRUE, "canonical" = list("Assistant" = -1)),
+		list("name" = "invalid canonical minimum", "has_legacy" = TRUE, "legacy" = list("Assistant" = 2), "has_canonical" = TRUE, "canonical" = list("Assistant" = -2)),
+		list("name" = "empty job key", "has_canonical" = TRUE, "canonical" = list("" = 2)),
+		list("name" = "nested slot value", "has_canonical" = TRUE, "canonical" = list("Assistant" = list("unexpected" = 2))),
+		list("name" = "null legacy with broken canonical", "has_legacy" = TRUE, "legacy" = null, "has_canonical" = TRUE, "canonical" = list("Assistant" = "bad")),
+	)
+	for(var/list/scenario as anything in cases)
+		var/legacy_before = json_encode(scenario["legacy"])
+		var/canonical_before = json_encode(scenario["canonical"])
+		QDEL_NULL(preferences.savefile)
+		var/datum/json_savefile/final_profile_assignment_fixture/savefile = allocate(/datum/json_savefile/final_profile_assignment_fixture)
+		preferences.savefile = savefile
+		savefile.set_entry("version", 53)
+		savefile.set_entry("default_slot", 1)
+		savefile.set_entry("unrelated_field", "keep")
+		if(scenario["has_legacy"])
+			savefile.set_entry("job_assigned_profiles", scenario["legacy"])
+		if(scenario["has_canonical"])
+			savefile.set_entry("pref_job_slots", scenario["canonical"])
+		var/scenario_name = scenario["name"]
+		TEST_ASSERT(preferences.load_preferences(), "Malformed assignment data blocked unrelated preferences loading: [scenario_name]")
+		TEST_ASSERT_NOTNULL(preferences.invalid_job_profile_assignment_entries, "Malformed assignments were accepted: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(preferences.job_assigned_profiles), 0, "Malformed legacy data became an active second map: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(savefile.flushes), 1, "Malformed load did not reach the native nested flush: [scenario_name]")
+		TEST_ASSERT(!preferences.set_job_character_slot(job.title, 0), "A direct assignment edit overwrote malformed storage: [scenario_name]")
+		TEST_ASSERT(!preferences.reset_job_slots(), "A direct reset overwrote malformed storage: [scenario_name]")
+		TEST_ASSERT(!slot_ui.set_job_slot(list("job" = job.title, "slot" = 0, "edit_slot" = 1), user), "The UI reported a successful rejected assignment: [scenario_name]")
+		TEST_ASSERT(!slot_ui.reset_job_slots(list("edit_slot" = 1), user), "The UI reported a successful rejected reset: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(savefile.flushes), 1, "Rejected assignment actions triggered a flush: [scenario_name]")
+		preferences.lastchangelog = "unrelated edit"
+		TEST_ASSERT(preferences.save_preferences(), "Unrelated preferences could not be saved: [scenario_name]")
+		TEST_ASSERT_EQUAL(length(savefile.flushes), 2, "Unrelated save did not use exactly one native flush: [scenario_name]")
+		for(var/list/flushed_entries as anything in savefile.flushes)
+			TEST_ASSERT_EQUAL(("job_assigned_profiles" in flushed_entries), !!scenario["has_legacy"], "Legacy entry presence changed: [scenario_name]")
+			TEST_ASSERT_EQUAL(("pref_job_slots" in flushed_entries), !!scenario["has_canonical"], "Canonical entry presence changed: [scenario_name]")
+			if(scenario["has_legacy"])
+				TEST_ASSERT_EQUAL(json_encode(flushed_entries["job_assigned_profiles"]), legacy_before, "Original legacy data changed: [scenario_name]")
+			if(scenario["has_canonical"])
+				TEST_ASSERT_EQUAL(json_encode(flushed_entries["pref_job_slots"]), canonical_before, "Original canonical data changed: [scenario_name]")
+			TEST_ASSERT_EQUAL(flushed_entries["unrelated_field"], "keep", "Unrelated root data was lost: [scenario_name]")
+
+/datum/unit_test/final_profile_assignment_malformed_preservation/Destroy()
 	release_job_player_fixtures()
 	return ..()

@@ -292,7 +292,7 @@ def main():
                 raise RuntimeError('Unexpected Python test count')
             report['results']['python'] = {'passed': manifest['python_count']}
         if args.suite in ('all', 'bun'):
-            execute([str(worktree / 'tools/bootstrap/javascript.bat'), 'test', 'tools/build/juke/exec.test.js'],
+            execute([str(worktree / 'tools/bootstrap/javascript.bat'), 'test', '--timeout', '30000', 'tools/build/juke/exec.test.js'],
                      worktree, run_root / 'bun.log', env)
             report['results']['bun'] = {'passed': manifest['bun_count']}
         if args.suite in ('all', 'dm'):

@@ -1,152 +1,131 @@
 {
-  "schema": 1,
-  "product_head": "b9feef39fdc825cfe3992f3f5251d19f16a1e119",
-  "product_tree": "de50353062327c9c7b695a87559bfdff41635e46",
+  "schema": 2,
+  "product_head": "b9f024dc4ebb06fe87b34adad5aa5ea348e3e736",
+  "product_tree": "351bb89236525d65beffe2df11a1798012dab429",
   "base": "820de7f6ef9235d8417250cb01eec15da6735b18",
-  "published_manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
-  "executed_manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
-  "canonical_manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
-  "canonical_manifest_file": "CANONICAL_MANIFEST.json",
-  "source_revision": "705c370f528aa001e5857389b6cc766a231e8b5c",
-  "source_patch_sha256": "62c899158c4dc5bcc06f835ecf03b199fa5bd7015f63e4a84dee6451cc8bb5d9",
+  "manifest_sha256": "2b3f18ef43d690feb9d6a1b75043a5b154db291a52e208e69a895234f782c218",
+  "canonical_manifest_sha256": "2f4a9b728139756786b15c9d49d49a9ef0cf0c77c572392a62f2f9cc037523a8",
+  "proof_structure": "Composite phases on one identical product tree, not a whole-run PASS. First all stopped at Bun default timeout; strengthened external DM fixture needed two membership parentheses; a stale storage test was updated to require supported legacy conversion instead of data loss. Product did not change.",
+  "source_patch_sha256": "37a7f7ac24f087d597a4fa21ed8277ba4be0c8ccb1ca050cc9b95a8ed2ca45c7",
   "source_checkout_unchanged": true,
-  "source_integrity": {
-    "head_unchanged": true,
-    "status_unchanged": true,
-    "patch_bytes_unchanged": true,
-    "untracked_bytes_unchanged": true,
-    "final_patch_sha256": "62c899158c4dc5bcc06f835ecf03b199fa5bd7015f63e4a84dee6451cc8bb5d9"
-  },
-  "source_contract": {
-    "status": "PASS",
-    "native_files": 14,
-    "hunks": 62,
-    "single_line_replacements": 18,
-    "removed_definitions": 0,
-    "removed_multiline_blocks": 0,
-    "native_jobs_middleware": "exact BASE"
-  },
-  "native_contract_sha256": "90a4edf624b5c981db63778f02038da6de9cc0542f223b8565e97c56336a34c9",
-  "evidence_run": {
-    "root": "bandastation-external-tests-svzocukm",
-    "suite": "all",
-    "status": "PASS",
-    "whole_run_passed": true,
-    "result_sha256": "156d6cba8d57a4ee0d57cc1c9f6ad936bbfe60282d5f7568828798bb41b21531",
-    "source_revision": "705c370f528aa001e5857389b6cc766a231e8b5c",
-    "product_tree": "de50353062327c9c7b695a87559bfdff41635e46",
-    "manifest_sha256": "91f656392df5ffa6156a3d42f4a283b2cb0e2c1eaea403858127966e4ce5ef6a",
-    "started_utc": "2026-10-16T13:37:40.235338+00:00",
-    "finished_utc": "2026-10-16T13:52:02.075355+00:00"
-  },
   "production": {
     "command": "tools/build/build.bat build -Werror",
-    "dmb_sha256": "288f9918475e36424eb68c1735fdc043ea154b06be968a64ad5db3534b51b34a",
+    "dmb_sha256": "d4a1481bffe02fedc12be21bd2206b6c8f3d7754d3ec1a157a88a595c74ba584",
     "dme_sha256": "e66b8dde69de2e7e4e98d7e03533e3f2380e6513246a5cf539029a8cc2ac672d",
     "external_tests_injected": false
   },
   "native_harness_compile": {
     "external_tests_injected": false,
-    "dmb_sha256": "65f7bc7b7c7f269797f23c7bc02fb4f06d809c3f182d541860f07b9f31eb5e6f"
+    "dmb_sha256": "4559c61875c69d459ebbb5beb77c5445c36cf48cb802304e0df910c12c114abc"
   },
-  "native_harness_binary_scope": "DMB digest recorded by completed all-run; intermediate native DMB was overwritten by external compile, so no preserved native binary is independently rehashed.",
+  "python": {
+    "passed": 21
+  },
+  "bun": {
+    "status": "PASS",
+    "exit_code": 0,
+    "command": "tools/bootstrap/javascript.bat test --timeout 30000 tools/build/juke/exec.test.js",
+    "passed": 1,
+    "seconds": 3.177,
+    "fixture_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
+    "log_sha256": "d5f48863f69d33f462b533c5207e7cdd25564356215a7892036a144495537abd",
+    "product_change": false,
+    "scope": "Identical overlay assertions in the original isolated checkout; only Bun test timeout increases from 5000 to 30000ms."
+  },
   "dm_compile": {
-    "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742"
+    "dmb_sha256": "c52570c535eb5db188670548967d633d05c48faf7a2266b95cd57342b39580c2"
   },
-  "dm_count": 80,
   "dm_modes": {
     "00": {
-      "passed": 80,
+      "passed": 82,
       "clean_run": true,
-      "runtime_errors": 0,
+      "map": "runtimestation_minimal",
       "startup_flags": {
         "donor_jobs_enabled": 0,
         "donor_prisoner_gate": 0
+      },
+      "dll_sha256": {
+        "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
+        "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
       },
       "runtime": "runtime-00",
-      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
-      "log_sha256": "25b85493a7afbac77aa2b5230d159227358fd5074ebed289e84db3d363dde24a",
-      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
-      "config_sha256": "f3fd07195976d8702dfac817b3281c25093de17813cd07ebfe452053e151ce74",
-      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
-      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
-      "dll_sha256": {
-        "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
-        "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
-      }
+      "exit_code": 0,
+      "runtime_errors": 0,
+      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
+      "log_sha256": "15370787ba9dc05bf3e3819dbc731822e9a1a7ae7e4418a3e02039e3b5cc961f",
+      "structured_runtime_log_sha256": "bc785f32e1653e3936fbd81682cff96d97337bf4b516487dd6b9aa0f06a83933"
     },
     "01": {
-      "passed": 80,
+      "passed": 82,
       "clean_run": true,
-      "runtime_errors": 0,
+      "map": "runtimestation_minimal",
       "startup_flags": {
         "donor_jobs_enabled": 0,
         "donor_prisoner_gate": 1
       },
-      "runtime": "runtime-01",
-      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
-      "log_sha256": "2d4e332460b4c41a389fdfe6ae77444d1aedc63f0158d1835bcd787d9e25f73f",
-      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
-      "config_sha256": "2d9c42aa95f54d79d7a017dd656fbb2ce8f79d1185556de963cd22fcd495b9ac",
-      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
-      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
       "dll_sha256": {
         "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
         "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
-      }
+      },
+      "runtime": "runtime-01",
+      "exit_code": 0,
+      "runtime_errors": 0,
+      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
+      "log_sha256": "193457ddb499416338625399c539e78e01325ba293dcb29f49a2749d34934947",
+      "structured_runtime_log_sha256": "0b8511767a21c2deecc65896080434933a9b2f54a626437be3ba246eb66c995d"
     },
     "10": {
-      "passed": 80,
+      "passed": 82,
       "clean_run": true,
-      "runtime_errors": 0,
+      "map": "runtimestation_minimal",
       "startup_flags": {
         "donor_jobs_enabled": 1,
         "donor_prisoner_gate": 0
       },
-      "runtime": "runtime-10",
-      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
-      "log_sha256": "51edd8e9a3ecae832ba97ae8c1a81da8b2c20878f4aa24c76d7b22e65cb59226",
-      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
-      "config_sha256": "9ed78da8051c52a7445001445ad43cb95a8a6047a97ea5db814d868abcf81e7c",
-      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
-      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
       "dll_sha256": {
         "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
         "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
-      }
+      },
+      "runtime": "runtime-10",
+      "exit_code": 0,
+      "runtime_errors": 0,
+      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
+      "log_sha256": "0b99dd1897c9cb382361ddf5745677ad14795820bba25a4e4885542b5189e3c7",
+      "structured_runtime_log_sha256": "367c1aa4053c245d7c451410d80e408f17df89e99f2a20835c96639b0d518d69"
     },
     "11": {
-      "passed": 80,
+      "passed": 82,
       "clean_run": true,
-      "runtime_errors": 0,
+      "map": "runtimestation_minimal",
       "startup_flags": {
         "donor_jobs_enabled": 1,
         "donor_prisoner_gate": 1
       },
-      "runtime": "runtime-11",
-      "unit_tests_json_sha256": "78b88af4e1bcc18ea65e990793f0f0ef8340b1e4eb9e360d92090a1001dcceb2",
-      "log_sha256": "ca1f23879da6cf18d4f20b25e8ea483f6c5413548b9fa109e4bf1f939ee011f2",
-      "clean_run_marker_sha256": "80587217fc582ebb6cba647bb021e9a749f89a0474642deccbf1e04c4991dac7",
-      "config_sha256": "628e704869e4f6129f7b9c7c6f493865014e49e32a08eab848bb547dc47eb8e2",
-      "dmb_sha256": "5e032f2a4982ac3012f322e345ea6e1ec9e261a290a1c7039e63e539672d9742",
-      "rsc_sha256": "e89a8641b06a397460cdda99e7ab62d38b5335d66df247dfb5dc7e710c318a39",
       "dll_sha256": {
         "rust_g.dll": "51130b5597a992b01c06fa620ec3b45862247f7aa8d5e85285f271d15ac83b24",
         "librust_utils.dll": "6e164ad80665018f911104ae56b9a4c8af4a7265ba7732056830d59f7e6cf1ff"
-      }
+      },
+      "runtime": "runtime-11",
+      "exit_code": 0,
+      "runtime_errors": 0,
+      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
+      "log_sha256": "c4a4f7fa1b8ef78b11e35beb177584f04ecc7a142a6659310116c8df58710196",
+      "structured_runtime_log_sha256": "5265a4efdb2397b153b7baa1dfee42b9e1d3324d863b84cd00cd07204ef880b0"
     }
   },
-  "python_passed": 21,
-  "bun_passed": 1,
-  "compile_and_test_log_sha256": {
-    "production.log": "eaa2b46ddd911ed5007e80f9bb906afa642a212abedf25e9672db24a62d267aa",
-    "native-harness-compile.log": "56d9628772580c53b8d1f34df584e4a50582275b16ccb260d648ba37feb15f54",
-    "dm-compile.log": "9a1f9d1f0b22d096b9fb435402d5c7b196b693d1891fc7410268c14bcf3eb485",
-    "python.log": "19f0c6aa0107ee53d238d84c35894865f1842b4f3d1b3eaf6545adc912fa1974",
-    "bun.log": "77a54f64d2687244766887d3ae602e03d83c4a6c442c6f13872497fc4c0a6e5f"
+  "phase_report_sha256": {
+    "initial_all": "6e0220e0ea0dfd1b8587124e52ca7f92c519d7bafd96acc7eb6ef4494490e450",
+    "final_dm": "a8523c7b1aef569709e37ae3d9a5b930035c1d0d6556af82c71b93fed316b231"
   },
-  "sealed_files": 59,
-  "publication_changes": [],
+  "source_contract": {
+    "status": "PASS",
+    "native_files": 14,
+    "hunks": 58,
+    "single_line_replacements": 18,
+    "removed_definitions": 0,
+    "removed_multiline_blocks": 0,
+    "native_jobs_middleware": "exact BASE"
+  },
   "publication_files": [
     ".gitattributes",
     "CANONICAL_MANIFEST.json",
@@ -213,11 +192,5 @@
     "seal.py",
     "settings.example.json",
     "source_invariants.py"
-  ],
-  "limits": [
-    "Headless mock fixtures; connected BYOND client, actual localhost notification, live SQL and interactive/visual flows not exercised.",
-    "Browser harness and full native unit runtime not run in this all-run.",
-    "Production launcher/cwd/save root and actual deployment migration/readiness unverified; no real player saves accessed.",
-    "No donor DMM placements added; native fallback spawn remains."
   ]
 }

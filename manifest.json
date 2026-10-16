@@ -2,7 +2,7 @@
   "schema": 2,
   "head": "7553b3553c80b5b385dab290ca318e23437bb6b5",
   "upstream_base": "820de7f6ef9235d8417250cb01eec15da6735b18",
-  "reviewed_source_head": "705c370f528aa001e5857389b6cc766a231e8b5c",
+  "reviewed_source_head": "b9feef39fdc825cfe3992f3f5251d19f16a1e119",
   "test_files": [
     {
       "path": "modular_bandastation/donor_jobs/code/tests/_tests.dm",
@@ -168,11 +168,13 @@
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
-      "sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
-      "lines": 218,
+      "sha256": "2ada213eb9f3dd02a65404c2bd0d4fefaaa7ef22998599e3a2ed8e2a07ff489a",
+      "lines": 350,
       "dm_names": [
         "job_slot_preferences",
-        "job_slot_saved_format"
+        "job_slot_saved_format",
+        "final_profile_assignment_conversion",
+        "final_profile_assignment_malformed_preservation"
       ],
       "python_methods": []
     },
@@ -301,8 +303,8 @@
     },
     {
       "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
-      "sha256": "216c95212ec7714bac3f004b2a685ef6c1c0642ce8990a843ede9980cebe7f42",
-      "lines": 918,
+      "sha256": "f83a3275dda8eb4144043c087072096efc5778449d2c30aa04eaab95dd41dd31",
+      "lines": 933,
       "dm_names": [
         "dynamic_roundstart_cancellation/blood_worm_signal_lifecycle",
         "donor_centcom_template_idempotence",
@@ -342,8 +344,8 @@
     },
     {
       "path": "modular_bandastation/jobs/code/tests/replay/readability_entry_regressions.dm",
-      "sha256": "0c6d519eff792a8461fb9a81be331893e845be9563c03a33063d6625b48d7a2a",
-      "lines": 319,
+      "sha256": "2ae0c3671fdef82cb6322d304362c8f9c485e4e90cab106ea406517ed04ce17f",
+      "lines": 315,
       "dm_names": [
         "readability_latejoin_context",
         "native_latejoin_harddelete_ui",
@@ -459,6 +461,8 @@
     "dynamic_roundstart_cancellation/blood_worm_signal_lifecycle",
     "entry_error_messages",
     "entry_history_handover_once",
+    "final_profile_assignment_conversion",
+    "final_profile_assignment_malformed_preservation",
     "job_character_greeting_entrypoint",
     "job_character_respawn_policy",
     "job_character_selection",
@@ -496,7 +500,7 @@
     "ussp_clothing_assets",
     "ussp_space_clothing"
   ],
-  "dm_count": 80,
+  "dm_count": 82,
   "python_count": 21,
   "bun_count": 1,
   "flag_modes": [
@@ -673,8 +677,11 @@
       "destination": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
       "source": "baseline/modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
       "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
-      "changes": [],
-      "adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
+      "changes": [
+        "Final cleanup: malformed format tests now require raw entry preservation instead of sanitizing deletion; renamed storage hooks. Add two native load/save regressions covering six supported conversion cases and ten malformed maps, every nested flush, idempotence, unrelated saves and rejected set/reset actions.",
+        "Independent fixture review: freeze malformed expected JSON before storage/loading so mutation through an alias cannot weaken assertions. Product source unchanged; repeat DM suite only."
+      ],
+      "adapted_sha256": "2ada213eb9f3dd02a65404c2bd0d4fefaaa7ef22998599e3a2ed8e2a07ff489a",
       "parent_adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
     },
     {
@@ -808,15 +815,22 @@
         "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved.",
         "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
         "Runtime fixture correction: release callback reference by assigning null; native callback explicitly forbids qdel. All four yielding client/mind scenarios and all eighteen assertions retained.",
-        "Native eligibility boundary fixture now explicitly sets replacement age40 (native informed default is random21..50, fixture threshold30). Real ban-cache wait/requester swap and all215 prior assertions retained; parent refusal precedence unchanged."
+        "Native eligibility boundary fixture now explicitly sets replacement age40 (native informed default is random21..50, fixture threshold30). Real ban-cache wait/requester swap and all215 prior assertions retained; parent refusal precedence unchanged.",
+        "Final cleanup storage policy: replace obsolete rejection of supported legacy assignments with safe legacy-only and mixed conversion. Assert canonical -1/0 precedence, preservation of non-conflicting legacy entries in runtime and persisted output, independent source maps, unchanged inputs, empty native compatibility state, and exactly one native nested flush. Other test bodies and all prior admission/UI checks remain unchanged; product source unchanged."
       ],
-      "adapted_sha256": "216c95212ec7714bac3f004b2a685ef6c1c0642ce8990a843ede9980cebe7f42",
+      "adapted_sha256": "f83a3275dda8eb4144043c087072096efc5778449d2c30aa04eaab95dd41dd31",
       "fixture_runtime_corrections": [
         {
           "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
           "previous_sha256": "9e70ac58ea929eb0bf9e930a8f3580a769c4d164211074c0a5121b1bd0a2938b",
           "corrected_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130",
           "reason": "The previous middleware.ui_act(null UI) invokes only inherited datum authorization, whose TRUE means stop. New input reaches actual preferences middleware dispatch; all rejection/state/DTO assertions stay. Remove exactly one pre-existing extra blank line at EOF; other CRLF bytes preserved."
+        },
+        {
+          "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regressions.dm",
+          "previous_sha256": "216c95212ec7714bac3f004b2a685ef6c1c0642ce8990a843ede9980cebe7f42",
+          "corrected_sha256": "f83a3275dda8eb4144043c087072096efc5778449d2c30aa04eaab95dd41dd31",
+          "reason": "Final cleanup storage policy: replace obsolete rejection of supported legacy assignments with safe legacy-only and mixed conversion. Assert canonical -1/0 precedence, preservation of non-conflicting legacy entries in runtime and persisted output, independent source maps, unchanged inputs, empty native compatibility state, and exactly one native nested flush. Other test bodies and all prior admission/UI checks remain unchanged; product source unchanged."
         }
       ],
       "parent_adapted_sha256": "57d4566b55bb6f7de507d19548521a3e3271e4d0f617929efb9f9c979951c130"
@@ -848,9 +862,10 @@
       "changes": [
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
         "Append-only native_latejoin_harddelete_ui regression calls retained fallback/random available/random rejected/dynamic/static routes. Only eligibility hard-delete seam and documented mock random predicate are substituted. Checks actual caller null reference, no second availability query and safe direct postmodal adapters; not live client/SQL/input coverage.",
-        "Runtime fixture correction: direct del bypassed native Destroy and polluted mob registries with null. Use actual qdel->parent Destroy->QDEL_HINT_HARDDEL_NOW, preserving all five routes and hard-delete assertions; assert one native cleanup and no null in the three native registries. Product code unchanged."
+        "Runtime fixture correction: direct del bypassed native Destroy and polluted mob registries with null. Use actual qdel->parent Destroy->QDEL_HINT_HARDDEL_NOW, preserving all five routes and hard-delete assertions; assert one native cleanup and no null in the three native registries. Product code unchanged.",
+        "Final cleanup: native fallback restored exactly to BASE, so remove obsolete fallback eligibility route and its two deleted helper calls. Four real native hard-delete routes and public selection/null-owner checks retained. No claim of live-modal YES coverage."
       ],
-      "adapted_sha256": "0c6d519eff792a8461fb9a81be331893e845be9563c03a33063d6625b48d7a2a",
+      "adapted_sha256": "2ae0c3671fdef82cb6322d304362c8f9c485e4e90cab106ea406517ed04ce17f",
       "parent_adapted_sha256": "5eaf9c69ac5ad3999757d7c1fad6915864d3fa1b3ac67ba76b63d94574759f1f"
     },
     {
@@ -953,14 +968,14 @@
     "client_fixture_adapter.py": "b900b7e098e44ae0c98fbb3bab0cb2102503957bb84126e31d204d8b65af7227",
     "includes.dm": "9d5023ecc172544754f1528ea9fc845bb7158da9010f24be16ad28ab7bf7516f",
     "late_includes.dm": "04ddd7a5a21e157ceaa7cf9992272dec124fa3e7e336cca0848bbeb7fbaf0a64",
-    "NATIVE_CONTRACTS.json": "90a4edf624b5c981db63778f02038da6de9cc0542f223b8565e97c56336a34c9",
+    "NATIVE_CONTRACTS.json": "e92d018ec54a90de8bf46a2a0355f71d123b0f0da9cc67e7ae41795224ba668e",
     "native_preservation.py": "875ea4f3d0b965ce177b15d775bcc70d803ef099ae13648ed5083304cdbb5589",
-    "provenance.json": "69f1e8fa0b7c20212620fb30fc72d1da451dd0c5b3de76abf81a72dd2e957152",
+    "provenance.json": "ee1e6cd8bfe51b70f77a3e696737fda9093fb088c76deb6f584d180253861aa3",
     "README_RU.md": "b0fc158b786f814698419ff77701193fb6242a48daba3753455556986ac8469c",
-    "run.py": "73cf09008514c605a2a9096e96166dc159117398aaad6d70597538030261f4a5",
-    "seal.py": "47e4a827eafbf68f284ab084c1f196b1e08e57117792762aab7ed1c91a526f6d",
+    "run.py": "f271742b41bbfa3d03f3d146f21c9af589aaabcde0d5d5fe829242f9b5d32dc3",
+    "seal.py": "faa8d07274583ffe3c0e4cdc4fd37c2dc9c48be8145cc363115b9c237914732e",
     "settings.example.json": "5ab936c7c953073fb9d30c35dff965dd7738d459026a3093f4c3ae267838eb84",
-    "SOURCE_INPUTS.json": "13cc283454f14fd6a2b4746326bacd9e414322260e4b5eedc86c117d156d6ee8",
+    "SOURCE_INPUTS.json": "fb580fcc0c839a968bd72eefe956d7a9ddfc06d84a1154770000a366b67100bc",
     "source_invariants.py": "5fe3353f91a1202103fb2c9bd712fa96dac24bab9d643df8875846b3ab3f7182",
     "VARIANT_MIGRATION.json": "c3cb09d4d941aef39e5f41554407478a75811c61bd4a63cd0f1bb296703d52c7"
   },
