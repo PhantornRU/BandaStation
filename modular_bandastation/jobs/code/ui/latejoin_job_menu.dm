@@ -1,67 +1,48 @@
-/// The fallback menu shares canonical admission and selected-character labels with TGUI.
-/datum/latejoin_menu/fallback_ui(mob/dead/new_player/user)
-	var/client/requester = user.client
-	if(!requester || requester.interviewee)
-		return
-	var/datum/latejoin_profile_snapshot/profile_context = requester.prefs.capture_latejoin_profile()
-	var/list/jobs = list()
-	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		var/availability = user.IsJobUnavailable(job.title, latejoin = TRUE)
-		if(QDELETED(user) || !requester || user.client != requester || requester.mob != user || !requester.prefs.is_latejoin_profile_current(null, profile_context))
-			return
+/// Enrich native canonical choices; native owns the input and the subsequent spawn call.
+/datum/latejoin_menu/proc/prepare_latejoin_job_choices(mob/dead/new_player/user, list/job_titles, datum/latejoin_profile_snapshot/context)
+	if(!user?.is_latejoin_request_current(context) || context.requester.interviewee)
+		return null
+	var/list/choices = list()
+	for(var/job_title in job_titles)
+		var/datum/job/job = SSjob.get_job(job_title)
+		var/availability = user.IsJobUnavailable(job_title, latejoin = TRUE)
+		if(!user?.is_latejoin_request_current(context))
+			return null
 		if(availability != JOB_AVAILABLE && (job.job_flags & JOB_HIDE_WHEN_EMPTY))
 			continue
-		var/label = get_job_choice_label(job, user, availability, jobs)
-		jobs[label] = job.title
-	var/input_contents = input(user, "Выберите профессию:", "Поздний вход") as null|anything in jobs
-	if(!input_contents || QDELETED(user) || !requester || user.client != requester || requester.mob != user)
-		return
-	if(!requester.prefs.is_latejoin_profile_current(null, profile_context))
-		return
-	user.AttemptLateSpawn(jobs[input_contents])
+		choices[get_job_choice_label(job, user, availability, choices)] = job_title
+	return choices
 
-/// Random admission excludes roles requiring an explicit preference and rejects stale modal replies.
-/datum/latejoin_menu/get_random_job(mob/dead/new_player/owner)
-	var/client/requester = owner.client
-	if(!requester)
-		return
-	var/datum/latejoin_profile_snapshot/profile_context = requester.prefs.capture_latejoin_profile()
-	var/list/candidates = list()
-	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
-		for(var/datum/job/job as anything in department.department_jobs)
-			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
-				continue
-			var/availability = owner.IsJobUnavailable(job.title, latejoin = TRUE)
-			if(QDELETED(owner) || !requester || owner.client != requester || requester.mob != owner || !requester.prefs.is_latejoin_profile_current(null, profile_context))
-				return
-			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
-				continue
-			if(availability == JOB_AVAILABLE)
-				candidates += job.title
-	if(!length(candidates))
-		tgui_alert(owner, "В данный момент для вас нет случайной профессии. Обратитесь в ahelp за помощью.", "О нет!")
-		return
-	while(length(candidates))
-		var/job_title = pick_n_take(candidates)
-		var/datum/job/job = SSjob.get_job(job_title)
-		if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job_title])
-			continue
-		var/list/character_data = get_job_character_data(job, owner)
-		var/choice = tgui_alert(owner, "[character_data["public_title"]]?", "Случайная должность", list("Yes", "Reroll", "Cancel"))
-		if(QDELETED(owner) || !requester || owner.client != requester || requester.mob != owner || !requester.prefs.is_latejoin_profile_current(null, profile_context))
-			return
-		if(choice == "Cancel")
-			return
-		if(choice == "Yes")
-			if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job_title])
-				return
-			return job_title
-	tgui_alert(owner, "В данный момент нет доступных для вас случайных профессий!", "О нет!")
+/datum/latejoin_menu/proc/resolve_latejoin_job_choice(mob/dead/new_player/user, choice, list/choices, datum/latejoin_profile_snapshot/context)
+	if(!user?.is_latejoin_request_current(context))
+		return null
+	return choices[choice]
+
+/datum/latejoin_menu/proc/is_latejoin_selection_current(mob/dead/new_player/owner, list/params, datum/latejoin_profile_snapshot/context)
+	return owner?.is_latejoin_request_current(context) && params["edit_slot"] == context.editing_slot
+
+/datum/latejoin_menu/proc/is_latejoin_random_job_allowed(mob/dead/new_player/owner, datum/job/job)
+	var/client/requester = owner?.client
+	return job && requester && !requester.interviewee && (!job.requires_explicit_preference() || requester.prefs.job_preferences[job.title])
+
+/datum/latejoin_menu/proc/get_latejoin_job_label(mob/dead/new_player/owner, job_title)
+	var/list/character_data = get_job_character_data(SSjob.get_job(job_title), owner)
+	return character_data["public_title"]
+
+/// Adapt the original species helper's input; its config and station-trait checks still run.
+/datum/latejoin_menu/proc/get_job_character_species(job_title, mob/dead/new_player/owner)
+	var/datum/job/job = SSjob.get_job(job_title)
+	if(!job || !owner.client)
+		return null
+	var/datum/job_character_selection/selection = owner.client.prefs.select_job_character(job, TRUE)
+	var/species = selection.species
+	qdel(selection)
+	return species
 
 /// Display the same selected profile and variant that admission will use.
 /datum/latejoin_menu/proc/get_job_character_data(datum/job/job, mob/dead/new_player/user)
 	if(!user.client)
-		return list("public_title" = job_title_ru(job.title))
+		return list("public_title" = job_title_ru(job.title), "command" = !!(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND), "description" = job.description)
 	var/datum/preferences/preferences = user.client.prefs
 	var/datum/job_character_selection/character = preferences.select_job_character(job, TRUE)
 	var/public_title = job.get_character_job_title(character)
@@ -70,6 +51,8 @@
 	if(character.randomized)
 		profile_description += ", случайные имя и внешность"
 	var/list/data = list(
+		"command" = !!(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
+		"description" = job.description,
 		"public_title" = public_title,
 		"character_profile" = profile_description,
 		"job_icon" = icon2base64(job.get_character_job_icon(character)),
@@ -97,12 +80,12 @@
 
 /// Enrich only native dynamic rows: hidden jobs stay hidden and eligibility is not repeated.
 /datum/latejoin_menu/ui_data(mob/user)
-	var/client/requester = user.client
-	if(!requester)
+	var/mob/dead/new_player/owner = user
+	var/datum/latejoin_profile_snapshot/profile_context = owner.capture_latejoin_request()
+	if(!profile_context)
 		return list()
-	var/datum/latejoin_profile_snapshot/profile_context = requester.prefs.capture_latejoin_profile()
 	. = ..()
-	if(QDELETED(user) || !requester || user.client != requester || !requester.prefs.is_latejoin_profile_current(null, profile_context))
+	if(!owner?.is_latejoin_request_current(profile_context))
 		return list()
 	var/list/data = .
 	data["edit_slot"] = profile_context.editing_slot
@@ -127,22 +110,3 @@
 	if(department_data["open_slots"] != "∞")
 		if(job.total_positions - job.current_positions > 0)
 			department_data["open_slots"] += job.total_positions - job.current_positions
-
-/// A modal random choice may yield; stale selections must not enter as another profile.
-/datum/latejoin_menu/proc/handle_job_selection(mob/dead/new_player/owner, list/params)
-	if(!owner.client || owner.client.interviewee || !isnewplayer(owner))
-		return TRUE
-	var/client/requester = owner.client
-	var/datum/latejoin_profile_snapshot/profile_context = requester.prefs.capture_latejoin_profile()
-	if(params["edit_slot"] != profile_context.editing_slot)
-		return TRUE
-	if(params["job"] == "Random")
-		var/job = get_random_job(owner)
-		if(!job)
-			return TRUE
-		params["job"] = job
-	if(QDELETED(owner) || !requester || owner.client != requester || requester.mob != owner)
-		return TRUE
-	if(!requester.prefs.is_latejoin_profile_current(null, profile_context))
-		return TRUE
-	owner.AttemptLateSpawn(params["job"])

@@ -1,11 +1,15 @@
 /// Native candidacy has already checked the mind and queued rulesets before this phase.
-/datum/dynamic_ruleset/roundstart/blood_worm/proc/is_valid_host_profile(mob/candidate, client/candidate_client)
+/datum/dynamic_ruleset/roundstart/blood_worm/proc/get_host_profile_species(mob/candidate, client/candidate_client, current_species)
 	if(isnewplayer(candidate))
 		var/mob/dead/new_player/player = candidate
-		return player.has_eligible_crew_preference(get_blacklisted_roles() | get_bloodless_jobs(candidate_client))
-	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
-	var/datum/species/species = GLOB.species_prototypes[species_type]
-	return !(TRAIT_NOBLOOD in species.inherent_traits)
+		var/datum/job/host_job = player.get_eligible_crew_job(get_blacklisted_roles() | get_bloodless_jobs(candidate_client))
+		if(!host_job)
+			return null
+		var/datum/job_character_selection/selection = candidate_client.prefs.select_job_character(host_job)
+		. = selection.species
+		qdel(selection)
+		return
+	return current_species
 
 /datum/dynamic_ruleset/roundstart/blood_worm/proc/get_bloodless_jobs(client/player)
 	var/list/bloodless_jobs = list()

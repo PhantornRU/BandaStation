@@ -251,7 +251,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
-	load_job_character_slots() // BANDASTATION EDIT: load before check_keybindings() can save preferences.
+	job_assigned_profiles = savefile.get_entry("job_assigned_profiles", savefile.get_entry("pref_job_slots", job_assigned_profiles))
+	load_job_character_slots() // BANDASTATION ADD - Canonical slots before nested saves and native sanitation.
 
 	// OOC commendations
 	hearted_until = savefile.get_entry("hearted_until", hearted_until)
@@ -287,6 +288,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+	job_assigned_profiles = SANITIZE_LIST(job_assigned_profiles)
+	for(var/job, slot in job_assigned_profiles)
+		if(!isnum(slot) || slot < 1 || slot > max_save_slots)
+			job_assigned_profiles -= job
 
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
@@ -341,7 +346,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
-	save_job_character_slots() // BANDASTATION EDIT: the profile module owns its persisted format.
+	savefile.set_entry("job_assigned_profiles", job_assigned_profiles)
+	save_job_character_slots() // BANDASTATION ADD - Canonical format before the single native flush.
 	savefile.save()
 	return TRUE
 

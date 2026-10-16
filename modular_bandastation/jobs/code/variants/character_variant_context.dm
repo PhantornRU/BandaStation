@@ -1,6 +1,13 @@
 /mob/living/carbon/human
 	var/datum/job_variant_context/job_variant_context
 
+/// Snapshot this body's crime and outfit before native appearance checks can yield.
+/mob/living/carbon/human/apply_prefs_job(client/player_client, datum/job/job)
+	if(!player_client)
+		return
+	job.prepare_spawn_character(src, player_client.prefs)
+	return ..()
+
 /datum/job_variant_context
 	var/job_type
 	var/outfit_type

@@ -3,6 +3,12 @@
 	var/prisoner_crime
 	var/prisoner_record_registered = FALSE
 	var/prisoner_tattoos_applied = FALSE
+	var/datum/record/crew/prisoner_initial_record
+
+/// Replace only our native global subscription; registration needs the exact initial record.
+/datum/job/prisoner/New()
+	. = ..()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 /// Capture one crime before preference application can yield, alongside the shared variant context.
 /datum/job/prisoner/prepare_spawn_character(mob/living/body, datum/preferences/preferences)
@@ -15,18 +21,50 @@
 	var/crime_name = preferences?.read_preference(/datum/preference/choiced/prisoner_crime)
 	new_prisoner.prisoner_crime = GLOB.prisoner_crimes[crime_name] ? crime_name : pick(assoc_to_keys(GLOB.prisoner_crimes))
 
-/// Write the already selected crime into the exact initial record once.
+/// Run the native handler with body-owned inputs, never a name-matched replacement record.
 /datum/job/prisoner/proc/register_initial_prisoner_record(mob/living/carbon/human/crewmember, datum/record/crew/target_record)
-	if(crewmember.prisoner_record_registered)
+	if(crewmember.prisoner_record_registered || QDELETED(target_record))
 		return FALSE
-	var/crime_name = crewmember.prisoner_crime
-	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
-	if(!crime)
+	if(!GLOB.prisoner_crimes[crewmember.prisoner_crime])
 		CRASH("Initial Prisoner record has no selected crime")
-	crewmember.prisoner_record_registered = TRUE
-	var/datum/crime/past_crime = new(crime.name, crime.desc, "Central Command", "Indefinite.")
-	target_record.crimes += past_crime
-	target_record.recreate_manifest_photos(add_height_chart = TRUE)
-	to_chat(crewmember, span_warning("Вы отбываете наказание за: [crime.name]."))
-	crewmember.add_mob_memory(/datum/memory/key/permabrig_crimes, crimes = crime_name)
-	return TRUE
+	crewmember.prisoner_initial_record = target_record
+	handle_prisoner_joining(null, crewmember, title)
+	crewmember.prisoner_initial_record = null
+	return crewmember.prisoner_record_registered
+
+/datum/job/prisoner/handle_prisoner_joining(datum/source, mob/living/crewmember, rank)
+	SIGNAL_HANDLER
+	if(rank != title)
+		return ..()
+	if(!ishuman(crewmember))
+		return
+	var/mob/living/carbon/human/body = crewmember
+	if(body.prisoner_record_registered || QDELETED(body.prisoner_initial_record))
+		return
+	body.prisoner_record_registered = TRUE
+	return ..()
+
+/// Adapt the native local before its Random/fallback handling and effects.
+/datum/job/prisoner/proc/get_committed_prisoner_crime_name(mob/living/crewmember, crime_name)
+	if(ishuman(crewmember))
+		var/mob/living/carbon/human/body = crewmember
+		if(GLOB.prisoner_crimes[body.prisoner_crime])
+			return body.prisoner_crime
+	return crime_name
+
+/// The wrapper guarantees that effects run only during the exact-record callback.
+/datum/job/prisoner/proc/get_initial_prisoner_record(mob/living/crewmember, datum/record/crew/target_record)
+	if(ishuman(crewmember))
+		var/mob/living/carbon/human/body = crewmember
+		if(body.prisoner_initial_record)
+			return body.prisoner_initial_record
+	return target_record
+
+/// Native parent equipment already ran; only the tattoo loop is gated here.
+/datum/outfit/job/prisoner/proc/get_prisoner_equipment_crime(mob/living/carbon/human/new_prisoner, datum/prisoner_crime/crime, visuals_only)
+	if(visuals_only || new_prisoner.prisoner_tattoos_applied)
+		return null
+	crime = GLOB.prisoner_crimes[new_prisoner.prisoner_crime] || crime
+	if(crime)
+		new_prisoner.prisoner_tattoos_applied = TRUE
+	return crime

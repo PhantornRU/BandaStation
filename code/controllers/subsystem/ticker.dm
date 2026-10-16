@@ -465,11 +465,14 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		SStitle.show_title_screen_to(player.client) // BANDASTATION ADDITION - HTML Title Screen
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
-			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
-			var/mob/living/character = destination ? player.create_character(destination) : null
-			if(!validate_roundstart_character(player, character)) // BANDASTATION EDIT - Validate or cancel before equipment and handover.
-				continue
+			var/datum/roundstart_character_attempt/attempt = capture_roundstart_character(player) // BANDASTATION EDIT - Own only this construction.
 			GLOB.joined_player_list += player.ckey
+			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
+			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
+				qdel(attempt) // BANDASTATION EDIT - No construction receipt is needed on this native path.
+				continue
+			player.create_character(destination)
+			validate_roundstart_character(player, player?.new_character, attempt) // BANDASTATION EDIT - Reject before equipment; compensate this append only.
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()

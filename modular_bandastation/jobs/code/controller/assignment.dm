@@ -13,16 +13,21 @@
 			QDEL_NULL(player.assigned_character)
 	. = ..()
 
+/// Only explicit-preference roles need an opt-in; this check never runs eligibility or SQL.
+/datum/controller/subsystem/job/proc/is_random_job_preference_allowed(mob/dead/new_player/player, datum/job/job)
+	var/client/requester = player ? GET_CLIENT(player) : null
+	return job && requester?.prefs && (!job.requires_explicit_preference() || requester.prefs.job_preferences[job.title])
+
 /// Check each fallback candidate before eligibility and again after its potentially yielding lookup.
 /datum/controller/subsystem/job/proc/check_random_job_eligibility(mob/dead/new_player/player, datum/job/job, debug_prefix = "GRJ", add_job_to_log = TRUE)
 	var/client/requester = player ? GET_CLIENT(player) : null
-	if(job.requires_explicit_preference() && !requester?.prefs?.job_preferences[job.title])
+	if(!is_random_job_preference_allowed(player, job))
 		return JOB_UNAVAILABLE_GENERIC
 	var/eligibility = check_job_eligibility(player, job, debug_prefix, add_job_to_log = add_job_to_log)
 	if(eligibility != JOB_AVAILABLE)
 		return eligibility
 	if(QDELETED(player) || !requester?.prefs || GET_CLIENT(player) != requester)
 		return JOB_UNAVAILABLE_GENERIC
-	if(job.requires_explicit_preference() && !requester.prefs.job_preferences[job.title])
+	if(!is_random_job_preference_allowed(player, job))
 		return JOB_UNAVAILABLE_GENERIC
 	return eligibility

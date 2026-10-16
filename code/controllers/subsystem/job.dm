@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(job)
  * * latejoin - Set to TRUE if this is a latejoin role assignment.
  * * do_eligibility_checks - Set to TRUE to conduct all job eligibility tests and reject on failure. Set to FALSE if job eligibility has been tested elsewhere and they can be safely skipped.
  */
-/datum/controller/subsystem/job/proc/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE, is_debug_dummy = FALSE) // BANDASTATION EDIT - Explicit admin dummy opt-in.
+/datum/controller/subsystem/job/proc/assign_role(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE)
 	job_debug("AR: Running, Player: [player], Job: [isnull(job) ? "null" : job], LateJoin: [latejoin]")
 	if(!player?.mind || !job)
 		job_debug("AR: Failed, player has no mind or job is null. Player: [player], Rank: [isnull(job) ? "null" : job.type]")
@@ -251,7 +251,7 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 
 	// BANDASTATION EDIT - Commit selected-character admission before occupying the vacancy.
-	if(!prepare_job_assignment(player, job, latejoin, is_debug_dummy))
+	if(!prepare_job_assignment(player, job, latejoin))
 		return FALSE
 
 	job_debug("AR: Role now set and assigned - [player] is [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
@@ -313,7 +313,10 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		// This check handles its own output to job_debug.
-		if(check_random_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE) // BANDASTATION EDIT: modular fallback admission.
+		if(check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
+			continue
+
+		if(!is_random_job_preference_allowed(player, job)) // BANDASTATION ADD - Explicit roles require a current opt-in after eligibility waits.
 			continue
 
 		if(assign_role(player, job, do_eligibility_checks = FALSE))
@@ -950,23 +953,20 @@ SUBSYSTEM_DEF(job)
  * * debug_prefix - Logging prefix for the job_debug log entries. For example, GRJ during give_random_job or DO during divide_occupations.
  * * add_job_to_log - If TRUE, appends the job type to the log entry. If FALSE, does not. Set to FALSE when check is part of iterating over players for a specific job, set to TRUE when check is part of iterating over jobs for a specific player and you don't want extra log entry spam.
  */
-/datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE)
-	// BANDASTATION EDIT - Preserve the requester across the yielding account/ban checks.
-	var/client/requester = player ? GET_CLIENT(player) : null
-	var/datum/mind/candidate_mind = player?.mind
-	if(!candidate_mind || !possible_job || !requester)
+/datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE) // BANDASTATION EDIT - Selected profile context.
+	if(!player.mind)
 		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
-	if(possible_job.title in LAZYACCESS(prevented_occupations, candidate_mind))
+	if(possible_job.title in LAZYACCESS(prevented_occupations, player.mind))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_ANTAG_INCOMPAT
 
-	if(!possible_job.player_old_enough(requester))
+	if(!possible_job.player_old_enough(player.client))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ACCOUNTAGE, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_ACCOUNTAGE
 
-	var/required_playtime_remaining = possible_job.required_playtime_remaining(requester)
+	var/required_playtime_remaining = possible_job.required_playtime_remaining(player.client)
 	if(required_playtime_remaining)
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME, possible_job.title)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_PLAYTIME
@@ -975,18 +975,22 @@ SUBSYSTEM_DEF(job)
 	if(is_banned_from(player.ckey, possible_job.title))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_BANNED
-	// BANDASTATION EDIT - Revalidate identity after the database query, then run the character phase.
-	if(QDELETED(player) || !requester || GET_CLIENT(player) != requester || requester.mob != player || player.mind != candidate_mind)
-		return JOB_UNAVAILABLE_GENERIC
-	return check_character_eligibility(player, possible_job, debug_prefix, add_job_to_log, latejoin)
 
-/// Character-specific admission, after the common account/playtime/ban checks.
-/datum/controller/subsystem/job/proc/check_character_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE, latejoin = FALSE) // BANDASTATION EDIT - Real extension phase.
 	// Check for character age
+	if(QDELETED(player)) // BANDASTATION EDIT - Ban lookup can yield before the native client read.
+		return JOB_UNAVAILABLE_GENERIC
 	var/client/player_client = GET_CLIENT(player)
-	if(isnum(possible_job.required_character_age) && possible_job.required_character_age > player_client.prefs.read_preference(/datum/preference/numeric/age))
+	if(!player_client) // BANDASTATION EDIT - The preceding database query may have lost its client.
+		return JOB_UNAVAILABLE_GENERIC
+	var/character_age = get_job_character_age(player, possible_job, latejoin) // BANDASTATION EDIT - Only the age input is adapted.
+	if(isnum(possible_job.required_character_age) && possible_job.required_character_age > character_age)
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_AGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_AGE
+
+	// Need to recheck the player exists after is_banned_from since it can query the DB which may sleep.
+	if(QDELETED(player))
+		job_debug("[debug_prefix]: Player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_GENERIC
 
 	return JOB_AVAILABLE
 

@@ -36,9 +36,9 @@
 	var/list/variants = character.read_preference(/datum/preference/job_outfit_variants)
 	return get_job_variant_icon(variants?[title])
 
-/// Outfits may replace one backpack insertion while ordinary outfits retain native overflow deletion.
+/// TRUE means a module handled this item; FALSE leaves the native storage operation intact.
 /datum/outfit/proc/equip_backpack_item(mob/living/carbon/human/user, item_path)
-	return user.equip_to_storage(SSwardrobe.provide_type(item_path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
+	return FALSE
 
 /datum/id_trim/job
 	/// Expose a registered job template only through native CentCom authentication.

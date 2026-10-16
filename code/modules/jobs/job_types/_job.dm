@@ -299,12 +299,12 @@
 	return TRUE
 
 /// Gets the message that shows up when spawning as this job
-/datum/job/proc/get_spawn_message(mob/spawned) // BANDASTATION EDIT: supply the committed body to extensible instructions.
+/datum/job/proc/get_spawn_message()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return boxed_message(span_infoplain(jointext(get_spawn_message_information(spawned), "\n&bull; "))) // BANDASTATION EDIT
+	return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
 
 /// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
-/datum/job/proc/get_spawn_message_information(mob/spawned) // BANDASTATION EDIT
+/datum/job/proc/get_spawn_message_information()
 	SHOULD_CALL_PARENT(TRUE)
 	var/list/info = list()
 	info += "<b>Ваша роль на станции: [job_title_ru(title)].</b>\n"
@@ -528,11 +528,7 @@
 		spawn_instance = new spawn_type(get_turf(spawn_point), player_client.mob, null, null, TRUE)
 	else
 		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
-	// BANDASTATION EDIT START - Capture character state before preference application can yield.
-	if(player_client)
-		prepare_spawn_character(spawn_instance, player_client.prefs)
-		spawn_instance.apply_prefs_job(player_client, src)
-	// BANDASTATION EDIT END
+	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		rollback_spawn_character(spawn_instance, spawning_player, spawning_mind) // BANDASTATION EDIT: AI initialization has already moved the lobby mind.
 		qdel(spawn_instance)

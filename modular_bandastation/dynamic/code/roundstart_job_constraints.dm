@@ -1,5 +1,6 @@
 /// Changes made by one unexecuted ruleset, excluding restrictions that already existed.
 /datum/roundstart_job_changes
+	var/list/previous_blocked_jobs
 	var/list/added_blocked_jobs
 	var/forced_job
 	var/previous_forced_job
@@ -10,22 +11,41 @@
 
 /// A crew antagonist also needs an eligible job after the native mind and queued-selection checks.
 /datum/dynamic_ruleset/roundstart/is_valid_candidate(mob/candidate, client/candidate_client)
+	if(QDELETED(candidate) || !candidate_client || GET_CLIENT(candidate) != candidate_client)
+		return FALSE
 	. = ..()
+	if(QDELETED(candidate) || !candidate_client || GET_CLIENT(candidate) != candidate_client)
+		return FALSE
 	if(!. || !isnewplayer(candidate) || (ruleset_flags & RULESET_INVADER))
 		return
 	var/mob/dead/new_player/player = candidate
-	return player.has_eligible_crew_preference(get_blacklisted_roles())
+	. = player.has_eligible_crew_preference(get_blacklisted_roles())
+	if(QDELETED(candidate) || !candidate_client || GET_CLIENT(candidate) != candidate_client)
+		return FALSE
 
-/datum/dynamic_ruleset/roundstart/prepare_job_constraints(datum/mind/candidate)
-	var/list/previous_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate)
-	previous_blocks = previous_blocks ? previous_blocks.Copy() : list()
-	var/previous_forced = LAZYACCESS(SSjob.forced_occupations, candidate)
+/// The native caller retains both operations; only their before/after state belongs here.
+/datum/dynamic_ruleset/proc/capture_job_constraints(datum/mind/candidate)
+	return null
+
+/datum/dynamic_ruleset/proc/commit_job_constraints(datum/mind/candidate, datum/roundstart_job_changes/changes)
+	return
+
+/datum/dynamic_ruleset/roundstart/capture_job_constraints(datum/mind/candidate)
 	. = ..()
-	var/list/current_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate)
 	var/datum/roundstart_job_changes/changes = new
-	changes.added_blocked_jobs = (current_blocks || list()) - previous_blocks
+	var/list/blocked_jobs = LAZYACCESS(SSjob.prevented_occupations, candidate)
+	changes.previous_blocked_jobs = blocked_jobs ? blocked_jobs.Copy() : list()
+	changes.previous_forced_job = LAZYACCESS(SSjob.forced_occupations, candidate)
+	return changes
+
+/datum/dynamic_ruleset/roundstart/commit_job_constraints(datum/mind/candidate, datum/roundstart_job_changes/changes)
+	. = ..()
+	if(!changes)
+		return
+	var/list/current_blocks = LAZYACCESS(SSjob.prevented_occupations, candidate)
+	changes.added_blocked_jobs = (current_blocks || list()) - changes.previous_blocked_jobs
+	changes.previous_blocked_jobs = null
 	changes.forced_job = LAZYACCESS(SSjob.forced_occupations, candidate)
-	changes.previous_forced_job = previous_forced
 	LAZYSET(prepared_job_changes, candidate, changes)
 
 /datum/dynamic_ruleset/roundstart/execute()

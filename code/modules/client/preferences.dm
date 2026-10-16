@@ -50,7 +50,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	 * If a job is absent from the list, it is considered to be "JP_NEVER"
 	 */
 	var/list/job_preferences = list()
-	// BANDASTATION EDIT - Per-job character slots are owned by pref_job_slots.
+	/**
+	 * Lazylist of job titles to character slot numbers
+	 * When rolling for a job, if that job is present in this list, we load that slot instead of the active slot
+	 */
+	var/list/job_assigned_profiles
 
 	/// The current window, PREFERENCE_TAB_* in [`code/__DEFINES/preferences.dm`]
 	var/current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
@@ -255,7 +259,36 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				preference_middleware.post_set_preference(ui.user, requested_preference_key, value)
 			return TRUE
 		if ("set_color_preference")
-			return set_character_color(params, ui) // BANDASTATION EDIT - One guarded preference operation owns the modal.
+			var/requested_preference_key = params["preference"]
+
+			var/datum/preference/requested_preference = GLOB.preference_entries_by_key[requested_preference_key]
+			if (isnull(requested_preference))
+				return FALSE
+
+			if (!istype(requested_preference, /datum/preference/color))
+				return FALSE
+
+			var/default_value = read_preference(requested_preference.type)
+			var/color_editing_slot = default_slot // BANDASTATION ADD - Capture character color context before the modal.
+
+			// Yielding
+			var/new_color = tgui_color_picker(
+				usr,
+				"Select new color",
+				null,
+				default_value || COLOR_WHITE,
+			)
+
+			if (!new_color)
+				return FALSE
+
+			if (!is_color_preference_context_current(requested_preference, color_editing_slot, ui)) // BANDASTATION ADD - Reject a stale modal result.
+				return FALSE
+
+			if (!update_preference(requested_preference, new_color))
+				return FALSE
+
+			return TRUE
 		// BANDASTATION ADDITION - START
 		if("change_preferences_window")
 			if(current_window == PREFERENCE_TAB_CHARACTER_PREFERENCES)

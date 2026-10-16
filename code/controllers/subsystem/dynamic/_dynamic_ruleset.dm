@@ -235,7 +235,10 @@
 
 	for(var/mob/candidate as anything in selected_candidates)
 		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
-		prepare_job_constraints(candidate_mind) // BANDASTATION EDIT - Track cancellable occupation constraints.
+		var/datum/roundstart_job_changes/job_changes = capture_job_constraints(candidate_mind) // BANDASTATION EDIT - Snapshot only this assignment.
+		prepare_for_role(candidate_mind)
+		LAZYADDASSOC(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles()) // this is what makes sure you can't roll traitor as a sec-off
+		commit_job_constraints(candidate_mind, job_changes) // BANDASTATION EDIT - Record the native changes for cancellation.
 		selected_minds += candidate_mind
 		antag_candidates -= candidate
 
@@ -349,13 +352,6 @@
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)
 	SHOULD_CALL_PARENT(TRUE)
 	return TRUE
-
-/// Apply native occupation constraints as one phase that roundstart can track and undo.
-/datum/dynamic_ruleset/proc/prepare_job_constraints(datum/mind/candidate) // BANDASTATION EDIT
-	PROTECTED_PROC(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
-	prepare_for_role(candidate)
-	LAZYADDASSOC(SSjob.prevented_occupations, candidate, get_blacklisted_roles())
 
 /**
  * Handles any special logic that needs to be done for a player before they are assigned to this ruleset

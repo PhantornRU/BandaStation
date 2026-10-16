@@ -1,5 +1,7 @@
 /// Load the assignment format without erasing temporarily unavailable jobs or slots.
 /datum/preferences/proc/load_job_character_slots()
+	// The restored native field stays empty; its sanitation must never mutate canonical assignments.
+	job_assigned_profiles = null
 	pref_job_slots = list()
 	var/list/saved_slots = savefile.get_entry("pref_job_slots")
 	if(!islist(saved_slots))

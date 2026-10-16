@@ -1,5 +1,6 @@
 /datum/outfit/job/clown/security
 	name = "Security Clown"
+	preserve_backpack_supplies = TRUE
 	jobtype = /datum/job/donor/security_clown
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/job/donor_security_clown
@@ -23,10 +24,6 @@
 		/obj/item/reagent_containers/spray/waterflower = 1,
 	)
 	implants = list(/obj/item/implant/sad_trombone, /obj/item/implant/mindshield)
-
-/// Retain the donor supply operation while inheriting the native clown effects.
-/datum/outfit/job/clown/security/equip_backpack_item(mob/living/carbon/human/user, item_path)
-	return equip_backpack_item_preserving_overflow(user, item_path)
 
 /datum/outfit/job/clown/security/detective
 	name = "Security Clown (detective)"
