@@ -15,7 +15,7 @@
 	player.prefs = allocate(/datum/preferences, player)
 	player.prefs.write_preference(GLOB.preference_entries[/datum/preference/job_outfit_variants], list(JOB_PRISONER = "felon"))
 	body.prisoner_crime = /datum/prisoner_crime/negligence::name
-	job.prepare_job_variant(body, player.prefs)
+	job.prepare_spawn_character(body, player.prefs)
 	body.dress_up_as_job(job, consistent = TRUE)
 	job.after_spawn(body, null)
 	var/obj/item/card/id/card = body.get_idcard(hand_first = FALSE)

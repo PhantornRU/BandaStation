@@ -24,7 +24,6 @@ const shell = (child) => h('div', { className: 'PreferencesMenu', style: { width
     jobs.jobs_sorted = names;
     const donor = Object.fromEntries((donorEnabled ? ['Barber','Prisoner','Banker','Cargo Technician'] : ['Cargo Technician']).map(name => [name,structuredClone(fixture.job_variants[name])]));
     if(donorEnabled){
-      donor.Barber.profile_title = 'Стилист B';
       donor.Barber.lock_reason = lockReason;
       donor.Banker.lock_reason = 'Требуется подписка уровня 5.';
     }
@@ -34,7 +33,7 @@ const shell = (child) => h('div', { className: 'PreferencesMenu', style: { width
       character_preferences: { misc: { joblessrole: 3 } }, overflow_role: 'Assistant',
       job_preferences: [{ job: donorEnabled?'Barber':'Cargo Technician', priority: 3 }],
       pref_job_slots: {Barber:assignedSlot},
-      job_character_profiles: Object.fromEntries(names.map(name => [name,{slot:name==='Barber'?2:1, randomized:name==='Barber'&&randomized, error:name==='Barber'?profileError:null}])),
+      job_character_profiles: Object.fromEntries(names.map(name => [name,{slot:name==='Barber'?2:1, randomized:name==='Barber'&&randomized, error:name==='Barber'?profileError:null, public_title:name==='Barber'?'Стилист B':fixture.job_character_profiles[name]?.public_title??null}])),
       job_variants:donor, job_bans:banned?['Barber']:[],
       job_required_experience:experience?{Barber:{experience_type:'Crew',required_playtime:121}}:{},
       job_days_left:days?{Barber:days}:{},
@@ -67,7 +66,9 @@ const shell = (child) => h('div', { className: 'PreferencesMenu', style: { width
     const metadata={Cargo:{jobs:{Visible:{description:'static',public_title:'old',availability:0,unavailable_reason:null},Hidden:{}}},HiddenDepartment:{jobs:{HiddenOther:{}}}};
     const before=JSON.stringify({current,metadata});
     const merged=mergeLatejoinDepartments(current,metadata);
-    return {departments:Object.keys(merged),jobs:Object.keys(merged.Cargo.jobs),visible:merged.Cargo.jobs.Visible,unchanged:before===JSON.stringify({current,metadata}),empty:Object.keys(mergeLatejoinDepartments({},metadata)),tooltip:getJobProfileDescription({character_profiles:profiles,job_character_profiles:{Barber:{slot:2,randomized:true,error:null}},job_variants:{Barber:{profile_title:'Стилист B'}}} as any,'Barber')};
+    const profile = {slot:2,randomized:true,error:null,public_title:'Стилист B'};
+    const tooltip = (entry) => getJobProfileDescription({character_profiles:profiles,job_character_profiles:{Barber:entry}} as any,'Barber');
+    return {departments:Object.keys(merged),jobs:Object.keys(merged.Cargo.jobs),visible:merged.Cargo.jobs.Visible,unchanged:before===JSON.stringify({current,metadata}),empty:Object.keys(mergeLatejoinDepartments({},metadata)),tooltip:tooltip(profile),ordinaryTooltip:tooltip({...profile,randomized:false,public_title:null}),errorTooltip:tooltip({...profile,error:'Недоступный профиль'}),missingTooltip:tooltip({...profile,slot:3})};
   },
   currentData() { return structuredClone(currentData); },
   resetActions() { (window as any).__acts=[]; },

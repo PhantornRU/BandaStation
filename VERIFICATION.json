@@ -1,43 +1,16 @@
 {
-  "schema": 2,
-  "product_head": "b9f024dc4ebb06fe87b34adad5aa5ea348e3e736",
-  "product_tree": "351bb89236525d65beffe2df11a1798012dab429",
-  "base": "820de7f6ef9235d8417250cb01eec15da6735b18",
-  "manifest_sha256": "2b3f18ef43d690feb9d6a1b75043a5b154db291a52e208e69a895234f782c218",
-  "canonical_manifest_sha256": "2f4a9b728139756786b15c9d49d49a9ef0cf0c77c572392a62f2f9cc037523a8",
-  "proof_structure": "Composite phases on one identical product tree, not a whole-run PASS. First all stopped at Bun default timeout; strengthened external DM fixture needed two membership parentheses; a stale storage test was updated to require supported legacy conversion instead of data loss. Product did not change.",
-  "source_patch_sha256": "37a7f7ac24f087d597a4fa21ed8277ba4be0c8ccb1ca050cc9b95a8ed2ca45c7",
+  "status": "PASS",
+  "product_tree": "523188dc324f0c16ac1c5d7111f632090b617c0b",
+  "source_head_at_test": "b9f024dc4ebb06fe87b34adad5aa5ea348e3e736",
+  "source_patch_sha256": "6a30be5b2ae111b2d40dbe8597aeadff1b90efddcf2d05978f025b3e8ed3f503",
   "source_checkout_unchanged": true,
-  "production": {
-    "command": "tools/build/build.bat build -Werror",
-    "dmb_sha256": "d4a1481bffe02fedc12be21bd2206b6c8f3d7754d3ec1a157a88a595c74ba584",
-    "dme_sha256": "e66b8dde69de2e7e4e98d7e03533e3f2380e6513246a5cf539029a8cc2ac672d",
-    "external_tests_injected": false
-  },
-  "native_harness_compile": {
-    "external_tests_injected": false,
-    "dmb_sha256": "4559c61875c69d459ebbb5beb77c5445c36cf48cb802304e0df910c12c114abc"
-  },
-  "python": {
-    "passed": 21
-  },
-  "bun": {
-    "status": "PASS",
-    "exit_code": 0,
-    "command": "tools/bootstrap/javascript.bat test --timeout 30000 tools/build/juke/exec.test.js",
-    "passed": 1,
-    "seconds": 3.177,
-    "fixture_sha256": "a3b0b3298ceb8d90eca3af8f14de5b997f2f9f7ba4a2de26a3e7fdcb0617418c",
-    "log_sha256": "d5f48863f69d33f462b533c5207e7cdd25564356215a7892036a144495537abd",
-    "product_change": false,
-    "scope": "Identical overlay assertions in the original isolated checkout; only Bun test timeout increases from 5000 to 30000ms."
-  },
-  "dm_compile": {
-    "dmb_sha256": "c52570c535eb5db188670548967d633d05c48faf7a2266b95cd57342b39580c2"
-  },
+  "manifest_sha256": "48fb1726962ffc7ee4140c04c219cae9af1d0a262ef8c3faef6e782a6e96ef59",
+  "canonical_manifest_sha256": "f8fe97895350a17837854f1987689091295cd1bb84dc31e9f51ed04d02e44526",
+  "result_sha256": "6f789e4f754ab9210b2cd6fe45d1bcd304ddf4edc14b3af532dca541c53cea84",
+  "proof_structure": "One fresh full all PASS on executed_product_tree. Delivery differs solely by removing one empty EOF line in character_creation.dm, proven by exact blob identity and complete tree diff. No gameplay retest for whitespace. Canonical replay updates only that input hash and its adapter hash guard; executed copies retained.",
   "dm_modes": {
     "00": {
-      "passed": 82,
+      "passed": 83,
       "clean_run": true,
       "map": "runtimestation_minimal",
       "startup_flags": {
@@ -51,12 +24,12 @@
       "runtime": "runtime-00",
       "exit_code": 0,
       "runtime_errors": 0,
-      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
-      "log_sha256": "15370787ba9dc05bf3e3819dbc731822e9a1a7ae7e4418a3e02039e3b5cc961f",
-      "structured_runtime_log_sha256": "bc785f32e1653e3936fbd81682cff96d97337bf4b516487dd6b9aa0f06a83933"
+      "unit_tests_json_sha256": "2f7c28a5bb868ac95e6a8f35209d24ad90e29a51a1eb271ace2d3356e8e3203b",
+      "log_sha256": "896b5e27bcfc1d34e26747d1c772ba3d31e355222f19a0c8b4a19eda94bfa744",
+      "structured_runtime_log_sha256": "bbd6e99185177ecdae6cd15460299bc578a600710c056de4c75716c346f180a0"
     },
     "01": {
-      "passed": 82,
+      "passed": 83,
       "clean_run": true,
       "map": "runtimestation_minimal",
       "startup_flags": {
@@ -70,12 +43,12 @@
       "runtime": "runtime-01",
       "exit_code": 0,
       "runtime_errors": 0,
-      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
-      "log_sha256": "193457ddb499416338625399c539e78e01325ba293dcb29f49a2749d34934947",
-      "structured_runtime_log_sha256": "0b8511767a21c2deecc65896080434933a9b2f54a626437be3ba246eb66c995d"
+      "unit_tests_json_sha256": "2f7c28a5bb868ac95e6a8f35209d24ad90e29a51a1eb271ace2d3356e8e3203b",
+      "log_sha256": "92e6dd14385b10c66f82fe89b1b6e9ac8e2e6cf45031aa8044c2637293ce9e0d",
+      "structured_runtime_log_sha256": "806a05dad58f50bdbc1d3ac78bc973dc2aa91b171950e8fa5093d969a1f6d7f1"
     },
     "10": {
-      "passed": 82,
+      "passed": 83,
       "clean_run": true,
       "map": "runtimestation_minimal",
       "startup_flags": {
@@ -89,12 +62,12 @@
       "runtime": "runtime-10",
       "exit_code": 0,
       "runtime_errors": 0,
-      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
-      "log_sha256": "0b99dd1897c9cb382361ddf5745677ad14795820bba25a4e4885542b5189e3c7",
-      "structured_runtime_log_sha256": "367c1aa4053c245d7c451410d80e408f17df89e99f2a20835c96639b0d518d69"
+      "unit_tests_json_sha256": "2f7c28a5bb868ac95e6a8f35209d24ad90e29a51a1eb271ace2d3356e8e3203b",
+      "log_sha256": "96c1c4d1faf0174c89fbe435b23ee660f402d710ea0a79972e03acbf2502ac69",
+      "structured_runtime_log_sha256": "58637aff14c11f99adfcc51491014cf216c8c5a83f5d0757548152a9d4d42d96"
     },
     "11": {
-      "passed": 82,
+      "passed": 83,
       "clean_run": true,
       "map": "runtimestation_minimal",
       "startup_flags": {
@@ -108,20 +81,49 @@
       "runtime": "runtime-11",
       "exit_code": 0,
       "runtime_errors": 0,
-      "unit_tests_json_sha256": "e70246717c9c509efd230b2d2b22d905d4d015f137e8d9e0d2138fe1340c5d18",
-      "log_sha256": "c4a4f7fa1b8ef78b11e35beb177584f04ecc7a142a6659310116c8df58710196",
-      "structured_runtime_log_sha256": "5265a4efdb2397b153b7baa1dfee42b9e1d3324d863b84cd00cd07204ef880b0"
+      "unit_tests_json_sha256": "2f7c28a5bb868ac95e6a8f35209d24ad90e29a51a1eb271ace2d3356e8e3203b",
+      "log_sha256": "d78ad48fd76454b461ebae8f336dba2d3688a19948298b237173c9f108bc878d",
+      "structured_runtime_log_sha256": "481e26c475c5009c65720f93d284560bdf36317da2256c95dc83dfdf02ee7b60"
     }
   },
-  "phase_report_sha256": {
-    "initial_all": "6e0220e0ea0dfd1b8587124e52ca7f92c519d7bafd96acc7eb6ef4494490e450",
-    "final_dm": "a8523c7b1aef569709e37ae3d9a5b930035c1d0d6556af82c71b93fed316b231"
+  "executed_product_tree": "f7c4dacb8abfd7a10abd03411a3ca3976ce6a285",
+  "post_test_formatting": {
+    "path": "modular_bandastation/jobs/code/player/character_creation.dm",
+    "change": "Remove exactly one empty final line; no other byte or file changed.",
+    "executed_tree": "f7c4dacb8abfd7a10abd03411a3ca3976ce6a285",
+    "delivery_tree": "523188dc324f0c16ac1c5d7111f632090b617c0b",
+    "executed_file_sha256": "0c53d048746083daea7d3577c7050fe3fb324d2a38bc023cbc8d75c90e42d34a",
+    "delivery_file_sha256": "955314661687f328dbfe7c7aabb6df0b8e9ea41fefef098099f5923a0b37a4fd",
+    "git_diff_numstat": "0 added / 1 empty line removed",
+    "strict_blob_identity_except_final_lf": true
+  },
+  "schema": 3,
+  "product_head": "5026cbb6221c6b56ba853d7ca5cfcf96e52d23f6",
+  "base": "820de7f6ef9235d8417250cb01eec15da6735b18",
+  "production": {
+    "command": "tools/build/build.bat build -Werror",
+    "dmb_sha256": "2d8e1fe25b679a3f2ff1d7637a1277bbfb17effd624cb267c302336ca6b8cb89",
+    "dme_sha256": "e66b8dde69de2e7e4e98d7e03533e3f2380e6513246a5cf539029a8cc2ac672d",
+    "external_tests_injected": false
+  },
+  "native_harness_compile": {
+    "external_tests_injected": false,
+    "dmb_sha256": "b334137a5db288ef988a9b904cdaf1af448e35c3337a16946a4291e07658f25f"
+  },
+  "python": {
+    "passed": 21
+  },
+  "bun": {
+    "passed": 1
+  },
+  "dm_compile": {
+    "dmb_sha256": "2fd0d4707a58e994ce63ac7fd4b34b559f7b34a4b014803006c934d798770088"
   },
   "source_contract": {
     "status": "PASS",
     "native_files": 14,
     "hunks": 58,
-    "single_line_replacements": 18,
+    "single_line_replacements": 20,
     "removed_definitions": 0,
     "removed_multiline_blocks": 0,
     "native_jobs_middleware": "exact BASE"
@@ -130,8 +132,11 @@
     ".gitattributes",
     "CANONICAL_MANIFEST.json",
     "EXECUTED_MANIFEST.json",
+    "EXECUTED_SOURCE_INPUTS.json",
+    "EXECUTED_client_fixture_adapter.py",
     "LICENSE",
     "NATIVE_CONTRACTS.json",
+    "POST_TEST_FORMAT.json",
     "README.md",
     "README_RU.md",
     "SOURCE_INPUTS.json",

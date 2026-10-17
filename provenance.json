@@ -25,9 +25,10 @@
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/equipment.dm",
       "original_sha256": "1f598defa2f0c6495336d5ec3a6eaef8fba84ded145a93334486d35df8107e4c",
       "changes": [
-        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant."
       ],
-      "adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199",
+      "adapted_sha256": "90335c9fd4e44591512cdb9e6900f971b0b3cbbc4f6bff0b51ee84c1196062a9",
       "parent_adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199"
     },
     {
@@ -111,9 +112,10 @@
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
       "original_sha256": "ec24138b3591b25945167b5e83763ff3db970c0e2e1852c9f26a5a418f167360",
       "changes": [
-        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant."
       ],
-      "adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a",
+      "adapted_sha256": "835c76076a932995dc76528bdc0592b8654f30762c838710418ef8fe2ff03e2d",
       "parent_adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a"
     },
     {
@@ -171,10 +173,12 @@
       "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
       "changes": [
         "Final cleanup: malformed format tests now require raw entry preservation instead of sanitizing deletion; renamed storage hooks. Add two native load/save regressions covering six supported conversion cases and ten malformed maps, every nested flush, idempotence, unrelated saves and rejected set/reset actions.",
-        "Independent fixture review: freeze malformed expected JSON before storage/loading so mutation through an alias cannot weaken assertions. Product source unchanged; repeat DM suite only."
+        "Independent fixture review: freeze malformed expected JSON before storage/loading so mutation through an alias cannot weaken assertions. Product source unchanged; repeat DM suite only.",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant.",
+        "Fixture expected Deliverer for unchanged deliverer ID; translated deliverer_ru is distinct. All saved IDs and assertions retained."
       ],
-      "adapted_sha256": "2ada213eb9f3dd02a65404c2bd0d4fefaaa7ef22998599e3a2ed8e2a07ff489a",
-      "parent_adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
+      "adapted_sha256": "6eb6a721e9bd3b1c06eb90d15b38888b48d34671b1d8b7559c79be312434ce83",
+      "parent_adapted_sha256": "1bcd9242a81cc5ea5f1091fdb3524e7a8ef7972f7b8d998efd548f3d3da6b569"
     },
     {
       "destination": "modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
@@ -225,9 +229,11 @@
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
         "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture.",
         "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
-        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied."
+        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied.",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant.",
+        "Hard-delete regression exposed skipped lobby method dispatch. Actual validator now belongs to independent per-call context; two direct fixture calls use it and late observer calls real parent. Existing assertions/5 scenarios retained; no validator/client admission logic substituted."
       ],
-      "adapted_sha256": "5bf4eaf6344fbec4579ae227f2ea39ab9a897a644b1ce3afa705e015d8310976",
+      "adapted_sha256": "d554be922e0c0d630f8774733fe132539255a8ff127a78a142a29a7ec8f50ede",
       "fixture_runtime_corrections": [
         {
           "path": "modular_bandastation/jobs/code/tests/handover.dm",
@@ -236,7 +242,7 @@
           "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
         }
       ],
-      "parent_adapted_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268"
+      "parent_adapted_sha256": "8dd799a8e49304f799a433992ddab16cca4d14b33a628dfcfd5bd410b8d44f77"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/latejoin_context.dm",
@@ -332,10 +338,11 @@
       "source": "task_state/20261016-pr11-core-minimum/REGRESSION_LATE_HELPERS.dm",
       "original_sha256": "67d3dc3c59a30cfb2046f9fc9eb0cc92bbf51655d4d24f13e6d2eee93b51ad8a",
       "changes": [
-        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied."
+        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied.",
+        "Hard-delete regression exposed skipped lobby method dispatch. Actual validator now belongs to independent per-call context; two direct fixture calls use it and late observer calls real parent. Existing assertions/5 scenarios retained; no validator/client admission logic substituted."
       ],
-      "adapted_sha256": "bb673e0c7a863eea5d08d6a66a3f9d414294f07b38b228935a75639975aaa8d4",
-      "parent_adapted_sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5"
+      "adapted_sha256": "cd756f2554657729ff484c025d808dc8a9876500ec8685a2f904c60b0acf8d4b",
+      "parent_adapted_sha256": "bb673e0c7a863eea5d08d6a66a3f9d414294f07b38b228935a75639975aaa8d4"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
@@ -378,9 +385,12 @@
         "Use the actual native Medical Doctor datum type for the later Dynamic writer; preserve both rollback assertions unchanged.",
         "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged.",
         "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
-        "Runtime fixture correction: provide public AttemptLateSpawn with a synthetic key and linked persistent client/mind. The constructor seam still owns its own side effects; actual transfer/equipment/latejoin tail and rollback assertions retained."
+        "Runtime fixture correction: provide public AttemptLateSpawn with a synthetic key and linked persistent client/mind. The constructor seam still owns its own side effects; actual transfer/equipment/latejoin tail and rollback assertions retained.",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant.",
+        "Constructor interruption fixture captures its owner explicitly in setup instead of reading intentionally null native client. All five modes and all assertions retained; no product or adapter changes.",
+        "Hard-delete regression exposed skipped lobby method dispatch. Actual validator now belongs to independent per-call context; two direct fixture calls use it and late observer calls real parent. Existing assertions/5 scenarios retained; no validator/client admission logic substituted."
       ],
-      "adapted_sha256": "1fdcdf045675c4366454b6bcef4c3a59c0352824a77948e2d950900cd332d497",
+      "adapted_sha256": "06c5b1adbb4cc938dcaa3dcc3a86978a03711b57294e522becf2cdb2c5f8f01a",
       "corrected_local_source_sha256": "a8411f1312ff389ade9cb24404aafa24de93f4e05741e33cf5d0f9e0790f4742",
       "fixture_runtime_corrections": [
         {
@@ -390,7 +400,7 @@
           "reason": "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
         }
       ],
-      "parent_adapted_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937"
+      "parent_adapted_sha256": "3de025eaba917589134f1933017410438ea72be3eeb0207c6c50150aaf827b82"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
@@ -483,7 +493,8 @@
         "Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.",
         "Before any TEMP overlay, native_preservation checks every code/ hunk against NATIVE_CONTRACTS.json; canonical mode never stages external tests.",
         "Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded.",
-        "Final cleanup: Bun timeout is explicitly bounded at 30000ms after the unchanged subprocess-output regression exceeded the default 5000ms on Windows. Assertions and product build helper remain unchanged."
+        "Final cleanup: Bun timeout is explicitly bounded at 30000ms after the unchanged subprocess-output regression exceeded the default 5000ms on Windows. Assertions and product build helper remain unchanged.",
+        "Modular refactor: per-call creation snapshot API; new public-entry harddelete/replacement/reentrancy regression. Existing assertions retained, same native algorithm and real-client boundary. Profile DTO assertions and inherited outfit initial values use actual production phases/parent."
       ]
     }
   ],

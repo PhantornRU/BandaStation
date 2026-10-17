@@ -518,20 +518,20 @@
           "reason": "Latejoin помечает первоначальную manifest job-запись для once-only callback."
         },
         {
-          "old_start": 287,
-          "new_start": 298,
-          "before": "",
-          "after": "\t// BANDASTATION EDIT START - Capture ownership before the constructor can yield or move an AI mind.\n\tvar/datum/job_character_selection/character_context = assigned_character\n\tvar/datum/mind/spawning_mind = mind\n\tvar/datum/job/spawning_job = mind.assigned_role\n\t// BANDASTATION EDIT END\n",
-          "owner": "jobs: admission / player",
-          "reason": "Selection/mind/job захватываются до native constructor и его ожиданий. Post-wrapper не видит эти local values."
+          "before": "/mob/dead/new_player/proc/create_character(atom/destination, forced_slot)\n",
+          "after": "/mob/dead/new_player/proc/create_character(atom/destination, forced_slot, datum/job_character_creation/creation) // BANDASTATION EDIT - Per-call ownership supplied by the module.\n",
+          "owner": "jobs: character creation",
+          "reason": "Контекст создаёт модуль перед настоящим ..(); native принимает его только для внутренней проверки после yielding constructor. Захват состояния и его удаление находятся в модуле.",
+          "old_start": 280,
+          "new_start": 291
         },
         {
-          "old_start": 289,
-          "new_start": 305,
-          "before": "",
-          "after": "\tif(!validate_created_character(spawning_mob, spawning_mind, spawning_job, character_context)) // BANDASTATION EDIT - Validate before mind and history changes.\n\t\treturn\n",
+          "old_start": 288,
+          "new_start": 299,
+          "before": "\tvar/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)\n",
+          "after": "\tvar/mob/living/spawning_mob = creation.create_body(client, destination, src) // BANDASTATION EDIT - Keep construction cleanup alive if the lobby is deleted.\n\tif(!spawning_mob) // BANDASTATION ADD - The module rejected the constructed body.\n\t\treturn\n",
           "owner": "jobs: admission / player",
-          "reason": "Final body/context validation до native mind transfer и history write, включая специализированные constructors."
+          "reason": "Независимый context вызывает исходный виртуальный job constructor один раз и проверяет тело до возврата. При hard-delete lobby BYOND прерывает native proc; только frame контекста может закончить owned cleanup. Mind/history остаются в native."
         }
       ]
     }

@@ -1,9 +1,9 @@
 {
   "schema": 1,
-  "sealed_utc": "2026-10-16T22:30:40.983690+00:00",
+  "sealed_utc": "2026-10-17T08:47:10.937864+00:00",
   "upstream_base": "820de7f6ef9235d8417250cb01eec15da6735b18",
-  "source_head_at_seal": "b9feef39fdc825cfe3992f3f5251d19f16a1e119",
-  "source_patch_sha256_at_seal": "37a7f7ac24f087d597a4fa21ed8277ba4be0c8ccb1ca050cc9b95a8ed2ca45c7",
+  "source_head_at_seal": "b9f024dc4ebb06fe87b34adad5aa5ea348e3e736",
+  "source_patch_sha256_at_seal": "6a30be5b2ae111b2d40dbe8597aeadff1b90efddcf2d05978f025b3e8ed3f503",
   "files": [
     {
       "path": ".github/workflows/run_linters.yml",
@@ -54,6 +54,10 @@
       "sha256": "2374b348f5fe99b669454e3d3bc82a6ebaf0aa8529115bbd851b73486f309f48"
     },
     {
+      "path": "code/modules/jobs/job_types/clown.dm",
+      "sha256": "cb8afa7571d001da8e5eea287cb4af9f2b4e5d5b357e2f7608eac93119874a8c"
+    },
+    {
       "path": "code/modules/jobs/job_types/prisoner.dm",
       "sha256": "851af0b004d1be0db15d9813f2ec54083e0b20b8b8d5bdabc12274b2bf2d7518"
     },
@@ -63,7 +67,7 @@
     },
     {
       "path": "code/modules/mob/dead/new_player/new_player.dm",
-      "sha256": "eafac38050a7ef1af5a929fe4407401b87897cb006f648c0631c2824f5ea5737"
+      "sha256": "7fcd95754081ee18eddd9be132c237baea879859b7d0135cabf1cf7f8349cfe4"
     },
     {
       "path": "config/jobconfig.toml",
@@ -87,7 +91,7 @@
     },
     {
       "path": "modular_bandastation/donor_jobs/CORE_BOUNDARY.md",
-      "sha256": "9eb0028633748149042a58fdd97f729c326e3f45af2af8038831edd3c43c1b07"
+      "sha256": "6c0043c598f511e9dc7bd5c66dcb6db14bd1b90162887c1268927a7d1c711109"
     },
     {
       "path": "modular_bandastation/donor_jobs/FACTION_CLOTHING.md",
@@ -311,7 +315,7 @@
     },
     {
       "path": "modular_bandastation/donor_jobs/code/outfits/security_clown_outfit.dm",
-      "sha256": "72e91473e40fa93028ff474ee248895bcfc36850dcfe1292b5a796f105500fd3"
+      "sha256": "637b8e26dae87318f601306ecbe96e7d6a73233e522ffaf7d0b8e66ca03a505b"
     },
     {
       "path": "modular_bandastation/donor_jobs/code/outfits/service_administrator_outfit.dm",
@@ -499,7 +503,7 @@
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/pref_job_slots_middleware.dm",
-      "sha256": "b2bb753454ccc168247c0fa24096c30c3a3b966a3a91b4b21aa3cfd1c9f6d518"
+      "sha256": "d41b6e99a21aafa85f3fab83762edad8cba4ca9a407f3099236425a0faf469da"
     },
     {
       "path": "modular_bandastation/jobs/VARIANT_MIGRATION.md",
@@ -511,7 +515,7 @@
     },
     {
       "path": "modular_bandastation/jobs/_jobs.dme",
-      "sha256": "06f9e695131bbc68a1056bc5eca56d1f0a253a84eb6b76e621a9474b393eeca1"
+      "sha256": "1f08cefc856e4de47b4762245ea3330e10d3d505f6d8fd08ad103994e4291a24"
     },
     {
       "path": "modular_bandastation/jobs/code/controller/admission.dm",
@@ -531,7 +535,7 @@
     },
     {
       "path": "modular_bandastation/jobs/code/extension_hooks.dm",
-      "sha256": "4966bceb2ce98ca704a05a24706b683cc9a392a5c87c6d0a0059f9fbbc74c05c"
+      "sha256": "f1cd6fdeab06a5565457bf705dbd828c4f8cf11200f7c3107d4d2cab62e6e574"
     },
     {
       "path": "modular_bandastation/jobs/code/initial_crew_records.dm",
@@ -554,8 +558,12 @@
       "sha256": "a697089bc52624504bd43cf6a4398d97d59da092c93d24d8912789f28630ca31"
     },
     {
+      "path": "modular_bandastation/jobs/code/player/character_creation.dm",
+      "sha256": "955314661687f328dbfe7c7aabb6df0b8e9ea41fefef098099f5923a0b37a4fd"
+    },
+    {
       "path": "modular_bandastation/jobs/code/player/latejoin_attempt.dm",
-      "sha256": "7f0bbd28c22e7192acbb7a6ba7e900d13baf0efafb379989f4ead22bf2aeb3c9"
+      "sha256": "73025c25f4fccbd1f4701d26cf4c15b315b37f28def468c464d0b2f8f990a140"
     },
     {
       "path": "modular_bandastation/jobs/code/preferences/job_outfit_variants.dm",
@@ -563,7 +571,7 @@
     },
     {
       "path": "modular_bandastation/jobs/code/preferences/job_variants_middleware.dm",
-      "sha256": "8356a48cf99034babbfa6acbe12b456ff9b567cdde8951d043506b06074594b5"
+      "sha256": "bdc13ee4cc57b207cddd6095816ffaa299dd77f9a9caef3ae15fe49f2385835a"
     },
     {
       "path": "modular_bandastation/jobs/code/ui/job_availability_messages.dm",
@@ -575,7 +583,7 @@
     },
     {
       "path": "modular_bandastation/jobs/code/variants/character_variant_context.dm",
-      "sha256": "fdaef264dbc05dfc7b0a4745aba81398072eb451396c8f833924162b3fb55cd6"
+      "sha256": "4f6535a1a2a1ef79bed68c9f5fad94b6e1dd970e8dbb401d972622f4a039d4b7"
     },
     {
       "path": "modular_bandastation/jobs/code/variants/job_variant_icons.dm",
@@ -591,7 +599,7 @@
     },
     {
       "path": "modular_bandastation/jobs/code/variants/outfit_supplies.dm",
-      "sha256": "3713800559672ce5e0e26416c682141200f94e83b33886fd1a218e1c3a97069b"
+      "sha256": "16a6b3e39582919c3d5d1b805b2bce4534330e78e503b14c1170f61bb7fdf7cb"
     },
     {
       "path": "modular_bandastation/modular_bandastation.dme",
@@ -691,11 +699,11 @@
     },
     {
       "path": "tgui/packages/tgui/bandastation/job_slots_preferences/profileDescription.ts",
-      "sha256": "7b073442db4f80d4efb876c5c8ae5399539da7417155da758fc9c7686de7606d"
+      "sha256": "60d533a869f1c5815eec335814be0cab85cda9d72f43ee3d659d7c09cd43727f"
     },
     {
       "path": "tgui/packages/tgui/bandastation/job_slots_preferences/types.ts",
-      "sha256": "06afe1a7dd5038924997babdcb6e848229686fb12e514c9e36ef236f495d6f1a"
+      "sha256": "e94c2698f07eab550d630b9669dfaa4f41f6a2074ed9fee6741c41434ad572a1"
     },
     {
       "path": "tgui/packages/tgui/bandastation/jobs/JobHudIcon.tsx",
@@ -707,7 +715,7 @@
     },
     {
       "path": "tgui/packages/tgui/bandastation/jobs/types.ts",
-      "sha256": "95aa018fe591637347c1cdab46d5116b09c6d02af22e206ecf41e65205114e1c"
+      "sha256": "fb74c1fe42ba18640a9bde6d3c6a3dd2f2c449efd4db2f6d9f82b12a07d519dc"
     },
     {
       "path": "tgui/packages/tgui/interfaces/JobSelection.tsx",
@@ -850,5 +858,15 @@
       "sha256": "ad0edc72590c2fb3abbd5ddc3d04e785735cdcbd12d69f1e605cc7913c4d65d2"
     }
   ],
-  "scope": "All PR paths changed/deleted against upstream base, nonignored untracked files and explicit build/bootstrap/migration/lock inputs. Full HEAD/patch/untracked bytes are captured separately at replay."
+  "scope": "All PR paths changed/deleted against upstream base, nonignored untracked files and explicit build/bootstrap/migration/lock inputs. Full HEAD/patch/untracked bytes are captured separately at replay.",
+  "post_test_formatting": {
+    "path": "modular_bandastation/jobs/code/player/character_creation.dm",
+    "change": "Remove exactly one empty final line; no other byte or file changed.",
+    "executed_tree": "f7c4dacb8abfd7a10abd03411a3ca3976ce6a285",
+    "delivery_tree": "523188dc324f0c16ac1c5d7111f632090b617c0b",
+    "executed_file_sha256": "0c53d048746083daea7d3577c7050fe3fb324d2a38bc023cbc8d75c90e42d34a",
+    "delivery_file_sha256": "955314661687f328dbfe7c7aabb6df0b8e9ea41fefef098099f5923a0b37a4fd",
+    "git_diff_numstat": "0 added / 1 empty line removed",
+    "strict_blob_identity_except_final_lf": true
+  }
 }

@@ -18,7 +18,7 @@
 	preferences.path = null
 	QDEL_NULL(preferences.savefile)
 	preferences.savefile = allocate(/datum/json_savefile)
-	preferences.savefile.set_entry("character2", list("real_name" = "Saved Second", "age" = 44, "species" = SPECIES_HUMAN))
+	preferences.savefile.set_entry("character2", list("real_name" = "Saved Second", "age" = 44, "species" = SPECIES_HUMAN, "job_outfit_variants" = list("Cargo Technician" = "deliverer")))
 	preferences.savefile.set_entry("character3", list("real_name" = "Saved Third", "age" = 48, "species" = SPECIES_HUMAN))
 	TEST_ASSERT(preferences.write_preference(GLOB.preference_entries[/datum/preference/name/real_name], "Current Character"), "Could not set the active name")
 	TEST_ASSERT(preferences.write_preference(GLOB.preference_entries[/datum/preference/numeric/age], 36), "Could not set the active age")
@@ -47,6 +47,11 @@
 
 	preferences.pref_job_slots = list("[job.title]" = 2, "[other_job_title]" = other_assignment)
 	check_assignment(2, 2, FALSE, "Saved assignment")
+	var/list/assigned_profile = preferences.savefile.get_entry("character2")
+	assigned_profile["job_outfit_variants"] = list("[job.title]" = "unknown_variant")
+	var/list/default_title_data = slot_ui.get_ui_data(user)
+	TEST_ASSERT_EQUAL(default_title_data["job_character_profiles"][job.title]["public_title"], "Грузчик", "An unknown variant in assigned profile B did not use the default public title")
+	assigned_profile["job_outfit_variants"] = list("[job.title]" = "deliverer")
 	var/reset_action = slot_ui.action_delegations["reset_job_slots"]
 	var/set_action = slot_ui.action_delegations["set_job_slot"]
 	TEST_ASSERT_NOTNULL(reset_action, "The real reset action is not registered")
@@ -131,6 +136,9 @@
 	TEST_ASSERT_EQUAL(slot_data["pref_job_slots"][job.title], stored, "Slot dropdown disagrees with selection: [scenario]")
 	TEST_ASSERT_EQUAL(slot_data["job_character_profiles"][job.title]["slot"], effective_slot, "Profile tooltip disagrees with selection: [scenario]")
 	TEST_ASSERT_EQUAL(slot_data["job_character_profiles"][job.title]["randomized"], randomized, "Profile tooltip disagrees with randomization: [scenario]")
+	TEST_ASSERT_EQUAL(slot_data["job_character_profiles"][job.title]["public_title"], effective_slot == 2 ? "Deliverer" : "Грузчик", "Profile tooltip does not name the assigned character's variant: [scenario]")
+	TEST_ASSERT("public_title" in slot_data["job_character_profiles"][other_job_title], "An ordinary job omitted the profile public-title contract: [scenario]")
+	TEST_ASSERT_NULL(slot_data["job_character_profiles"][other_job_title]["public_title"], "An ordinary job acquired a duplicate variant title: [scenario]")
 	TEST_ASSERT_EQUAL(slot_data["pref_job_slots"][other_job_title], other_assignment, "Assignment changed another profession: [scenario]")
 	var/list/priority_data = priority_ui.get_ui_data(user)
 	var/list/job_preferences = priority_data["job_preferences"]

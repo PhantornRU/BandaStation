@@ -21,6 +21,11 @@ MIGRATION = TASK / "VARIANT_MIGRATION.json"
 OLD = "d15909e7abab81a0dc4f21faf063b6bd1148706d"
 DONOR = "modular_bandastation/donor_jobs/code/"
 JOBS = "modular_bandastation/jobs/code/"
+CLOWN_PARENT = "/datum/outfit/job/clown"
+SECURITY_CLOWN = CLOWN_PARENT + "/security"
+INHERITED_CLOWN_FIELDS = frozenset({
+    "backpack", "satchel", "duffelbag", "shoes", "mask", "l_pocket", "belt",
+})
 
 # Deployment identifiers and sprite-state strings are deliberately not renamed.
 STEMS = {
@@ -144,12 +149,15 @@ def main() -> int:
                    for path in folder.rglob("*.dm")}
     old, old_owners = merge(old_sources)
     new, new_owners = merge(new_sources)
+    native_clown = declarations((ROOT / "code/modules/jobs/job_types/clown.dm")
+                                .read_text(encoding="utf-8-sig")).get(CLOWN_PARENT, {})
     migration = json.loads(MIGRATION.read_text(encoding="utf-8"))
     expected = {}
     jobs = []
     property_count = 0
     preserved_icons = []
     property_differences = []
+    inherited_fields = []
     for typepath, fields in old.items():
         current_path = renamed(typepath)
         check(current_path in new, f"Missing current type: {typepath} -> {current_path}")
@@ -189,6 +197,16 @@ def main() -> int:
                 continue
             actual = current.get(new_name)
             expected_value = normalized(value, job_mapping if name == "donor_variant_specs" else None)
+            if current_path == SECURITY_CLOWN and new_name in INHERITED_CLOWN_FIELDS:
+                check(current_path.rsplit("/", 1)[0] == CLOWN_PARENT
+                      and "parent_type" not in current, "Security Clown inheritance changed")
+                check(actual is None, f"Redundant Security Clown field restored: {new_name}")
+                check(new_name not in new.get(CLOWN_PARENT, {}),
+                      f"Module overrides native Clown field: {new_name}")
+                actual = native_clown.get(new_name)
+                inherited_fields.append({"typepath": current_path, "field": new_name,
+                                         "parent": CLOWN_PARENT,
+                                         "value": normalized(actual) if actual is not None else None})
             check(actual is not None, f"Missing field: {current_path}.{new_name}")
             if actual is not None and normalized(actual) != expected_value:
                 property_differences.append({"typepath": current_path, "field": new_name,
@@ -197,6 +215,8 @@ def main() -> int:
             if name.endswith(("icon_state", "trim_state")) or name in {"soft_type", "greyscale_colors"}:
                 preserved_icons.append({"typepath": current_path, "field": name, "value": value.strip()})
     check(not property_differences, f"{len(property_differences)} property values changed")
+    check({item["field"] for item in inherited_fields} == INHERITED_CLOWN_FIELDS
+          and len(inherited_fields) == 7, "Expected exactly seven inherited Security Clown fields")
     check(len(expected) == len(migration) == 129, "Expected exactly129 migrated old variants")
     seen = set()
     for row in migration:
@@ -292,6 +312,7 @@ def main() -> int:
                    "unchanged_dmi_assets": sum(p.endswith(".dmi") for p in asset_paths)},
         "canonical_jobs_and_config_tags": jobs, "changed_typepaths": changed_paths,
         "preserved_icon_states": preserved_icons, "property_differences": property_differences,
+        "inherited_security_clown_fields": inherited_fields,
         "stale_typepath_tokens": stale, "retained_dmi_state_literals": old_literals,
         "failures": failures,
         "checked_current_source_sha256": hashlib.sha256("\n".join(

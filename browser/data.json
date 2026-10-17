@@ -363,8 +363,7 @@
       ],
       "selected": "default",
       "title": "Послушник",
-      "lock_reason": null,
-      "profile_title": "Послушник"
+      "lock_reason": null
     },
     "Actor": {
       "required_tier": 2,
@@ -420,8 +419,7 @@
       ],
       "selected": "default",
       "title": "Актёр",
-      "lock_reason": null,
-      "profile_title": "Актёр"
+      "lock_reason": null
     },
     "Adjutant": {
       "required_tier": 4,
@@ -449,8 +447,7 @@
       ],
       "selected": "default",
       "title": "Адъютант",
-      "lock_reason": null,
-      "profile_title": "Адъютант"
+      "lock_reason": null
     },
     "Administrator": {
       "required_tier": 3,
@@ -478,8 +475,7 @@
       ],
       "selected": "default",
       "title": "Сервис-администратор",
-      "lock_reason": null,
-      "profile_title": "Сервис-администратор"
+      "lock_reason": null
     },
     "Banker": {
       "required_tier": 5,
@@ -515,8 +511,7 @@
       ],
       "selected": "default",
       "title": "Банкир",
-      "lock_reason": null,
-      "profile_title": "Банкир"
+      "lock_reason": null
     },
     "Barber": {
       "required_tier": 2,
@@ -552,8 +547,7 @@
       ],
       "selected": "default",
       "title": "Парикмахер",
-      "lock_reason": null,
-      "profile_title": "Парикмахер"
+      "lock_reason": null
     },
     "Bath": {
       "required_tier": 2,
@@ -577,8 +571,7 @@
       ],
       "selected": "default",
       "title": "Банщик",
-      "lock_reason": null,
-      "profile_title": "Банщик"
+      "lock_reason": null
     },
     "Casino": {
       "required_tier": 2,
@@ -602,8 +595,7 @@
       ],
       "selected": "default",
       "title": "Крупье",
-      "lock_reason": null,
-      "profile_title": "Крупье"
+      "lock_reason": null
     },
     "Cleaning Manager": {
       "required_tier": 3,
@@ -671,8 +663,7 @@
       ],
       "selected": "default",
       "title": "Менеджер по клинингу",
-      "lock_reason": null,
-      "profile_title": "Менеджер по клинингу"
+      "lock_reason": null
     },
     "Dealer": {
       "required_tier": 4,
@@ -704,8 +695,7 @@
       ],
       "selected": "default",
       "title": "Торговец",
-      "lock_reason": null,
-      "profile_title": "Торговец"
+      "lock_reason": null
     },
     "Guard": {
       "required_tier": 3,
@@ -733,8 +723,7 @@
       ],
       "selected": "default",
       "title": "Охранник сервиса",
-      "lock_reason": null,
-      "profile_title": "Охранник сервиса"
+      "lock_reason": null
     },
     "Migrant": {
       "required_tier": 3,
@@ -746,8 +735,7 @@
       ],
       "selected": "default",
       "title": "Мигрант",
-      "lock_reason": null,
-      "profile_title": "Мигрант"
+      "lock_reason": null
     },
     "Musician": {
       "required_tier": 2,
@@ -803,8 +791,7 @@
       ],
       "selected": "default",
       "title": "Музыкант",
-      "lock_reason": null,
-      "profile_title": "Музыкант"
+      "lock_reason": null
     },
     "Representative TSF": {
       "required_tier": 4,
@@ -824,8 +811,7 @@
       ],
       "selected": "default",
       "title": "Представитель ТСФ",
-      "lock_reason": null,
-      "profile_title": "Представитель ТСФ"
+      "lock_reason": null
     },
     "Representative USSP": {
       "required_tier": 4,
@@ -845,8 +831,7 @@
       ],
       "selected": "default",
       "title": "Представитель СССП",
-      "lock_reason": null,
-      "profile_title": "Представитель СССП"
+      "lock_reason": null
     },
     "Security Clown": {
       "required_tier": 5,
@@ -878,8 +863,7 @@
       ],
       "selected": "default",
       "title": "Клоун СБ",
-      "lock_reason": null,
-      "profile_title": "Клоун СБ"
+      "lock_reason": null
     },
     "Tourist TSF": {
       "required_tier": 3,
@@ -895,8 +879,7 @@
       ],
       "selected": "default",
       "title": "Турист ТСФ",
-      "lock_reason": null,
-      "profile_title": "Турист ТСФ"
+      "lock_reason": null
     },
     "Tourist USSP": {
       "required_tier": 3,
@@ -912,8 +895,7 @@
       ],
       "selected": "default",
       "title": "Турист СССП",
-      "lock_reason": null,
-      "profile_title": "Турист СССП"
+      "lock_reason": null
     },
     "Uncertain": {
       "required_tier": 3,
@@ -941,8 +923,7 @@
       ],
       "selected": "default",
       "title": "Безработный",
-      "lock_reason": null,
-      "profile_title": "Безработный"
+      "lock_reason": null
     },
     "VIP Corporate Guest": {
       "required_tier": 5,
@@ -974,8 +955,7 @@
       ],
       "selected": "default",
       "title": "VIP-гость корпорации",
-      "lock_reason": null,
-      "profile_title": "VIP-гость корпорации"
+      "lock_reason": null
     },
     "Waiter": {
       "required_tier": 2,
@@ -991,8 +971,7 @@
       ],
       "selected": "default",
       "title": "Официант",
-      "lock_reason": null,
-      "profile_title": "Официант"
+      "lock_reason": null
     },
     "Wrestler": {
       "required_tier": 2,
@@ -1020,8 +999,7 @@
       ],
       "selected": "default",
       "title": "Борец",
-      "lock_reason": null,
-      "profile_title": "Борец"
+      "lock_reason": null
     },
     "Cargo Technician": {
       "required_tier": 0,
@@ -1037,8 +1015,7 @@
           "id": "deliverer",
           "name": "Доставщик"
         }
-      ],
-      "profile_title": "Грузчик"
+      ]
     },
     "Prisoner": {
       "required_tier": 1,
@@ -1054,8 +1031,153 @@
           "id": "convict",
           "name": "Каторжник"
         }
-      ],
-      "profile_title": "Заключённый"
+      ]
+    }
+  },
+  "job_character_profiles": {
+    "Acolyte": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Послушник"
+    },
+    "Actor": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Актёр"
+    },
+    "Adjutant": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Адъютант"
+    },
+    "Administrator": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Сервис-администратор"
+    },
+    "Banker": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Банкир"
+    },
+    "Barber": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Парикмахер"
+    },
+    "Bath": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Банщик"
+    },
+    "Casino": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Крупье"
+    },
+    "Cleaning Manager": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Менеджер по клинингу"
+    },
+    "Dealer": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Торговец"
+    },
+    "Guard": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Охранник сервиса"
+    },
+    "Migrant": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Мигрант"
+    },
+    "Musician": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Музыкант"
+    },
+    "Representative TSF": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Представитель ТСФ"
+    },
+    "Representative USSP": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Представитель СССП"
+    },
+    "Security Clown": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Клоун СБ"
+    },
+    "Tourist TSF": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Турист ТСФ"
+    },
+    "Tourist USSP": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Турист СССП"
+    },
+    "Uncertain": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Безработный"
+    },
+    "VIP Corporate Guest": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "VIP-гость корпорации"
+    },
+    "Waiter": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Официант"
+    },
+    "Wrestler": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Борец"
+    },
+    "Cargo Technician": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Грузчик"
+    },
+    "Prisoner": {
+      "slot": 1,
+      "randomized": false,
+      "error": null,
+      "public_title": "Заключённый"
     }
   }
 }

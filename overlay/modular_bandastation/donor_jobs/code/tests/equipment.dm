@@ -7,6 +7,14 @@
 	jobs_enabled_before = CONFIG_GET(flag/donor_jobs_enabled)
 	CONFIG_SET(flag/donor_prisoner_gate, TRUE)
 	CONFIG_SET(flag/donor_jobs_enabled, TRUE)
+	var/datum/outfit/job/clown/security/security_outfit = /datum/outfit/job/clown/security
+	TEST_ASSERT_EQUAL(initial(security_outfit.backpack), /obj/item/storage/backpack/clown, "Security Clown lost its inherited backpack")
+	TEST_ASSERT_EQUAL(initial(security_outfit.satchel), /obj/item/storage/backpack/clown, "Security Clown lost its inherited satchel")
+	TEST_ASSERT_EQUAL(initial(security_outfit.duffelbag), /obj/item/storage/backpack/duffelbag/clown, "Security Clown lost its inherited duffelbag")
+	TEST_ASSERT_EQUAL(initial(security_outfit.shoes), /obj/item/clothing/shoes/clown_shoes, "Security Clown lost its inherited shoes")
+	TEST_ASSERT_EQUAL(initial(security_outfit.mask), /obj/item/clothing/mask/gas/clown_hat, "Security Clown lost its inherited mask")
+	TEST_ASSERT_EQUAL(initial(security_outfit.l_pocket), /obj/item/bikehorn, "Security Clown lost its inherited horn")
+	TEST_ASSERT_EQUAL(initial(security_outfit.belt), /obj/item/modular_computer/pda/crew/clown, "Security Clown lost its inherited PDA")
 	var/datum/client_interface/player = allocate(/datum/client_interface)
 	player.prefs = allocate(/datum/preferences, player)
 	player.prefs.write_preference(GLOB.preference_entries[/datum/preference/loadout], null)
@@ -55,7 +63,7 @@
 	allocated += body.mind
 	body.mind.set_assigned_role(job)
 	body.job = job.title
-	job.prepare_job_variant(body, player.prefs)
+	job.prepare_spawn_character(body, player.prefs)
 	var/list/contents_before = list()
 	for(var/item_type in outfit.backpack_contents)
 		contents_before[item_type] = count_supplies(item_type)

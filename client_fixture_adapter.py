@@ -14,8 +14,8 @@ from pathlib import Path
 SPECS = (
     {
         "path": "code/modules/mob/dead/new_player/new_player.dm",
-        "source_sha256_lf": "eafac38050a7ef1af5a929fe4407401b87897cb006f648c0631c2824f5ea5737",
-        "start": "/mob/dead/new_player/proc/create_character(atom/destination, forced_slot)\n",
+        "source_sha256_lf": "7fcd95754081ee18eddd9be132c237baea879859b7d0135cabf1cf7f8349cfe4",
+        "start": "/mob/dead/new_player/proc/create_character(atom/destination, forced_slot, datum/job_character_creation/creation) // BANDASTATION EDIT - Per-call ownership supplied by the module.\n",
         "end": "/mob/dead/new_player/proc/transfer_character()\n",
         "replacements": (
             (
@@ -45,8 +45,8 @@ SPECS = (
         ),
     },
     {
-        "path": "modular_bandastation/jobs/code/player/latejoin_attempt.dm",
-        "source_sha256_lf": "7f0bbd28c22e7192acbb7a6ba7e900d13baf0efafb379989f4ead22bf2aeb3c9",
+        "path": "modular_bandastation/jobs/code/player/character_creation.dm",
+        "source_sha256_lf": "955314661687f328dbfe7c7aabb6df0b8e9ea41fefef098099f5923a0b37a4fd",
         "start": "/mob/dead/new_player/create_character(atom/destination, forced_slot)\n",
         "end": "/mob/dead/new_player/proc/prepare_character_profile(atom/destination, forced_slot)\n",
         "replacements": (

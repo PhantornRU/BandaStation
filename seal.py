@@ -31,6 +31,7 @@ def main():
     repo = args.repo.resolve()
     names = set(filter(None, git_bytes(repo, 'diff', '--name-only', '--no-renames', '-z', args.upstream_base, '--').decode('utf-8').split('\0')))
     names.update(filter(None, git_bytes(repo, 'ls-files', '--others', '--exclude-standard', '-z').decode('utf-8').split('\0')))
+    names.add('code/modules/jobs/job_types/clown.dm')
     names.update(filter(None, git_bytes(repo, 'ls-files', '-z', '--', 'dependencies.sh', 'tgstation.dme', 'modular_bandastation/modular_bandastation.dme', 'tools/build', 'tools/bootstrap', 'tools/migrate_job_slots', 'tgui/package.json', 'tgui/bun.lock', 'tgui/bun.lockb', 'tgui/tsconfig.json', 'tgui/packages/*/package.json', '.github/workflows/run_linters.yml').decode('utf-8').split('\0')))
     files = []
     for name in sorted(names):
@@ -62,7 +63,8 @@ def main():
             'Static bundle/source binding verification, manifest hashes and support inventory; no runtime execution on import.',
             'Before any TEMP overlay, native_preservation checks every code/ hunk against NATIVE_CONTRACTS.json; canonical mode never stages external tests.',
             'Only after unadapted canonical compile, stage_tests applies the exact hash/scope/count guarded client_fixture_adapter; its inventory is recorded.',
-            'Final cleanup: Bun timeout is explicitly bounded at 30000ms after the unchanged subprocess-output regression exceeded the default 5000ms on Windows. Assertions and product build helper remain unchanged.']},
+            'Final cleanup: Bun timeout is explicitly bounded at 30000ms after the unchanged subprocess-output regression exceeded the default 5000ms on Windows. Assertions and product build helper remain unchanged.',
+            'Modular refactor: per-call creation snapshot API; new public-entry harddelete/replacement/reentrancy regression. Existing assertions retained, same native algorithm and real-client boundary. Profile DTO assertions and inherited outfit initial values use actual production phases/parent.']},
     ]
     test_files = []
     dm_names, python_count, bun_count = [], 0, 0

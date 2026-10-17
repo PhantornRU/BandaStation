@@ -2,7 +2,7 @@
   "schema": 2,
   "head": "7553b3553c80b5b385dab290ca318e23437bb6b5",
   "upstream_base": "820de7f6ef9235d8417250cb01eec15da6735b18",
-  "reviewed_source_head": "b9feef39fdc825cfe3992f3f5251d19f16a1e119",
+  "reviewed_source_head": "b9f024dc4ebb06fe87b34adad5aa5ea348e3e736",
   "test_files": [
     {
       "path": "modular_bandastation/donor_jobs/code/tests/_tests.dm",
@@ -22,8 +22,8 @@
     },
     {
       "path": "modular_bandastation/donor_jobs/code/tests/equipment.dm",
-      "sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199",
-      "lines": 225,
+      "sha256": "90335c9fd4e44591512cdb9e6900f971b0b3cbbc4f6bff0b51ee84c1196062a9",
+      "lines": 233,
       "dm_names": [
         "donor_job_outfits",
         "donor_outfit_cash_ownership",
@@ -109,7 +109,7 @@
     },
     {
       "path": "modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
-      "sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a",
+      "sha256": "835c76076a932995dc76528bdc0592b8654f30762c838710418ef8fe2ff03e2d",
       "lines": 82,
       "dm_names": [
         "donor_prisoner_initial_record"
@@ -168,8 +168,8 @@
     },
     {
       "path": "modular_bandastation/job_slots_preferences/code/tests/preferences_regressions.dm",
-      "sha256": "2ada213eb9f3dd02a65404c2bd0d4fefaaa7ef22998599e3a2ed8e2a07ff489a",
-      "lines": 350,
+      "sha256": "6eb6a721e9bd3b1c06eb90d15b38888b48d34671b1d8b7559c79be312434ce83",
+      "lines": 358,
       "dm_names": [
         "job_slot_preferences",
         "job_slot_saved_format",
@@ -220,8 +220,8 @@
     },
     {
       "path": "modular_bandastation/jobs/code/tests/handover.dm",
-      "sha256": "5bf4eaf6344fbec4579ae227f2ea39ab9a897a644b1ce3afa705e015d8310976",
-      "lines": 234,
+      "sha256": "d554be922e0c0d630f8774733fe132539255a8ff127a78a142a29a7ec8f50ede",
+      "lines": 239,
       "dm_names": [
         "native_offline_character_handover",
         "native_spawn_admission_interruptions",
@@ -327,8 +327,8 @@
     },
     {
       "path": "modular_bandastation/jobs/code/tests/replay/core-minimum_regression_late_helpers.dm",
-      "sha256": "bb673e0c7a863eea5d08d6a66a3f9d414294f07b38b228935a75639975aaa8d4",
-      "lines": 13,
+      "sha256": "cd756f2554657729ff484c025d808dc8a9876500ec8685a2f904c60b0acf8d4b",
+      "lines": 28,
       "dm_names": [],
       "python_methods": []
     },
@@ -364,10 +364,11 @@
     },
     {
       "path": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_entry_regressions.dm",
-      "sha256": "1fdcdf045675c4366454b6bcef4c3a59c0352824a77948e2d950900cd332d497",
-      "lines": 320,
+      "sha256": "06c5b1adbb4cc938dcaa3dcc3a86978a03711b57294e522becf2cdb2c5f8f01a",
+      "lines": 422,
       "dm_names": [
         "contract_public_create_character",
+        "contract_public_creation_context",
         "contract_public_latejoin",
         "contract_spawn_cancellation_ownership",
         "contract_roundstart_changes"
@@ -423,6 +424,7 @@
     "contract_cleanup_latejoin_authorization",
     "contract_cleanup_latejoin_offline_selection",
     "contract_public_create_character",
+    "contract_public_creation_context",
     "contract_public_latejoin",
     "contract_roundstart_changes",
     "contract_spawn_cancellation_ownership",
@@ -500,7 +502,7 @@
     "ussp_clothing_assets",
     "ussp_space_clothing"
   ],
-  "dm_count": 82,
+  "dm_count": 83,
   "python_count": 21,
   "bun_count": 1,
   "flag_modes": [
@@ -533,9 +535,10 @@
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/equipment.dm",
       "original_sha256": "1f598defa2f0c6495336d5ec3a6eaef8fba84ded145a93334486d35df8107e4c",
       "changes": [
-        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant."
       ],
-      "adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199",
+      "adapted_sha256": "90335c9fd4e44591512cdb9e6900f971b0b3cbbc4f6bff0b51ee84c1196062a9",
       "parent_adapted_sha256": "f9576291048e5cec0aa765c9decfbe35394323ed1e3e71eed1bd7d9ba3c3f199"
     },
     {
@@ -619,9 +622,10 @@
       "source": "baseline/modular_bandastation/donor_jobs/code/tests/prisoner_record.dm",
       "original_sha256": "ec24138b3591b25945167b5e83763ff3db970c0e2e1852c9f26a5a418f167360",
       "changes": [
-        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved"
+        "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant."
       ],
-      "adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a",
+      "adapted_sha256": "835c76076a932995dc76528bdc0592b8654f30762c838710418ef8fe2ff03e2d",
       "parent_adapted_sha256": "7ada5b722f7b7beb2b50aac7a5fd3bbf63913e79e81de3bb22694042bd6ed41a"
     },
     {
@@ -679,10 +683,12 @@
       "original_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a",
       "changes": [
         "Final cleanup: malformed format tests now require raw entry preservation instead of sanitizing deletion; renamed storage hooks. Add two native load/save regressions covering six supported conversion cases and ten malformed maps, every nested flush, idempotence, unrelated saves and rejected set/reset actions.",
-        "Independent fixture review: freeze malformed expected JSON before storage/loading so mutation through an alias cannot weaken assertions. Product source unchanged; repeat DM suite only."
+        "Independent fixture review: freeze malformed expected JSON before storage/loading so mutation through an alias cannot weaken assertions. Product source unchanged; repeat DM suite only.",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant.",
+        "Fixture expected Deliverer for unchanged deliverer ID; translated deliverer_ru is distinct. All saved IDs and assertions retained."
       ],
-      "adapted_sha256": "2ada213eb9f3dd02a65404c2bd0d4fefaaa7ef22998599e3a2ed8e2a07ff489a",
-      "parent_adapted_sha256": "3c0838c10a15c22c00d86a9b239eb20bb3fba9c80fc1e477820f6335db65135a"
+      "adapted_sha256": "6eb6a721e9bd3b1c06eb90d15b38888b48d34671b1d8b7559c79be312434ce83",
+      "parent_adapted_sha256": "1bcd9242a81cc5ea5f1091fdb3524e7a8ef7972f7b8d998efd548f3d3da6b569"
     },
     {
       "destination": "modular_bandastation/job_slots_preferences/code/tests/profile_selection.dm",
@@ -733,9 +739,11 @@
         "Reviewed exact typepath/API/action renames, typed snapshot declarations, semantic runtime variant IDs; canonical titles/config/DMI literals preserved",
         "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture.",
         "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
-        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied."
+        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied.",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant.",
+        "Hard-delete regression exposed skipped lobby method dispatch. Actual validator now belongs to independent per-call context; two direct fixture calls use it and late observer calls real parent. Existing assertions/5 scenarios retained; no validator/client admission logic substituted."
       ],
-      "adapted_sha256": "5bf4eaf6344fbec4579ae227f2ea39ab9a897a644b1ce3afa705e015d8310976",
+      "adapted_sha256": "d554be922e0c0d630f8774733fe132539255a8ff127a78a142a29a7ec8f50ede",
       "fixture_runtime_corrections": [
         {
           "path": "modular_bandastation/jobs/code/tests/handover.dm",
@@ -744,7 +752,7 @@
           "reason": "Constructor is now solely body creation; exercise the real final validate_created_character boundary for the human. Keep disconnected AI rejection and all original mind/current/assigned-role assertions. Assert actual profile mutation/captured slot, rejected body deletion and no committed body; explicitly disclose no real-client isolated profile-mismatch proof in headless fixture."
         }
       ],
-      "parent_adapted_sha256": "6cf8f43850f81f2e4bfed130e61026a5f4fe3452e3c7827c8d04fe313f3d2268"
+      "parent_adapted_sha256": "8dd799a8e49304f799a433992ddab16cca4d14b33a628dfcfd5bd410b8d44f77"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/latejoin_context.dm",
@@ -840,10 +848,11 @@
       "source": "task_state/20261016-pr11-core-minimum/REGRESSION_LATE_HELPERS.dm",
       "original_sha256": "67d3dc3c59a30cfb2046f9fc9eb0cc92bbf51655d4d24f13e6d2eee93b51ad8a",
       "changes": [
-        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied."
+        "Preserve-native signal ownership regressions resolve the actual module-owned COMSIG through a late-included constant helper; no literal alias or product implementation copied.",
+        "Hard-delete regression exposed skipped lobby method dispatch. Actual validator now belongs to independent per-call context; two direct fixture calls use it and late observer calls real parent. Existing assertions/5 scenarios retained; no validator/client admission logic substituted."
       ],
-      "adapted_sha256": "bb673e0c7a863eea5d08d6a66a3f9d414294f07b38b228935a75639975aaa8d4",
-      "parent_adapted_sha256": "898694255b554d7b60d771e6bd3ba65c911e93be9d46b415665bf2c42ce708e5"
+      "adapted_sha256": "cd756f2554657729ff484c025d808dc8a9876500ec8685a2f904c60b0acf8d4b",
+      "parent_adapted_sha256": "bb673e0c7a863eea5d08d6a66a3f9d414294f07b38b228935a75639975aaa8d4"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/publish-reaudit_audit_regressions.dm",
@@ -886,9 +895,12 @@
         "Use the actual native Medical Doctor datum type for the later Dynamic writer; preserve both rollback assertions unchanged.",
         "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged.",
         "Preserve-native revision: assert native definitions retained, real parent routes, owned body/history receipts and current public API. See TEST_ADAPT records and per-file diff to parent bundle; no product test seams.",
-        "Runtime fixture correction: provide public AttemptLateSpawn with a synthetic key and linked persistent client/mind. The constructor seam still owns its own side effects; actual transfer/equipment/latejoin tail and rollback assertions retained."
+        "Runtime fixture correction: provide public AttemptLateSpawn with a synthetic key and linked persistent client/mind. The constructor seam still owns its own side effects; actual transfer/equipment/latejoin tail and rollback assertions retained.",
+        "2026-10-17 modular refactor: preserve old assertions; use actual prepare_spawn_character and per-call ownership context. Add public create harddelete/replacement/reentrancy checks, inherited outfit values and selected profile public_title assertions where relevant.",
+        "Constructor interruption fixture captures its owner explicitly in setup instead of reading intentionally null native client. All five modes and all assertions retained; no product or adapter changes.",
+        "Hard-delete regression exposed skipped lobby method dispatch. Actual validator now belongs to independent per-call context; two direct fixture calls use it and late observer calls real parent. Existing assertions/5 scenarios retained; no validator/client admission logic substituted."
       ],
-      "adapted_sha256": "1fdcdf045675c4366454b6bcef4c3a59c0352824a77948e2d950900cd332d497",
+      "adapted_sha256": "06c5b1adbb4cc938dcaa3dcc3a86978a03711b57294e522becf2cdb2c5f8f01a",
       "corrected_local_source_sha256": "a8411f1312ff389ade9cb24404aafa24de93f4e05741e33cf5d0f9e0790f4742",
       "fixture_runtime_corrections": [
         {
@@ -898,7 +910,7 @@
           "reason": "Fixture supplies the real non-admin /client.holder field through its own mock subtype; all native guards and assertions stay unchanged."
         }
       ],
-      "parent_adapted_sha256": "da4879e959aeeefa011a4c5886b90775cb97c9cfd1e53a0cf5aac1f17460a937"
+      "parent_adapted_sha256": "3de025eaba917589134f1933017410438ea72be3eeb0207c6c50150aaf827b82"
     },
     {
       "destination": "modular_bandastation/jobs/code/tests/replay/contract-cleanup_jobs_regressions.dm",
@@ -960,23 +972,23 @@
   ],
   "bundle_files": {
     "browser/bind_sources.py": "a0d045ebf156fd3547b1f5677f273980f5b54ae2acb8d27104926c3bf379ec7f",
-    "browser/browser-checks.js": "0bab3ce08b01bdb899e3a7cc1fcbac27af295ee5124b69166b1e2180e4cf4759",
-    "browser/browser.tsx": "154c023b72f880ede40c613a70d493b36d3128f43dedf580d3ef1acbe1161054",
-    "browser/data.json": "f6e6d13662b20d123e0a18c5fac0e0abfe3c75aec94caa98a770ecd06ffccf58",
-    "browser/README.md": "e15279d721bded21e691edb5acbfcc5691f60ee9e224fcf0031156369a82d5c3",
+    "browser/browser-checks.js": "b26a78a271f8033c52a7d1e6b389965eafc68f1dcb61845c7d69e0e91307d9eb",
+    "browser/browser.tsx": "b5c8cacd15ba4d6110f860e988b4c5e40254f56c8e10dc7d48c0c682b3cf0661",
+    "browser/data.json": "06c5afb83a9ae8bc008f90e929b941b1e31f798923cde636884da00abd3b7d9f",
+    "browser/README.md": "39f548c9a753a82b55fa810cb1d3c3ab50be27c94bff5747eefebbac8648ce29",
     "browser/serve.ts": "c127243f26b416ff69464466d40124945fc13a5937dce4f187c032acb864e36e",
-    "client_fixture_adapter.py": "b900b7e098e44ae0c98fbb3bab0cb2102503957bb84126e31d204d8b65af7227",
+    "client_fixture_adapter.py": "96083e9a20a0ffc22ec492e6a495491c647df8722f8b288710186e55a5f7ad0c",
     "includes.dm": "9d5023ecc172544754f1528ea9fc845bb7158da9010f24be16ad28ab7bf7516f",
     "late_includes.dm": "04ddd7a5a21e157ceaa7cf9992272dec124fa3e7e336cca0848bbeb7fbaf0a64",
-    "NATIVE_CONTRACTS.json": "e92d018ec54a90de8bf46a2a0355f71d123b0f0da9cc67e7ae41795224ba668e",
+    "NATIVE_CONTRACTS.json": "f1388c7a70e016f62d85a457ab5dd80765918b8443d820dd782dc820300e1a78",
     "native_preservation.py": "875ea4f3d0b965ce177b15d775bcc70d803ef099ae13648ed5083304cdbb5589",
-    "provenance.json": "ee1e6cd8bfe51b70f77a3e696737fda9093fb088c76deb6f584d180253861aa3",
+    "provenance.json": "8ffa91220c9b7e0ab399730bec4f07eca1903e45c7aa436ff3a3418c27f21349",
     "README_RU.md": "b0fc158b786f814698419ff77701193fb6242a48daba3753455556986ac8469c",
     "run.py": "f271742b41bbfa3d03f3d146f21c9af589aaabcde0d5d5fe829242f9b5d32dc3",
-    "seal.py": "faa8d07274583ffe3c0e4cdc4fd37c2dc9c48be8145cc363115b9c237914732e",
+    "seal.py": "f325538eeb92eb298dc7a6a1390be046fe397ea2043295114ef5adc524501f5a",
     "settings.example.json": "5ab936c7c953073fb9d30c35dff965dd7738d459026a3093f4c3ae267838eb84",
-    "SOURCE_INPUTS.json": "fb580fcc0c839a968bd72eefe956d7a9ddfc06d84a1154770000a366b67100bc",
-    "source_invariants.py": "5fe3353f91a1202103fb2c9bd712fa96dac24bab9d643df8875846b3ab3f7182",
+    "SOURCE_INPUTS.json": "4437890425828fb8122bcc99e718f56322884ba44d5463e0f65b74f221ecfbff",
+    "source_invariants.py": "fbb292c49f7afb1a11f99ac4823302a8b1241db75db44f85a337edcdc78caafe",
     "VARIANT_MIGRATION.json": "c3cb09d4d941aef39e5f41554407478a75811c61bd4a63cd0f1bb296703d52c7"
   },
   "execution_status_at_seal": "PREPARED_NOT_RUN"

@@ -1,0 +1,862 @@
+{
+  "schema": 1,
+  "sealed_utc": "2026-10-17T08:47:10.937864+00:00",
+  "upstream_base": "820de7f6ef9235d8417250cb01eec15da6735b18",
+  "source_head_at_seal": "b9f024dc4ebb06fe87b34adad5aa5ea348e3e736",
+  "source_patch_sha256_at_seal": "6a30be5b2ae111b2d40dbe8597aeadff1b90efddcf2d05978f025b3e8ed3f503",
+  "files": [
+    {
+      "path": ".github/workflows/run_linters.yml",
+      "sha256": "dbaace2e1dea9e2d9ace577243305c8b51f33432836e86a9347ed74fb4bea81b"
+    },
+    {
+      "path": "code/controllers/subsystem/dynamic/_dynamic_ruleset.dm",
+      "sha256": "d4404491a0c63f68e64389b03f536205ae4f46a38052e2d48fc460840b54710b"
+    },
+    {
+      "path": "code/controllers/subsystem/dynamic/dynamic_ruleset_roundstart.dm",
+      "sha256": "84299f8b4167a79356a47b115a312adb89014132dbefeb676689b801b6e02b30"
+    },
+    {
+      "path": "code/controllers/subsystem/job.dm",
+      "sha256": "8d40a39877ae41ced99231f1555ae3d80b75a5e0c816a5ecd255574c59227291"
+    },
+    {
+      "path": "code/controllers/subsystem/networks/id_access.dm",
+      "sha256": "bff6ff398c6324d938ef4486629159a211443a881a59c75de409fa4414e798ce"
+    },
+    {
+      "path": "code/controllers/subsystem/ticker.dm",
+      "sha256": "1552302a173c0913da5c3e96ea769d0c1a373f558e5ea22877f674efe35483c2"
+    },
+    {
+      "path": "code/datums/outfit.dm",
+      "sha256": "27fa2030cc17371f645087a460bf3a94cc04d398a96835d17dbca7100a1b69dd"
+    },
+    {
+      "path": "code/datums/records/manifest.dm",
+      "sha256": "460f4195c1d7897a00313463305f09a0a398fe06946ad3ee57a767ce31cc79bd"
+    },
+    {
+      "path": "code/modules/admin/admin_verbs.dm",
+      "sha256": "f9d925046e90270a77dbc22dfd34db734716a381c6408bd445742bc00c9a7ef3"
+    },
+    {
+      "path": "code/modules/client/preferences.dm",
+      "sha256": "72a05d68e69b40064795f1532c3510e154df360426170b14f380056646a5506e"
+    },
+    {
+      "path": "code/modules/client/preferences_savefile.dm",
+      "sha256": "039745753504c64cae1d367b03960c72768c8e1219c1859d426f665e40d404a3"
+    },
+    {
+      "path": "code/modules/jobs/job_types/_job.dm",
+      "sha256": "2374b348f5fe99b669454e3d3bc82a6ebaf0aa8529115bbd851b73486f309f48"
+    },
+    {
+      "path": "code/modules/jobs/job_types/clown.dm",
+      "sha256": "cb8afa7571d001da8e5eea287cb4af9f2b4e5d5b357e2f7608eac93119874a8c"
+    },
+    {
+      "path": "code/modules/jobs/job_types/prisoner.dm",
+      "sha256": "851af0b004d1be0db15d9813f2ec54083e0b20b8b8d5bdabc12274b2bf2d7518"
+    },
+    {
+      "path": "code/modules/mob/dead/new_player/latejoin_menu.dm",
+      "sha256": "e48bc426fff4ab2f28fd654a4f9bc035cbda173ac28edbbdfd42dcb7ff010b68"
+    },
+    {
+      "path": "code/modules/mob/dead/new_player/new_player.dm",
+      "sha256": "7fcd95754081ee18eddd9be132c237baea879859b7d0135cabf1cf7f8349cfe4"
+    },
+    {
+      "path": "config/jobconfig.toml",
+      "sha256": "9dc9e9876cb0bff14127e7ef57d8217d542bdc09133efa15ff2d5f97f1951214"
+    },
+    {
+      "path": "dependencies.sh",
+      "sha256": "f5a08e0c6bedc1498c926672b87f04e856d40b597c14a6187f6f677a5c584be0"
+    },
+    {
+      "path": "html/changelogs/bandastation/AutoChangeLog-donor-roles.yml",
+      "sha256": "ae78b4d81a35fbe0fe13ecdf12f9cf8d2614c78395169d1748e9399f71eebae6"
+    },
+    {
+      "path": "modular_bandastation/_defines220/code/defines/jobs.dm",
+      "sha256": "85a8a65edddde7dfab939004e8795e76e8edc45893f7266569b4e95d4161dbb8"
+    },
+    {
+      "path": "modular_bandastation/_defines220/code/signals_mob/signals_mob_carbon.dm",
+      "sha256": "da8614004b5346c4e70bdf0367578c52531f3096188cde248e850a1e66085e38"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/CORE_BOUNDARY.md",
+      "sha256": "6c0043c598f511e9dc7bd5c66dcb6db14bd1b90162887c1268927a7d1c711109"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/FACTION_CLOTHING.md",
+      "sha256": "c327b68ffbda237816a3cfe55249666000153c8df5f08be6109a91c7411fb4ae"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/FACTION_KITS.md",
+      "sha256": "380f5c80002e8bb9d4341eec7636aa7d7a776e21ced76cb7b2814392ef43eccf"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/README.md",
+      "sha256": "1e743328fdcd7d89df24f1788832280258f9a88827fe1d71b07c9dd35ecc2fee"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/_donor_jobs.dm",
+      "sha256": "4272038ab54abd2724dd647c5be549416a42245c35cb296fd3f1cb5c987a234c"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/_donor_jobs.dme",
+      "sha256": "158e12d69e3ecda74d1841568abbe94054ba833eec460f6e4643e2845aed67f9"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/donor_job_admission.dm",
+      "sha256": "b126d945aeb8d366af854983437338a9bd7d4c0d9a10a69cbfa461de394fddc7"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/donor_job_configuration.dm",
+      "sha256": "d30b07e569c88967e9cbe9e5d898f598ca70405267348a65ddde854b045d2148"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/donor_job_titles.dm",
+      "sha256": "975df6648f6e5db8ec7e6bf63cefcdbf1193fb4903d2dd101a573982ba2f72ae"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/integrations/donor_id_templates.dm",
+      "sha256": "5f69d56ff2b5efe763800ec7a131aa219ba0bc9adba819316c8641a21994b4d8"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/integrations/donor_station_traits.dm",
+      "sha256": "bf73946f57b11ad43a52bff9739990fb3c7206ba16a9c83327dc8f799dbf8051"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/items/honk_rifle.dm",
+      "sha256": "247f8d4dac544df1ec6fef410694cd450542671ec1d0c162949b74e487ddcbf0"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/items/seclown_uniform.dm",
+      "sha256": "c8dda5422b79a497d62b7f97e89fa2f1952b3669328eb58c53cc63c79cad8f4b"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/items/tsf_clothing.dm",
+      "sha256": "a5ac1c92c1bc716257891eab02b40e8bb8f60330beecb9e245cb501938df285e"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/items/ussp_clothing.dm",
+      "sha256": "74d7ce89052a8df837515696bb5fec463ccc6f51f8bcd650597b00d9ceb0e9e8"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/acolyte_job.dm",
+      "sha256": "9c8f7d04ff1a8a4f5ede752d4229787cda5576591996661a2fede67eefa81276"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/actor_job.dm",
+      "sha256": "72990fe26e36d4a0ae3af8d16e258f5749f2820e7383c91e7e4e58016c6f03b3"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/adjutant_job.dm",
+      "sha256": "6f216491056e4285b347ac17d808f4333ac4e8d80fe204d08a0077192cfb5ec4"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/banker_job.dm",
+      "sha256": "7f1e4a3f27e3c1750fedd952a8482d53bf8fae9f5039bdc79b580c793e94959b"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/barber_job.dm",
+      "sha256": "20bb33bb61a6e0911fb25674b709b023b3db955018039732e841b41053de32d5"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/bath_attendant_job.dm",
+      "sha256": "402a57c03352dabc7491e7926be4fcdb040cba3cf450a1e202a71d15697deff7"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/cleaning_manager_job.dm",
+      "sha256": "86ba8d05bf57973c73ee8f1a10fcc6a668152a9e5548671c483edb653916328f"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/croupier_job.dm",
+      "sha256": "407914af452c6ce7cf3d0e1455112b5e2d6f45546c3b193ab9cff2e3c2283075"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/donor_job_base.dm",
+      "sha256": "1e0dd5d3845a0117592a2ad32871e95a2b40a2da45ef488b6f4fdf3f1c2d51bb"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/greetings.dm",
+      "sha256": "e3aeeb2852de7402e3f07c1d6c6c06091ee71957972f7253aad7540fdf659a1e"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/merchant_job.dm",
+      "sha256": "e50fcdabd501ddcedbb99aef68ab30ada97c8c5e93f7114d21f943854e1fb5aa"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/migrant_job.dm",
+      "sha256": "46f49618f775ab7ca03d798755eb447ee23977443aa6f40820ad25729c321fd7"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/musician_job.dm",
+      "sha256": "0249d01be12261b2d001e6e2a1072e0a0ebe3637f38cfd848aaba9efc131dbd4"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/prisoner_job.dm",
+      "sha256": "d2add65a09331a2174c7453b6312859d5ea366ef17a11e5a9e202e284a4d5044"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/representative_tsf_job.dm",
+      "sha256": "6c4be8c81811008e16b0a31febe7a166834ab474a89ff741b112b86bbc3cfae4"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/representative_ussp_job.dm",
+      "sha256": "a751485b093e8c5ca6de4c75fff40f9746d84e81382668ee322bb3e4e15d7a56"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/security_clown_job.dm",
+      "sha256": "b4e0e26b4fa595e064fb056c1b86d9e7cff85ff86255b80d392577da6e5da1f6"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/service_administrator_job.dm",
+      "sha256": "3cd5568f4079d36c4fbf79074c2f024e0428f664274988ae618dd9530e1b7460"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/service_guard_job.dm",
+      "sha256": "5b1a04879bd73cfa8d48c8a8b01c744dce4f9fd88666b5bde0e4b11769908de5"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/tourist_tsf_job.dm",
+      "sha256": "b27009c1d346d903f3895485493d411e47d45d9716d029ca7ffcac0c8887f57e"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/tourist_ussp_job.dm",
+      "sha256": "337cd1c8f889c53bdb170606a8fc1457878c9f239ac39ba2a19663c8791c0a0e"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/unemployed_job.dm",
+      "sha256": "187eec6ffa02378538dc31d60ae09006e2d6cabf877b3a1c1a52a796db1a19e4"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/vip_guest_job.dm",
+      "sha256": "8c58b2de5bd4b61e20dcdf1efe80be4968c6099c3d81a103352b3f223bc614f6"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/waiter_job.dm",
+      "sha256": "c62130c931579835639330af0ce1f6ee5f2a88f085759bc00ce36b2f29a24bf7"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/jobs/wrestler_job.dm",
+      "sha256": "c6b8f7c41bb7762a1b5e04192aa65ad2a5d50f72b00537d9fe877fa42699bc2c"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/landmarks/donor_landmarks.dm",
+      "sha256": "e4456e4d15136a07ad4c8ead309082c860aa510d926591baa18fe3eee6f66d78"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/landmarks/prisoner_landmarks.dm",
+      "sha256": "6e1f3180505c0eebece4c8004ee2f3e162e72d929ecc8907b44fcae099e0f072"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/acolyte_outfit.dm",
+      "sha256": "114ad94f6544a29b9d6372ae815c45d220e7d8d1cebb68398dbaf11b1a71e698"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/actor_outfit.dm",
+      "sha256": "5001b2d83c3818d1f8a1b333409b17c7962ff73df13f624c8897b983e28577f2"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/adjutant_outfit.dm",
+      "sha256": "59660b1b5f538a118e6eb4afce5a822e5decda7f78ebc8e84e3c3aa783f58d48"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/banker_outfit.dm",
+      "sha256": "9d62bc7a326095dc27457aa5bfd4de3b807c624cbc035970e06de23a4a02a72d"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/barber_outfit.dm",
+      "sha256": "8821ce17f1cb464618f228980087e41579cb912a318b1b1d97476557f853eff1"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/bath_attendant_outfit.dm",
+      "sha256": "08e4323ce888ec4a7bdd69f027c983ea4a4edb57a9f7f4abb774972c89e06ca5"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/cleaning_manager_outfit.dm",
+      "sha256": "aa54b4daa728d48b0421c1e53e0852893a35961b60ed6e01d2828797c3980cda"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/croupier_outfit.dm",
+      "sha256": "a55225b313e58a9c76c74fb96000df62152fb5fefb10c75bb2b003b8fb14361c"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/donor_outfit_base.dm",
+      "sha256": "f6b57262bf621c43b21e0eb60bda8bbec068410b3e6fada07732a8381683891a"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/merchant_outfit.dm",
+      "sha256": "a48dfb3f00578aa8050855f30be757b724d523182a6c073bf0447a346a9e8884"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/migrant_outfit.dm",
+      "sha256": "e23e5d680eef1361ff238383fcfd9f6fb5efe8cc14ba8a6d9c4bf875b5b1088e"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/musician_outfit.dm",
+      "sha256": "57d6e8e504266ac0b03c6519274d5b70eba79545b066a5f6001b0d2d3d84e877"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/representative_tsf_outfit.dm",
+      "sha256": "f98e14574e60ff63d7876eddb01df3a53ec9424fc98d76bff74ed7e168767650"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/representative_ussp_outfit.dm",
+      "sha256": "d8567901dfd7f109c7715a1e3092accf74becacd9d57e210ca4bb809bfb34807"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/security_clown_outfit.dm",
+      "sha256": "637b8e26dae87318f601306ecbe96e7d6a73233e522ffaf7d0b8e66ca03a505b"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/service_administrator_outfit.dm",
+      "sha256": "b504bf91101e5c3675ba4be0c5b03a03577db0faf99311645e73ed7be7147645"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/service_guard_outfit.dm",
+      "sha256": "a477729b26f06517e2f21709757dcdc773630b34579db742bf11902596cf8be1"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/tourist_tsf_outfit.dm",
+      "sha256": "61fc047e61ce89e72868d66ff53f4763737c0386afc87dd6db4b6f732154a59a"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/tourist_ussp_outfit.dm",
+      "sha256": "399b6518169df73a1a21a587fe75d17f07b11115422c9c960db58a7081a10fcc"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/unemployed_outfit.dm",
+      "sha256": "d131a4c6e9173afa913d5d52f0d1d11d7c14125da03137608e40e486df790dad"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/vip_guest_outfit.dm",
+      "sha256": "57175caf91aef7b8f0a2b91dc3730cac5ce3cec90ac5e69828885417732694b7"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/waiter_outfit.dm",
+      "sha256": "fd664cf1db7f279dfc8531f236822d06a9bf2e6c354096ebecfbbe302fc0e606"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/outfits/wrestler_outfit.dm",
+      "sha256": "7c329c131d8b3228dfa8e60642af86ec83e46b13ca3fee4caf6615c8e971cbf5"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/preferences/clown_name.dm",
+      "sha256": "a810d068f39cf90940a858fff1e9957030dc460031b9dadae98a4399316bc4b5"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/trims/donor_trims.dm",
+      "sha256": "932f548ac830421c754accc1ba02b8241d76131ed19c227f31f502424f5cd0dc"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/code/trims/donor_variant_trims.dm",
+      "sha256": "9db4118e6fd7a7567a106aadfdfdf1263659797b64136e5bc15ad57e901d9666"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ATTRIBUTION.md",
+      "sha256": "6e502b41602c50d641024015072d8c20864947c9f77224f690cf741f3dd7351f"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/honk_rifle.dmi",
+      "sha256": "d138453fd36333ff69448d2bc8e5f5cb181a844e5d3f8b4358efff1c1ee15c6a"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/honk_rifle_lefthand.dmi",
+      "sha256": "964f977683a8a676aa511310087f20a1d0404c99424219a008d0bdc270b187e1"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/honk_rifle_righthand.dmi",
+      "sha256": "43cb1c7229c278965acf2b955a38d8759b136e535a81ce409b295b4d7ad05043"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/id_trims.dmi",
+      "sha256": "66058274a84976000b5fb9804060f6b1c44e2f1f8736c5908b6d90a42b418036"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/job_hud.dmi",
+      "sha256": "0ee02ccd7293dd4d47c6f8120735d5e7f507ddfc7449e5bc7abab83f79060ede"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/landmarks.dmi",
+      "sha256": "3d93d008b44f7e926de44eafb1e158a2e0d5a690f6221634b3847d559ade2acf"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/seclown_uniform.dmi",
+      "sha256": "aeced225b32fd9f4ef54f189405b026969e0bd4e2d0eaad85fb2db6ae0072cb6"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/seclown_uniform_worn.dmi",
+      "sha256": "d6d572a96a2e77fe2283be88f896a74f92c69dfc4f295f86398cc66e49fba143"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_hats.dmi",
+      "sha256": "4ed66d71d370d8a3a624312aadb459efc7fe0615459833b0da62436f4587691a"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_hats_worn.dmi",
+      "sha256": "6af45c28be004b0c01e8b076b02ce99e7d29f4aacc54198b4926a0e0ad508f29"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_map_icons.dmi",
+      "sha256": "56214260f0d9b9de75385f7953f9b43368deddd3a6277924c81baf9f47834c72"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_suits.dmi",
+      "sha256": "f5d9d495797d818abe5e931b37378c550acedf08c11d21336c16f5dd31b0f8a7"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_suits_worn.dmi",
+      "sha256": "5766d28b09bad5edce2e3f07d68641519f6b5e0b1d0a7100d08459a9be1d6d9a"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_uniforms.dmi",
+      "sha256": "2282897278667aa02f71aa95fbb2c5d0bc63bede8314e76d9adf64036a8e9015"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_uniforms_lefthand.dmi",
+      "sha256": "168598f5507a7392208999cef3a9fd5beaa2309120f2fb86ed4dbe957ff883f2"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_uniforms_righthand.dmi",
+      "sha256": "8c298929b887b7458a2c2e61c441922f0f39dbfd8a64eb8f27fb3270b16f7bb4"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/tsf_uniforms_worn.dmi",
+      "sha256": "d1c1ba3c4c9046662ad21f7b48bad807647eb480b39d7e857e3adc715ee161ea"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_hats.dmi",
+      "sha256": "1cc0f8ccf9822ed14f7f5bff631de19ee747a2b58ab95c1ed6d670ea2fefbd2f"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_hats_worn.dmi",
+      "sha256": "2c4e688b783e9ad46a42136fe84a2ee279607035fdaf9f4478536eba6757afff"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_suits.dmi",
+      "sha256": "11a6256d3867fb66bf6b02886f30d25417f178e08974522c88df8db9dd80fbae"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_suits_lefthand.dmi",
+      "sha256": "3b04b0b37de2f8a2e438e707b5e944b3a3e9b12c086bec8f18f2221021d30cb4"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_suits_righthand.dmi",
+      "sha256": "0ddc7c9a091f09cb0c0e1cb7c2ca1a9e21a58a8e59002a60c5fcfdb1f2d10817"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_suits_worn.dmi",
+      "sha256": "bfb6e93a82a9c8fe99a2ba0ba5313d178ef3985ae5ec11df04fc9e57c612b3cf"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_uniforms.dmi",
+      "sha256": "5bff22b12551f414963f788498717ec4b711d505ad5abf72e4d24fc986c2314a"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/icons/ussp_uniforms_worn.dmi",
+      "sha256": "07438927233bdcee184875babe708d9a3695c17237238e4ac162253ed9bf5494"
+    },
+    {
+      "path": "modular_bandastation/donor_jobs/jobconfig.example.toml",
+      "sha256": "0261f6e2d69396430532c395c81df92c886b4943d1ecb2a702009467abe00d14"
+    },
+    {
+      "path": "modular_bandastation/dynamic/_dynamic.dme",
+      "sha256": "ccde6a57af729296cf33bdf6be1e7cff09ca89fae4139e26cbae366a20a6c20b"
+    },
+    {
+      "path": "modular_bandastation/dynamic/code/blood_worm.dm",
+      "sha256": "23af69383b0d9fc1246e1853f166dbc888dda779e0c267ddb13675e0dd9627c1"
+    },
+    {
+      "path": "modular_bandastation/dynamic/code/roundstart_job_constraints.dm",
+      "sha256": "7c1ba64d87258144e20bd58cb3621e44190fd009f9a426edd39ab9a216f2e13d"
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/_job_slots_preferences.dme",
+      "sha256": "82a80efb7ac943f10ddc05f5bbe90df8989fc01f858bb4da03a7e8488c22007f"
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/character_selection.dm",
+      "sha256": "2b0c78664c054875c0391d855fb3f8dab8bdb4a96a663fab4172e5b325887c66"
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/job_slots_preferences.dm",
+      "sha256": "63b12808fda7f53cb0f487188a6778cf428782c032fb3dc55a61e3c3629c1c18"
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/job_slots_savefile.dm",
+      "sha256": "709344d6b46daf79403e949d726a30488ef90fcd5f91b928d496e33d0b2cf700"
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/latejoin_context.dm",
+      "sha256": "52435dc0a8efdb689bef182d055ac3655dd06b2abff578a8fa3b61406ba8d0b2"
+    },
+    {
+      "path": "modular_bandastation/job_slots_preferences/code/pref_job_slots_middleware.dm",
+      "sha256": "d41b6e99a21aafa85f3fab83762edad8cba4ca9a407f3099236425a0faf469da"
+    },
+    {
+      "path": "modular_bandastation/jobs/VARIANT_MIGRATION.md",
+      "sha256": "2bffc24bedbb0ccf78851475b473fe1d31cf1c3b143fc83dadcff630a83caf7a"
+    },
+    {
+      "path": "modular_bandastation/jobs/_jobs.dm",
+      "sha256": "ab162cb74c305add170ab80f4908c5fe767f7d02d57252d528c8ce57169dcaa2"
+    },
+    {
+      "path": "modular_bandastation/jobs/_jobs.dme",
+      "sha256": "1f08cefc856e4de47b4762245ea3330e10d3d505f6d8fd08ad103994e4291a24"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/controller/admission.dm",
+      "sha256": "c1e11a907e57d32ef4bd9907342d813b4a4ce31b44d860a8638fb733462da3b6"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/controller/assignment.dm",
+      "sha256": "861bd63da7611858c046ccce141dcc09b6839fd828328f5589ca75591272c1bf"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/controller/roundstart_character_admission.dm",
+      "sha256": "d2b231f14e5aa1d6ae42ad691973c818ded8f602c7e91edaee451aab8d068dcf"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/controller/subsystem/job.dm",
+      "sha256": "39cd2620163e108464d45a01c2e9b24ff746659a2ee45f5baa7f1c5337c77e18"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/extension_hooks.dm",
+      "sha256": "f1cd6fdeab06a5565457bf705dbd828c4f8cf11200f7c3107d4d2cab62e6e574"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/initial_crew_records.dm",
+      "sha256": "0c95e7a6604979df6db99e3915762544774b8cb65e347fbc7136e71c8aa0ea8e"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/job_types/cargo_technician/cargo_technician_variants.dm",
+      "sha256": "a88de711203d0274559992983c3268e1cfa389f160fb09214104d2e0750b7d5d"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/job_types/cargo_technician/deliverer_outfit.dm",
+      "sha256": "b29b1645e03071d58b4cb43da852dca8e75eba7eb4e82382db40a79dba9fa13b"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/job_types/cargo_technician/deliverer_trim.dm",
+      "sha256": "fba4d580e656889df42eecd08f6be51ae5e0d104c4177c66f820abdc5e6632bf"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/job_types/prisoner/spawn.dm",
+      "sha256": "a697089bc52624504bd43cf6a4398d97d59da092c93d24d8912789f28630ca31"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/player/character_creation.dm",
+      "sha256": "0c53d048746083daea7d3577c7050fe3fb324d2a38bc023cbc8d75c90e42d34a"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/player/latejoin_attempt.dm",
+      "sha256": "73025c25f4fccbd1f4701d26cf4c15b315b37f28def468c464d0b2f8f990a140"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/preferences/job_outfit_variants.dm",
+      "sha256": "07e435153488bbd23a5f46df0e29d91e201946fce4f5e3240baedb8a93f29bc3"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/preferences/job_variants_middleware.dm",
+      "sha256": "bdc13ee4cc57b207cddd6095816ffaa299dd77f9a9caef3ae15fe49f2385835a"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/ui/job_availability_messages.dm",
+      "sha256": "46567f0b1d83d5f2f89c9c4414b7882982970fccb4155c42d8abc7b51a4fb6c7"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/ui/latejoin_job_menu.dm",
+      "sha256": "7f9fa56b7a56378fe2b21f39b075c7e0488f31f6ffb8a173530fbad5eb2735ea"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/variants/character_variant_context.dm",
+      "sha256": "4f6535a1a2a1ef79bed68c9f5fad94b6e1dd970e8dbb401d972622f4a039d4b7"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/variants/job_variant_icons.dm",
+      "sha256": "f5265fdd4dcae38acdc2bb0010e1884823691513f0096512e5140a6a85ac5190"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/variants/job_variants.dm",
+      "sha256": "ec69c21076a243b72a27349eeba2fe56184eea75a63cce36655e63cabcdba9c8"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/variants/legacy_variant_ids.dm",
+      "sha256": "ff50bc50a9c4a3e71cff6b44e44515bf638e0ebf5c0d665bf82a6387e73019a1"
+    },
+    {
+      "path": "modular_bandastation/jobs/code/variants/outfit_supplies.dm",
+      "sha256": "16a6b3e39582919c3d5d1b805b2bce4534330e78e503b14c1170f61bb7fdf7cb"
+    },
+    {
+      "path": "modular_bandastation/modular_bandastation.dme",
+      "sha256": "935c0c622e6fb69090cbdd54c6239c426eff51be152b68caf4daff3a4fa743d8"
+    },
+    {
+      "path": "modular_bandastation/objects/_objects.dme",
+      "sha256": "18800032d3aec1c76c5b5c52c6fb08d441b53a56f13cb990d49e09b4d707bb51"
+    },
+    {
+      "path": "modular_bandastation/objects/code/items/clothing/under/jobs/tsf.dm",
+      "sha256": "dd46ea9c5ff734d443ff973f53ab3ed6c746fa315fde5161fce3ce17207fa015"
+    },
+    {
+      "path": "modular_bandastation/objects/code/items/devices/pda.dm",
+      "sha256": "b927a09b2dab2a68cd7fdebf8b9f44598278fa66cd9a757f2618c784b519e4c7"
+    },
+    {
+      "path": "modular_bandastation/preferences/_preferences.dme",
+      "sha256": "a9f47ee27350b38aa8f32287c84d2c294980d287cc25ef518878f122b25c848f"
+    },
+    {
+      "path": "modular_bandastation/preferences/code/modules/client/preferences/color.dm",
+      "sha256": "4fbbe6a2a3540a686f437f387cf733964894e7d6d45b8b86f17a038f34a0252a"
+    },
+    {
+      "path": "modular_bandastation/quirks/_quirks.dme",
+      "sha256": "09d15a670a2bf32357c68822fd85c128f1af9a9afbd591deaff50ea1b4f9dfd9"
+    },
+    {
+      "path": "modular_bandastation/quirks/code/controller/quirk_handover.dm",
+      "sha256": "5d95fd477ab309556b119361c2df03dc223793b47514bc968f3100c815ce7fa6"
+    },
+    {
+      "path": "modular_bandastation/title_screen/code/title_screen_controls.dm",
+      "sha256": "0f83a8f262678218639353ef1704136d708dd61fa807646a02d1fb676fa77e37"
+    },
+    {
+      "path": "tgstation.dme",
+      "sha256": "e66b8dde69de2e7e4e98d7e03533e3f2380e6513246a5cf539029a8cc2ac672d"
+    },
+    {
+      "path": "tgui/bun.lock",
+      "sha256": "8a48ae50b63320b9567bca38198c51cf06166b2f0051ae9df31337fc19a1dbb3"
+    },
+    {
+      "path": "tgui/package.json",
+      "sha256": "cca977bd78b585b4e77fdf5630c425100985a2c42e8273df735460e131c42a02"
+    },
+    {
+      "path": "tgui/packages/common/package.json",
+      "sha256": "782a5d25bd71dc0cb725bc33c17787836091ccf646fd8e4a31f34b90b3905d7c"
+    },
+    {
+      "path": "tgui/packages/tgfont/package.json",
+      "sha256": "7917abd1e10caadb3a957a5584ae53ea55c90282f6c08a865d7bf0ab16217470"
+    },
+    {
+      "path": "tgui/packages/tgui-dev-server/package.json",
+      "sha256": "b3dc8f0dd90bea03f0fbce4b0e91ba1983bea85938fdceed89777dfa26a1b2a1"
+    },
+    {
+      "path": "tgui/packages/tgui-escape-menu/package.json",
+      "sha256": "90bd44591f5dcd23671cb7151b3eed4a5cbe72837ebc62eb58a13fb867778d89"
+    },
+    {
+      "path": "tgui/packages/tgui-panel/package.json",
+      "sha256": "42cc8dc69416f8a013208f6e72f31e0d421c2b7b08e08f083e04fc3feb9d6ea9"
+    },
+    {
+      "path": "tgui/packages/tgui-say/package.json",
+      "sha256": "23674ba8ef09571b0e606191a1241a4675dbc9f6959f61ff864de423b614a8cc"
+    },
+    {
+      "path": "tgui/packages/tgui-setup/package.json",
+      "sha256": "9169ee32c24d26a112c2eca23a4f7dd2e5413156e3615bf90f6c1fa2fb79fe3e"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/donor_jobs/JobRestriction.tsx",
+      "sha256": "5e7a7d5d6fc912653ddbe61a564e156508af4a792a529796eeb9b39dd68b73ac"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/donor_jobs/JobTabs.tsx",
+      "sha256": "be116d6a423ccd60cab95105052520b664b4e6f9c908b7bd4167cc378a9a14a8"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/donor_jobs/JobsLayout.tsx",
+      "sha256": "b591c9ccb363f23eb44820ed23a2dd2962724fbdd1de799b2c93554eed2764ce"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/job_slots_preferences/latejoin.ts",
+      "sha256": "f9168c474e8c93c3b9f4b89c726ee8bef4391b6ef227d45ea0ae6094e2409954"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/job_slots_preferences/priority.ts",
+      "sha256": "85cb0828b972622cf4769cf614e73a7d59d2964bc1cc155d561225afebb09cec"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/job_slots_preferences/profileDescription.ts",
+      "sha256": "60d533a869f1c5815eec335814be0cab85cda9d72f43ee3d659d7c09cd43727f"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/job_slots_preferences/types.ts",
+      "sha256": "e94c2698f07eab550d630b9669dfaa4f41f6a2074ed9fee6741c41434ad572a1"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/jobs/JobHudIcon.tsx",
+      "sha256": "5b2996195803149b8476e06e799ac1cba09edabee74adc4cd8512efc328afb81"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/jobs/JobLabel.tsx",
+      "sha256": "8c44b6bc3eab5ddcc4cf6548d7175d8aaf22b415a1943507ad3911e66a102c3f"
+    },
+    {
+      "path": "tgui/packages/tgui/bandastation/jobs/types.ts",
+      "sha256": "fb74c1fe42ba18640a9bde6d3c6a3dd2f2c449efd4db2f6d9f82b12a07d519dc"
+    },
+    {
+      "path": "tgui/packages/tgui/interfaces/JobSelection.tsx",
+      "sha256": "2c7d473089f376bffbcfe03f3798bee32594df9bea0e535a6de4c632ab29d114"
+    },
+    {
+      "path": "tgui/packages/tgui/interfaces/PreferencesMenu/CharacterPreferences/JobSlotDropdown.tsx",
+      "sha256": "8b7ae1a369f207a07ba5cbe72f78e647c5cdb72356b7f060f66b37f9c97ddd32"
+    },
+    {
+      "path": "tgui/packages/tgui/interfaces/PreferencesMenu/CharacterPreferences/JobsPage.tsx",
+      "sha256": "68ddc8b72815429a30a162483e375c36fd087725682c5bb3fe5d8a67cc093641"
+    },
+    {
+      "path": "tgui/packages/tgui/interfaces/PreferencesMenu/types.ts",
+      "sha256": "7c1871ee3e8523ab18f2404f226be4f8d9f3edb0bf9a3c39c3fb2a8df421e9b7"
+    },
+    {
+      "path": "tgui/packages/tgui/package.json",
+      "sha256": "ed910d1e76ac075b16a67ae655823c7476c3c0f684ab649defe5077aea2730f4"
+    },
+    {
+      "path": "tgui/packages/tgui/styles/bandastation/donor_jobs.scss",
+      "sha256": "d031e03fcf352b8b48048cecc803cd2a95421391561fe6e7c33ee2666ebfed5c"
+    },
+    {
+      "path": "tgui/packages/tgui/styles/bandastation/job_hud_icon.scss",
+      "sha256": "75654f6d7be98739fd329ea48dffec6323c20490642b0edc2c6fb34ab09bb26c"
+    },
+    {
+      "path": "tgui/packages/tgui/styles/bandastation/job_variants.scss",
+      "sha256": "4f97ae5461234edbedd6cc91e427fd101b003a94a3ef0d0e671ff042fed52d9b"
+    },
+    {
+      "path": "tgui/tsconfig.json",
+      "sha256": "255e982e545c3451fea984b05b81d5c14fd45fba76b1ea845b08a4aa9727a5d7"
+    },
+    {
+      "path": "tools/bootstrap/javascript.bat",
+      "sha256": "129a12693e585aaf70d40cf36ccf7a579a54a1a8034d88e4550e32b2cf212d21"
+    },
+    {
+      "path": "tools/bootstrap/javascript.sh",
+      "sha256": "2b901ca82f4042f38f7d89975d7703b613b5ff8950ebfc030ec86c59c538b18d"
+    },
+    {
+      "path": "tools/bootstrap/javascript_.ps1",
+      "sha256": "1d68a6b37f6af9aaeac5e6bd89b7605a14e971744d49ace53b2d249e851627d4"
+    },
+    {
+      "path": "tools/bootstrap/python",
+      "sha256": "fe5c55a65800bc2be03cb93611ee31e2cc334b3ea6d556f0a8abeeaeaec9ee35"
+    },
+    {
+      "path": "tools/bootstrap/python.bat",
+      "sha256": "549aef14a361334105c68154d08807c408f2806c5c8881bdf60dcb58ef7fb500"
+    },
+    {
+      "path": "tools/bootstrap/python_.ps1",
+      "sha256": "aa37dd36372182123feb9e17dba9235c96e375136b95893ecf63fa7883868094"
+    },
+    {
+      "path": "tools/build/README.md",
+      "sha256": "114c6de6a4035ff2a5a261405974ce34c36516caba993178a944a92136ed8c97"
+    },
+    {
+      "path": "tools/build/build.bat",
+      "sha256": "ac275730f01fd0086d3960bb0824d0a66b62f701345a8826730d1b6a4d9e378e"
+    },
+    {
+      "path": "tools/build/build.sh",
+      "sha256": "e5409083f97b8b8cc25b5fce024fb89feb9ab208eba01eafb42607a4c490a8de"
+    },
+    {
+      "path": "tools/build/build.ts",
+      "sha256": "c59848cc8d71b9dce9608b248a44977df3ecf85032ca912ed5d407df0e98ec98"
+    },
+    {
+      "path": "tools/build/build_flags.jsonc",
+      "sha256": "9e3baab07562944b7cf5f586f3b6602b4913e0788800fecaaeed714c22fbd148"
+    },
+    {
+      "path": "tools/build/bun.lock",
+      "sha256": "a7003dfe02391c577500167bd018087b2ee25f5ecd1ba95869f32eab3aed7583"
+    },
+    {
+      "path": "tools/build/juke/index.d.ts",
+      "sha256": "a0df517d0cb5624e71fadca819753500aa851d1dbd3e4f39f61475cf63d594aa"
+    },
+    {
+      "path": "tools/build/juke/index.js",
+      "sha256": "18d05b30705c4f4c6e8db1dd35b0ecd60cc4cbb962cb0ec55b2e17858f0e018f"
+    },
+    {
+      "path": "tools/build/juke/package.json",
+      "sha256": "a51bff776fdd53226e2e67d8f654d17dadfe3decc8bf8bf869cba3aff9813826"
+    },
+    {
+      "path": "tools/build/lib/bun.ts",
+      "sha256": "744066d8c51e1ab75476e0b3f2e1b405409444d97b7ff85135e31c5b1d7b1100"
+    },
+    {
+      "path": "tools/build/lib/byond.ts",
+      "sha256": "ec6e4c975943ecac9ba94e7a7fb0e10827d892bd95b363a99f4f86f54fbb2ae6"
+    },
+    {
+      "path": "tools/build/lib/download.ts",
+      "sha256": "ac82d196a96b37563ac62e00cf4e7645b51421b21a8a7d745690e724c08fefee"
+    },
+    {
+      "path": "tools/build/lib/helpers.ts",
+      "sha256": "2866aadbaf194e84ea8608bbd7ef36145d48bd343ba3176fbb40e8d1603011a3"
+    },
+    {
+      "path": "tools/build/lib/tgs.ts",
+      "sha256": "bcc49f0b3a976f3dacdf72d4e7eedd2612720292d9b8c73f8cfb2f535f558f04"
+    },
+    {
+      "path": "tools/build/lib/winreg.ts",
+      "sha256": "fa220ebbc621dea3abec826fdbcad417c051e0b8e6c1040ad8652c14ae33c55c"
+    },
+    {
+      "path": "tools/build/package-lock.json",
+      "sha256": "b79a12ed777c4e2eb7a459ad8776d3b6e4fde551d0b5afb711b6f01e854f3c4f"
+    },
+    {
+      "path": "tools/build/package.json",
+      "sha256": "cb658d6f84262ad391e91890953887b2138017a0c7bcffa6cac473c7d4579a2a"
+    },
+    {
+      "path": "tools/migrate_job_slots/README.md",
+      "sha256": "3f6f04d6fb0cde6f67abd924d1d81d56ad476516f3472bc92db0136bcb176fcd"
+    },
+    {
+      "path": "tools/migrate_job_slots/migrate.py",
+      "sha256": "bd7be1e0de89c846c604faff9ac97295fbd9a62ef99e545782587b5ed9b2dabe"
+    },
+    {
+      "path": "tools/migrate_job_slots/start_checked.ps1",
+      "sha256": "ad0edc72590c2fb3abbd5ddc3d04e785735cdcbd12d69f1e605cc7913c4d65d2"
+    }
+  ],
+  "scope": "All PR paths changed/deleted against upstream base, nonignored untracked files and explicit build/bootstrap/migration/lock inputs. Full HEAD/patch/untracked bytes are captured separately at replay."
+}

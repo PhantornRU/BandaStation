@@ -62,16 +62,19 @@
 		lobby.mind.set_assigned_role(job)
 		var/datum/mind/mind = lobby.mind
 		lobby.assigned_character = player.prefs.select_job_character(job)
+		var/datum/job_character_creation/creation = allocate(/datum/job_character_creation, lobby)
 		var/mob/living/body = job.get_spawn_mob(player, run_loc_floor_bottom_left)
 		if(scenario["job"] == /datum/job/ai)
 			TEST_ASSERT_NULL(body, "A disconnected AI constructor returned a partial character")
+			qdel(creation)
 		else
 			TEST_ASSERT_NOTNULL(body, "The constructor did not return its human for final admission")
 			TEST_ASSERT_EQUAL(player.prefs.default_slot, 2, "The constructor did not exercise the profile mutation")
 			TEST_ASSERT_EQUAL(lobby.assigned_character.slot, 1, "The captured assignment followed the mutated profile")
 			// The public create_character route calls this boundary after every constructor.
 			// Headless also lacks a real client: this isolates rejection/cleanup, not connected profile mismatch.
-			TEST_ASSERT(!lobby.validate_created_character(body, mind, job, lobby.assigned_character), "Final admission accepted the interrupted human")
+			TEST_ASSERT(!creation.validate_character(body, lobby), "Final admission accepted the interrupted human")
+			TEST_ASSERT(QDELETED(creation), "Final admission retained its consumed construction context")
 			TEST_ASSERT(QDELETED(body), "Rejected final admission retained its partial human")
 			TEST_ASSERT_NULL(lobby.new_character, "Rejected final admission committed its partial human")
 		TEST_ASSERT_EQUAL(lobby.mind, mind, "An interrupted native spawn lost the lobby mind")
@@ -117,11 +120,13 @@
 	selection.job_type = job.type
 	selection.created_mind = captured_mind
 	lobby.assigned_character = selection
+	var/datum/job_character_creation/creation = allocate(/datum/job_character_creation, lobby)
 	var/mob/living/basic/foreign_body = allocate(/mob/living/basic)
 	var/datum/mind/foreign_mind = allocate(/datum/mind)
 	foreign_mind.set_assigned_role(job)
 	foreign_mind.transfer_to(foreign_body)
-	TEST_ASSERT(!lobby.validate_created_character(foreign_body, captured_mind, job, selection), "Final admission accepted a foreign mind's body")
+	TEST_ASSERT(!creation.validate_character(foreign_body, lobby), "Final admission accepted a foreign mind's body")
+	TEST_ASSERT(QDELETED(creation), "Foreign-body rejection retained its consumed construction context")
 	TEST_ASSERT(!QDELETED(foreign_body), "Final admission deleted another mind's body")
 	TEST_ASSERT_EQUAL(foreign_body.mind, foreign_mind, "Final admission replaced another mind")
 	TEST_ASSERT_EQUAL(lobby.mind, captured_mind, "Final admission moved the captured lobby mind")
@@ -210,7 +215,7 @@
 	body.mind_initialize()
 	allocated += body.mind
 	body.mind.set_assigned_role(job)
-	job.prepare_job_variant(body, player.prefs)
+	job.prepare_spawn_character(body, player.prefs)
 	SSjob.equip_rank(body, job, null)
 	allocated += SSeconomy.bank_accounts_by_id["[body.account_id]"]
 	SSquirks.AssignQuirks(body, player)

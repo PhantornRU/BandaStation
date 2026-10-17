@@ -33,19 +33,17 @@
 	var/allow_profile = FALSE
 	var/prepare_calls = 0
 	var/validation_calls = 0
+	var/selection_type = /datum/job_character_selection
+	var/datum/job_character_creation/last_creation
 
 // No real BYOND client is available; supply a profile to reach the native constructor.
 /mob/dead/new_player/contract_create_fixture/prepare_character_profile(atom/destination, forced_slot)
 	prepare_calls++
 	if(!allow_profile)
 		return null
-	assigned_character = new
+	assigned_character = new selection_type
 	assigned_character.job_type = mind.assigned_role.type
 	return assigned_character
-
-/mob/dead/new_player/contract_create_fixture/validate_created_character(mob/living/body, datum/mind/spawning_mind, datum/job/spawning_job, datum/job_character_selection/context)
-	validation_calls++
-	return ..()
 
 /datum/unit_test/contract_public_create_character/Run()
 	var/mob/dead/new_player/contract_create_fixture/lobby = allocate(/mob/dead/new_player/contract_create_fixture)
@@ -71,12 +69,116 @@
 	TEST_ASSERT_EQUAL(lobby.prepare_calls, 2, "Public create_character did not prepare the second request")
 	TEST_ASSERT_EQUAL(job.construction_calls, 1, "The public entrypoint did not reach its constructor exactly once")
 	TEST_ASSERT_EQUAL(lobby.validation_calls, 1, "A specialized constructor bypassed final player validation")
+	TEST_ASSERT(QDELETED(lobby.last_creation), "The public constructor retained its consumed context")
 	TEST_ASSERT(QDELETED(job.fixture_body), "A rejected specialized body was retained")
 	TEST_ASSERT_EQUAL(lobby.mind, original_mind, "Rejected construction transferred the lobby mind")
 	TEST_ASSERT_EQUAL(original_mind.current, lobby, "Rejected construction changed the mind owner")
 	TEST_ASSERT_NULL(lobby.new_character, "A rejected body was committed for handover")
 
 /datum/unit_test/contract_public_create_character/Destroy()
+	release_job_player_fixtures()
+	return ..()
+
+// External TEMP-only constructor interruptions. No real client is supplied:
+// these prove captured ownership, rollback and cleanup, not connected admission.
+/datum/job_character_selection/contract_creation_harddelete/Destroy(force)
+	. = ..()
+	return QDEL_HINT_HARDDEL_NOW
+
+/mob/dead/new_player/contract_create_fixture/interruptions
+	selection_type = /datum/job_character_selection/contract_creation_harddelete
+
+/mob/dead/new_player/contract_create_fixture/interruptions/Destroy(force)
+	. = ..()
+	return QDEL_HINT_HARDDEL_NOW
+
+/datum/job/contract_creation_interrupt_fixture
+	parent_type = /datum/job/contract_entry_fixture
+	var/datum/unit_test/contract_public_creation_context/fixture_test
+	var/mob/dead/new_player/contract_create_fixture/interruptions/fixture_owner
+	var/mode
+	var/datum/mind/foreign_mind
+	var/datum/job_character_selection/replacement_assignment
+	var/datum/job_character_creation/last_creation
+	var/datum/mind/captured_mind
+	var/datum/job_character_selection/captured_assignment
+	var/validation_calls = 0
+	var/reentrant_result
+	var/reentrant_creation_in_progress
+
+/datum/job/contract_creation_interrupt_fixture/get_spawn_mob(client/player_client, atom/spawn_point)
+	construction_calls++
+	var/mob/dead/new_player/contract_create_fixture/interruptions/owner = fixture_owner
+	if(mode == "reentrant")
+		reentrant_result = owner.create_character(spawn_point)
+		reentrant_creation_in_progress = owner.character_creation_in_progress
+	if(foreign_mind)
+		fixture_body = fixture_test.allocate(/mob/living/basic)
+		foreign_mind.transfer_to(fixture_body)
+	else
+		// Use real AI initialization to move the captured mind before interruption.
+		fixture_body = fixture_test.allocate(/mob/living/silicon/ai, spawn_point, owner, null, null, TRUE)
+	if(mode == "replace_owned" || mode == "replace_foreign")
+		qdel(owner.assigned_character)
+		replacement_assignment = fixture_test.allocate(/datum/job_character_selection)
+		replacement_assignment.job_type = type
+		owner.assigned_character = replacement_assignment
+	if(mode == "delete_owned" || mode == "delete_foreign")
+		qdel(owner)
+	return fixture_body
+
+/datum/unit_test/contract_public_creation_context/Run()
+	for(var/mode in list("replace_owned", "replace_foreign", "delete_owned", "delete_foreign", "reentrant"))
+		var/mob/dead/new_player/contract_create_fixture/interruptions/lobby = allocate(/mob/dead/new_player/contract_create_fixture/interruptions)
+		var/datum/job/contract_creation_interrupt_fixture/job = allocate(/datum/job/contract_creation_interrupt_fixture)
+		job.fixture_test = src
+		job.fixture_owner = lobby
+		job.mode = mode
+		lobby.mind = allocate(/datum/mind)
+		lobby.mind.set_current(lobby)
+		lobby.mind.set_assigned_role(job)
+		var/datum/mind/original_mind = lobby.mind
+		var/datum/client_interface/requester = allocate(/datum/client_interface)
+		requester.prefs = allocate(/datum/preferences, requester)
+		requester.prefs.load_and_save = FALSE
+		requester.prefs.path = null
+		requester.mob = lobby
+		lobby.mock_client = requester
+		lobby.allow_profile = TRUE
+		if(mode == "replace_foreign" || mode == "delete_foreign")
+			job.foreign_mind = allocate(/datum/mind)
+			job.foreign_mind.set_assigned_role(job)
+		TEST_ASSERT_NULL(lobby.create_character(run_loc_floor_bottom_left), "The [mode] interrupted public constructor accepted its body")
+		TEST_ASSERT_EQUAL(job.construction_calls, 1, "The [mode] public constructor repeated or skipped body creation")
+		TEST_ASSERT_EQUAL(job.validation_calls, 1, "The [mode] constructor bypassed final native validation")
+		TEST_ASSERT_NOTNULL(job.last_creation, "The [mode] validator did not receive the per-call context")
+		TEST_ASSERT(QDELETED(job.last_creation), "The [mode] validator retained its consumed context")
+		TEST_ASSERT_EQUAL(job.captured_mind, original_mind, "The [mode] context reread its mind after construction")
+		TEST_ASSERT_EQUAL(length(requester.persistent_client.joined_as_slots), 0, "The [mode] failure appended respawn history")
+		if(job.foreign_mind)
+			TEST_ASSERT(!QDELETED(job.fixture_body), "The [mode] validator deleted a foreign mind's body")
+			TEST_ASSERT_EQUAL(job.fixture_body.mind, job.foreign_mind, "The [mode] validator stole a foreign mind's body")
+			TEST_ASSERT_EQUAL(job.foreign_mind.current, job.fixture_body, "The [mode] validator detached a foreign mind")
+		else
+			TEST_ASSERT(QDELETED(job.fixture_body), "The [mode] validator retained its own rejected AI body")
+		if(mode == "delete_owned" || mode == "delete_foreign")
+			TEST_ASSERT_NULL(lobby, "The [mode] constructor did not actually hard-delete the lobby")
+			TEST_ASSERT(!GLOB.new_player_list.Find(null), "The [mode] hard deletion left a null lobby registry entry")
+		else
+			TEST_ASSERT_NULL(lobby.new_character, "The [mode] failure committed a body for handover")
+			TEST_ASSERT_EQUAL(lobby.mind, original_mind, "The [mode] failure lost the captured lobby mind")
+			TEST_ASSERT_EQUAL(original_mind.current, lobby, "The [mode] failure retained its mind in a discarded body")
+			TEST_ASSERT(!lobby.character_creation_in_progress, "The [mode] failure left creation locked")
+		if(mode == "replace_owned" || mode == "replace_foreign")
+			TEST_ASSERT_NULL(job.captured_assignment, "The [mode] context followed a replacement assignment")
+			TEST_ASSERT_EQUAL(lobby.assigned_character, job.replacement_assignment, "The [mode] rejection cleared a newer assignment")
+			TEST_ASSERT(!QDELETED(job.replacement_assignment), "The [mode] rejection deleted a newer assignment")
+		if(mode == "reentrant")
+			TEST_ASSERT_NULL(job.reentrant_result, "A reentrant construction was accepted")
+			TEST_ASSERT(job.reentrant_creation_in_progress, "A nested rejection cleared the outer construction lock")
+			TEST_ASSERT_EQUAL(lobby.prepare_calls, 1, "A reentrant construction prepared another profile")
+
+/datum/unit_test/contract_public_creation_context/Destroy()
 	release_job_player_fixtures()
 	return ..()
 

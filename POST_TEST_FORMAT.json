@@ -1,0 +1,10 @@
+{
+  "path": "modular_bandastation/jobs/code/player/character_creation.dm",
+  "change": "Remove exactly one empty final line; no other byte or file changed.",
+  "executed_tree": "f7c4dacb8abfd7a10abd03411a3ca3976ce6a285",
+  "delivery_tree": "523188dc324f0c16ac1c5d7111f632090b617c0b",
+  "executed_file_sha256": "0c53d048746083daea7d3577c7050fe3fb324d2a38bc023cbc8d75c90e42d34a",
+  "delivery_file_sha256": "955314661687f328dbfe7c7aabb6df0b8e9ea41fefef098099f5923a0b37a4fd",
+  "git_diff_numstat": "0 added / 1 empty line removed",
+  "strict_blob_identity_except_final_lf": true
+}

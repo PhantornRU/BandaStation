@@ -74,7 +74,10 @@ async () => {
   await wait();
 
   const helpers = fixture.helpers();
-  check('selected profile tooltip reads canonical job_variants DTO', helpers.tooltip.includes('Выбранный B') && helpers.tooltip.includes('случайная внешность') && helpers.tooltip.includes('Стилист B'), helpers.tooltip);
+  check('selected profile tooltip reads assigned-character public title', helpers.tooltip === 'В начале раунда: 2. Выбранный B, случайная внешность, Стилист B', helpers.tooltip);
+  check('ordinary profile tooltip keeps the no-variant fallback', helpers.ordinaryTooltip === 'В начале раунда: 2. Выбранный B', helpers.ordinaryTooltip);
+  check('profile error wins over display metadata', helpers.errorTooltip === 'Недоступный профиль', helpers.errorTooltip);
+  check('missing profile keeps its unavailable fallback', helpers.missingTooltip === 'Профиль для входа недоступен', helpers.missingTooltip);
   check('latejoin static merge never restores hidden jobs and preserves dynamic admission', helpers.departments.join() === 'Cargo' && helpers.jobs.join() === 'Visible' && helpers.visible.description === 'static' && helpers.visible.public_title === 'dynamic' && helpers.visible.availability === 9 && helpers.visible.unavailable_reason === 'dynamic lock' && helpers.visible.open_slots === '∞' && helpers.empty.length === 0 && helpers.unchanged, helpers);
 
   async function openVariant(slot) {

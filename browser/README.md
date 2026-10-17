@@ -27,7 +27,7 @@ $browserBundle = (Get-Location).Path
 py -3 -B ./bind_sources.py "$productionSource" "$checkoutRoot" before
 ```
 
-Откройте выведенный URL. Выполните содержимое `browser-checks.js` как JavaScript async function expression, например browser MCP `browser_evaluate` получает точное содержимое файла в поле `function`. Для developer tools выполните `(CONTENTS_OF_BROWSER_CHECKS)()`; это только обозначение вставки содержимого, не literal команда. Объект результата также доступен как `window.__contractResults`. Сохраните полученный JSON отдельно от sealed bundle. Ожидается **24/24 assertions**, `pass=true`; ошибки и предупреждения console проверьте отдельно. Снимите кадр Подписки, переключите вкладку Обычные и снимите второй кадр. Кадры и logs не входят в переносимый source bundle.
+Откройте выведенный URL. Выполните содержимое `browser-checks.js` как JavaScript async function expression, например browser MCP `browser_evaluate` получает точное содержимое файла в поле `function`. Для developer tools выполните `(CONTENTS_OF_BROWSER_CHECKS)()`; это только обозначение вставки содержимого, не literal команда. Объект результата также доступен как `window.__contractResults`. Сохраните полученный JSON отдельно от sealed bundle. Ожидается **27/27 assertions** на synthetic backend, `pass=true`; ошибки и предупреждения console проверьте отдельно. Снимите кадр Подписки, переключите вкладку Обычные и снимите второй кадр. Кадры и logs не входят в переносимый source bundle.
 
 После проверки:
 
@@ -42,8 +42,8 @@ Invoke-WebRequest "http://127.0.0.1:PORT/stop"
 
 - Обычные/Подписка, три тира, единый DOM Section, loading/recovery, donor OFF, provider state после смены профиля.
 - Настоящие canonical CSS tier grid и `.JobHudIcon` 16×16/pixelated; PNG synthetic 1×1 проверяет decode/стили, а не игровые sprites.
-- Только новый `job_variants` DTO и `set_job_variant` action; selected-profile tooltip читает canonical DTO.
+- Выбор варианта использует `job_variants` DTO и `set_job_variant` action; selected-profile tooltip читает `job_character_profiles.public_title`.
 - Старый UI A после backend B отправляет captured A; свежий B — B. Отдельно проверяются priority, variant, assigned slot и latejoin selection, canonical job identity сохраняется.
 - Dynamic latejoin rows остаются authoritative: static metadata дополняет description, не возвращает скрытые профессии/отделы и не перезаписывает availability/title/slots. Недоступная строка selection не отправляет.
 
-Количество jobs сокращено намеренно. Native authentication, SQL yield и реальный client possession покрываются DM fixtures, не этим браузерным harness.
+Количество jobs сокращено намеренно. DM fixtures отдельно проверяют headless/mock контракты native authentication, SQL yield и владения телом. Реальный подключённый BYOND client и его possession этим набором не проверены.
