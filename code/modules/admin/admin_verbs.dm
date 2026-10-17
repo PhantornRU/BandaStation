@@ -605,6 +605,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 
 		// Create our new_player for this job and set up its mind.
 		var/mob/dead/new_player/new_guy = new()
+		new_guy.is_admin_job_dummy = TRUE // BANDASTATION ADD - Explicitly mark the admin-created non-player dummy.
 		new_guy.mind_initialize()
 		new_guy.mind.name = "[rank] Dummy"
 
