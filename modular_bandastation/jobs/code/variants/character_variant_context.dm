@@ -22,8 +22,10 @@
 	public_title = variant?.public_title || job.title
 	return ..()
 
-/// Capture only the chosen variant before appearance callbacks or the job greeting.
-/datum/job/proc/prepare_job_variant(mob/living/spawned, datum/preferences/preferences)
+/// Capture the chosen variant before preference application, appearance checks and the greeting; must not yield.
+/datum/job/proc/prepare_spawn_character(mob/living/spawned, datum/preferences/preferences)
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(!length(job_variant_specs) || !ishuman(spawned) || !length(get_job_variants()))
 		return
 	var/mob/living/carbon/human/body = spawned

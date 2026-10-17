@@ -3,7 +3,6 @@ export type JobVariantsData = {
     string,
     {
       title: string | null;
-      profile_title: string | null;
       selected: string | null;
       icon: string;
       variants: { id: string; name: string }[];

@@ -8,7 +8,7 @@ export function getJobProfileDescription(
   const entryName = entryProfile?.slot
     ? data.character_profiles[entryProfile.slot - 1]
     : null;
-  const profileTitle = data.job_variants?.[jobName]?.profile_title;
+  const profileTitle = entryProfile?.public_title;
   return entryProfile?.error
     ? entryProfile.error
     : entryName

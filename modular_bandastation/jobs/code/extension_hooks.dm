@@ -7,12 +7,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	return null
 
-/// Runs before preference application, appearance checks and the greeting; must not yield.
-/datum/job/proc/prepare_spawn_character(mob/living/body, datum/preferences/preferences)
-	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_NOT_SLEEP(TRUE)
-	prepare_job_variant(body, preferences)
-
 /// AI construction moves the lobby mind before preferences can yield; restore only that owned mind.
 /datum/job/proc/rollback_spawn_character(mob/living/body, mob/dead/new_player/spawning_player, datum/mind/spawning_mind)
 	if(QDELETED(body) || !isAI(body) || QDELETED(spawning_player) || QDELETED(spawning_mind))

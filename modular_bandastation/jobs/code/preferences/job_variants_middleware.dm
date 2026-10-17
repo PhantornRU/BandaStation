@@ -42,16 +42,8 @@
 			options += list(list("id" = variant_id, "name" = variant.public_title))
 		var/datum/job_variant/selected_variant = job.resolve_job_variant(selection[job.title])
 		var/datum/job_variant/default_variant = job.resolve_job_variant("default")
-		var/profile_title
-		if(length(variants))
-			var/datum/job_character_selection/character = preferences.select_job_character(job)
-			var/list/profile_variants = character.read_preference(/datum/preference/job_outfit_variants)
-			var/datum/job_variant/profile_variant = job.resolve_job_variant(profile_variants?[job.title])
-			profile_title = profile_variant?.public_title
-			qdel(character)
 		job_variants[job.title] = list(
 			"title" = default_variant?.public_title,
-			"profile_title" = profile_title,
 			"selected" = selected_variant?.id,
 			"icon" = icon2base64(job.get_job_variant_icon(selected_variant?.id)),
 			"variants" = options,

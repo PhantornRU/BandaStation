@@ -5,6 +5,7 @@
 #include "code/controller/admission.dm"
 #include "code/controller/assignment.dm"
 #include "code/controller/roundstart_character_admission.dm"
+#include "code/player/character_creation.dm"
 #include "code/player/latejoin_attempt.dm"
 #include "code/ui/latejoin_job_menu.dm"
 #include "code/initial_crew_records.dm"

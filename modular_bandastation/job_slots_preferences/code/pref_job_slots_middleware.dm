@@ -46,6 +46,7 @@
 			"slot" = isnum(character.slot) ? character.slot : null,
 			"randomized" = character.randomized,
 			"error" = character.character_error(job, user.client, FALSE),
+			"public_title" = length(job.get_job_variants()) ? job.get_character_job_title(character) : null,
 		)
 		qdel(character)
 	data["job_character_profiles"] = job_profiles

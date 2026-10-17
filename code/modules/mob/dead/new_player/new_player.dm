@@ -288,21 +288,16 @@
  * * destination - where to spawn the character
  * * forced_slot - if provided, will load whatever character is in that slot instead of their active slot
  */
-/mob/dead/new_player/proc/create_character(atom/destination, forced_slot)
+/mob/dead/new_player/proc/create_character(atom/destination, forced_slot, datum/job_character_creation/creation) // BANDASTATION EDIT - Per-call ownership supplied by the module.
 	spawning = TRUE
 
 	var/spawned_slot = isnum(forced_slot) ? forced_slot : LAZYACCESS(client.prefs.job_assigned_profiles, mind.assigned_role.title)
 	if(isnum(spawned_slot) && client.prefs.default_slot != spawned_slot)
 		client.prefs.load_character(spawned_slot) // if this fails, we will simply load their current slot anyways
 
-	// BANDASTATION EDIT START - Capture ownership before the constructor can yield or move an AI mind.
-	var/datum/job_character_selection/character_context = assigned_character
-	var/datum/mind/spawning_mind = mind
-	var/datum/job/spawning_job = mind.assigned_role
-	// BANDASTATION EDIT END
 	mind.active = FALSE //we wish to transfer the key manually
-	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
-	if(!validate_created_character(spawning_mob, spawning_mind, spawning_job, character_context)) // BANDASTATION EDIT - Validate before mind and history changes.
+	var/mob/living/spawning_mob = creation.create_body(client, destination, src) // BANDASTATION EDIT - Keep construction cleanup alive if the lobby is deleted.
+	if(!spawning_mob) // BANDASTATION ADD - The module rejected the constructed body.
 		return
 	if(QDELETED(src))
 		return
