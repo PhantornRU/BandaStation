@@ -14,7 +14,11 @@
 	register_context()
 
 /obj/structure/frame/machine/Destroy()
-	QDEL_LIST(components)
+	// BANDASTATION EDIT START - Stock-part datums are shared singletons; the frame only owns physical components.
+	for(var/obj/item/component in components)
+		qdel(component)
+	components = null
+	// BANDASTATION EDIT END - Stock-part datums are shared singletons; the frame only owns physical components.
 	return ..()
 
 /obj/structure/frame/machine/atom_deconstruct(disassembled = TRUE)
@@ -348,11 +352,14 @@
 		if(isstack(tool))
 			var/obj/item/stack/S = tool
 			var/used_amt = min(round(S.get_amount()), req_components[stock_part_path])
+			// BANDASTATION EDIT START - Report successful stack consumption to the native interaction chain.
 			if(used_amt && S.use(used_amt))
 				req_components[stock_part_path] -= used_amt
 				// No balloon alert here so they can look back and see what they added
 				to_chat(user, span_notice("You add [tool] to [src]."))
-			return
+				return TRUE
+			return FALSE
+			// BANDASTATION EDIT END - Report successful stack consumption to the native interaction chain.
 
 		// We might end up qdel'ing the part if it's a stock part datum.
 		// In practice, this doesn't have side effects to the name,

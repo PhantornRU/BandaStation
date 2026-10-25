@@ -44718,6 +44718,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"poP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/turf/open/floor/iron,
+/area/station/engineering/storage_shared)
 "poS" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -113636,7 +113640,7 @@ mdk
 kYG
 nJM
 lOg
-pom
+poP
 pom
 uUL
 qsv

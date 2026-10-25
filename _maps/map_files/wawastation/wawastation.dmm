@@ -44116,6 +44116,14 @@
 "pnS" = (
 /turf/closed/mineral/random/stationside/asteroid,
 /area/station/asteroid)
+"poP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "poe" = (
 /obj/structure/railing{
 	dir = 4
@@ -110017,7 +110025,7 @@ gKu
 pUt
 dHL
 dpU
-bnK
+poP
 wqU
 ocB
 mIC
