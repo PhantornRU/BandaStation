@@ -412,6 +412,8 @@
 #include "../../../modular_bandastation/species/code/tests/vox_paradise_toggle_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/vox_quill_mask_tests.dm"
 // BANDASTATION ADDITION END - Vox port regression tests
+// BANDASTATION ADDITION - Shadow Demon port regression tests
+#include "../../../modular_bandastation/shadow_demon/code/shadow_demon_tests.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif
