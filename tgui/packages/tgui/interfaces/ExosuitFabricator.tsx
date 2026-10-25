@@ -1,5 +1,11 @@
-import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
-import { Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -14,6 +20,7 @@ type ExosuitDesign = Design & {
 };
 
 type ExosuitFabricatorData = FabricatorData & {
+  machine_name: string;
   processing: BooleanLike;
   designs: Record<string, ExosuitDesign>;
 };
@@ -29,7 +36,7 @@ export const ExosuitFabricator = (props) => {
   }
 
   return (
-    <Window title="Фабрикатор экзокостюмов" width={1100} height={600}>
+    <Window title={data.machine_name} width={1100} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -50,7 +57,9 @@ export const ExosuitFabricator = (props) => {
                       color={'transparent'}
                       onClick={() => {
                         act('build', {
-                          designs: category.children.map((design) => design.path),
+                          designs: category.children.map(
+                            (design) => design.path,
+                          ),
                         });
                       }}
                     >

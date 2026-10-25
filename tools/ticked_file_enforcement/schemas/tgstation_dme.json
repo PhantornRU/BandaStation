@@ -10,6 +10,7 @@
 		"modular_bandastation/*.dm",
 		"modular_bandastation/**/*.dm",
 		"tools/ci/od_lints.dm",
+		"tools/spacepods/local-playtest.dm",
 		"tools/HubMigrator/HubMigrator.dm",
 		"tools/CatchUnescapedBrackets/*.dm",
 		"tools/SS13SmoothingCutter/*.dm",

@@ -428,6 +428,24 @@
 #include "../../../modular_bandastation/sierra_background/tests/names.dm"
 #include "../../../modular_bandastation/sierra_background/tests/gutter.dm"
 
+// BANDASTATION ADDITION START - Paradise spacepod port regression tests
+#include "../../../modular_bandastation/spacepods/_defines.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_construction_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_job_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_equipment_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_fabricator_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_vehicle_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_actions_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_status_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_tank_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_life_support_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_hud_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_vacuum_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_wreckage_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_movement_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_failure_tests.dm"
+// BANDASTATION ADDITION END - Paradise spacepod port regression tests
+
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

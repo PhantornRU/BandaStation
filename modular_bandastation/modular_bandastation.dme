@@ -69,6 +69,7 @@
 #include "nanomap/_nanomap.dme"
 #include "navigator/_navigator.dme"
 #include "objects/_objects.dme"
+#include "spacepods/_spacepods.dme"
 #include "orderables/_orderables.dme"
 #include "outfits/_outfits.dme"
 #include "overrides/_overrides.dme"

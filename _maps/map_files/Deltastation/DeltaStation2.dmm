@@ -74361,6 +74361,16 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
+"spP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/sign/warning/radiation/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "spV" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -124441,7 +124451,7 @@ tUg
 gmP
 qeP
 tqo
-nFr
+spP
 bfX
 gRE
 bEN

@@ -48279,6 +48279,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"poP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/engineering/storage/tech)
 "pof" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
@@ -106569,7 +106574,7 @@ hyl
 rsw
 fqQ
 xCz
-rIk
+poP
 rIk
 viM
 wtB

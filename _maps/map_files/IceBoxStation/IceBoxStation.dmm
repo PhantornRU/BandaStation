@@ -65979,6 +65979,15 @@
 /obj/structure/chair/wood,
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
+"spP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/edge,
+/area/station/engineering/lobby)
 "spV" = (
 /obj/effect/spawner/random/trash/bin,
 /obj/item/paper/crumpled{
@@ -248301,7 +248310,7 @@ fXg
 bID
 bID
 fvA
-vCK
+spP
 rSC
 rSC
 rSC

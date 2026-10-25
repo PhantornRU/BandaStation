@@ -210,10 +210,19 @@
 		return FALSE
 
 	generate_cordon()
+	// BANDASTATION ADDITION START - rebuild virtual links that atmos may have checked between deck allocations
+	if(z_size > 1)
+		for(var/turf/reserved_turf as anything in reserved_turfs)
+			CALCULATE_ADJACENT_TURFS(reserved_turf, NORMAL_TURF)
+	// BANDASTATION ADDITION END
 	return TRUE
 
 /// Calculates the effective bounds information for the given turf. Returns a list of the information, or null if not applicable.
 /datum/turf_reservation/proc/calculate_turf_bounds_information(turf/target)
+	// BANDASTATION ADDITION START - the allocator can yield while only part of a virtual stack exists
+	if(length(bottom_left_turfs) != z_size || length(top_right_turfs) != z_size)
+		return null
+	// BANDASTATION ADDITION END
 	for(var/z_idx in 1 to z_size)
 		var/turf/bottom_left = bottom_left_turfs[z_idx]
 		var/turf/top_right = top_right_turfs[z_idx]
