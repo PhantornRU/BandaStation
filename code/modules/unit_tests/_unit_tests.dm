@@ -101,6 +101,23 @@
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
+#include "../../../modular_bandastation/species/code/tests/ipc_appearance_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_cleaning_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_culinary_drink_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_drink_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_emote_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_extinguisher_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_fabrication_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_power_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_preferences_hud_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_radiation_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_reagent_effect_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_reagent_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_remains_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_surgery_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_ui_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_upgrade_tests.dm"
 #include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"

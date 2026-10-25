@@ -62,12 +62,20 @@
 		return ..()
 
 	if(forkload)
+		// BANDASTATION ADDITION START - utensils must respect the same food restrictions as edible items
+		if(SEND_SIGNAL(M, COMSIG_CARBON_ATTEMPT_EAT, src) & BLOCK_EAT_ATTEMPT)
+			return TRUE
+		// BANDASTATION ADDITION END
 		if(M == user)
 			M.visible_message(span_notice("[user] eats a delicious forkful of omelette!"))
-			M.reagents.add_reagent(forkload.type, 1)
 		else
 			M.visible_message(span_notice("[user] feeds [M] a delicious forkful of omelette!"))
+		// BANDASTATION EDIT START - the fork's portion was already removed from its food when loaded
+		if(is_species(M, /datum/species/ipc))
+			M.taste_list(list(forkload))
+		else
 			M.reagents.add_reagent(forkload.type, 1)
+		// BANDASTATION EDIT END - the fork's portion was already removed from its food when loaded
 		icon_state = "fork"
 		forkload = null
 	else
@@ -260,6 +268,11 @@
 	if(!target_mob.reagents || reagents.total_volume <= 0)
 		return  ..()
 
+	// BANDASTATION ADDITION START - utensils must respect the same food restrictions as edible items
+	if(SEND_SIGNAL(target_mob, COMSIG_CARBON_ATTEMPT_EAT, src) & BLOCK_EAT_ATTEMPT)
+		return TRUE
+	// BANDASTATION ADDITION END
+
 	if(target_mob.is_mouth_covered(ITEM_SLOT_HEAD) || target_mob.is_mouth_covered(ITEM_SLOT_MASK))
 		if(target_mob == user)
 			target_mob.balloon_alert(user, "can't eat with mouth covered!")
@@ -280,6 +293,11 @@
 			target_mob.balloon_alert(user, "interrupted!")
 			return TRUE
 
+		// BANDASTATION ADDITION START - the patient's species may change while being fed
+		if(SEND_SIGNAL(target_mob, COMSIG_CARBON_ATTEMPT_EAT, src) & BLOCK_EAT_ATTEMPT)
+			return TRUE
+		// BANDASTATION ADDITION END
+
 		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "You are forced to" : "[user] forces you to"] swallow a spoonful of something!"))
 		user.visible_message(
 			span_danger("[user] scoops a spoonful into [target_mob]'s mouth."),
@@ -287,7 +305,14 @@
 		)
 
 	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
-	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
+	// BANDASTATION EDIT START - synthetic food intake must spend a real portion without transferring chemicals
+	if(is_species(target_mob, /datum/species/ipc))
+		var/mob/living/carbon/eater = target_mob
+		var/obj/item/organ/stomach/ipc_culinary/culinary = eater.get_organ_by_type(/obj/item/organ/stomach/ipc_culinary)
+		culinary?.consume_flavor(src, spoon_sip_size)
+	else
+		reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
+	// BANDASTATION EDIT END - synthetic food intake must spend a real portion without transferring chemicals
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, list/modifiers, list/attack_modifiers)

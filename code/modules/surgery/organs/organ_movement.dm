@@ -62,6 +62,11 @@
 			stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
 		return FALSE
 
+	// BANDASTATION ADDITION START - Reject incompatible organs before replacing the current organ
+	if(!can_insert_into(receiver, special, movement_flags))
+		return FALSE
+	// BANDASTATION ADDITION END - Reject incompatible organs before replacing the current organ
+
 	if(owner == receiver)
 		stack_trace("Organ receiver is already organ owner")
 		return FALSE
@@ -341,3 +346,9 @@
 	if (!blood_color && length(limb.blood_dna_info))
 		blood_color = get_color_from_blood_list(limb.blood_dna_info)
 	return blood_color
+
+// BANDASTATION ADDITION START - Check transplant compatibility before changing organ ownership
+/// Pure compatibility check shared by surgery, autosurgeons and organs carried inside detached limbs.
+/obj/item/organ/proc/can_insert_into(mob/living/carbon/receiver, special = FALSE, movement_flags)
+	return TRUE
+// BANDASTATION ADDITION END - Check transplant compatibility before changing organ ownership

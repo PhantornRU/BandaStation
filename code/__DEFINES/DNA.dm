@@ -78,6 +78,15 @@
 
 // BANDASTATION ADDITION START - Species Features
 // keep in line with sprite_accessories .dmi
+#define FEATURE_IPC_CHASSIS "ipc_chassis"
+#define FEATURE_IPC_CHASSIS_COLOR "ipc_chassis_color"
+#define FEATURE_IPC_HEAD "ipc_head"
+#define FEATURE_IPC_SCREEN "ipc_screen"
+#define FEATURE_IPC_SCREEN_COLOR "ipc_screen_color"
+#define FEATURE_IPC_SCREEN_COLOR_SECONDARY "ipc_screen_color_secondary"
+#define FEATURE_IPC_ANTENNA "ipc_antenna"
+#define FEATURE_IPC_ANTENNA_COLOR "ipc_antenna_color"
+
 #define FEATURE_VULPKANIN_HEAD_MARKINGS "vulpkanin_head_markings"
 #define FEATURE_VULPKANIN_CHEST_MARKINGS "vulpkanin_chest_markings"
 #define FEATURE_VULPKANIN_LIMB_MARKINGS "vulpkanin_limb_markings"

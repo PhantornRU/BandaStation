@@ -57,14 +57,24 @@
 		)
 		if(!do_after(user, 3 SECONDS, target))
 			return ITEM_INTERACT_BLOCKING
-		if(!reagents || !reagents.total_volume)
-			return ITEM_INTERACT_BLOCKING // The condiment might be empty after the delay.
+		// BANDASTATION EDIT START - Recheck oral consumption after a species change during forcefeeding.
+		if(!canconsume(target, user))
+			return ITEM_INTERACT_BLOCKING
+		// BANDASTATION EDIT END
 		target.visible_message(
 			span_warning("[capitalize(user.declent_ru(NOMINATIVE))] кормит [target.declent_ru(ACCUSATIVE)] с помощью [declent_ru(GENITIVE)]."),
 			span_warning("[capitalize(user.declent_ru(NOMINATIVE))] кормит вас [declent_ru(INSTRUMENTAL)]"),
 		)
 		log_combat(user, target, "fed", reagents.get_reagent_log_string())
-	reagents.trans_to(target, 10, transferred_by = user, methods = INGEST)
+	// BANDASTATION EDIT START - Culinary processors retain taste and actual consumption without chemical exposure.
+	if(HAS_TRAIT(target, TRAIT_REAGENT_IMMUNE))
+		var/mob/living/carbon/eater = target
+		var/obj/item/organ/stomach/ipc_culinary/culinary = eater.get_organ_by_type(/obj/item/organ/stomach/ipc_culinary)
+		if(!culinary?.consume_flavor(src, 10))
+			return ITEM_INTERACT_BLOCKING
+	else
+		reagents.trans_to(target, 10, transferred_by = user, methods = INGEST)
+	// BANDASTATION EDIT END
 	playsound(target, 'sound/items/drink.ogg', rand(10, 50), TRUE)
 	return ITEM_INTERACT_SUCCESS
 
