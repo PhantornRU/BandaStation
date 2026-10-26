@@ -1,0 +1,116 @@
+{
+  "source_paths": [
+    "/obj/item/clothing/head/helmet/rus_ushanka",
+    "/obj/item/clothing/head/vampire/cowboy",
+    "/obj/item/clothing/head/vampire/helmet/spain",
+    "/obj/item/clothing/head/vampire/napoleon",
+    "/obj/item/clothing/shoes/vampire/brown",
+    "/obj/item/clothing/shoes/vampire/jackboots/high",
+    "/obj/item/clothing/shoes/vampire/jackboots/work",
+    "/obj/item/clothing/suit/costume/soviet",
+    "/obj/item/clothing/suit/vampire/trench/alt",
+    "/obj/item/clothing/suit/vampire/vest/medieval",
+    "/obj/item/clothing/under/costume/soviet",
+    "/obj/item/clothing/under/vampire/black",
+    "/obj/item/clothing/under/vampire/bouncer",
+    "/obj/item/clothing/under/vampire/brujah",
+    "/obj/item/clothing/under/vampire/brujah/female",
+    "/obj/item/clothing/under/vampire/fancy_gray",
+    "/obj/item/clothing/under/vampire/fancy_red",
+    "/obj/item/clothing/under/vampire/gangrel",
+    "/obj/item/clothing/under/vampire/gangrel/female",
+    "/obj/item/clothing/under/vampire/gothic",
+    "/obj/item/clothing/under/vampire/leatherpants",
+    "/obj/item/clothing/under/vampire/napoleon",
+    "/obj/item/clothing/under/vampire/punk",
+    "/obj/item/clothing/under/vampire/red",
+    "/obj/item/clothing/under/vampire/tremere",
+    "/obj/item/clothing/under/vampire/ventrue",
+    "/obj/item/clothing/under/vampire/ventrue/female"
+  ],
+  "outfits": {
+    "napoleon": {
+      "items": [
+        "/obj/item/clothing/head/vampire/napoleon",
+        "/obj/item/clothing/under/vampire/napoleon",
+        "/obj/item/clothing/shoes/vampire/jackboots/high"
+      ]
+    },
+    "conquistador": {
+      "items": [
+        "/obj/item/clothing/head/vampire/helmet/spain",
+        "/obj/item/clothing/shoes/vampire/jackboots/work",
+        "/obj/item/clothing/under/vampire/tremere",
+        "/obj/item/clothing/suit/vampire/vest/medieval"
+      ]
+    },
+    "cowboy": {
+      "items": [
+        "/obj/item/clothing/head/vampire/cowboy",
+        "/obj/item/clothing/shoes/vampire/brown",
+        "/obj/item/clothing/under/vampire/bouncer",
+        "/obj/item/clothing/suit/vampire/trench/alt"
+      ]
+    },
+    "soviet": {
+      "items": [
+        "/obj/item/clothing/head/helmet/rus_ushanka",
+        "/obj/item/clothing/shoes/vampire/jackboots/high",
+        "/obj/item/clothing/under/costume/soviet",
+        "/obj/item/clothing/suit/costume/soviet"
+      ]
+    },
+    "fancy": {
+      "random_probability": 75,
+      "pool": [
+        "/obj/item/clothing/under/vampire/ventrue",
+        "/obj/item/clothing/under/vampire/ventrue/female",
+        "/obj/item/clothing/under/vampire/fancy_gray",
+        "/obj/item/clothing/under/vampire/fancy_red",
+        "/obj/item/clothing/under/vampire/leatherpants"
+      ]
+    },
+    "punk": {
+      "random_probability": 75,
+      "pool": [
+        "/obj/item/clothing/under/vampire/punk",
+        "/obj/item/clothing/under/vampire/black",
+        "/obj/item/clothing/under/vampire/red",
+        "/obj/item/clothing/under/vampire/gothic",
+        "/obj/item/clothing/under/vampire/brujah",
+        "/obj/item/clothing/under/vampire/brujah/female",
+        "/obj/item/clothing/under/vampire/gangrel",
+        "/obj/item/clothing/under/vampire/gangrel/female"
+      ]
+    }
+  },
+  "aliases": {
+    "/obj/item/clothing/head/helmet/rus_ushanka": "/obj/item/clothing/head/helmet/rus_ushanka",
+    "/obj/item/clothing/head/vampire/cowboy": "/obj/item/clothing/san_francisco/head_vampire_cowboy",
+    "/obj/item/clothing/head/vampire/helmet/spain": "/obj/item/clothing/san_francisco/head_vampire_helmet_spain",
+    "/obj/item/clothing/head/vampire/napoleon": "/obj/item/clothing/san_francisco/head_vampire_napoleon",
+    "/obj/item/clothing/shoes/vampire/brown": "/obj/item/clothing/san_francisco/shoes_vampire_brown",
+    "/obj/item/clothing/shoes/vampire/jackboots/high": "/obj/item/clothing/san_francisco/shoes_vampire_jackboots_high",
+    "/obj/item/clothing/shoes/vampire/jackboots/work": "/obj/item/clothing/san_francisco/shoes_vampire_jackboots_work",
+    "/obj/item/clothing/suit/costume/soviet": "/obj/item/clothing/suit/costume/soviet",
+    "/obj/item/clothing/suit/vampire/trench/alt": "/obj/item/clothing/san_francisco/suit_vampire_trench_alt",
+    "/obj/item/clothing/suit/vampire/vest/medieval": "/obj/item/clothing/san_francisco/suit_vampire_vest_medieval",
+    "/obj/item/clothing/under/costume/soviet": "/obj/item/clothing/under/costume/soviet",
+    "/obj/item/clothing/under/vampire/black": "/obj/item/clothing/san_francisco/under_vampire_black",
+    "/obj/item/clothing/under/vampire/bouncer": "/obj/item/clothing/san_francisco/under_vampire_bouncer",
+    "/obj/item/clothing/under/vampire/brujah": "/obj/item/clothing/san_francisco/under_vampire_brujah",
+    "/obj/item/clothing/under/vampire/brujah/female": "/obj/item/clothing/san_francisco/under_vampire_brujah_female",
+    "/obj/item/clothing/under/vampire/fancy_gray": "/obj/item/clothing/san_francisco/under_vampire_fancy_gray",
+    "/obj/item/clothing/under/vampire/fancy_red": "/obj/item/clothing/san_francisco/under_vampire_fancy_red",
+    "/obj/item/clothing/under/vampire/gangrel": "/obj/item/clothing/san_francisco/under_vampire_gangrel",
+    "/obj/item/clothing/under/vampire/gangrel/female": "/obj/item/clothing/san_francisco/under_vampire_gangrel_female",
+    "/obj/item/clothing/under/vampire/gothic": "/obj/item/clothing/san_francisco/under_vampire_gothic",
+    "/obj/item/clothing/under/vampire/leatherpants": "/obj/item/clothing/san_francisco/under_vampire_leatherpants",
+    "/obj/item/clothing/under/vampire/napoleon": "/obj/item/clothing/san_francisco/under_vampire_napoleon",
+    "/obj/item/clothing/under/vampire/punk": "/obj/item/clothing/san_francisco/under_vampire_punk",
+    "/obj/item/clothing/under/vampire/red": "/obj/item/clothing/san_francisco/under_vampire_red",
+    "/obj/item/clothing/under/vampire/tremere": "/obj/item/clothing/san_francisco/under_vampire_tremere",
+    "/obj/item/clothing/under/vampire/ventrue": "/obj/item/clothing/san_francisco/under_vampire_ventrue",
+    "/obj/item/clothing/under/vampire/ventrue/female": "/obj/item/clothing/san_francisco/under_vampire_ventrue_female"
+  }
+}

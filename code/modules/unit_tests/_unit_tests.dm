@@ -455,6 +455,8 @@
 
 #include "../../../modular_bandastation/quirks/code/tests/porphyria.dm" // BANDASTATION ADDITION - Porphyria
 
+// BANDASTATION ADDITION - TGM attribute alignment regression for the imported map.
+#include "../../../modular_bandastation/san_francisco/code/mapping_tests.dm"
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

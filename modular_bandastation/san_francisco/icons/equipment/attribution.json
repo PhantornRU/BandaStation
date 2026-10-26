@@ -1,0 +1,27 @@
+{
+  "source_repository": "https://github.com/Monkestation/crimson-grid",
+  "source_commit": "483ef4772fe4957027c8e2f290cd1503b2b237f5",
+  "license_notice": "Upstream assets: CC BY-SA 3.0 unless individually stated otherwise.",
+  "files": [
+    {
+      "source": "modular_darkpack/modules/clothes/icons/clothing.dmi",
+      "destination": "modular_bandastation/san_francisco/icons/equipment/e47159f991_clothing.dmi",
+      "sha256": "b9fbc481ed29a509e14b568e38044b2dedf6e3cffccf3662f22e081434c55cc3"
+    },
+    {
+      "source": "modular_darkpack/modules/clothes/icons/worn.dmi",
+      "destination": "modular_bandastation/san_francisco/icons/equipment/cb9da1310f_worn.dmi",
+      "sha256": "3b13be3975384f8be875426002af80ee3b45efab1a66eca9b75cd3c03031855e"
+    },
+    {
+      "source": "modular_darkpack/modules/ert/icons/clothing.dmi",
+      "destination": "modular_bandastation/san_francisco/icons/equipment/8e81e9f5b6_clothing.dmi",
+      "sha256": "4f1316fcdb2e90c066b9e3082d54815edef3fff7a4ee3839ed01697dbfa9db78"
+    },
+    {
+      "source": "modular_darkpack/modules/ert/icons/worn.dmi",
+      "destination": "modular_bandastation/san_francisco/icons/equipment/701801f944_worn.dmi",
+      "sha256": "9e9dc75abdb0f43d6f75c8c9d4174ca659153e0aee25055c2d2c506a900bbb60"
+    }
+  ]
+}

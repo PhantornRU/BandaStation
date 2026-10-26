@@ -1,0 +1,36 @@
+SAN FRANCISCO — DIRECT MAP PORT
+
+Source: https://github.com/Monkestation/crimson-grid
+Commit: 483ef4772fe4957027c8e2f290cd1503b2b237f5
+Original footprint: 255 x 255 tiles, five levels.
+
+This first runnable prototype retains the original map layout, architecture,
+decoration, names and brands. Equipment uses compatible native behavior where
+possible. Technical adapters provide map loading, doors, vertical links and
+native spawns. No generated artwork or additional city systems are included.
+
+DarkPack NPCs and economy are excluded. Unsupported donor interactions are
+listed in tools/san_francisco/bindings/native_compat.json. Cars retain their
+parked appearance; driving was not ported. Station arrivals, evacuation and
+cargo shuttle routes are not connected to the city. Doors use native ID access.
+
+Run PLAY_CITY.cmd, or tools/san_francisco/start-local.ps1, with BYOND 516.1685.
+The launcher uses local port 1343 and isolated configurations, saves and logs.
+No personal admin account is configured by default; the native localhost rank
+remains enabled. Pass -AdminKey YourCkey to explicitly add a personal admin.
+STOP_CITY.cmd stops only servers started by this checkout's launcher.
+
+Imported sprite provenance covers all 196 DMI in
+modular_bandastation/san_francisco/icons/provenance.json. Upstream notices and
+asset-specific exceptions remain applicable. Import and validation commands
+are documented in tools/san_francisco/README.txt.
+
+Validation on 2026-10-26 against master 51052ad052e:
+- Normal BYOND 516.1685 compilation including the DMM: 0 errors, 0 warnings.
+- TGUI production build passed.
+- Eight focused integration test groups passed, zero runtimes, clean shutdown.
+- All 196 DMI hashes and donor bytes match; 431 static appearances validated.
+This is a focused suite, not the complete CI suite. An interactive player
+walkthrough has not been performed on this PR checkout. The first prototype is
+excluded from the generic station CI matrix because it lacks station shuttle
+routes. Its focused checks are available via tools/san_francisco/test-city.ps1.
