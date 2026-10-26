@@ -339,7 +339,7 @@
 
 /obj/vehicle/sealed/spacepod/proc/load_cargo(mob/living/user, obj/object)
 	var/obj/item/spacepod_equipment/cargo/cargo = cargo_system
-	if(!cargo || cargo.storage || !unlocked || !Adjacent(user) || !user.Adjacent(object) || object.anchored)
+	if(QDELETED(src) || QDELETED(user) || QDELETED(cargo) || QDELETED(object) || !isturf(loc) || !isturf(object.loc) || cargo.my_atom != src || cargo.loc != src || cargo.storage || !unlocked || !Adjacent(user) || !user.Adjacent(object) || object.anchored)
 		return FALSE
 	if(istype(cargo, /obj/item/spacepod_equipment/cargo/ore))
 		if(!istype(object, /obj/structure/ore_box))
@@ -355,14 +355,15 @@
 			return FALSE
 	if(!do_after(user, 4 SECONDS, src))
 		return FALSE
-	if(QDELETED(cargo) || cargo != cargo_system || cargo.storage || QDELETED(object) || object.anchored || !unlocked || !Adjacent(user) || !user.Adjacent(object))
+	if(QDELETED(src) || QDELETED(user) || QDELETED(cargo) || cargo != cargo_system || cargo.my_atom != src || cargo.loc != src || cargo.storage || QDELETED(object) || !isturf(loc) || !isturf(object.loc) || object.anchored || !unlocked || !Adjacent(user) || !user.Adjacent(object))
 		return FALSE
 	if(istype(object, /obj/structure/closet))
 		var/obj/structure/closet/closet = object
 		if(closet.opened)
 			return FALSE
+	if(!object.forceMove(cargo) || QDELETED(src) || QDELETED(cargo) || cargo != cargo_system || cargo.my_atom != src || cargo.loc != src || cargo.storage || QDELETED(object) || object.loc != cargo)
+		return FALSE
 	cargo.storage = object
-	object.forceMove(cargo)
 	balloon_alert(user, "груз загружен")
 	return TRUE
 

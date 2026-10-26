@@ -594,7 +594,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else if(istype(AM, /obj/structure/closet))
 		return FALSE
 	else if(isobj(AM))
-		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs() || ismecha(AM))
+		// BANDASTATION EDIT - Single-tile storage cannot contain multi-tile objects.
+		if((!allow_dense && AM.density) || AM.anchored || AM.has_buckled_mobs() || ismecha(AM) || is_multi_tile_object(AM))
 			return FALSE
 		else if(isitem(AM) && !HAS_TRAIT(AM, TRAIT_NODROP))
 			return TRUE
