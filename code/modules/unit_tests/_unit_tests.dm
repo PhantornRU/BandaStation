@@ -446,6 +446,8 @@
 #include "../../../modular_bandastation/spacepods/code/spacepod_failure_tests.dm"
 // BANDASTATION ADDITION END - Paradise spacepod port regression tests
 
+#include "../../../modular_bandastation/quirks/code/tests/porphyria.dm" // BANDASTATION ADDITION - Porphyria
+
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

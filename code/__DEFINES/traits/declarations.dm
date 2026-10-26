@@ -1781,6 +1781,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Given to vampires.
 #define TRAIT_VAMPIRE "vampire"
 
+/// Nutrition gains require a blood-feeding source, as for vampires.
+#define TRAIT_BLOOD_DIET "blood_diet" // BANDASTATION ADDITION - Porphyria
+
 /// Given to vampires and thralls
 #define TRAIT_VAMPIRE_LIKE "vampire_like"
 // BANDASTATION EDIT END: Vampire collision and identity traits
