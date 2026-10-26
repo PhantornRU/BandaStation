@@ -343,6 +343,10 @@
 		var/atom/movable/virtualspeaker/virtual_speaker = speaker
 		var/atom/movable/runechat_anchor = LAZYACCESS(virtual_speaker.runechat_anchors, src) // radio runechat
 		speaker = runechat_anchor || virtual_speaker.source
+		// BANDASTATION ADDITION START - A radio proxy must preserve its speaker's hidden runechat.
+		if(HAS_TRAIT(virtual_speaker.source, TRAIT_RUNECHAT_HIDDEN) || HAS_TRAIT(speaker, TRAIT_RUNECHAT_HIDDEN))
+			return
+		// BANDASTATION ADDITION END
 		classes |= "virtual-speaker"
 
 	// Ignore virtual speaker (most often radio messages) from ourselves

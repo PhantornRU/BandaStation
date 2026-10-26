@@ -60,6 +60,7 @@
 	ion_trail.attach(src)
 	ion_trail.start()
 	GLOB.spacepods_list += src
+	AddElement(/datum/element/hostile_machine)
 	START_PROCESSING(SSobj, src)
 	update_appearance()
 
@@ -230,12 +231,14 @@
 
 /obj/vehicle/sealed/spacepod/after_add_occupant(mob/living/occupant)
 	. = ..()
+	ADD_TRAIT(occupant, TRAIT_RUNECHAT_HIDDEN, REF(src))
 	occupant.reset_perspective(src)
 	if(occupant == pilot)
 		RegisterSignal(occupant, COMSIG_MOVABLE_KEYBIND_FACE_DIR, PROC_REF(on_pilot_turn))
 
 /obj/vehicle/sealed/spacepod/after_remove_occupant(mob/living/occupant)
 	. = ..()
+	REMOVE_TRAIT(occupant, TRAIT_RUNECHAT_HIDDEN, REF(src))
 	SStgui.close_user_uis(occupant, src)
 	if(occupant == pilot)
 		stop_engine_sound()

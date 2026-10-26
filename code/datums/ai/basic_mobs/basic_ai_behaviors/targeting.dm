@@ -3,7 +3,8 @@ GLOBAL_ALIST_EMPTY(hostile_machines_by_z)
 /// Static typecache list of things we are interested in
 /// Consider this a union of the for loop and the hearers call from below
 /// Must be kept up to date with the contents of hostile_machines
-GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha)))
+// BANDASTATION EDIT - Spacepods use the same occupied-vehicle targeting rules as mecha.
+GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/porta_turret, /obj/vehicle/sealed/mecha, /obj/vehicle/sealed/spacepod)))
 
 
 ///Used to find combat targets; Allow finding things hidden in things such as lockers too.

@@ -438,6 +438,8 @@
 #include "../../../modular_bandastation/spacepods/code/spacepod_vehicle_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_actions_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_status_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_speech_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_npc_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_tank_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_life_support_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_hud_tests.dm"

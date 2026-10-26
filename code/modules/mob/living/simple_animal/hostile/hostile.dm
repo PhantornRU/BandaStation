@@ -172,7 +172,8 @@
 	if(!search_objects)
 		. = hearers(vision_range, target_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+		// BANDASTATION EDIT - Include spacepods in native machine discovery.
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha, /obj/vehicle/sealed/spacepod))
 
 		for(var/HM in typecache_filter_list(range(vision_range, target_from), hostile_machines))
 			if(can_see(target_from, HM, vision_range))
@@ -271,11 +272,13 @@
 					return FALSE
 			return TRUE
 
-		if(ismecha(the_target))
-			var/obj/vehicle/sealed/mecha/M = the_target
+		// BANDASTATION EDIT START - Spacepods inherit their crew's native hostility checks.
+		if(ismecha(the_target) || istype(the_target, /obj/vehicle/sealed/spacepod))
+			var/obj/vehicle/sealed/M = the_target
 			for(var/occupant in M.occupants)
 				if(CanAttack(occupant))
 					return TRUE
+		// BANDASTATION EDIT END
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
@@ -607,7 +610,8 @@
 	search_objects = value
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+	// BANDASTATION EDIT - Include spacepods in native lazy machine discovery.
+	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha, /obj/vehicle/sealed/spacepod))
 	. = list()
 	for (var/I in SSmobs.clients_by_zlevel[_Z])
 		var/mob/M = I
