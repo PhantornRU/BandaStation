@@ -67,6 +67,14 @@
 	civilian.add_equipment(null, new /obj/item/spacepod_equipment/cargo/ore(civilian), "cargo_system")
 	var/obj/vehicle/sealed/spacepod/sec/security = new(at(24, 14))
 	security.name = "Тестовый под СБ"
+	var/obj/vehicle/sealed/spacepod/civilian/cargo_pod = new(at(18, 17))
+	cargo_pod.name = "Тестовый грузовой под"
+	var/obj/item/spacepod_equipment/cargo/crate/crate_bay = new(cargo_pod)
+	cargo_pod.install_equipment(crate_bay, crate_bay.slot)
+	var/obj/item/spacepod_equipment/sec_cargo/loot_box/loot_bay = new(cargo_pod)
+	cargo_pod.install_equipment(loot_bay, loot_bay.slot)
+	new /obj/item/flashlight(loot_bay)
+	crate_bay.storage = new /obj/structure/closet/crate(crate_bay)
 	var/obj/item/spacepod_equipment/key/key = new(at(14, 15))
 	key.id = security.lock_system.id
 	new /obj/vehicle/sealed/spacepod/civilian/damaged(at(24, 20))

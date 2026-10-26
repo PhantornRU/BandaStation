@@ -301,6 +301,7 @@
 		/datum/job/blueshield = /obj/item/organ/cyberimp/arm/toolkit/flash,
 		/datum/job/magistrate = /obj/item/organ/cyberimp/arm/toolkit/paperwork,
 		/datum/job/explorer = /obj/item/organ/cyberimp/arm/toolkit/toolset,
+		/datum/job/spacepod_technician = /obj/item/organ/cyberimp/arm/toolkit/toolset,
 		// BANDASTATION ADD - END
 	)
 

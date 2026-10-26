@@ -25,6 +25,16 @@ All ShuttleMove procs go here
 	for(var/atom/movable/thing as anything in contents)
 		if(thing.resistance_flags & SHUTTLE_CRUSH_PROOF)
 			continue
+		// BANDASTATION ADDITION START - A landing crushes a pod instead of pushing its large hull onto the shuttle.
+		if(istype(thing, /obj/vehicle/sealed/spacepod))
+			var/obj/vehicle/sealed/spacepod/pod = thing
+			var/turf/pod_anchor = pod.loc
+			// Overlapping docking regions can also contain cargo already aboard this moving shuttle.
+			if(isturf(pod_anchor) && isshuttleturf(pod_anchor) && shuttle.shuttle_areas[get_area(pod_anchor)])
+				continue
+			pod.detonate()
+			continue
+		// BANDASTATION ADDITION END - A landing crushes a pod instead of pushing its large hull onto the shuttle.
 		if(isliving(thing))
 			var/mob/living/living_thing = thing
 			if(living_thing.incorporeal_move) // Don't crush incorporeal things

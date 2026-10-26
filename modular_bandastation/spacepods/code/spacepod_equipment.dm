@@ -49,7 +49,7 @@
 	if(istype(tool, /obj/item/spacepod_equipment))
 		var/obj/item/spacepod_equipment/equipment = tool
 		return add_equipment(user, equipment, equipment.slot) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-	if(!hatch_open && unlocked && sec_cargo_system?.atom_storage)
+	if(istype(sec_cargo_system, /obj/item/spacepod_equipment/sec_cargo/loot_box) && IsContainedAtomAccessible(sec_cargo_system, user))
 		sec_cargo_system.atom_storage.attempt_insert(tool, user)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -310,10 +310,13 @@
 	unload()
 	return ..()
 
-/obj/item/spacepod_equipment/cargo/proc/unload()
-	if(storage)
-		storage.forceMove(get_turf(my_atom || src))
-		storage = null
+/obj/item/spacepod_equipment/cargo/proc/unload(turf/destination)
+	if(QDELETED(storage))
+		return FALSE
+	if(!storage.forceMove(destination || get_turf(my_atom || src)))
+		return FALSE
+	storage = null
+	return TRUE
 
 /obj/item/spacepod_equipment/cargo/proc/passover(obj/item/item)
 	return
@@ -336,7 +339,7 @@
 
 /obj/vehicle/sealed/spacepod/proc/load_cargo(mob/living/user, obj/object)
 	var/obj/item/spacepod_equipment/cargo/cargo = cargo_system
-	if(!cargo || cargo.storage || !unlocked || !Adjacent(user) || !user.Adjacent(object) || object.anchored)
+	if(QDELETED(src) || QDELETED(user) || QDELETED(cargo) || QDELETED(object) || !isturf(loc) || !isturf(object.loc) || cargo.my_atom != src || cargo.loc != src || cargo.storage || !unlocked || !Adjacent(user) || !user.Adjacent(object) || object.anchored)
 		return FALSE
 	if(istype(cargo, /obj/item/spacepod_equipment/cargo/ore))
 		if(!istype(object, /obj/structure/ore_box))
@@ -352,21 +355,56 @@
 			return FALSE
 	if(!do_after(user, 4 SECONDS, src))
 		return FALSE
-	if(QDELETED(cargo) || cargo != cargo_system || cargo.storage || QDELETED(object) || object.anchored || !unlocked || !Adjacent(user) || !user.Adjacent(object))
+	if(QDELETED(src) || QDELETED(user) || QDELETED(cargo) || cargo != cargo_system || cargo.my_atom != src || cargo.loc != src || cargo.storage || QDELETED(object) || !isturf(loc) || !isturf(object.loc) || object.anchored || !unlocked || !Adjacent(user) || !user.Adjacent(object))
 		return FALSE
 	if(istype(object, /obj/structure/closet))
 		var/obj/structure/closet/closet = object
 		if(closet.opened)
 			return FALSE
+	if(!object.forceMove(cargo) || QDELETED(src) || QDELETED(cargo) || cargo != cargo_system || cargo.my_atom != src || cargo.loc != src || cargo.storage || QDELETED(object) || object.loc != cargo)
+		return FALSE
 	cargo.storage = object
-	object.forceMove(cargo)
 	balloon_alert(user, "груз загружен")
 	return TRUE
 
 /obj/vehicle/sealed/spacepod/proc/unload(mob/living/user)
-	if(!can_control(user))
-		return
-	cargo_system?.unload()
+	if(!can_control(user) && (!can_service_cargo(user) || user.get_active_held_item()))
+		return FALSE
+	if(QDELETED(cargo_system) || cargo_system.my_atom != src || cargo_system.loc != src)
+		balloon_alert(user, "нет грузового модуля!")
+		return FALSE
+	if(QDELETED(cargo_system.storage))
+		balloon_alert(user, "грузовой отсек пуст")
+		return FALSE
+	var/turf/destination = find_cargo_unload_turf()
+	if(!destination)
+		balloon_alert(user, "рядом нет места!")
+		return FALSE
+	if(!cargo_system.unload(destination))
+		return FALSE
+	balloon_alert(user, "груз выгружен")
+	return TRUE
+
+/// Only the cargo fittings are externally accessible; the cabin keeps its other contents sealed.
+/obj/vehicle/sealed/spacepod/proc/can_service_cargo(mob/living/user)
+	return !QDELETED(src) && !melting_down && isliving(user) && !QDELETED(user) && isturf(user.loc) && !user.incapacitated && !user.combat_mode && !HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && unlocked && !hatch_open && Adjacent(user)
+
+/obj/vehicle/sealed/spacepod/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	if(istype(contained, /obj/item/spacepod_equipment/sec_cargo/loot_box) && contained == sec_cargo_system)
+		return sec_cargo_system.my_atom == src && sec_cargo_system.loc == src && can_service_cargo(user)
+	return ..()
+
+/// Search only the footprint's immediate edges, without dropping cargo beneath the cabin.
+/obj/vehicle/sealed/spacepod/proc/find_cargo_unload_turf()
+	if(!isturf(loc))
+		return null
+	for(var/turf/pod_turf as anything in locs)
+		for(var/direction in GLOB.cardinals)
+			var/turf/candidate = get_step(pod_turf, direction)
+			if(!isopenturf(candidate) || (candidate in locs) || candidate.is_blocked_turf() || !pod_turf.Adjacent(candidate))
+				continue
+			return candidate
+	return null
 
 /obj/item/spacepod_equipment/sec_cargo
 	name = "spacepod auxiliary cargo module"
@@ -395,12 +433,51 @@
 
 /obj/item/spacepod_equipment/sec_cargo/loot_box/Destroy()
 	// A destroyed fitting must not delete the valuables stored in it.
+	atom_storage?.close_all()
 	atom_storage?.remove_all()
 	return ..()
 
+/obj/item/spacepod_equipment/sec_cargo/loot_box/removed(mob/user)
+	atom_storage?.close_all()
+	return ..()
+
+/obj/item/spacepod_equipment/sec_cargo/loot_box/attempt_pickup(mob/living/user, skip_grav = FALSE)
+	if(my_atom)
+		return TRUE
+	return ..()
+
 /obj/item/spacepod_equipment/sec_cargo/loot_box/check_storage(mob/user)
-	if(my_atom && (my_atom.can_control(user) || (!user.incapacitated && my_atom.Adjacent(user) && my_atom.unlocked && !my_atom.hatch_open)))
-		atom_storage.show_contents(user)
+	var/obj/vehicle/sealed/spacepod/pod = my_atom
+	if(QDELETED(src) || QDELETED(pod) || pod.sec_cargo_system != src || loc != pod || !atom_storage)
+		return FALSE
+	if(pod.can_control(user))
+		var/list/items = list()
+		for(var/obj/item/item in contents)
+			items += item
+		if(!length(items))
+			pod.balloon_alert(user, "малый отсек пуст")
+			return FALSE
+		var/obj/item/selected = tgui_input_list(user, "Какой предмет выгрузить рядом с челноком?", "Малый грузовой отсек", items)
+		if(QDELETED(src) || QDELETED(pod) || my_atom != pod)
+			return FALSE
+		return unload_item(user, selected)
+	if(pod.can_service_cargo(user))
+		return atom_storage.open_storage(user)
+	return FALSE
+
+/// The pilot's hands stay blocked: selected items go outside through the normal storage removal API.
+/obj/item/spacepod_equipment/sec_cargo/loot_box/proc/unload_item(mob/living/user, obj/item/item)
+	var/obj/vehicle/sealed/spacepod/pod = my_atom
+	if(QDELETED(src) || QDELETED(pod) || pod.sec_cargo_system != src || loc != pod || !atom_storage || !pod.can_control(user) || QDELETED(item) || item.loc != src)
+		return FALSE
+	var/turf/destination = pod.find_cargo_unload_turf()
+	if(!destination)
+		pod.balloon_alert(user, "рядом нет места!")
+		return FALSE
+	if(!atom_storage.remove_single(user, item, destination))
+		return FALSE
+	pod.balloon_alert(user, "предмет выгружен")
+	return TRUE
 
 /obj/item/spacepod_equipment/lock
 	name = "spacepod lock"

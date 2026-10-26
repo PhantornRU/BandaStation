@@ -63,8 +63,9 @@
 			if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
 				return FALSE
 
-	else if(ismecha(the_target)) //Targeting vs mechas
-		var/obj/vehicle/sealed/mecha/M = the_target
+	// BANDASTATION EDIT START - Target an occupied spacepod through its crew, as with a mech.
+	else if(ismecha(the_target) || istype(the_target, /obj/vehicle/sealed/spacepod))
+		var/obj/vehicle/sealed/M = the_target
 		var/valid_occupant = FALSE
 		for(var/occupant in M.occupants)
 			if(is_valid_target(living_mob, occupant)) //Can we attack any of the occupants?
@@ -72,6 +73,7 @@
 				break
 		if(!valid_occupant)
 			return FALSE
+	// BANDASTATION EDIT END
 
 	else if(istype(the_target, /obj/machinery/porta_turret)) //Cringe turret! kill it!
 		var/obj/machinery/porta_turret/P = the_target

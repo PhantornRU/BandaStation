@@ -939,6 +939,15 @@
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
 
+	// BANDASTATION ADDITION START - Transition a complete footprint only after every turf has received Entered().
+	if(is_multi_tile_object(src) && isturf(loc) && !currently_z_moving)
+		for(var/turf/open/transition_turf in locs)
+			if(!transition_turf.destination_z)
+				continue
+			transition_turf.transfer_occupant(src)
+			break
+	// BANDASTATION ADDITION END - Transition a complete footprint only after every turf has received Entered().
+
 	return TRUE
 
 // Make sure you know what you're doing if you call this
