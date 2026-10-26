@@ -1501,7 +1501,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
 		return
 	// BANDASTATION ADDITION START - Vampire: reject ordinary gains; blood feeding uses forced.
-	if(change > 0 && HAS_TRAIT(src, TRAIT_VAMPIRE) && !forced)
+	if(change > 0 && (HAS_TRAIT(src, TRAIT_VAMPIRE) || HAS_TRAIT(src, TRAIT_BLOOD_DIET)) && !forced) // BANDASTATION EDIT - Share vampire blood-only feeding with Porphyria
 		return
 	// BANDASTATION ADDITION END
 
@@ -1520,7 +1520,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
 		return
 	// BANDASTATION ADDITION START - Vampire: also cover feeding sources that set nutrition directly.
-	if(set_to > nutrition && HAS_TRAIT(src, TRAIT_VAMPIRE) && !forced)
+	if(set_to > nutrition && (HAS_TRAIT(src, TRAIT_VAMPIRE) || HAS_TRAIT(src, TRAIT_BLOOD_DIET)) && !forced) // BANDASTATION EDIT - Share vampire blood-only feeding with Porphyria
 		return
 	// BANDASTATION ADDITION END
 
