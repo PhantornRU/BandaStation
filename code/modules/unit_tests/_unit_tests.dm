@@ -445,6 +445,7 @@
 #include "../../../modular_bandastation/spacepods/code/spacepod_hud_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_vacuum_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_wreckage_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_shuttle_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_movement_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_transition_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_failure_tests.dm"
