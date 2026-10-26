@@ -484,8 +484,26 @@
 		user.visible_message(span_warning("[user] вытаскивает [target] из челнока!"))
 		return
 	if(!hatch_open)
-		if(unlocked)
-			sec_cargo_system?.check_storage(user)
+		if(!can_service_cargo(user) || user.get_active_held_item())
+			return
+		var/obj/item/spacepod_equipment/sec_cargo/loot_box/loot = sec_cargo_system
+		var/has_loot = istype(loot) && loot.my_atom == src && loot.loc == src
+		var/obj/item/spacepod_equipment/cargo/cargo = cargo_system
+		var/has_cargo = !QDELETED(cargo) && cargo.my_atom == src && cargo.loc == src && !QDELETED(cargo.storage)
+		if(has_loot && has_cargo)
+			var/selection = tgui_input_list(user, "Какой грузовой отсек открыть?", "Груз челнока", list("Открыть малый отсек", "Выгрузить ящик"))
+			if(!selection || QDELETED(src) || !can_service_cargo(user) || user.get_active_held_item())
+				return
+			if(selection == "Открыть малый отсек" && !QDELETED(loot) && sec_cargo_system == loot)
+				loot.check_storage(user)
+			else if(selection == "Выгрузить ящик" && !QDELETED(cargo) && cargo_system == cargo)
+				unload(user)
+		else if(has_loot)
+			loot.check_storage(user)
+		else if(has_cargo)
+			unload(user)
+		else
+			balloon_alert(user, cargo ? "грузовой отсек пуст" : "нет грузового модуля!")
 		return
 	var/list/choices = list()
 	if(battery)
@@ -517,6 +535,7 @@
 		balloon_alert(user, "люк заблокирован!")
 		return TRUE
 	if(tool.use_tool(src, user, 0, volume = 50))
+		sec_cargo_system?.atom_storage?.close_all()
 		hatch_open = !hatch_open
 		balloon_alert(user, hatch_open ? "люк открыт" : "люк закрыт")
 	return TRUE
@@ -552,6 +571,7 @@
 		unlocked = TRUE
 		balloon_alert(user, "нет системы блокировки!")
 		return FALSE
+	sec_cargo_system?.atom_storage?.close_all()
 	unlocked = !unlocked
 	balloon_alert(user, unlocked ? "двери разблокированы" : "двери заблокированы")
 	return TRUE

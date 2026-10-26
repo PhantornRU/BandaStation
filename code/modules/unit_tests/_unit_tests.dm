@@ -433,6 +433,7 @@
 #include "../../../modular_bandastation/spacepods/code/spacepod_construction_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_job_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_equipment_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_cargo_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_fabricator_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_vehicle_tests.dm"
 #include "../../../modular_bandastation/spacepods/code/spacepod_actions_tests.dm"
