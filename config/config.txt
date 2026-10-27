@@ -210,7 +210,7 @@ IPINTEL_REJECT_BAD
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## In-game bug reports, reviewed by staff before creating an issue in GITHUBURL.
-## Optional: without a token, report-issue keeps opening the GitHub issue form.
+## A token is required to publish issues; unconfigured reports remain in the review queue.
 ## Store the token in config/dev_overrides.txt or a private deployment config.
 ## Fine-grained token: Issues read/write permission for the repository in GITHUBURL.
 # GITHUB_API_TOKEN your_secret_here

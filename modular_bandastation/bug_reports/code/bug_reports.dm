@@ -98,6 +98,7 @@ ADMIN_VERB(view_bug_reports, BUG_REPORT_RIGHTS, "View Bug Reports", "Прове�
 
 /datum/bug_report/ui_interact(mob/user, datum/tgui/ui)
 	if(ui_status(user) != UI_INTERACTIVE)
+		ui?.close()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

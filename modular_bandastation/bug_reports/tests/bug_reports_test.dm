@@ -77,3 +77,41 @@
 	draft.ui_close(unauthorized)
 	TEST_ASSERT(QDELETED(draft), "Closing an unsubmitted draft must delete it")
 	TEST_ASSERT_NULL(GLOB.bug_report_drafts["bugreporttest"], "Deleted drafts must leave no global references")
+
+/// Simulate the permission result changing without requiring a connected BYOND client.
+/datum/bug_report/permission_test
+	var/can_review = TRUE
+
+/datum/bug_report/permission_test/ui_status(mob/user, datum/ui_state/state)
+	return can_review ? UI_INTERACTIVE : UI_CLOSE
+
+/// Omit browser registration while retaining native UI close and window lock handling.
+/datum/tgui_window/bug_report_unit_test/New()
+	id = "bug-report-unit-test"
+
+/datum/unit_test/bug_report_deadmin/Run()
+	var/mob/reviewer = allocate(/mob)
+	reviewer.key = "bugreportreviewer"
+	var/datum/bug_report/permission_test/report = allocate(/datum/bug_report/permission_test)
+	report.submitted = TRUE
+	report.reviewer_ckey = reviewer.ckey
+	GLOB.bug_reports += report
+	TEST_ASSERT(length(report.reviewer_ckey), "The fixture must hold a review lock before losing permission")
+	TEST_ASSERT_EQUAL(report.ui_status(reviewer), UI_INTERACTIVE, "The fixture must initially allow review")
+	var/datum/tgui/ui = allocate(/datum/tgui, reviewer, report, "BugReportForm")
+	var/datum/tgui_window/window = allocate(/datum/tgui_window/bug_report_unit_test)
+	ui.window = window
+	ui.initialized = TRUE
+	ui.opened_at = world.time
+	window.acquire_lock(ui)
+	SStgui.on_open(ui)
+	TEST_ASSERT((ui in SStgui.all_uis) && (ui in reviewer.tgui_open_uis) && (ui in report.open_uis), "The fixture must register a real open review UI")
+
+	report.can_review = FALSE
+	ui.process(1)
+
+	TEST_ASSERT(QDELETED(ui), "Losing review permission must close the existing UI during autoupdate")
+	TEST_ASSERT_NULL(report.reviewer_ckey, "Closing an unauthorized review must release its reviewer lock")
+	TEST_ASSERT(!(ui in SStgui.all_uis) && !(ui in reviewer.tgui_open_uis) && !(ui in report.open_uis), "The unauthorized review must leave every native UI registry")
+	TEST_ASSERT(!window.locked && isnull(window.locked_by), "Closing an unauthorized review must release the window lock")
+	TEST_ASSERT(!QDELETED(report) && (report in GLOB.bug_reports), "Losing review permission must retain the submitted report for another reviewer")
