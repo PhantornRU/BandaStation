@@ -457,6 +457,8 @@
 
 #include "../../../modular_bandastation/quirks/code/tests/porphyria.dm" // BANDASTATION ADDITION - Porphyria
 
+#include "../../../modular_bandastation/bug_reports/tests/bug_reports_test.dm" // BANDASTATION ADDITION - In-game bug reports
+
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

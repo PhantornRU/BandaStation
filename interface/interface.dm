@@ -54,7 +54,12 @@ GAME_VERB_HIDDEN(/client, config, "config")
 		return
 	DIRECT_OUTPUT(src, link(configurl))
 
-GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
+GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", "OOC") // BANDASTATION EDIT - in-game bug reports
+	// BANDASTATION ADDITION START - in-game bug reports
+	if(CONFIG_GET(string/github_api_token))
+		open_bug_report()
+		return
+	// BANDASTATION ADDITION END - in-game bug reports
 
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
