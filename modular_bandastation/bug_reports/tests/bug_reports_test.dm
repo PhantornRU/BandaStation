@@ -91,7 +91,7 @@
 
 /datum/unit_test/bug_report_deadmin/Run()
 	var/mob/reviewer = allocate(/mob)
-	reviewer.key = "bugreportreviewer"
+	reviewer.key = "@bugreportreviewer" // Native fake keys avoid client checks and ghosting during cleanup.
 	var/datum/bug_report/permission_test/report = allocate(/datum/bug_report/permission_test)
 	report.submitted = TRUE
 	report.reviewer_ckey = reviewer.ckey
