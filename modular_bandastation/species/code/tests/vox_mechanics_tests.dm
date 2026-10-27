@@ -420,3 +420,29 @@
 	heart.on_death(60)
 	TEST_ASSERT(heart.damage > extracted_damage, "A transplanted vox heart did not decay inside an unprotected organic owner.")
 	TEST_ASSERT(!(heart.organ_flags & ORGAN_FROZEN), "Transplanted vox tissue retained a permanent frozen flag.")
+
+/// Oxygen injury must survive death without becoming decay or being described as proven putrefaction.
+/datum/unit_test/vox_lung_failure_description
+	parent_type = /datum/unit_test/lungs
+
+/datum/unit_test/vox_lung_failure_description/Run()
+	var/mob/living/carbon/human/vox = allocate(/mob/living/carbon/human/consistent)
+	vox.set_species(/datum/species/vox)
+	var/obj/item/organ/lungs/vox/lungs = vox.get_organ_slot(ORGAN_SLOT_LUNGS)
+	lungs_test_check_breath("oxygen injury before death", vox, lungs, create_standard_mix())
+	TEST_ASSERT(vox.stat != DEAD, "A single ordinary breath killed the oxygen-injury fixture.")
+	TEST_ASSERT(lungs.damage > 0 && lungs.damage < lungs.maxHealth, "Oxygen did not cause measurable, non-saturated lung damage.")
+	var/oxygen_damage = lungs.damage
+	vox.death()
+	TEST_ASSERT(HAS_TRAIT(vox, TRAIT_NODECAY), "The dead Vox lost its preservation trait.")
+	vox.bodytemperature = BODYTEMP_NORMAL
+	vox.Life(45 MINUTES / (1 SECONDS))
+	lungs.process(60)
+	TEST_ASSERT_EQUAL(lungs.owner, vox, "The dead Vox lost physical ownership of its lungs.")
+	TEST_ASSERT_EQUAL(lungs.damage, oxygen_damage, "The dead Vox's lungs decayed or their oxygen injury was silently repaired.")
+	lungs.apply_organ_damage(lungs.maxHealth)
+	TEST_ASSERT(lungs.organ_flags & ORGAN_FAILING, "Critical injury did not produce lung failure.")
+	var/failure_text = jointext(lungs.examine(vox), "\n")
+	TEST_ASSERT(!findtext(failure_text, "разлож"), "Lung failure from injury was falsely described as decomposition.")
+	TEST_ASSERT(findtext(failure_text, "не функционирует"), "Examining critically injured lungs no longer reports their loss of function.")
+	TEST_ASSERT_EQUAL(lungs.damage, lungs.maxHealth, "Examining critically injured lungs repaired their damage.")
