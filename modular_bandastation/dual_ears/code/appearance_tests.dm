@@ -1,29 +1,41 @@
+/// The shared selector preserves ordinary clothing defaults and never mirrors non-ear slots.
+/datum/unit_test/worn_icon_slot_fallback/Run()
+	var/obj/item/item = allocate(/obj/item)
+	item.worn_icon = null
+	TEST_ASSERT_EQUAL(item.get_worn_icon_for_slot(ITEM_SLOT_HEAD, SPECIES_HUMAN), get_default_icon_by_slot(ITEM_SLOT_HEAD), "Ordinary headwear fell back to an ear icon file.")
+	TEST_ASSERT_EQUAL(item.get_worn_icon_for_slot(ITEM_SLOT_FEET, SPECIES_HUMAN), get_default_icon_by_slot(ITEM_SLOT_FEET), "Ordinary footwear fell back to an ear icon file.")
+	item.worn_icon = 'icons/mob/clothing/eyes.dmi'
+	TEST_ASSERT_EQUAL(item.get_worn_icon_for_slot(ITEM_SLOT_HEAD, SPECIES_HUMAN), item.worn_icon, "The slot default replaced an item's explicit worn file.")
+	var/obj/item/radio/headset/headset = allocate(/obj/item/radio/headset)
+	headset.worn_icon_state = "sec_headset_alt"
+	TEST_ASSERT_EQUAL(headset.get_worn_icon_for_slot(ITEM_SLOT_HEAD, SPECIES_HUMAN), headset.worn_icon, "A headset mirrored its icon for a non-ear slot.")
+
 /// One-sided earpieces must move between ears and disappear behind the correct profile.
 /datum/unit_test/dual_ear_sprites/Run()
 	var/obj/item/radio/headset/headset = allocate(/obj/item/radio/headset)
 	var/source_file = headset.worn_icon
-	var/right_file = headset.get_ear_worn_icon(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN)
-	var/left_file = headset.get_ear_worn_icon(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN)
+	var/right_file = headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN)
+	var/left_file = headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN)
 	TEST_ASSERT_EQUAL(right_file, source_file, "The ordinary headset lost its native right-ear sprite.")
-	TEST_ASSERT_EQUAL(left_file, headset.get_ear_worn_icon(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), "Mirrored earpieces did not reuse their cached icon.")
+	TEST_ASSERT_EQUAL(left_file, headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), "Mirrored earpieces did not reuse their cached icon.")
 	check_mirrored(source_file, left_file, "headset")
 	var/icon/left_sprite = icon(left_file)
 	TEST_ASSERT_EQUAL(visible_pixels(left_sprite, EAST), 0, "The left earpiece shows through the head while facing east.")
 	TEST_ASSERT(visible_pixels(left_sprite, WEST), "The left earpiece disappeared while facing west.")
 
 	headset.worn_icon_state = "sec_headset_alt"
-	TEST_ASSERT_EQUAL(headset.get_ear_worn_icon(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), source_file, "The bowman headset lost its native left-ear sprite.")
-	check_mirrored(source_file, headset.get_ear_worn_icon(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN), "sec_headset_alt")
+	TEST_ASSERT_EQUAL(headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), source_file, "The bowman headset lost its native left-ear sprite.")
+	check_mirrored(source_file, headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN), "sec_headset_alt")
 	headset.worn_icon_state = "ussp_headset"
-	TEST_ASSERT_EQUAL(headset.get_ear_worn_icon(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), source_file, "The USSP headset was assigned the wrong native side.")
+	TEST_ASSERT_EQUAL(headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), source_file, "The USSP headset was assigned the wrong native side.")
 
 	// Whole-head headphones must remain bilateral, including their animated state.
 	headset.worn_icon_state = "headphones_on"
-	TEST_ASSERT_EQUAL(headset.get_ear_worn_icon(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN), source_file, "Bilateral headphones were altered for the right slot.")
-	TEST_ASSERT_EQUAL(headset.get_ear_worn_icon(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), source_file, "Bilateral headphones were altered for the left slot.")
+	TEST_ASSERT_EQUAL(headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN), source_file, "Bilateral headphones were altered for the right slot.")
+	TEST_ASSERT_EQUAL(headset.get_worn_icon_for_slot(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), source_file, "Bilateral headphones were altered for the left slot.")
 	check_mirrored(source_file, left_file, "headphones_on", 7)
 	var/obj/item/clothing/ears/earmuffs/muffs = allocate(/obj/item/clothing/ears/earmuffs)
-	TEST_ASSERT_EQUAL(muffs.get_ear_worn_icon(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN), muffs.get_ear_worn_icon(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), "Bilateral earmuffs changed their sprite between ear slots.")
+	TEST_ASSERT_EQUAL(muffs.get_worn_icon_for_slot(ITEM_SLOT_EAR_RIGHT, SPECIES_HUMAN), muffs.get_worn_icon_for_slot(ITEM_SLOT_EAR_LEFT, SPECIES_HUMAN), "Bilateral earmuffs changed their sprite between ear slots.")
 
 /// Pixel comparisons also cover the transparent profile and every animation frame requested.
 /datum/unit_test/dual_ear_sprites/proc/check_mirrored(source_file, mirrored_file, state, frames = 1)
@@ -50,8 +62,11 @@
 /datum/unit_test/dual_ear_appearance/Run()
 	var/mob/living/carbon/human/consistent/wearer = allocate(/mob/living/carbon/human/consistent)
 	wearer.mob_height = HUMAN_HEIGHT_TALL
-	var/obj/item/bodypart/head/head = wearer.get_bodypart(BODY_ZONE_HEAD)
-	head.limb_id = SPECIES_VOX
+	var/obj/item/bodypart/head/old_head = wearer.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/vox/head = allocate(/obj/item/bodypart/head/vox)
+	TEST_ASSERT(head.replace_limb(wearer), "Could not attach the vox head for the ear fitting test.")
+	qdel(old_head)
+	TEST_ASSERT_EQUAL(wearer.dna.species.id, SPECIES_HUMAN, "The fitted-ear fixture must keep human DNA with its vox head.")
 	QDEL_NULL(head.worn_ears_offset)
 	head.worn_ears_offset = new(head, OFFSET_EARS, list("south" = 3), list("south" = 2))
 	var/obj/item/radio/headset/right = allocate(/obj/item/radio/headset)

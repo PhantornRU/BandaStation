@@ -16,29 +16,28 @@
 	return items
 
 /mob/living/carbon/human/can_equip(obj/item/equip_target, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) == COMPONENT_BLOCK_EQUIP)
+	// BANDASTATION ADDITION START - Signal-based equip checks before and after equip delays
+	if(QDELETED(src) || QDELETED(equip_target))
 		return FALSE
+	// BANDASTATION ADDITION END
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) & COMPONENT_BLOCK_EQUIP)
+		return FALSE
+	// BANDASTATION ADDITION START - Let the candidate validate all required slots, even when dressing another mob.
+	if(SEND_SIGNAL(equip_target, COMSIG_ITEM_EQUIP_CHECK, src, slot) & COMPONENT_BLOCK_EQUIP)
+		return FALSE
+	// BANDASTATION ADDITION END
 	if(HAS_TRAIT(equip_target, TRAIT_NODROP) && is_holding(equip_target))
 		if(!disable_warning)
 			to_chat(src, span_warning("[equip_target] won't budge, it's impossible to put it on!"))
 		return FALSE
-	// BANDASTATION EDIT START - Clothing occupying multiple inventory slots
-	var/obj/item/reserving_item = LAZYACCESS(occupied_clothing_slots, "[slot]")
-	if(reserving_item && reserving_item != equip_target)
-		return FALSE
-	var/datum/component/occupies_slots/multiple_slots = equip_target.GetComponent(/datum/component/occupies_slots)
-	if(multiple_slots && !multiple_slots.can_equip(src, slot))
-		return FALSE
+	// BANDASTATION EDIT START - Revalidate generic equip signals after the species' possible do_after.
 	if(!dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped, indirect_action))
 		return FALSE
-	// Species checks may wait for the equip delay, so all reservations must be checked again.
 	if(QDELETED(src) || QDELETED(equip_target))
 		return FALSE
-	reserving_item = LAZYACCESS(occupied_clothing_slots, "[slot]")
-	if(reserving_item && reserving_item != equip_target)
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) & COMPONENT_BLOCK_EQUIP)
 		return FALSE
-	multiple_slots = equip_target.GetComponent(/datum/component/occupies_slots)
-	return !multiple_slots || multiple_slots.can_equip(src, slot)
+	return !(SEND_SIGNAL(equip_target, COMSIG_ITEM_EQUIP_CHECK, src, slot) & COMPONENT_BLOCK_EQUIP)
 	// BANDASTATION EDIT END
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)

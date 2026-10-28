@@ -1,10 +1,12 @@
-/// Keep the normal species fitting and item overrides for anything worn on an ear.
-/obj/item/proc/get_ear_worn_icon(ear_slot, species_id)
-	return get_species_worn_icon(species_id) || worn_icon || 'icons/mob/clothing/ears.dmi'
+/// Choose fitted art, item overrides, then the standard worn file for this inventory slot.
+/obj/item/proc/get_worn_icon_for_slot(slot_id, species_id)
+	return get_species_worn_icon(species_id) || worn_icon || get_default_icon_by_slot(slot_id)
 
 /// The small earpieces and the bowman headsets have opposite native sides.
-/obj/item/radio/headset/get_ear_worn_icon(ear_slot, species_id)
+/obj/item/radio/headset/get_worn_icon_for_slot(slot_id, species_id)
 	var/icon_file = ..()
+	if(!(slot_id & ITEM_SLOT_EARS))
+		return icon_file
 	var/state = worn_icon_state || icon_state
 	var/static/list/bilateral_states = list("earmuffs", "earset", "headphones", "headphones_on", "spacepods", "spacepods_on")
 	if(state in bilateral_states)
@@ -18,7 +20,7 @@
 		"abductor_headset",
 		"ussp_headset",
 	)
-	if((ear_slot == ITEM_SLOT_EAR_LEFT) != (state in native_left_states))
+	if((slot_id == ITEM_SLOT_EAR_LEFT) != (state in native_left_states))
 		return get_mirrored_ear_icon(icon_file)
 	return icon_file
 

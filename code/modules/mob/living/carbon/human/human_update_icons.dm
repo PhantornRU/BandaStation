@@ -261,7 +261,7 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/ears_overlay = worn_item.build_worn_icon(
 			default_layer = EARS_LAYER,
-			override_file = worn_item.get_ear_worn_icon(ear_slot, my_head.limb_id),
+			override_file = worn_item.get_worn_icon_for_slot(ear_slot, my_head.limb_id),
 			bodyshape = bodyshape,
 		)
 		apply_height(ears_overlay, UPPER_BODY)

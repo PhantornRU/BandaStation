@@ -30,7 +30,10 @@
 	var/static/list/slot_flags = list(
 		ITEM_SLOT_HEAD,
 		ITEM_SLOT_EYES,
-		ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT, // BANDASTATION EDIT - Separate ear slots
+		// BANDASTATION EDIT START - Separate ear slots
+		ITEM_SLOT_EAR_RIGHT,
+		ITEM_SLOT_EAR_LEFT,
+		// BANDASTATION EDIT END
 		ITEM_SLOT_MASK,
 		ITEM_SLOT_NECK,
 		ITEM_SLOT_BACK,
@@ -111,18 +114,20 @@
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
 			continue
-		var/default_icon = get_default_icon_by_slot(text2num(slot_flag))
-		var/default_layer = get_default_layer_by_slot(text2num(slot_flag))
-		// BANDASTATION ADDITION START - Separate ear slots
-		var/ear_icon
-		if(text2num(slot_flag) & ITEM_SLOT_EARS)
-			ear_icon = worn_item.get_ear_worn_icon(text2num(slot_flag), SPECIES_HUMAN)
-		// BANDASTATION ADDITION END
+		// BANDASTATION EDIT START - Share worn icon selection with living wearers
+		var/slot_id = text2num(slot_flag)
+		var/default_layer = get_default_layer_by_slot(slot_id)
+		var/icon_file = worn_item.get_worn_icon_for_slot(slot_id, SPECIES_HUMAN)
 		var/female_icon = NO_FEMALE_UNIFORM
 		if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
 			var/obj/item/clothing/under/worn_jumpsuit = worn_item
 			female_icon = worn_jumpsuit.female_sprite_flags
-		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon, override_file = ear_icon) // BANDASTATION EDIT - Separate ear slots
+		. += worn_item.build_worn_icon(
+			default_layer = default_layer,
+			female_uniform = female_icon,
+			override_file = icon_file,
+		)
+		// BANDASTATION EDIT END
 
 /obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

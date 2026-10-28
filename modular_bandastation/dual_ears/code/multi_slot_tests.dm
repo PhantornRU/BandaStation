@@ -12,7 +12,7 @@
 	TEST_ASSERT(!wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE), "A two-ear item ignored an occupied left ear.")
 	TEST_ASSERT(wearer.dropItemToGround(blocker), "Could not remove the left-ear blocker.")
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_LEFT), "Could not equip the two-ear item with the left ear primary.")
-	TEST_ASSERT_EQUAL(slots.wearer, wearer, "The slot component did not retain its wearer.")
+	TEST_ASSERT_EQUAL(slots.wearer_ref?.resolve(), wearer, "The slot component did not retain a weak reference to its wearer.")
 	TEST_ASSERT_EQUAL(slots.primary_slot, ITEM_SLOT_EAR_LEFT, "The slot component lost the chosen primary ear.")
 	TEST_ASSERT_EQUAL(wearer.ear_left, double, "The real left-ear slot was not assigned.")
 	TEST_ASSERT_NULL(wearer.ear_right, "The component duplicated the item into a real secondary slot.")
@@ -32,7 +32,7 @@
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_RIGHT), "Could not equip the lifecycle fixture.")
 	TEST_ASSERT(wearer.dropItemToGround(double), "Could not drop the two-ear item.")
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_LEFT), "Dropping the item left a reservation.")
-	TEST_ASSERT_NULL(slots.wearer, "Dropping the item retained the wearer.")
+	TEST_ASSERT_NULL(slots.wearer_ref, "Dropping the item retained its wearer reference.")
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_LEFT), "Could not re-equip the lifecycle fixture.")
 	double.forceMove(wearer.drop_location())
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), "forceMove left a secondary reservation.")
@@ -40,6 +40,7 @@
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_LEFT), "Could not equip the component-removal fixture.")
 	qdel(slots)
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), "Deleting the component left its reservation.")
+	TEST_ASSERT_NULL(wearer.occupied_clothing_slots, "Deleting the active component retained its reservation map.")
 	TEST_ASSERT_EQUAL(wearer.ear_left, double, "Deleting the component removed its item from the primary slot.")
 	slots = double.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), double, "Attaching a component to a worn item did not reserve its other slot.")
@@ -64,8 +65,10 @@
 	var/mob/living/carbon/human/deleting = allocate(/mob/living/carbon/human/consistent)
 	TEST_ASSERT(deleting.equip_to_slot_if_possible(right, ITEM_SLOT_EAR_RIGHT), "Could not equip the wearer-deletion fixture.")
 	slots = right.GetComponent(/datum/component/occupies_slots)
+	var/list/deleted_owner_reservations = deleting.occupied_clothing_slots
 	qdel(deleting)
-	TEST_ASSERT_NULL(slots.wearer, "Deleting the wearer retained a component reference to it.")
+	TEST_ASSERT_NULL(slots.wearer_ref, "Deleting the wearer retained a component weakref.")
+	TEST_ASSERT_EQUAL(length(deleted_owner_reservations), 0, "The QDELETING handler did not clear reservations after its weakref stopped resolving.")
 
 /// The component must work for clothing slots other than ears as well.
 /datum/unit_test/multi_slot_generic/Run()
@@ -85,3 +88,88 @@
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(combined, ITEM_SLOT_MASK), "Could not choose the mask as the primary slot.")
 	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_HEAD), combined, "The reversed generic secondary slot was not reserved.")
 	TEST_ASSERT_EQUAL(wearer.get_slot_by_item(combined), ITEM_SLOT_MASK, "Reversed generic clothing lost its primary slot.")
+
+/// Candidate-side validation must check the target inventory, even while another mob holds the item.
+/datum/unit_test/multi_slot_signal_checks/Run()
+	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/dresser = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/radio/headset/double = allocate(/obj/item/radio/headset)
+	var/datum/component/occupies_slots/slots = double.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
+	var/obj/item/radio/headset/blocker = allocate(/obj/item/radio/headset)
+	var/datum/strippable_item/mob_item_slot/right_slot = GLOB.strippable_human_items[STRIPPABLE_ITEM_EAR_RIGHT]
+	TEST_ASSERT(dresser.put_in_hands(double), "The dresser could not hold the multi-slot item.")
+	TEST_ASSERT(wearer.equip_to_slot_if_possible(blocker, ITEM_SLOT_EAR_LEFT), "Could not occupy the target's other ear.")
+	TEST_ASSERT(!right_slot.try_equip(wearer, double, dresser), "Dressing another mob ignored its occupied required slot.")
+	TEST_ASSERT(wearer.dropItemToGround(blocker), "Could not clear the target's ear.")
+	TEST_ASSERT(dresser.equip_to_slot_if_possible(blocker, ITEM_SLOT_EAR_LEFT), "Could not occupy the dresser's own ear.")
+	TEST_ASSERT(right_slot.try_equip(wearer, double, dresser), "The dresser's inventory incorrectly blocked another mob's free slots.")
+	TEST_ASSERT(dresser.temporarilyRemoveItemFromInventory(double), "Could not finish taking the garment out of the dresser's hands.")
+	right_slot.finish_equip(wearer, double, dresser)
+	TEST_ASSERT_EQUAL(slots.wearer_ref?.resolve(), wearer, "Stripping attached the reservation to the dresser instead of the target.")
+	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_EAR_LEFT), double, "Dressing another mob did not reserve its secondary slot.")
+	TEST_ASSERT_EQUAL(dresser.ear_left, blocker, "Dressing another mob displaced the dresser's own equipment.")
+
+/// Neither a candidate nor a current wearer may skip revalidation across an equip delay.
+/datum/unit_test/multi_slot_equip_delay
+	var/blocker_equipped = FALSE
+	var/list/candidate_checks = list()
+	var/list/wearer_checks = list()
+
+/datum/unit_test/multi_slot_equip_delay/Run()
+	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent/slow)
+	var/obj/item/radio/headset/double = allocate(/obj/item/radio/headset)
+	double.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
+	double.equip_delay_self = 1 SECONDS
+	var/obj/item/radio/headset/blocker = allocate(/obj/item/radio/headset)
+	RegisterSignal(wearer, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_wearer_check))
+	RegisterSignal(double, COMSIG_ITEM_EQUIP_CHECK, PROC_REF(on_candidate_check))
+	addtimer(CALLBACK(src, PROC_REF(equip_blocker), wearer, blocker, ITEM_SLOT_EAR_LEFT), 1)
+	TEST_ASSERT(!wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE), "A multi-slot candidate ignored a slot occupied during its equip delay.")
+	TEST_ASSERT(blocker_equipped, "The delayed candidate test never occupied the other ear.")
+	TEST_ASSERT_EQUAL(candidate_checks[REF(double)], 2, "Candidate validation did not run both before and after the successful delay.")
+	TEST_ASSERT_EQUAL(wearer.ear_left, blocker, "Delayed equipment displaced the required-slot blocker.")
+	TEST_ASSERT_NULL(wearer.ear_right, "A rejected delayed candidate was still equipped.")
+	TEST_ASSERT(wearer.dropItemToGround(blocker), "Could not reset the occupied ear.")
+
+	var/obj/item/radio/headset/single = allocate(/obj/item/radio/headset)
+	single.equip_delay_self = 1 SECONDS
+	var/obj/item/radio/headset/protected = allocate(/obj/item/radio/headset/headset_sec/alt)
+	protected.equip_delay_self = 0
+	blocker_equipped = FALSE
+	RegisterSignal(single, COMSIG_ITEM_EQUIP_CHECK, PROC_REF(on_candidate_check))
+	addtimer(CALLBACK(src, PROC_REF(equip_blocker), wearer, protected, ITEM_SLOT_EAR_LEFT), 1)
+	TEST_ASSERT(!wearer.equip_to_slot_if_possible(single, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE), "An ordinary item stole a slot reserved during its equip delay.")
+	TEST_ASSERT(blocker_equipped, "The delayed wearer test never installed the two-ear item.")
+	TEST_ASSERT_EQUAL(wearer_checks[REF(single)], 2, "The wearer's reservation signal was not checked again after the delay.")
+	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), protected, "A delayed ordinary candidate overwrote a new secondary reservation.")
+	TEST_ASSERT_NULL(wearer.ear_right, "The ordinary candidate was equipped behind a reserved slot.")
+
+/datum/unit_test/multi_slot_equip_delay/proc/equip_blocker(mob/living/carbon/human/wearer, obj/item/blocker, slot)
+	blocker_equipped = wearer.equip_to_slot_if_possible(blocker, slot, disable_warning = TRUE)
+
+/datum/unit_test/multi_slot_equip_delay/proc/on_candidate_check(datum/source, mob/living/carbon/human/target, slot)
+	SIGNAL_HANDLER
+	candidate_checks[REF(source)] = (candidate_checks[REF(source)] || 0) + 1
+
+/datum/unit_test/multi_slot_equip_delay/proc/on_wearer_check(datum/source, obj/item/candidate, slot)
+	SIGNAL_HANDLER
+	wearer_checks[REF(candidate)] = (wearer_checks[REF(candidate)] || 0) + 1
+
+/// Reservations and their wearer listeners must leave the old inventory and disappear with the component.
+/datum/unit_test/multi_slot_owner_transfer/Run()
+	var/mob/living/carbon/human/first = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/second = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/radio/headset/double = allocate(/obj/item/radio/headset)
+	var/datum/component/occupies_slots/slots = double.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
+	var/obj/item/radio/headset/blocker = allocate(/obj/item/radio/headset)
+	TEST_ASSERT(first.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_RIGHT), "Could not equip the first owner's fixture.")
+	TEST_ASSERT(first.temporarilyRemoveItemFromInventory(double), "Could not remove the transferred item.")
+	TEST_ASSERT(second.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_LEFT), "Could not equip the transferred item on its new owner.")
+	TEST_ASSERT_EQUAL(slots.wearer_ref?.resolve(), second, "The transferred component retained its previous owner.")
+	TEST_ASSERT(first.equip_to_slot_if_possible(blocker, ITEM_SLOT_EAR_LEFT), "The previous owner's stale signal still blocked equipment.")
+	TEST_ASSERT(!second.can_equip(blocker, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE, ignore_equipped = TRUE), "The new owner's signal failed to block its reserved slot.")
+	TEST_ASSERT(first.temporarilyRemoveItemFromInventory(blocker), "Could not prepare the secondary-slot item.")
+	qdel(slots)
+	TEST_ASSERT_NULL(second.occupied_clothing_slots, "Deleting the active component retained its current reservations.")
+	TEST_ASSERT_EQUAL(second.ear_left, double, "Deleting the active component removed its primary item.")
+	TEST_ASSERT(second.equip_to_slot_if_possible(blocker, ITEM_SLOT_EAR_RIGHT), "Deleting the active component left a blocking wearer listener behind.")

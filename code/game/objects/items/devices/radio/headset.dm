@@ -358,11 +358,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/headset_cargo/mining/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_EARS)
-		ADD_TRAIT(user, TRAIT_SPEECH_BOOSTER, REF(src)) // BANDASTATION EDIT - Independent headset traits
+		ADD_CLOTHING_TRAIT(user, TRAIT_SPEECH_BOOSTER) // BANDASTATION EDIT - Independent headset traits
 
 /obj/item/radio/headset/headset_cargo/mining/dropped(mob/living/carbon/human/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_SPEECH_BOOSTER, REF(src)) // BANDASTATION EDIT - Independent headset traits
+	REMOVE_CLOTHING_TRAIT(user, TRAIT_SPEECH_BOOSTER) // BANDASTATION EDIT - Independent headset traits
 
 /obj/item/radio/headset/headset_srv
 	name = "service radio headset"

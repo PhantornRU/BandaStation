@@ -42,13 +42,20 @@
 	var/mob/living/carbon/human/dresser = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/radio/headset/headset = allocate(/obj/item/radio/headset/headset_sec/alt)
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(headset, ITEM_SLOT_EAR_LEFT), "Could not equip the stripping fixture.")
-	var/obj/item/pen/host = allocate(/obj/item/pen)
-	var/datum/element/strippable/rules = host.AddElement(/datum/element/strippable, GLOB.strippable_human_items)
+	var/datum/element/strippable/rules = SSdcs.GetElement(list(
+		/datum/element/strippable,
+		GLOB.strippable_human_items,
+		TYPE_PROC_REF(/mob/living/carbon/human/, should_strip),
+	), init_element = FALSE)
+	TEST_ASSERT_NOTNULL(rules, "The human stripping rules were not initialized.")
+	TEST_ASSERT_EQUAL(rules.items, GLOB.strippable_human_items, "The stripping fixture must use the initialized human rules.")
 	var/datum/strip_menu/menu = allocate(/datum/strip_menu, wearer, rules)
 	var/list/data = menu.ui_data(dresser)
 	var/list/items = data["items"]
 	var/list/right = items[STRIPPABLE_ITEM_EAR_RIGHT]
 	var/list/left = items[STRIPPABLE_ITEM_EAR_LEFT]
+	TEST_ASSERT_NOTNULL(right, "The stripping menu has no right-ear entry.")
+	TEST_ASSERT_NOTNULL(left, "The stripping menu has no left-ear entry.")
 	TEST_ASSERT(right["secondary_slot"], "The stripping menu does not mark the reserved slot.")
 	TEST_ASSERT(!left["secondary_slot"], "The stripping menu marks the actual primary slot as secondary.")
 	TEST_ASSERT_EQUAL(right["icon"], left["icon"], "The two occupied slots display different items.")
@@ -57,4 +64,4 @@
 	secondary.finish_unequip(wearer, dresser)
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), "Stripping the reserved slot did not release it.")
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_LEFT), "Stripping the reserved slot left the primary item equipped.")
-	TEST_ASSERT(dresser.is_holding(headset), "Stripping the reserved slot did not transfer the real item.")
+	TEST_ASSERT_EQUAL(headset.loc, wearer.drop_location(), "Stripping the reserved slot did not drop the real item at its wearer.")

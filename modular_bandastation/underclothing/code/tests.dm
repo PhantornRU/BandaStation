@@ -110,10 +110,13 @@
 /// Every sock style must fit inside an inventory frame without losing its pattern.
 /datum/unit_test/underclothing_socks_icon/Run()
 	var/obj/item/clothing/underwear/socks/socks = allocate(/obj/item/clothing/underwear/socks)
-	for(var/style_name in SSaccessories.socks_list)
-		var/datum/sprite_accessory/clothing/style = SSaccessories.socks_list[style_name]
-		if(!style.icon_state)
-			continue
+	// Nude is a name-only preference entry; test every actual style independently of the shared list.
+	var/list/style_types = valid_subtypesof(/datum/sprite_accessory/clothing/socks) - /datum/sprite_accessory/clothing/socks/nude
+	TEST_ASSERT(length(style_types), "No sock styles were available to test.")
+	for(var/style_type in style_types)
+		var/datum/sprite_accessory/clothing/socks/style = allocate(style_type)
+		var/style_name = style.name
+		TEST_ASSERT(style.icon_state, "[style_type] has no icon state.")
 		socks.set_style(style, COLOR_WHITE)
 		var/icon/loose = icon(socks.icon, socks.icon_state)
 		var/mutable_appearance/worn = style.make_appearance(COLOR_WHITE)

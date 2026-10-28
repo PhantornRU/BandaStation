@@ -185,8 +185,8 @@
 			// BANDASTATION EDIT START: Spatial TTS
 			var/datum/weakref/radio_ref = WEAKREF(radio)
 			for(var/mob/possible_hearer in radio_hearers)
-				if(!(possible_hearer in tts_listeners) && can_hear_radio_tts(possible_hearer, frequency)) // BANDASTATION EDIT - Dual ear slots
-					tts_listeners |= possible_hearer // BANDASTATION ADDITION - Dual ear slots
+				if(!tts_listeners[possible_hearer] && can_hear_radio_tts(possible_hearer, frequency)) // BANDASTATION EDIT - Dual ear slots
+					tts_listeners[possible_hearer] = TRUE // BANDASTATION ADDITION - Dual ear slots
 					LAZYADD(receive_radios[radio_ref], WEAKREF(possible_hearer))
 			// BANDASTATION EDIT START: Spatial TTS
 
