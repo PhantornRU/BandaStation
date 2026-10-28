@@ -1,3 +1,4 @@
+# AI EDIT START - Split the imported name into its required translation fragment.
 ["Wolf's Doom boots"]
 nominative = "ботинки «Волчья Погибель»"
 genitive = "ботинок «Волчья Погибель»"
@@ -6,3 +7,4 @@ accusative = "ботинки «Волчья Погибель»"
 instrumental = "ботинками «Волчья Погибель»"
 prepositional = "ботинках «Волчья Погибель»"
 gender = "plural"
+# AI EDIT END

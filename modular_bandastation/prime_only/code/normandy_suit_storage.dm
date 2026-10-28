@@ -17,6 +17,9 @@
 #define NORMANDY_STORAGE_STATE_ACTIVE "closed_active"
 #define NORMANDY_STEP_SOUND "normandy_step"
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Weighted armored footsteps used by the Normandy boots. */
+// AI EDIT END
 /datum/sound_effect/assoc/normandy_step
 	key = NORMANDY_STEP_SOUND
 	file_paths = list(
@@ -30,12 +33,17 @@
 
 // Clothing uses the 32x40 DMI as the worn icon, while these regular 32x32
 // icons are only used when the item is on the floor or in an inventory slot.
+// AI EDIT START - Document the Normandy equipment contract.
+/** Wolf's Doom armor with an attached helmet and a source-owned visual offset. */
+// AI EDIT END
 /obj/item/clothing/suit/armor/normandy
 	name = "Wolf's Doom armor"
 	desc = "A heavy combat armor set with an unusually tall silhouette."
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	icon_state = "armor"
-	worn_icon = 'modular_bandastation/prime_only/icons/centcom/NormandySuit.dmi'
+	// AI EDIT START - Use the lowercase Normandy sprite path.
+	worn_icon = 'modular_bandastation/prime_only/icons/centcom/normandy_suit.dmi'
+	// AI EDIT END
 	worn_icon_state = "armor"
 	worn_x_dimension = 32
 	worn_y_dimension = 40
@@ -56,22 +64,49 @@
 		auto_deploy_on_outfit_equip = TRUE,\
 	)
 
+// AI EDIT START - Own the character offset through the armor lifecycle.
+/** Apply the armor's visual offset only while it is worn in the suit slot. */
+/obj/item/clothing/suit/armor/normandy/equipped(mob/living/user, slot)
+	. = ..()
+	if(istype(user) && (slot & ITEM_SLOT_OCLOTHING))
+		user.add_offsets(REF(src), y_add = NORMANDY_CHARACTER_Y_OFFSET, animate = FALSE)
+
+/** Restore the wearer position on normal removal, forced removal and armor deletion. */
+/obj/item/clothing/suit/armor/normandy/dropped(mob/living/user)
+	. = ..()
+	if(istype(user))
+		user.remove_offsets(REF(src), animate = FALSE)
+// AI EDIT END
+
+// AI EDIT START - Document the Normandy equipment contract.
+/** Insulated armored gauntlets for the Wolf's Doom kit. */
+// AI EDIT END
 /obj/item/clothing/gloves/combat/normandy
 	name = "Wolf's Doom gloves"
 	desc = "Armored combat gloves from the Wolf's Doom suit."
 	icon_state = "black"
-	worn_icon = 'modular_bandastation/prime_only/icons/centcom/NormandySuit.dmi'
+	// AI EDIT START - Use the lowercase Normandy sprite path.
+	worn_icon = 'modular_bandastation/prime_only/icons/centcom/normandy_suit.dmi'
+	// AI EDIT END
 	worn_icon_state = "gloves"
 	worn_x_dimension = 32
 	worn_y_dimension = 40
 	worn_y_offset = NORMANDY_WORN_Y_OFFSET
+	// AI EDIT START - Cover the arms protected by these armored gauntlets.
+	body_parts_covered = HANDS|ARMS
+	// AI EDIT END
 	armor_type = /datum/armor/mod_theme_corporate
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Armored Wolf's Doom boots with their own movement sounds. */
+// AI EDIT END
 /obj/item/clothing/shoes/combat/normandy
 	name = "Wolf's Doom boots"
 	desc = "Armored combat boots from the Wolf's Doom suit."
 	icon_state = "jackboots"
-	worn_icon = 'modular_bandastation/prime_only/icons/centcom/NormandySuit.dmi'
+	// AI EDIT START - Use the lowercase Normandy sprite path.
+	worn_icon = 'modular_bandastation/prime_only/icons/centcom/normandy_suit.dmi'
+	// AI EDIT END
 	worn_icon_state = "boots"
 	worn_x_dimension = 32
 	worn_y_dimension = 40
@@ -83,19 +118,30 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, NORMANDY_STEP_SOUND, 2, 33, 0)
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Retractable Wolf's Doom helmet that applies the CentCom voice effect. */
+// AI EDIT END
 /obj/item/clothing/head/helmet/normandy
 	name = "Wolf's Doom helmet"
 	desc = "A sealed combat helmet from the Wolf's Doom suit."
 	icon_state = "helmet"
 	base_icon_state = "helmet"
-	worn_icon = 'modular_bandastation/prime_only/icons/centcom/NormandySuit.dmi'
+	// AI EDIT START - Use the lowercase Normandy sprite path.
+	worn_icon = 'modular_bandastation/prime_only/icons/centcom/normandy_suit.dmi'
+	// AI EDIT END
 	worn_icon_state = "head"
 	worn_x_dimension = 32
 	worn_y_dimension = 40
 	worn_y_offset = NORMANDY_WORN_Y_OFFSET
 	armor_type = /datum/armor/normandy_helmet
+	// AI EDIT START - Document helmet effect ownership.
+	/// Whether this helmet added its voice effect in the head slot.
 	var/tts_effect_active = FALSE
+	// AI EDIT END
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Protection profile for the sealed Wolf's Doom helmet. */
+// AI EDIT END
 /datum/armor/normandy_helmet
 	melee = 80
 	bullet = 80
@@ -121,11 +167,16 @@
 	tts_effect_active = FALSE
 	user.tts_effects_remove(list(/datum/singleton/sound_effect/centcom_vox))
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Standard armored cloak for the Wolf's Doom kit. */
+// AI EDIT END
 /obj/item/clothing/neck/cloak/normandy
 	name = "Wolf's Doom standard cloak"
 	desc = "A standard cloak bearing the Wolf's Doom colors."
 	icon_state = "qmcloak"
-	worn_icon = 'modular_bandastation/prime_only/icons/centcom/NormandySuit.dmi'
+	// AI EDIT START - Use the lowercase Normandy sprite path.
+	worn_icon = 'modular_bandastation/prime_only/icons/centcom/normandy_suit.dmi'
+	// AI EDIT END
 	worn_icon_state = "cloak_standart"
 	worn_x_dimension = 32
 	worn_y_dimension = 40
@@ -134,11 +185,17 @@
 	alternate_worn_layer = HEAD_LAYER - 0.2
 	armor_type = /datum/armor/mod_theme_corporate
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Wolf-patterned variant of the standard armored cloak. */
+// AI EDIT END
 /obj/item/clothing/neck/cloak/normandy/wolf
 	name = "Wolf's Doom wolf cloak"
 	desc = "A wolf-themed alternative cloak for the Wolf's Doom suit."
 	worn_icon_state = "cloak_wolf"
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** CentCom outfit containing the complete Wolf's Doom kit. */
+// AI EDIT END
 /datum/outfit/centcom/normandy
 	name = "бронекостюм «Волчья Погибель»"
 	suit = /obj/item/clothing/suit/armor/normandy
@@ -146,14 +203,22 @@
 	shoes = /obj/item/clothing/shoes/combat/normandy
 	neck = /obj/item/clothing/neck/cloak/normandy
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Wolf's Doom outfit with the wolf-patterned cloak. */
+// AI EDIT END
 /datum/outfit/centcom/normandy/wolf
 	name = "бронекостюм «Волчья Погибель» с волчьим плащом"
 	neck = /obj/item/clothing/neck/cloak/normandy/wolf
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Dressing unit that lends and recovers one physical Wolf's Doom kit. */
+// AI EDIT END
 /obj/machinery/normandy_suit_storage
 	name = "Wolf's Doom suit storage unit"
 	desc = "A unit that seals around a person and equips the Wolf's Doom armor."
-	icon = 'modular_bandastation/prime_only/icons/centcom/SuitStorage.dmi'
+	// AI EDIT START - Use the lowercase Normandy sprite path.
+	icon = 'modular_bandastation/prime_only/icons/centcom/suit_storage.dmi'
+	// AI EDIT END
 	icon_state = NORMANDY_STORAGE_STATE_OPEN
 	state_open = TRUE
 	density = FALSE
@@ -166,17 +231,24 @@
 	// The machine sprite is 64x64 and is centered on its map tile.
 	SET_BASE_PIXEL(-4, 0)
 
-	/// Outfit path used when the unit finishes its cycle.
+	// AI EDIT START - Document kit ownership without retaining a deleted wearer.
+	/// Cloak type instantiated as part of this unit's physical kit.
 	var/cloak_type = /obj/item/clothing/neck/cloak/normandy
-	/// The one physical set belonging to this unit. It is moved between the
-	/// unit and the wearer instead of creating a fresh outfit every cycle.
+	/// Armor moved between the unit and its wearer, owning the attached helmet.
 	var/obj/item/clothing/suit/armor/normandy/stored_armor
+	/// Gloves belonging to this unit's physical kit.
 	var/obj/item/clothing/gloves/combat/normandy/stored_gloves
+	/// Boots belonging to this unit's physical kit.
 	var/obj/item/clothing/shoes/combat/normandy/stored_boots
+	/// Helmet owned by the armor's toggle_attached_clothing component.
 	var/obj/item/clothing/head/helmet/normandy/stored_helmet
+	/// Cloak belonging to this unit's physical kit.
 	var/obj/item/clothing/neck/cloak/normandy/stored_cloak
+	/// Surviving kit pieces, removed from this list when they are deleted.
 	var/list/kit_items
+	/// Last successful wearer, retained weakly to allow recovery of an incomplete kit.
 	var/datum/weakref/kit_wearer_ref
+	// AI EDIT END
 	/// Timer for the door-closing animation before dressing starts.
 	var/dressing_start_timer = TIMER_ID_NULL
 	/// Timer for restoring the machine layer after a door animation.
@@ -186,6 +258,9 @@
 	/// TRUE when the current cycle removes the stored set from its wearer.
 	var/is_removing_kit = FALSE
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Dressing unit stocked with the wolf-patterned cloak. */
+// AI EDIT END
 /obj/machinery/normandy_suit_storage/wolf
 	name = "Wolf's Doom suit storage unit (wolf cloak)"
 	cloak_type = /obj/item/clothing/neck/cloak/normandy/wolf
@@ -201,21 +276,23 @@
 	kit_items = list(stored_armor, stored_gloves, stored_boots, stored_helmet, stored_cloak)
 	for(var/obj/item/kit_item as anything in kit_items)
 		ADD_TRAIT(kit_item, TRAIT_NODROP, NORMANDY_ARMOR_TRAIT)
+		// AI EDIT START - Release references when a kit piece is deleted.
 		RegisterSignal(kit_item, COMSIG_QDELETING, PROC_REF(on_kit_item_deleted))
+		// AI EDIT END
 	update_appearance()
 
 /obj/machinery/normandy_suit_storage/Destroy()
 	cancel_dressing_start_timer()
 	cancel_door_layer_reset_timer()
-	// The unit must undo its visual offset even when the kit cannot be returned.
-	var/mob/living/carbon/human/wearer = kit_wearer_ref?.resolve()
-	if(wearer)
-		wearer.set_base_pixel_y(wearer.base_pixel_y - NORMANDY_CHARACTER_Y_OFFSET)
+	// AI EDIT START - The armor now owns and releases its visual offset.
 	kit_wearer_ref = null
+	// AI EDIT END
 	for(var/obj/item/kit_item as anything in kit_items)
 		REMOVE_TRAIT(kit_item, TRAIT_NODROP, NORMANDY_ARMOR_TRAIT)
 	return ..()
 
+// AI EDIT START - Do not retain deleted kit pieces.
+/** Release typed and list references before a deleted kit piece enters garbage collection. */
 /obj/machinery/normandy_suit_storage/proc/on_kit_item_deleted(obj/item/source)
 	SIGNAL_HANDLER
 	if(source == stored_armor)
@@ -229,6 +306,7 @@
 	else if(source == stored_cloak)
 		stored_cloak = null
 	kit_items -= source
+// AI EDIT END
 
 /obj/machinery/normandy_suit_storage/update_icon_state()
 	. = ..()
@@ -274,10 +352,10 @@
 	if(mob_target.buckled || mob_target.mob_size >= MOB_SIZE_LARGE || target.has_buckled_mobs())
 		return FALSE
 
-	// Closing on the exact wearer means this cycle is a removal cycle. Any
-	// other occupant can only start a dressing cycle when the physical set is
-	// actually back inside this unit.
-	is_removing_kit = is_kit_worn_by(mob_target)
+	// AI EDIT START - Allow the tracked wearer to return an incomplete kit.
+	// The previous wearer may return surviving pieces after a forced removal or deletion.
+	is_removing_kit = mob_target == kit_wearer_ref?.resolve() || is_kit_worn_by(mob_target)
+	// AI EDIT END
 	if(!is_removing_kit && !is_kit_stored())
 		balloon_alert(mob_target, "комплект уже используется")
 		return FALSE
@@ -344,7 +422,10 @@
 	is_dressing = FALSE
 	if(!state_open)
 		open_machine(drop = FALSE)
-	apply_exit_pose(gone)
+	// AI EDIT START - Keep the exit pose local to its only caller.
+	if(!QDELETED(gone))
+		gone.setDir(SOUTH)
+	// AI EDIT END
 
 /obj/machinery/normandy_suit_storage/proc/cancel_dressing_start_timer()
 	if(dressing_start_timer == TIMER_ID_NULL)
@@ -402,8 +483,9 @@
 			balloon_alert(target, "не удалось надеть комплект")
 			cancel_dressing(target)
 			return
+		// AI EDIT START - Track successful issue without retaining the wearer.
 		kit_wearer_ref = WEAKREF(target)
-		target.set_base_pixel_y(target.base_pixel_y + NORMANDY_CHARACTER_Y_OFFSET)
+		// AI EDIT END
 		balloon_alert(target, "броня «Волчья Погибель» надета")
 	is_dressing = FALSE
 	open_machine()
@@ -416,9 +498,14 @@
 	if(!state_open)
 		open_machine()
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Whether the complete physical kit is inside this unit and ready for issue. */
+// AI EDIT END
 /obj/machinery/normandy_suit_storage/proc/is_kit_stored()
+	// AI EDIT START - A partially destroyed kit cannot be issued again.
 	if(!stored_armor || !stored_gloves || !stored_boots || !stored_helmet || !stored_cloak)
 		return FALSE
+	// AI EDIT END
 	for(var/obj/item/kit_item as anything in kit_items)
 		if(kit_item.loc == src)
 			continue
@@ -427,6 +514,9 @@
 		return FALSE
 	return TRUE
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Whether the target wears the full kit, allowing its helmet to be retracted. */
+// AI EDIT END
 /obj/machinery/normandy_suit_storage/proc/is_kit_worn_by(mob/living/carbon/human/target)
 	if(!target || !stored_armor || !stored_gloves || !stored_boots || !stored_helmet || !stored_cloak)
 		return FALSE
@@ -446,7 +536,14 @@
 		return TRUE
 	return target.transferItemToLoc(existing_item, get_turf(src), force = TRUE, silent = TRUE, animated = FALSE)
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Equip a complete stored kit, rolling partial equipment back on failure. */
+// AI EDIT END
 /obj/machinery/normandy_suit_storage/proc/equip_kit_on(mob/living/carbon/human/target)
+	// AI EDIT START - Revalidate the physical kit after do_after before stripping clothes.
+	if(!is_kit_stored())
+		return FALSE
+	// AI EDIT END
 	for(var/slot in list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_HEAD, ITEM_SLOT_NECK))
 		if(!remove_conflicting_item(target, slot))
 			return FALSE
@@ -473,25 +570,27 @@
 		return FALSE
 	return TRUE
 
+// AI EDIT START - Document the Normandy equipment contract.
+/** Recover surviving kit pieces from a wearer; return whether all surviving pieces were recovered. */
+// AI EDIT END
 /obj/machinery/normandy_suit_storage/proc/store_kit_from(mob/living/carbon/human/target)
-	if(!is_kit_worn_by(target) && target.wear_suit != stored_armor && target.gloves != stored_gloves && target.shoes != stored_boots && target.head != stored_helmet && target.wear_neck != stored_cloak)
+	// AI EDIT START - Permit recovery after the tracked wearer loses kit pieces.
+	if(target != kit_wearer_ref?.resolve() && target.wear_suit != stored_armor && target.gloves != stored_gloves && target.shoes != stored_boots && target.head != stored_helmet && target.wear_neck != stored_cloak)
 		return FALSE
+	// AI EDIT END
 
 	for(var/obj/item/kit_item as anything in kit_items)
 		if(kit_item.loc == src)
 			continue
-		if(target.get_slot_by_item(kit_item))
-			if(!target.temporarilyRemoveItemFromInventory(kit_item, force = TRUE, idrop = FALSE, newloc = src))
+		// AI EDIT START - Deslot recovered pieces from their actual holder before moving them.
+		if(ismob(kit_item.loc))
+			var/mob/holder = kit_item.loc
+			if(!holder.temporarilyRemoveItemFromInventory(kit_item, force = TRUE, idrop = FALSE, newloc = src))
 				return FALSE
+		// AI EDIT END
 		kit_item.forceMove(src)
 
-	if(target == kit_wearer_ref?.resolve())
-		target.set_base_pixel_y(target.base_pixel_y - NORMANDY_CHARACTER_Y_OFFSET)
+	// AI EDIT START - Armor unequipping already restores the character offset.
 	kit_wearer_ref = null
-	return is_kit_stored()
-
-/obj/machinery/normandy_suit_storage/proc/apply_exit_pose(mob/living/carbon/human/target)
-	if(!target || QDELETED(target))
-		return
-
-	target.setDir(SOUTH)
+	return TRUE
+	// AI EDIT END

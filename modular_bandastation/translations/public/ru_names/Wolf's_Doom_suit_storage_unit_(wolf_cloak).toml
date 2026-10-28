@@ -1,3 +1,4 @@
+# AI EDIT START - Split the imported name into its required translation fragment.
 ["Wolf's Doom suit storage unit (wolf cloak)"]
 nominative = "устройство хранения костюма «Волчья Погибель» (волчий плащ)"
 genitive = "устройства хранения костюма «Волчья Погибель» (волчьего плаща)"
@@ -6,3 +7,4 @@ accusative = "устройство хранения костюма «Волчь�
 instrumental = "устройством хранения костюма «Волчья Погибель» (волчьим плащом)"
 prepositional = "устройстве хранения костюма «Волчья Погибель» (волчьем плаще)"
 gender = "neuter"
+# AI EDIT END

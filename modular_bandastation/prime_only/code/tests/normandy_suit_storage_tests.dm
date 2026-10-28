@@ -1,3 +1,4 @@
+// AI EDIT START - Cover Normandy kit cleanup and invalidated dressing cycles
 /datum/unit_test/normandy_suit_storage
 	abstract_type = /datum/unit_test/normandy_suit_storage
 
@@ -5,7 +6,7 @@
 	var/obj/machinery/normandy_suit_storage/storage = allocate(/obj/machinery/normandy_suit_storage)
 	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
 	wearer.set_base_pixel_y(3)
-	var/original_pixel_y = wearer.base_pixel_y
+	var/original_pixel_y = wearer.pixel_y
 
 	storage.close_machine(wearer)
 	storage.cancel_dressing_start_timer()
@@ -13,25 +14,25 @@
 	if(!storage.is_kit_worn_by(wearer))
 		TEST_FAIL("The dressing cycle did not equip its kit")
 		return
-	if(wearer.base_pixel_y == original_pixel_y)
+	if(wearer.pixel_y == original_pixel_y)
 		TEST_FAIL("Dressing did not apply the character offset")
 		return
 
 	if(!storage.store_kit_from(wearer))
 		TEST_FAIL("The kit could not be returned to its storage unit")
 		return
-	if(wearer.base_pixel_y != original_pixel_y)
-		TEST_FAIL("Returning the kit did not restore the character offset ([wearer.base_pixel_y], expected [original_pixel_y])")
+	if(wearer.pixel_y != original_pixel_y)
+		TEST_FAIL("Returning the kit did not restore the character offset ([wearer.pixel_y], expected [original_pixel_y])")
 		return
 	qdel(storage)
-	if(wearer.base_pixel_y != original_pixel_y)
+	if(wearer.pixel_y != original_pixel_y)
 		TEST_FAIL("Deleting the empty unit applied the character offset a second time")
 
 /datum/unit_test/normandy_suit_storage/delete_storage/Run()
 	var/obj/machinery/normandy_suit_storage/storage = allocate(/obj/machinery/normandy_suit_storage)
 	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
 	wearer.set_base_pixel_y(3)
-	var/original_pixel_y = wearer.base_pixel_y
+	var/original_pixel_y = wearer.pixel_y
 
 	storage.close_machine(wearer)
 	storage.cancel_dressing_start_timer()
@@ -39,7 +40,7 @@
 	if(!storage.is_kit_worn_by(wearer))
 		TEST_FAIL("The dressing cycle did not equip its kit")
 		return
-	if(wearer.base_pixel_y == original_pixel_y)
+	if(wearer.pixel_y == original_pixel_y)
 		TEST_FAIL("Dressing did not apply the character offset")
 		return
 
@@ -49,8 +50,8 @@
 		if(worn_item && !wearer.dropItemToGround(worn_item))
 			TEST_FAIL("The kit could not be removed after deleting its storage unit")
 			return
-	if(wearer.base_pixel_y != original_pixel_y)
-		TEST_FAIL("Deleting the unit and removing its kit left a permanent character offset ([wearer.base_pixel_y], expected [original_pixel_y])")
+	if(wearer.pixel_y != original_pixel_y)
+		TEST_FAIL("Deleting the unit and removing its kit left a permanent character offset ([wearer.pixel_y], expected [original_pixel_y])")
 
 /datum/unit_test/normandy_suit_storage/delete_wearer/Run()
 	var/obj/machinery/normandy_suit_storage/storage = allocate(/obj/machinery/normandy_suit_storage)
@@ -59,9 +60,10 @@
 		TEST_FAIL("The dressing cycle did not equip its kit")
 		return
 
-	// The filter queue holds a reference briefly; the hard-delete queue is still minutes away.
-	sleep(10 SECONDS)
+	// Stop waiting once collected, while staying well before the hard-delete queue.
+	var/collection_deadline = world.time + 30 SECONDS
 	for(var/deleted_part in deleted_refs)
+		UNTIL(!locate(deleted_refs[deleted_part]) || world.time >= collection_deadline)
 		if(locate(deleted_refs[deleted_part]))
 			TEST_FAIL("The surviving storage unit kept its deleted [deleted_part] alive")
 
@@ -103,3 +105,106 @@
 	storage.close_machine(wearer)
 	if(!storage.state_open || wearer.loc == storage)
 		TEST_FAIL("The unit started closing with an incomplete kit")
+
+/// Losing a kit piece during the real dressing action must not strip the wearer's own clothes.
+/datum/unit_test/normandy_suit_storage/delete_kit_piece_during_dressing
+	/// The storage-owned piece deleted when the wearer's dressing action begins.
+	var/obj/item/clothing/shoes/combat/normandy/kit_piece_to_delete
+
+/datum/unit_test/normandy_suit_storage/delete_kit_piece_during_dressing/Destroy()
+	kit_piece_to_delete = null
+	return ..()
+
+/datum/unit_test/normandy_suit_storage/delete_kit_piece_during_dressing/Run()
+	var/obj/machinery/normandy_suit_storage/storage = allocate(/obj/machinery/normandy_suit_storage)
+	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent/slow)
+	var/obj/item/clothing/gloves/combat/original_gloves = allocate(/obj/item/clothing/gloves/combat)
+	wearer.set_base_pixel_y(3)
+	var/original_pixel_y = wearer.pixel_y
+	if(!wearer.equip_to_slot_if_possible(original_gloves, ITEM_SLOT_GLOVES))
+		TEST_FAIL("Could not equip the wearer's original gloves")
+		return
+	storage.close_machine(wearer)
+	if(storage.state_open || wearer.loc != storage)
+		TEST_FAIL("The complete unit could not close for dressing")
+		return
+	storage.cancel_dressing_start_timer()
+	kit_piece_to_delete = storage.stored_boots
+	RegisterSignal(wearer, COMSIG_DO_AFTER_BEGAN, PROC_REF(delete_pending_kit_piece))
+
+	storage.begin_dressing()
+	UnregisterSignal(wearer, COMSIG_DO_AFTER_BEGAN)
+	kit_piece_to_delete = null
+	if(!isnull(storage.stored_boots))
+		TEST_FAIL("The kit piece was not deleted during the dressing action")
+		return
+	if(wearer.gloves != original_gloves)
+		TEST_FAIL("An invalidated dressing cycle stripped the wearer's original gloves")
+		return
+	if(wearer.pixel_y != original_pixel_y)
+		TEST_FAIL("An invalidated dressing cycle changed the character offset")
+		return
+	if(!storage.state_open || wearer.loc == storage)
+		TEST_FAIL("An invalidated dressing cycle did not release its occupant")
+
+/// Invalidate the kit at the action boundary without replacing do_after or its validation.
+/datum/unit_test/normandy_suit_storage/delete_kit_piece_during_dressing/proc/delete_pending_kit_piece(mob/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_DO_AFTER_BEGAN)
+	// Wait one tick so the real dressing action has yielded before the kit changes.
+	QDEL_IN(kit_piece_to_delete, world.tick_lag)
+	kit_piece_to_delete = null
+
+/// Destroyed armor must release its visual offset and still allow the remaining kit to be returned.
+/datum/unit_test/normandy_suit_storage/return_incomplete_kit/Run()
+	var/obj/machinery/normandy_suit_storage/storage = allocate(/obj/machinery/normandy_suit_storage)
+	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
+	wearer.set_base_pixel_y(3)
+	var/original_pixel_y = wearer.pixel_y
+
+	storage.close_machine(wearer)
+	storage.cancel_dressing_start_timer()
+	storage.begin_dressing()
+	if(!storage.is_kit_worn_by(wearer))
+		TEST_FAIL("The dressing cycle did not equip its kit")
+		return
+	if(wearer.pixel_y == original_pixel_y)
+		TEST_FAIL("Dressing did not apply the character offset")
+		return
+
+	var/obj/item/clothing/shoes/combat/normandy/boots = storage.stored_boots
+	var/mob/living/carbon/human/holder = allocate(/mob/living/carbon/human/consistent)
+	if(!wearer.transferItemToLoc(boots, get_turf(wearer), force = TRUE, animated = FALSE))
+		TEST_FAIL("Could not remove the kit boots before giving them to another holder")
+		return
+	if(!holder.put_in_hands(boots))
+		TEST_FAIL("The other holder could not pick up the kit boots")
+		return
+
+	qdel(storage.stored_armor)
+	if(wearer.pixel_y != original_pixel_y)
+		TEST_FAIL("Deleting worn armor left its character offset active")
+		return
+	storage.close_machine(wearer)
+	if(storage.state_open || wearer.loc != storage)
+		TEST_FAIL("The wearer could not return the remaining pieces of an incomplete kit")
+		return
+	storage.cancel_dressing_start_timer()
+	storage.begin_dressing()
+	for(var/obj/item/remaining_item as anything in list(storage.stored_gloves, storage.stored_boots, storage.stored_cloak))
+		if(remaining_item?.loc != storage)
+			TEST_FAIL("Returning an incomplete kit did not store every surviving piece")
+			return
+	if(boots in holder.held_items)
+		TEST_FAIL("Returning the kit left its boots in the other holder's inventory")
+		return
+	if(wearer.pixel_y != original_pixel_y)
+		TEST_FAIL("Returning the remaining kit changed the restored character offset")
+		return
+	if(!storage.state_open || wearer.loc == storage)
+		TEST_FAIL("Returning an incomplete kit did not release its wearer")
+		return
+	storage.close_machine(wearer)
+	if(!storage.state_open || wearer.loc == storage)
+		TEST_FAIL("The unit started another dressing cycle with an incomplete kit")
+// AI EDIT END
