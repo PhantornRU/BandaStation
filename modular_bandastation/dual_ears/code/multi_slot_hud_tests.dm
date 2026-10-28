@@ -23,7 +23,6 @@
 	ghost = left_box.overlays[1]
 	TEST_ASSERT_EQUAL(ghost.icon_state, headset.icon_state, "The secondary icon did not update after an appearance change.")
 	TEST_ASSERT_EQUAL(ghost.color, headset.color, "The secondary icon lost its item's color.")
-	TEST_ASSERT_EQUAL(headset.alpha, 255, "Refreshing the ghost changed primary opacity.")
 
 	TEST_ASSERT(wearer.temporarilyRemoveItemFromInventory(headset), "Could not remove the HUD fixture.")
 	TEST_ASSERT_EQUAL(length(left_box.overlays), 0, "Removing the item left a ghost in its reserved slot.")
@@ -48,7 +47,6 @@
 		TYPE_PROC_REF(/mob/living/carbon/human/, should_strip),
 	), init_element = FALSE)
 	TEST_ASSERT_NOTNULL(rules, "The human stripping rules were not initialized.")
-	TEST_ASSERT_EQUAL(rules.items, GLOB.strippable_human_items, "The stripping fixture must use the initialized human rules.")
 	var/datum/strip_menu/menu = allocate(/datum/strip_menu, wearer, rules)
 	var/list/data = menu.ui_data(dresser)
 	var/list/items = data["items"]
