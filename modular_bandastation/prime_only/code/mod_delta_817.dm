@@ -1,8 +1,7 @@
-// AI EDIT START - Document the Delta-817 theme.
+// AI EDIT START - Delta-817 MODsuit theme and equipment.
 /**
  * Apocryphal-based theme with Delta-817 sprites and an open helmet that leaves hair visible.
  */
-// AI EDIT END
 /datum/mod_theme/apocryphal/delta_817
 	name = "Delta-817 standard"
 	desc = "A standard-issue MODsuit for Delta-817 operators."
@@ -10,21 +9,16 @@
 	default_skin = "apocryphal"
 	slowdown_deployed = 0.25
 
-// AI EDIT START - Document the Delta-817 part configuration.
 /** Configures Delta-817 sprites and helmet visibility while preserving inherited part settings. */
-// AI EDIT END
 /datum/mod_theme/apocryphal/delta_817/New()
 	// Keep the Apocryphal part configuration while using Delta-817 sprites.
 	variants = deep_copy_list_alt(variants)
 	variants["apocryphal"][/obj/item/clothing/head/mod][UNSEALED_INVISIBILITY] &= ~HIDEHAIR
-	// AI EDIT START - Hide hair when sealed and use the lowercase Delta-817 sprite path.
 	variants["apocryphal"][/obj/item/clothing/head/mod][SEALED_INVISIBILITY] |= HIDEHAIR
 	variants["apocryphal"][MOD_ICON_OVERRIDE] = 'modular_bandastation/prime_only/icons/centcom/mod_delta.dmi'
 	variants["apocryphal"][MOD_WORN_ICON_OVERRIDE] = 'modular_bandastation/prime_only/icons/centcom/mod_delta.dmi'
-	// AI EDIT END
 	return ..()
 
-// AI EDIT START - Document the Delta-817 sprite state adapter.
 /**
  * Applies the separate inventory and worn states in the Delta-817 sprite sheet.
  *
@@ -32,7 +26,6 @@
  * * mod - Control unit owning the part and its seal state.
  * * part - Control unit or clothing part to update.
  */
-// AI EDIT END
 /datum/mod_theme/apocryphal/delta_817/proc/apply_delta_icon_states(obj/item/mod/control/mod, obj/item/part)
 	var/static/list/icon_states_by_part = list(
 		"control" = "backpack",
@@ -64,8 +57,7 @@
 	delta_theme?.apply_delta_icon_states(src, part)
 	wearer?.update_clothing(part.slot_flags)
 
-// AI EDIT START - Document the pre-equipped Delta-817 MODsuit.
 /** Pre-equipped Delta-817 MODsuit retaining Apocryphal modules and access requirements. */
-// AI EDIT END
 /obj/item/mod/control/pre_equipped/apocryphal/delta_817
 	theme = /datum/mod_theme/apocryphal/delta_817
+// AI EDIT END
