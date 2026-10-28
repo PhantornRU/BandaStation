@@ -145,6 +145,15 @@ Report briefly: the risk checked, the existing or new test used (or why manual v
 - Implementation edits only the working tree. Commit, push, PR, or deploy happen only on explicit request. The user's uncommitted edits are never overwritten.
 - Generated files (`ru_names.toml`, built tgui bundles) are never edited by hand.
 
+<!-- AI EDIT START - Require visible boundaries for agent-authored changes -->
+### AI edit markers
+
+- Enclose agent-authored additions and modified blocks in repository text files with paired `AI EDIT START - <reason>` and `AI EDIT END` comments. Use comment syntax valid at that location: for example, `// AI EDIT START - <reason>` / `// AI EDIT END` in DM, or `<!-- AI EDIT START - <reason> -->` / `<!-- AI EDIT END -->` in Markdown.
+- Mark the smallest complete changed block, without claiming unchanged neighboring code or other contributors' work. Reuse an existing `AI EDIT` block rather than nesting another pair inside it.
+- `AI EDIT` markers supplement the required `BANDASTATION` markers in upstream files; preserve both conventions.
+- Keep generated files untouched. Do not insert markers into binary files or where the format, validator or required file structure forbids them; `.dmm` map checks reject arbitrary comments even though the syntax accepts them. Identify these unmarked paths and the reason in the report instead of breaking the file or its checks.
+<!-- AI EDIT END -->
+
 ---
 
 ## 6. Code Review Rules
