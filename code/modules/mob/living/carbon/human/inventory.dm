@@ -26,6 +26,14 @@
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
+		// BANDASTATION ADDITION START - Removable underclothing
+		if(ITEM_SLOT_UNDERWEAR)
+			return w_underwear
+		if(ITEM_SLOT_UNDERSHIRT)
+			return w_undershirt
+		if(ITEM_SLOT_SOCKS)
+			return w_socks
+		// BANDASTATION ADDITION END
 		if(ITEM_SLOT_BACK)
 			return back
 		if(ITEM_SLOT_BELT)
@@ -60,6 +68,10 @@
 	return ..()
 
 /mob/living/carbon/human/get_slot_by_item(obj/item/looking_for)
+	// BANDASTATION ADDITION START - Removable underclothing
+	if(istype(looking_for, /obj/item/clothing/underwear) && get_item_by_slot(looking_for.slot_flags) == looking_for)
+		return looking_for.slot_flags
+	// BANDASTATION ADDITION END
 	if(looking_for == back)
 		return ITEM_SLOT_BACK
 
@@ -112,6 +124,11 @@
 
 /mob/living/carbon/human/get_visible_items()
 	var/list/visible_items = ..()
+	// BANDASTATION ADDITION START - Removable underclothing
+	for(var/obj/item/clothing/underwear/garment in visible_items.Copy())
+		if(underclothing_hidden(garment.slot_flags))
+			visible_items -= garment
+	// BANDASTATION ADDITION END
 	var/obj/item/clothing/under/under = w_uniform
 	if(istype(under) && length(under.attached_accessories) && (under in visible_items))
 		visible_items += under.attached_accessories
@@ -125,6 +142,10 @@
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
+		// BANDASTATION ADDITION START - Removable underclothing
+		if(ITEM_SLOT_UNDERWEAR, ITEM_SLOT_UNDERSHIRT, ITEM_SLOT_SOCKS)
+			wear_underclothing(equipping)
+		// BANDASTATION ADDITION END
 		if(ITEM_SLOT_BACK)
 			if(back)
 				return
@@ -215,6 +236,10 @@
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !item_dropping)
 		return
+	// BANDASTATION ADDITION START - Removable underclothing
+	if(istype(item_dropping, /obj/item/clothing/underwear) && get_item_by_slot(item_dropping.slot_flags) == item_dropping)
+		remove_underclothing(item_dropping)
+	// BANDASTATION ADDITION END
 	if(item_dropping == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.

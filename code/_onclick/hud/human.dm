@@ -13,6 +13,7 @@
 	add_screen_object(/atom/movable/screen/mov_intent, HUD_MOB_MOVE_INTENT, HUD_GROUP_STATIC, ui_style)
 	add_screen_object(/atom/movable/screen/drop, HUD_MOB_DROP, HUD_GROUP_STATIC, ui_style, ui_swaphand_position(mymob, 1))
 	add_screen_object(/atom/movable/screen/human/toggle, HUD_HUMAN_TOGGLE_INVENTORY, HUD_GROUP_STATIC, ui_style)
+	add_screen_object(/atom/movable/screen/human/underclothing_toggle, "human_underclothing_toggle", HUD_GROUP_STATIC, ui_style) // BANDASTATION ADDITION - Foldable underclothing panel.
 	add_screen_object(/atom/movable/screen/rest, HUD_MOB_REST, HUD_GROUP_HOTKEYS, ui_style)
 	add_screen_object(/atom/movable/screen/sleep, HUD_MOB_SLEEP, HUD_GROUP_HOTKEYS, ui_style, ui_above_throw)
 	add_screen_object(/atom/movable/screen/pull, HUD_MOB_PULL, HUD_GROUP_STATIC, ui_style, ui_above_movement_top)
@@ -36,6 +37,7 @@
 	if(!is_species(mymob, /datum/species/ipc))
 		add_screen_object(/atom/movable/screen/hunger, HUD_MOB_HUNGER, HUD_GROUP_INFO)
 	// BANDASTATION EDIT END
+	update_underclothing_panel() // BANDASTATION ADDITION - Position the separate underclothing toggle.
 
 /datum/hud/human/update_locked_slots()
 	if(!mymob)

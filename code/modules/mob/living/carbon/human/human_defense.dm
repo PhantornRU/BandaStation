@@ -718,6 +718,15 @@
 		for(var/obj/item/burnable_item as anything in get_held_items())
 			burning_items |= burnable_item
 
+	// BANDASTATION ADDITION START - Exposed underclothing burns with its wearer.
+	if(w_underwear && !underclothing_hidden(ITEM_SLOT_UNDERWEAR))
+		burning_items |= w_underwear
+	if(w_undershirt && !underclothing_hidden(ITEM_SLOT_UNDERSHIRT))
+		burning_items |= w_undershirt
+	if(w_socks && !underclothing_hidden(ITEM_SLOT_SOCKS))
+		burning_items |= w_socks
+	// BANDASTATION ADDITION END
+
 	for(var/obj/item/burning as anything in burning_items)
 		burning.fire_act((stacks * 25 * seconds_per_tick)) //damage taken is reduced to 2% of this value by fire_act()
 
