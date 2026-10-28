@@ -118,6 +118,7 @@
 #include "../../../modular_bandastation/species/code/tests/ipc_emote_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_extinguisher_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_fabrication_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_mood_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_power_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_preferences_hud_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_radiation_tests.dm"
