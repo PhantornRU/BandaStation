@@ -66,7 +66,7 @@
 /// Select one transmitter so wearing two headsets does not duplicate outgoing messages.
 /mob/living/carbon/human/proc/get_headset_for_channel(channel)
 	for(var/obj/item/radio/headset/headset in list(ear_right, ear_left))
-		if(!headset.on || !headset.broadcasting || headset.wires.is_cut(WIRE_TX))
+		if(!headset.is_on() || !headset.get_broadcasting() || headset.wires.is_cut(WIRE_TX))
 			continue
 		if(channel)
 			if(channel == MODE_DEPARTMENT && !length(headset.channels))

@@ -327,6 +327,7 @@ type StripMenuItem =
           icon: string;
           name: string;
           obscured: ObscuringLevel;
+          secondary_slot?: BooleanLike; // BANDASTATION ADDITION - Multi-slot clothing
         } & AlternateActions)
       | ({
           obscured: ObscuringLevel;
@@ -389,6 +390,7 @@ export const StripMenu = (props) => {
                         height="64px"
                         style={{
                           verticalAlign: 'middle',
+                          opacity: item.secondary_slot ? 0.5 : 1, // BANDASTATION ADDITION - Multi-slot clothing
                         }}
                       />
                     );

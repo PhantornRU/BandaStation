@@ -22,9 +22,31 @@
 		if(!disable_warning)
 			to_chat(src, span_warning("[equip_target] won't budge, it's impossible to put it on!"))
 		return FALSE
-	return dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped, indirect_action)
+	// BANDASTATION EDIT START - Clothing occupying multiple inventory slots
+	var/obj/item/reserving_item = LAZYACCESS(occupied_clothing_slots, "[slot]")
+	if(reserving_item && reserving_item != equip_target)
+		return FALSE
+	var/datum/component/occupies_slots/multiple_slots = equip_target.GetComponent(/datum/component/occupies_slots)
+	if(multiple_slots && !multiple_slots.can_equip(src, slot))
+		return FALSE
+	if(!dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped, indirect_action))
+		return FALSE
+	// Species checks may wait for the equip delay, so all reservations must be checked again.
+	if(QDELETED(src) || QDELETED(equip_target))
+		return FALSE
+	reserving_item = LAZYACCESS(occupied_clothing_slots, "[slot]")
+	if(reserving_item && reserving_item != equip_target)
+		return FALSE
+	multiple_slots = equip_target.GetComponent(/datum/component/occupies_slots)
+	return !multiple_slots || multiple_slots.can_equip(src, slot)
+	// BANDASTATION EDIT END
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)
+	// BANDASTATION ADDITION START - Clothing occupying multiple inventory slots
+	var/obj/item/reserving_item = LAZYACCESS(occupied_clothing_slots, "[slot_id]")
+	if(reserving_item)
+		return reserving_item
+	// BANDASTATION ADDITION END
 	switch(slot_id)
 		// BANDASTATION ADDITION START - Removable underclothing
 		if(ITEM_SLOT_UNDERWEAR)

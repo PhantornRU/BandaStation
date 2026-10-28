@@ -466,6 +466,8 @@
 #include "../../../modular_bandastation/dual_ears/code/radio_tests.dm"
 #include "../../../modular_bandastation/dual_ears/code/appearance_tests.dm"
 #include "../../../modular_bandastation/dual_ears/code/mannequin_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/multi_slot_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/multi_slot_hud_tests.dm"
 // BANDASTATION ADDITION END
 
 #include "../../../modular_bandastation/weapon/code/ranged/weapon_choice_tests.dm" // BANDASTATION ADDITION - HoS and Blueshield sidearms

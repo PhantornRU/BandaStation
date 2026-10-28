@@ -9,8 +9,17 @@
 
 /datum/component/wearertargeting/earprotection/Initialize(protection_amount = EAR_PROTECTION_NORMAL)
 	. = ..()
+	// BANDASTATION ADDITION START - Protected earpieces occupy both ears
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+	// BANDASTATION ADDITION END
 	src.protection_amount = protection_amount
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
+	// BANDASTATION ADDITION START - Protected earpieces occupy both ears
+	var/obj/item/protected_item = parent
+	if(protected_item.slot_flags & ITEM_SLOT_EARS)
+		protected_item.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
+	// BANDASTATION ADDITION END
 
 /datum/component/wearertargeting/earprotection/proc/reducebang(datum/source, list/reflist)
 	SIGNAL_HANDLER
