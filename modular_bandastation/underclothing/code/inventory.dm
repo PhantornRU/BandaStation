@@ -39,11 +39,14 @@
 	if(QDELETED(equipping))
 		return FALSE
 	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH|ALLOW_RESTING) || !try_equip(source, equipping, user))
-		user.put_in_hands(equipping)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), equipping)
 		return FALSE
 	return ..()
 
 /datum/strippable_item/mob_item_slot/underclothing/finish_unequip(atom/source, mob/user)
-	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH|ALLOW_RESTING) || get_obscuring(source) != STRIPPABLE_OBSCURING_NONE || !try_unequip(source, user) || HAS_TRAIT(get_item(source), TRAIT_NO_STRIP))
+	if(!user.can_perform_action(source, FORBID_TELEKINESIS_REACH|ALLOW_RESTING) || get_obscuring(source) != STRIPPABLE_OBSCURING_NONE || !try_unequip(source, user))
+		return FALSE
+	var/obj/item/worn_item = get_item(source)
+	if(HAS_TRAIT(worn_item, TRAIT_NO_STRIP))
 		return FALSE
 	return ..()

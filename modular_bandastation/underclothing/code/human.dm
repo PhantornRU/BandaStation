@@ -33,7 +33,8 @@
 			garment.set_style(style, tint)
 		return
 	garment = new item_type(src, style, tint)
-	equip_to_slot(garment, garment.slot_flags, initial = TRUE)
+	// Generic hand/stack dispatch may yield; appearance updates must not block.
+	INVOKE_ASYNC(src, PROC_REF(equip_to_slot), garment, garment.slot_flags, TRUE)
 
 /mob/living/carbon/human/proc/wear_underclothing(obj/item/clothing/underwear/garment)
 	vars["w_[garment.appearance_key]"] = garment

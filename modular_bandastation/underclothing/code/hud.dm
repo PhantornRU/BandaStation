@@ -22,7 +22,6 @@
 		row++
 
 /datum/hud/human/on_viewdata_update(datum/source, view)
-	SIGNAL_HANDLER
 	. = ..()
 	update_underclothing_panel(view)
 

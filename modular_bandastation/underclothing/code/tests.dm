@@ -146,7 +146,8 @@
 	player_hud.inventory_update()
 	for(var/slot_id in list(ITEM_SLOT_UNDERWEAR, ITEM_SLOT_UNDERSHIRT, ITEM_SLOT_SOCKS))
 		var/datum/inventory_slot/slot = player_hud.inventory_slots[slot_id]
-		TEST_ASSERT_NULL(slot.get_screen_slot(player_hud).screen_loc, "Inventory refresh must not reopen the folded panel.")
+		var/atom/movable/screen/inventory/slot_box = slot.get_screen_slot(player_hud)
+		TEST_ASSERT_NULL(slot_box.screen_loc, "Inventory refresh must not reopen the folded panel.")
 	TEST_ASSERT_EQUAL(wearer.w_underwear, garment, "Folding the panel must preserve the equipped garment.")
 
 /datum/unit_test/underclothing_fire/Run()
