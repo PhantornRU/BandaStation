@@ -9,12 +9,6 @@
 
 /datum/component/wearertargeting/earprotection/Initialize(protection_amount = EAR_PROTECTION_NORMAL)
 	. = ..()
-	// AI EDIT START - Reject incompatible component parents
-	// BANDASTATION ADDITION START - Reject incompatible component parents
-	if(. == COMPONENT_INCOMPATIBLE)
-		return
-	// BANDASTATION ADDITION END
-	// AI EDIT END
 	src.protection_amount = protection_amount
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
 
