@@ -758,6 +758,7 @@ generate/load female uniform sprites matching all previously decided variables
 			return list("x" = 0, "y" = 0)//Handle held offsets
 
 /mob/living/carbon/human/update_body(is_creating = FALSE)
+	sync_underclothing() // BANDASTATION ADDITION - Keep physical garments in sync with appearance changes.
 	remove_overlay(BODY_LAYER)
 	var/list/clothing_overlays = get_underwear_overlays()
 	if(length(clothing_overlays))

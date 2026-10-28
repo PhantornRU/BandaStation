@@ -2,6 +2,11 @@
 #define POCKET_EQUIP_DELAY (1 SECONDS)
 
 GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
+	// BANDASTATION ADDITION START - Removable underclothing
+	/datum/strippable_item/mob_item_slot/underclothing,
+	/datum/strippable_item/mob_item_slot/underclothing/shirt,
+	/datum/strippable_item/mob_item_slot/underclothing/socks,
+	// BANDASTATION ADDITION END
 	/datum/strippable_item/mob_item_slot/head,
 	/datum/strippable_item/mob_item_slot/back,
 	/datum/strippable_item/mob_item_slot/mask,

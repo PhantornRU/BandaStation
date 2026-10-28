@@ -554,6 +554,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return FALSE
 
 	switch(slot)
+		// BANDASTATION ADDITION START - Removable underclothing
+		if(ITEM_SLOT_UNDERWEAR, ITEM_SLOT_UNDERSHIRT, ITEM_SLOT_SOCKS)
+			return istype(I, /obj/item/clothing/underwear) && H.can_wear_underclothing(slot)
+		// BANDASTATION ADDITION END
 		if(ITEM_SLOT_HANDS)
 			if(!(H.mobility_flags & MOBILITY_PICKUP))
 				return FALSE

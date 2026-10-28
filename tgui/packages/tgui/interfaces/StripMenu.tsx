@@ -122,6 +122,20 @@ type StripSlot = {
 };
 
 const SLOTS: Record<string, StripSlot> = {
+  // BANDASTATION ADDITION START - Removable underclothing
+  underwear: {
+    displayName: 'нижнее бельё',
+    gridSpot: getGridSpotKey([2, 3]),
+  },
+  undershirt: {
+    displayName: 'майка',
+    gridSpot: getGridSpotKey([1, 3]),
+  },
+  socks: {
+    displayName: 'носки',
+    gridSpot: getGridSpotKey([4, 3]),
+  },
+  // BANDASTATION ADDITION END
   eyes: {
     displayName: 'eyewear',
     gridSpot: getGridSpotKey([0, 0]),
