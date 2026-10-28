@@ -118,6 +118,7 @@
 #include "../../../modular_bandastation/species/code/tests/ipc_emote_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_extinguisher_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_fabrication_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_mood_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_power_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_preferences_hud_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_radiation_tests.dm"
@@ -473,6 +474,8 @@
 #include "../../../modular_bandastation/weapon/code/ranged/weapon_choice_tests.dm" // BANDASTATION ADDITION - HoS and Blueshield sidearms
 
 #include "../../../modular_bandastation/underclothing/code/tests.dm" // BANDASTATION ADDITION - Removable underclothing
+
+#include "../../../modular_bandastation/uplink_items/code/tests/syndicate_items.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
