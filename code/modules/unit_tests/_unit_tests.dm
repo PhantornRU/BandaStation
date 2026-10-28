@@ -459,6 +459,8 @@
 
 #include "../../../modular_bandastation/bug_reports/tests/bug_reports_test.dm" // BANDASTATION ADDITION - In-game bug reports
 
+#include "../../../modular_bandastation/weapon/code/ranged/weapon_choice_tests.dm" // BANDASTATION ADDITION - HoS and Blueshield sidearms
+
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL
