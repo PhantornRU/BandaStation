@@ -1,17 +1,17 @@
 /datum/inventory_slot/human/underwear
 	name = "нижнее бельё"
 	slot_id = ITEM_SLOT_UNDERWEAR
-	screen_group = HUD_GROUP_STATIC
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
 /datum/inventory_slot/human/undershirt
 	name = "майка"
 	slot_id = ITEM_SLOT_UNDERSHIRT
-	screen_group = HUD_GROUP_STATIC
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
 /datum/inventory_slot/human/socks
 	name = "носки"
 	slot_id = ITEM_SLOT_SOCKS
-	screen_group = HUD_GROUP_STATIC
+	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
 /datum/strippable_item/mob_item_slot/underclothing
 	key = "underwear"

@@ -29,19 +29,25 @@ Lazy about the solution, never about reading. The best code is the code never wr
 **Solution ladder.** The first rung that fully works wins:
 
 1. Does it need to exist? Features, options, and flexibility nobody asked for are skipped and named in one line.
-2. Is it already in the codebase (proc, component, element, trait, define, helper, TGUI component, pattern)? It is used the way the neighbors use it.
+2. <!-- AI EDIT START - Require checking existing methods before adding equivalents -->
+   Search the checked-out build, including relevant fork modules, for an existing proc, component, element, trait, define, helper, TGUI component or pattern before adding one. Read its implementation and callers; reuse it when its inputs, results, side effects, validation, ownership and async behavior fit the task. A similar name alone is not a reason to reuse it.
+   <!-- AI EDIT END -->
 3. Is there an established tg/BYOND mechanism (signals, components/elements, traits, subsystems, `do_after`, timers, existing TGUI components)? It is used.
 4. Can it be a small local change in the existing structure? It is done that way.
-5. Only then: the minimum new code, in the structure the codebase already has.
+5. <!-- AI EDIT START - Require a concrete justification for new code -->
+   Only then: the minimum new code, in the structure the codebase already has. Briefly justify the addition at the level of the chosen solution: the required behavior it provides, the gap in existing methods, and why reuse or a small local change is insufficient. Do not require a separate justification for each line.
+   <!-- AI EDIT END -->
 
 **Rules.**
 
 - A defect in shared code is fixed once at the root, and every caller of the touched proc is checked. A local workaround that leaves the cause in place is not a fix.
 - The shortest diff that reaches everything it must. A clever one-liner that needs decoding is not short.
-- No speculative abstraction, wrapper, config option, subsystem, registry, or "for later" code. Deletion beats addition.
+- <!-- AI EDIT START - Exclude unused additions and unjustified helpers -->
+  No speculative abstraction, wrapper, config option, subsystem, registry, or "for later" code. Leave no unused additions. A helper used once needs a concrete benefit, such as separating cohesive logic or providing a required override point; merely forwarding a call is insufficient. Deletion beats addition.
+  <!-- AI EDIT END -->
 - Moved or merged code keeps its validation and error handling.
 - Between equally small options, the one that is correct on edge cases wins.
-- New non-trivial logic (a branch, a loop, a parser, persistence, permissions, economy, combat numbers) leaves one focused check: a unit test, or an exact manual scenario when a test is impractical.
+- Verification follows the changed behavior and its risks, not the number of new branches or functions. Choose existing checks, a focused regression test, or a precise manual scenario using [Testing and verification](#4-testing-and-verification).
 - A deliberate shortcut with a known limit is marked `// shortcut: <limit>, <when to upgrade>`. It is a decision, not a defect, until the real load crosses the limit.
 - Comments explain only the why the code cannot show.
 
@@ -64,7 +70,22 @@ BandaStation is a downstream fork of `tgstation/tgstation` (Space Station 13) fo
 | `tools/` | build, CI, linters |
 | `icons/`, `sound/`, `strings/`, `interface/` | assets |
 
-**Sources of truth, in order:** the checked-out code; `.github/guides/*` (`STANDARDS.md`, `STYLE.md`, `AUTODOC.md`, `HARDDELETES.md`, `CI.md`, `ATOMIZATION.md`, …); `.github/CONTRIBUTING.md`; `tgui/README.md` and `tgui/docs/`; `code/modules/unit_tests/README.md`; lint config (`SpacemanDMM.toml`, `__odlint.dm`). General tg/DM knowledge comes after these. Legacy code shows what exists, not what is acceptable for new code. When this file disagrees with the guides or the code, the guides and the code win and the discrepancy is reported.
+**Sources of truth, in order:** the checked-out code; the guides below; [CONTRIBUTING](.github/CONTRIBUTING.md); [TGUI documentation](tgui/README.md); [DM unit-test documentation](code/modules/unit_tests/README.md); lint config ([SpacemanDMM.toml](SpacemanDMM.toml), [__odlint.dm](__odlint.dm)). General tg/DM knowledge comes after these. Legacy code shows what exists, not what is acceptable for new code. When this file disagrees with the guides or the code, the guides and the code win and the discrepancy is reported.
+
+Read the guides relevant to the change before editing; follow links rather than inventing a local style:
+
+| Guide | Use it for |
+| --- | --- |
+| [Style guide](.github/guides/STYLE.md) | DM formatting, paths, names, variables, procs, macros |
+| [Code standards](.github/guides/STANDARDS.md) | Structure, validation, signals, SQL, performance |
+| [Autodocumenting code](.github/guides/AUTODOC.md) | Required DMdoc comments and their format |
+| [Hard deletes](.github/guides/HARDDELETES.md) | Ownership, reference cleanup, teardown |
+| [Required CI checks](.github/guides/CI.md) | What compilation, integration and screenshot checks establish |
+| [Atomization](.github/guides/ATOMIZATION.md) | Keeping a change focused and splitting large PRs |
+| [TGUI tutorial](tgui/docs/tutorial-and-examples.md), [state usage](tgui/docs/state-usage.md) | Existing UI patterns and state ownership |
+| [DM unit tests](code/modules/unit_tests/README.md), [TGUI tests](tgui/docs/writing-tests.md) | Existing test facilities; see §4 before adding tests |
+
+Test commands and available facilities must match the current [build targets](tools/build/build.ts), [TGUI scripts](tgui/package.json), and [test configuration](tgui/bunfig.toml). The TGUI testing guide still describes Jest; the checked-out runner uses Bun. Do not copy obsolete commands from prose.
 
 **Fork conventions observed in the code:**
 
@@ -80,21 +101,68 @@ BandaStation is a downstream fork of `tgstation/tgstation` (Space Station 13) fo
 
 - the exact rule for `modular_bandastation/` versus direct upstream edits;
 - required merge checks beyond the completion gate;
-- which gameplay logic requires an automated test versus a manual testmerge;
+- feature-specific requirements for automated tests or manual testmerges beyond the documented rules and §4;
 - performance budgets for hot paths;
 - TGUI house rules beyond the `tgui/` docs.
 
 ---
 
-## 4. Boundaries
+## 4. Testing and verification
+
+**A change needs appropriate verification, not automatically a new test.** Follow [CONTRIBUTING](.github/CONTRIBUTING.md#процесс-открытия-pull-request) and existing CI requirements. A new branch, loop, proc, or changed line is not by itself a reason to add a test. Coverage percentages and assertion counts are not the goal.
+
+### Choose the smallest useful check
+
+Before adding a test, name the concrete failure it should catch, the conditions that trigger it, and the observable correct result. Inspect existing tests first. Reuse or extend a relevant test when it already exercises the same behavior; add a new one only for a remaining risk.
+
+Keep a test focused on one behavior; several assertions may describe that behavior. Do not repeat an assertion without an intervening action or a different invariant, or retest an inherited mechanic for every subtype without a new interaction to protect. Prefer testing a shared-code regression with its owning subsystem rather than hiding it inside an unrelated item's scenario.
+
+| Change or risk | Verification to choose |
+| --- | --- |
+| Text, documentation, translations, simple data or balance values | Relevant existing validators and review; compile or inspect in game when loading or presentation can break. Do not add tests that merely restate the edited definitions. |
+| Reproducible bug or new behavior with meaningful failure cases | A focused automated check when the existing harness can reproduce the behavior reliably at reasonable cost. Cover distinct failure cases, not every variation of the same case. |
+| Permissions, data integrity, economy, shared logic, repeated actions or state changes across a yield | Prioritize checks at the real boundary, including the relevant denial, duplication or invalidated-state case. Prefer automation when it can exercise that path faithfully. |
+| Appearance, map interactions or behavior that the harness cannot reproduce faithfully | A precise manual or existing screenshot scenario: setup, actions and expected result. State what it leaves unverified; a list of assigned icon values does not verify rendering. |
+
+The cost includes fixtures, production changes, CI runtime, flakiness and future maintenance. If a small fix needs a large artificial harness, reconsider the test boundary or use a documented manual scenario. This does not waive required CI checks or permit skipping verification of a high-risk path without explaining the gap.
+
+### What a useful automated test must do
+
+- Exercise the changed production behavior through an appropriate existing entry point and assert its observable contract. For an async validation fix, directly calling the final effect while bypassing the yield and revalidation does not test the fix. A check that an action was granted or a range was configured does not establish that activation or client-visible behavior works; verify that separately when relevant.
+- Keep setup separate from the result under test. Assigning a field in a fixture and immediately asserting that value does not verify the code that should set it. Defaults and data invariants merit tests only when they protect a separate contract or a demonstrated regression.
+- Derive expected results from the requirement or bug scenario, not by copying the implementation's algorithm, constants or private call sequence. Do not parse DM source or reproduce game logic in another language as a substitute for running it; existing lint and content validators serve a different purpose.
+- For a regression test, verify when practical that it fails on the original defect and passes with the fix, for the intended reason. If that comparison was not run, say so. A passing test alone does not establish that it catches the regression.
+- Use the existing harness and real game types where practical, as the [DM test guide](code/modules/unit_tests/README.md#how-to-think-about-tests) recommends. Test doubles may isolate unrelated dependencies; they must not replace the behavior being tested or bypass its essential validation.
+- Do not add production flags, public procs, wrappers, test-only branches or weakened validation solely to make assertions possible. Do not add a separate runner, standalone DM world or CI job for a local regression when the existing facilities can cover it. A structural change needs justification beyond making a test easier to write.
+- Keep cases deterministic and independent. Fixing unrelated randomness (for example, guaranteeing a shield block to check its consequences) is appropriate; it does not verify the configured probability. Use `allocate()` for owned DM test objects; restore changed globals, static lists, signals, timers and other shared state in teardown, including early-failure paths. Avoid incidental RNG, arbitrary sleeps and assertions that depend on test order.
+- Include new test files in the appropriate include chain. Keep local `TEST_FOCUS`, `TEST_REPEAT` and compile-option changes out of the final diff. Do not remove or weaken an existing regression test just to reduce the test count; establish that its protection is redundant or no longer applicable.
+
+### Run and report
+
+Start with the affected check, then run the checks required for the touched area. For TGUI changes, follow the [full-build requirement](tgui/README.md#important-memo); `bin/tgui-build.cmd` runs build, lint, type checks and tests, while `bun tgui:build` alone does not. Do not rerun or broaden successful checks without new changes, failures or unresolved risks.
+
+Report briefly: the risk checked, the existing or new test used (or why manual verification is appropriate), the commands or manual actions actually performed, their result, and remaining gaps. A proposed scenario is not a passed test; compilation is not proof of gameplay behavior. An unavailable tool is a verification limit, not a reason to invent a substitute test of different behavior.
+
+---
+
+## 5. Boundaries
 
 - Review is read-only: no edits, commits, pushes, GitHub comments, or PR changes.
 - Implementation edits only the working tree. Commit, push, PR, or deploy happen only on explicit request. The user's uncommitted edits are never overwritten.
 - Generated files (`ru_names.toml`, built tgui bundles) are never edited by hand.
 
+<!-- AI EDIT START - Require visible boundaries for agent-authored changes -->
+### AI edit markers
+
+- Enclose agent-authored additions and modified blocks in repository text files with paired `AI EDIT START - <reason>` and `AI EDIT END` comments. Use comment syntax valid at that location: for example, `// AI EDIT START - <reason>` / `// AI EDIT END` in DM, or `<!-- AI EDIT START - <reason> -->` / `<!-- AI EDIT END -->` in Markdown.
+- Mark the smallest complete changed block, without claiming unchanged neighboring code or other contributors' work. Reuse an existing `AI EDIT` block rather than nesting another pair inside it.
+- `AI EDIT` markers supplement the required `BANDASTATION` markers in upstream files; preserve both conventions.
+- Keep generated files untouched. Do not insert markers into binary files or where the format, validator or required file structure forbids them; `.dmm` map checks reject arbitrary comments even though the syntax accepts them. Identify these unmarked paths and the reason in the report instead of breaking the file or its checks.
+<!-- AI EDIT END -->
+
 ---
 
-## Code Review Rules
+## 6. Code Review Rules
 
 These rules hold for code being written and for code being reviewed. Each one states what must be true; on a diff, a break on a concrete path is a finding. Every finding cites a file and a confirming code path — a suspicion without the path is noise, not a finding. Rules apply to the diff; legacy code is context, not a target. The §3 open policy questions are never findings; the §3 fork conventions are enforced on the diff — `BANDASTATION` markers on upstream-file edits, translation fragments instead of `ru_names.toml` edits, attribution for new assets, untouched generated files, an honest "Почему это хорошо для игры", the ~500-line split threshold — and modpack-vs-upstream placement is not a violation by itself.
 
@@ -102,6 +170,11 @@ These rules hold for code being written and for code being reviewed. Each one st
 
 - The diff does what the PR states and nothing else; unrelated changes are flagged.
 - A new `.dm` file is included in a `.dme` (the modpack's `_<name>.dme` or `modular_bandastation/modular_bandastation.dme`); an unincluded file does not compile. CI's ticked-file check does not cover `modular_bandastation/`, so this rule is the only defense there.
+
+### Tests
+
+- Apply [§4](#4-testing-and-verification): assess the failure a test can detect, whether it reaches the changed behavior, and its isolation and maintenance cost. Do not demand a new test solely because code was added or a coverage number is low.
+- A test that bypasses the broken path, replaces the behavior under test, or asserts its own setup does not substantiate the fix. Cite the missed production path when reporting it; do not turn a preference about test quantity into a finding.
 
 ### Lifecycle and GC
 
