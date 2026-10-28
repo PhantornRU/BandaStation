@@ -126,6 +126,9 @@
 			default_layer = default_layer,
 			female_uniform = female_icon,
 			override_file = icon_file,
+			// AI EDIT START - Render the mannequin item's selected clothing slot
+			slot_id = slot_id,
+			// AI EDIT END
 		)
 		// BANDASTATION EDIT END
 
