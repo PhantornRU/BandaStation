@@ -7,7 +7,7 @@
 
 /datum/outfit/nanotrasenbridgeofficer
 	name = "Bridge Officer"
-	ears = /obj/item/radio/headset/heads/hop
+	ear_right = /obj/item/radio/headset/heads/hop // BANDASTATION EDIT - Dual ear slots
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -23,7 +23,7 @@
 	name = "\improper Nanotrasen Private Security Commander"
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
-	ears = /obj/item/radio/headset/heads/captain
+	ear_right = /obj/item/radio/headset/heads/captain // BANDASTATION EDIT - Dual ear slots
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/hats/centhat

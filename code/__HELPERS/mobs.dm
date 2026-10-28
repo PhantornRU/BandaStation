@@ -566,8 +566,12 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		slot_strings += "belt"
 	if(slot_flags & ITEM_SLOT_ID)
 		slot_strings += "id"
-	if(slot_flags & ITEM_SLOT_EARS)
-		slot_strings += "ear"
+	// BANDASTATION EDIT START - Separate ear slots
+	if(slot_flags & ITEM_SLOT_EAR_RIGHT)
+		slot_strings += "ear_right"
+	if(slot_flags & ITEM_SLOT_EAR_LEFT)
+		slot_strings += "ear_left"
+	// BANDASTATION EDIT END
 	if(slot_flags & ITEM_SLOT_EYES)
 		slot_strings += "glasses"
 	if(slot_flags & ITEM_SLOT_GLOVES)

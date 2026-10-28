@@ -54,7 +54,7 @@
 	id_trim = /datum/id_trim/job/station_engineer
 	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	belt = /obj/item/storage/belt/utility/full/engi
-	ears = /obj/item/radio/headset/headset_eng
+	ear_right = /obj/item/radio/headset/headset_eng // BANDASTATION EDIT - Dual ear slots
 	head = /obj/item/clothing/head/utility/hardhat/welding/up
 	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/crew/engineering

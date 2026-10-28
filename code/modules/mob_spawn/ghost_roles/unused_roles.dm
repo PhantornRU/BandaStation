@@ -104,7 +104,7 @@
 	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate
 	back = /obj/item/storage/backpack
-	ears = /obj/item/radio/headset/syndicate/alt
+	ear_right = /obj/item/radio/headset/syndicate/alt // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	shoes = /obj/item/clothing/shoes/combat
 
@@ -258,7 +258,7 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 	uniform = /obj/item/clothing/under/syndicate/coldres
-	ears = /obj/item/radio/headset/syndicate/alt
+	ear_right = /obj/item/radio/headset/syndicate/alt // BANDASTATION EDIT - Dual ear slots
 	shoes = /obj/item/clothing/shoes/combat/coldres
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 
@@ -307,7 +307,7 @@
 	uniform = /obj/item/clothing/under/syndicate/combat
 	back = /obj/item/storage/backpack
 	belt = /obj/item/storage/belt/military/assault
-	ears = /obj/item/radio/headset/syndicate/alt
+	ear_right = /obj/item/radio/headset/syndicate/alt // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/combat
 	shoes = /obj/item/clothing/shoes/combat
 
@@ -328,7 +328,7 @@
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
 	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	ears = /obj/item/radio/headset/syndicate/alt/leader
+	ear_right = /obj/item/radio/headset/syndicate/alt/leader // BANDASTATION EDIT - Dual ear slots
 	head = /obj/item/clothing/head/hats/hos/beret/syndicate
 	r_pocket = /obj/item/knife/combat/survival
 	backpack_contents = list(

@@ -47,7 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	belt = /obj/item/modular_computer/pda/crew/cargo
 	suit = /obj/item/clothing/suit/toggle/cargo_tech
-	ears = /obj/item/radio/headset/headset_cargo
+	ear_right = /obj/item/radio/headset/headset_cargo // BANDASTATION EDIT - Dual ear slots
 	l_hand = /obj/item/universal_scanner
 
 	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/cargo

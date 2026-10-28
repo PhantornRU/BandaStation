@@ -95,7 +95,7 @@
 	suit = /datum/outfit/job/security::suit
 	suit_store = /datum/outfit/job/security::suit_store
 	belt = /datum/outfit/job/security::belt
-	ears = /datum/outfit/job/security::ears //cant communicate with station i think?
+	ear_right = /datum/outfit/job/security::ear_right //cant communicate with station i think? // BANDASTATION EDIT - Dual ear slots
 	gloves = /datum/outfit/job/security::gloves
 	head = /datum/outfit/job/security::head
 	shoes = /datum/outfit/job/security::shoes
@@ -556,7 +556,7 @@
 	desc = "Finally, nobody to stop the power from going to your head."
 
 	head = /datum/outfit/job/hos::head
-	ears = 	/datum/outfit/job/hos::ears
+	ear_right = 	/datum/outfit/job/hos::ear_right // BANDASTATION EDIT - Dual ear slots
 	uniform = /obj/item/clothing/under/rank/security/head_of_security/alt
 	shoes = /datum/outfit/job/hos::shoes
 	neck = /datum/outfit/job/hos::neck
@@ -576,7 +576,7 @@
 	desc = "Draw your sword and show the syndicate scum no quarter."
 
 	head = /obj/item/clothing/head/hats/caphat/parade
-	ears = /obj/item/radio/headset/heads/captain/alt
+	ear_right = /obj/item/radio/headset/heads/captain/alt // BANDASTATION EDIT - Dual ear slots
 	uniform = /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	suit_store = /obj/item/gun/energy/e_gun
@@ -761,7 +761,7 @@
 
 	head = /obj/item/clothing/head/soft/black
 	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/headset_com
+	ear_right = /obj/item/radio/headset/headset_com // BANDASTATION EDIT - Dual ear slots
 	neck = /obj/item/clothing/neck/large_scarf/blue
 	//suit
 	id_trim = /datum/id_trim/job/bridge_assistant // half tider half command
@@ -889,7 +889,7 @@
 
 	head = /obj/item/clothing/head/soft/rainbow
 	glasses = null
-	ears = /obj/item/radio/headset
+	ear_right = /obj/item/radio/headset // BANDASTATION EDIT - Dual ear slots
 	neck = /obj/item/clothing/neck/petcollar/wearable
 	//suit
 	uniform = /obj/item/clothing/under/color/rainbow

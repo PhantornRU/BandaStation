@@ -40,7 +40,7 @@
 	belt = /obj/item/storage/belt/utility/full
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/utility/hardhat
-	ears = /obj/item/radio/headset/headset_eng
+	ear_right = /obj/item/radio/headset/headset_eng
 	l_pocket = /obj/item/modular_computer/pda/crew/engineering
 	r_pocket = /obj/item/t_scanner
 	glasses = /obj/item/clothing/glasses/meson

@@ -49,7 +49,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/modular_computer/pda/crew/medical
-	ears = /obj/item/radio/headset/headset_med
+	ear_right = /obj/item/radio/headset/headset_med // BANDASTATION EDIT - Dual ear slots
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 

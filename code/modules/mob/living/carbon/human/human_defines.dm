@@ -60,7 +60,10 @@
 	var/obj/item/back = null
 	var/obj/item/head = null
 	var/obj/item/gloves = null
-	var/obj/item/ears = null
+	// BANDASTATION EDIT START - Separate ear slots
+	var/obj/item/ear_right = null
+	var/obj/item/ear_left = null
+	// BANDASTATION EDIT END
 	var/obj/item/glasses = null
 	var/obj/item/shoes = null
 	var/obj/item/wear_neck = null

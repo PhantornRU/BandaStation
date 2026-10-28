@@ -101,7 +101,7 @@
 		/obj/item/melee/baton/telescopic/silver = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/heads/hop
-	ears = /obj/item/radio/headset/heads/hop
+	ear_right = /obj/item/radio/headset/heads/hop // BANDASTATION EDIT - Dual ear slots
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/armor/vest/hop

@@ -61,7 +61,7 @@
 		/obj/item/storage/box/evidence = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/detective
-	ears = /obj/item/radio/headset/headset_sec/alt
+	ear_right = /obj/item/radio/headset/headset_sec/alt // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
 	mask = /obj/item/cigarette

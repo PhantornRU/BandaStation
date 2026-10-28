@@ -18,7 +18,7 @@
 	name = "Centcom official"
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	mask = /obj/item/clothing/mask/gas/atmos/centcom
-	ears = /obj/item/radio/headset/headset_cent/alt/leader
+	ear_right = /obj/item/radio/headset/headset_cent/alt/leader // BANDASTATION EDIT - Dual ear slots
 	shoes = /obj/item/clothing/shoes/jackboots
 	back = /obj/item/mod/control/pre_equipped/corporate
 	gloves = /obj/item/clothing/gloves/kaza_ruk/combatglovesplus

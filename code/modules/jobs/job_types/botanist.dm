@@ -48,7 +48,7 @@
 	suit = /obj/item/clothing/suit/apron
 	suit_store = /obj/item/plant_analyzer
 	belt = /obj/item/modular_computer/pda/crew/botanist
-	ears = /obj/item/radio/headset/headset_srv
+	ear_right = /obj/item/radio/headset/headset_srv // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/botanic_leather
 
 	backpack = /obj/item/storage/backpack/botany

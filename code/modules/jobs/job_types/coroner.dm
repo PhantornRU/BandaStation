@@ -58,7 +58,7 @@
 	)
 
 	belt = /obj/item/modular_computer/pda/crew/coroner
-	ears = /obj/item/radio/headset/headset_srvmed
+	ear_right = /obj/item/radio/headset/headset_srvmed // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/latex/coroner
 	head = /obj/item/clothing/head/utility/surgerycap/black
 	l_pocket = /obj/item/clipboard //good for storing autopsy reports and taking notes

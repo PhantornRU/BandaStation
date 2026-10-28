@@ -461,6 +461,13 @@
 
 #include "../../../modular_bandastation/bug_reports/tests/bug_reports_test.dm" // BANDASTATION ADDITION - In-game bug reports
 
+// BANDASTATION ADDITION START - Separate ear slots
+#include "../../../modular_bandastation/dual_ears/code/inventory_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/radio_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/appearance_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/mannequin_tests.dm"
+// BANDASTATION ADDITION END
+
 #include "../../../modular_bandastation/weapon/code/ranged/weapon_choice_tests.dm" // BANDASTATION ADDITION - HoS and Blueshield sidearms
 
 #undef TEST_ASSERT

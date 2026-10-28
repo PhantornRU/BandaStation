@@ -39,7 +39,7 @@
 		return
 
 	var/mob/user = atom_parent.loc
-	if (!isnull(item_slot) && user.get_item_by_slot(item_slot) != parent)
+	if (!isnull(item_slot) && !(user.get_slot_by_item(parent) & item_slot)) // BANDASTATION EDIT - Support slot masks
 		return
 
 	RegisterSignal(atom_parent.loc, COMSIG_MOB_CLICKON, PROC_REF(on_click))

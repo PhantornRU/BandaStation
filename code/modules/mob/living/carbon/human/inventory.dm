@@ -32,8 +32,12 @@
 			return belt
 		if(ITEM_SLOT_ID)
 			return wear_id
-		if(ITEM_SLOT_EARS)
-			return ears
+		// BANDASTATION EDIT START - Separate ear slots
+		if(ITEM_SLOT_EAR_RIGHT)
+			return ear_right
+		if(ITEM_SLOT_EAR_LEFT)
+			return ear_left
+		// BANDASTATION EDIT END
 		if(ITEM_SLOT_EYES)
 			return glasses
 		if(ITEM_SLOT_GLOVES)
@@ -69,8 +73,12 @@
 	if(looking_for == wear_id)
 		return ITEM_SLOT_ID
 
-	if(looking_for == ears)
-		return ITEM_SLOT_EARS
+	// BANDASTATION EDIT START - Separate ear slots
+	if(looking_for == ear_right)
+		return ITEM_SLOT_EAR_RIGHT
+	if(looking_for == ear_left)
+		return ITEM_SLOT_EAR_LEFT
+	// BANDASTATION EDIT END
 
 	if(looking_for == glasses)
 		return ITEM_SLOT_EYES
@@ -141,11 +149,18 @@
 			wear_id = equipping
 			update_ID_card()
 			update_worn_id()
-		if(ITEM_SLOT_EARS)
-			if(ears)
+		// BANDASTATION EDIT START - Separate ear slots
+		if(ITEM_SLOT_EAR_RIGHT)
+			if(ear_right)
 				return
-			ears = equipping
+			ear_right = equipping
 			update_worn_ears()
+		if(ITEM_SLOT_EAR_LEFT)
+			if(ear_left)
+				return
+			ear_left = equipping
+			update_worn_ears()
+		// BANDASTATION EDIT END
 		if(ITEM_SLOT_EYES)
 			if(glasses)
 				return
@@ -262,10 +277,16 @@
 		glasses = null
 		if(!QDELETED(src))
 			update_worn_glasses()
-	else if(item_dropping == ears)
-		ears = null
+	// BANDASTATION EDIT START - Separate ear slots
+	else if(item_dropping == ear_right)
+		ear_right = null
 		if(!QDELETED(src))
 			update_worn_ears()
+	else if(item_dropping == ear_left)
+		ear_left = null
+		if(!QDELETED(src))
+			update_worn_ears()
+	// BANDASTATION EDIT END
 	else if(item_dropping == shoes)
 		shoes = null
 		if(!QDELETED(src))

@@ -6,7 +6,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots
 	id_trim = /datum/id_trim/job/explorer
-	ears = /obj/item/radio/headset/headset_cargo
+	ear_right = /obj/item/radio/headset/headset_cargo
 
 	backpack = /obj/item/storage/backpack/explorer
 	satchel = /obj/item/storage/backpack/satchel/explorer

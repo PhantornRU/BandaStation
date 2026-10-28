@@ -71,7 +71,7 @@
 		/obj/item/construction/rcd/ce = 1,
 	)
 	belt = /obj/item/storage/belt/utility/chief/full
-	ears = /obj/item/radio/headset/heads/ce
+	ear_right = /obj/item/radio/headset/heads/ce // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/utility/hardhat/welding/white/up
 	shoes = /obj/item/clothing/shoes/workboots

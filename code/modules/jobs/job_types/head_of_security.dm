@@ -66,7 +66,7 @@
 		/obj/item/melee/baton/security/loaded/hos = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/heads/hos
-	ears = /obj/item/radio/headset/heads/hos/alt
+	ear_right = /obj/item/radio/headset/heads/hos/alt // BANDASTATION EDIT - Dual ear slots
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/hats/hos/beret

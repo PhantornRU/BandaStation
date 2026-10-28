@@ -6,7 +6,7 @@
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/lawyer/black
 	belt = /obj/item/modular_computer/pda/crew/lawyer
-	ears = /obj/item/radio/headset/lawyer
+	ear_right = /obj/item/radio/headset/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	neck = /obj/item/clothing/neck/tie/black/tied
 	l_pocket = /obj/item/laser_pointer/red

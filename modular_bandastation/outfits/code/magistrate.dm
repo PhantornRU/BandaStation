@@ -6,7 +6,7 @@
 	suit = /obj/item/clothing/suit/magirobe
 	gloves = /obj/item/clothing/gloves/color/white
 	shoes = /obj/item/clothing/shoes/laceup
-	ears = /obj/item/radio/headset/heads/magistrate/alt
+	ear_right = /obj/item/radio/headset/heads/magistrate/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 
 	id = /obj/item/card/id/advanced/nanotrasen_official

@@ -452,7 +452,7 @@
 			return /obj/item/storage/belt
 		if(ITEM_SLOT_ID)
 			return /obj/item/card/id/advanced
-		if(ITEM_SLOT_EARS)
+		if(ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT) // BANDASTATION EDIT - Separate ear slots
 			return /obj/item/clothing/ears
 		if(ITEM_SLOT_EYES)
 			return /obj/item/clothing/glasses

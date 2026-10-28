@@ -125,16 +125,18 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	for(var/language in language_list)
 		var/amount_understood = language_list[language]
 		if(amount_understood >= 100)
-			grant_to.grant_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
+			grant_to.grant_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = "[LANGUAGE_RADIOKEY]_[REF(src)]") // BANDASTATION EDIT - Independent headset languages
 		else
-			grant_to.grant_partial_language(language, amount = amount_understood, source = LANGUAGE_RADIOKEY)
+			grant_to.grant_partial_language(language, amount = amount_understood, source = "[LANGUAGE_RADIOKEY]_[REF(src)]") // BANDASTATION EDIT - Independent headset languages
 
-/// Clears all radio related languages from the mob.
+/// Clears languages granted by this headset from the mob. // BANDASTATION EDIT - Independent headset languages
 /obj/item/radio/headset/proc/remove_headset_languages(mob/remove_from)
 	if(QDELETED(remove_from)) //This can be called as a part of destroy
 		return
-	remove_from.remove_all_languages(source = LANGUAGE_RADIOKEY)
-	remove_from.remove_all_partial_languages(source = LANGUAGE_RADIOKEY)
+	// BANDASTATION EDIT START - Independent headset languages
+	remove_from.remove_all_languages(source = "[LANGUAGE_RADIOKEY]_[REF(src)]")
+	remove_from.remove_all_partial_languages(source = "[LANGUAGE_RADIOKEY]_[REF(src)]")
+	// BANDASTATION EDIT END
 
 /obj/item/radio/headset/equipped(mob/user, slot, initial)
 	. = ..()
@@ -356,11 +358,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/headset_cargo/mining/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_EARS)
-		ADD_TRAIT(user, TRAIT_SPEECH_BOOSTER, CLOTHING_TRAIT)
+		ADD_TRAIT(user, TRAIT_SPEECH_BOOSTER, REF(src)) // BANDASTATION EDIT - Independent headset traits
 
 /obj/item/radio/headset/headset_cargo/mining/dropped(mob/living/carbon/human/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_SPEECH_BOOSTER, CLOTHING_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_SPEECH_BOOSTER, REF(src)) // BANDASTATION EDIT - Independent headset traits
 
 /obj/item/radio/headset/headset_srv
 	name = "service radio headset"
@@ -480,7 +482,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 	// Updates radio languages entirely for the mob wearing the headset
 	var/mob/mob_loc = loc
-	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
+	if(istype(mob_loc) && (mob_loc.get_slot_by_item(src) & slot_flags)) // BANDASTATION EDIT - Dual ear slots
 		remove_headset_languages(mob_loc)
 		grant_headset_languages(mob_loc)
 

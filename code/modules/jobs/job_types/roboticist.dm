@@ -47,7 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
 	belt = /obj/item/storage/belt/utility/full
-	ears = /obj/item/radio/headset/headset_sci
+	ear_right = /obj/item/radio/headset/headset_sci // BANDASTATION EDIT - Dual ear slots
 	l_pocket = /obj/item/modular_computer/pda/crew/roboticist
 
 	backpack = /obj/item/storage/backpack/science

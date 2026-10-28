@@ -118,9 +118,11 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		worn_under.attach_accessory(new accessory)
 
 	if(ears)
-		if(spawning.ears)
-			qdel(spawning.ears)
-		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
+		// BANDASTATION EDIT START - Dual ear slots
+		if(spawning.ear_right)
+			qdel(spawning.ear_right)
+		spawning.equip_to_slot_or_del(new ears(spawning), ITEM_SLOT_EAR_RIGHT)
+		// BANDASTATION EDIT END
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
@@ -223,7 +225,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		/obj/item/evidencebag = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/security
-	ears = /obj/item/radio/headset/headset_sec/alt
+	ear_right = /obj/item/radio/headset/headset_sec/alt // BANDASTATION EDIT - Dual ear slots
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/sec
 	shoes = /obj/item/clothing/shoes/jackboots/sec

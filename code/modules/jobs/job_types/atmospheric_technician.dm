@@ -46,7 +46,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	suit = /obj/item/clothing/suit/atmos_overalls
 	belt = /obj/item/storage/belt/utility/atmostech
-	ears = /obj/item/radio/headset/headset_eng
+	ear_right = /obj/item/radio/headset/headset_eng // BANDASTATION EDIT - Dual ear slots
 	l_pocket = /obj/item/modular_computer/pda/crew/atmos
 	r_pocket = /obj/item/analyzer
 

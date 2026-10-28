@@ -7,7 +7,10 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	/datum/strippable_item/mob_item_slot/mask,
 	/datum/strippable_item/mob_item_slot/neck,
 	/datum/strippable_item/mob_item_slot/eyes,
-	/datum/strippable_item/mob_item_slot/ears,
+	// BANDASTATION EDIT START - Separate ear slots
+	/datum/strippable_item/mob_item_slot/ear_right,
+	/datum/strippable_item/mob_item_slot/ear_left,
+	// BANDASTATION EDIT END
 	/datum/strippable_item/mob_item_slot/jumpsuit,
 	/datum/strippable_item/mob_item_slot/suit,
 	/datum/strippable_item/mob_item_slot/gloves,
@@ -40,9 +43,15 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_EYES
 	item_slot = ITEM_SLOT_EYES
 
-/datum/strippable_item/mob_item_slot/ears
-	key = STRIPPABLE_ITEM_EARS
-	item_slot = ITEM_SLOT_EARS
+// BANDASTATION EDIT START - Separate ear slots
+/datum/strippable_item/mob_item_slot/ear_right
+	key = STRIPPABLE_ITEM_EAR_RIGHT
+	item_slot = ITEM_SLOT_EAR_RIGHT
+
+/datum/strippable_item/mob_item_slot/ear_left
+	key = STRIPPABLE_ITEM_EAR_LEFT
+	item_slot = ITEM_SLOT_EAR_LEFT
+// BANDASTATION EDIT END
 
 /datum/strippable_item/mob_item_slot/jumpsuit
 	key = STRIPPABLE_ITEM_JUMPSUIT

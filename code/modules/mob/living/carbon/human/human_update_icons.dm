@@ -245,29 +245,32 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_worn_ears()
 	remove_overlay(EARS_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_EARS)
+	// BANDASTATION EDIT START - Independent ears share the existing clothing layer.
+	hud_used?.update_inventory_slot(ITEM_SLOT_EAR_RIGHT)
+	hud_used?.update_inventory_slot(ITEM_SLOT_EAR_LEFT)
 
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(my_head)) //decapitated
+	if(isnull(my_head) || (obscured_slots & HIDEEARS))
 		return
 
-	if(ears)
-		var/obj/item/worn_item = ears
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEEARS))
-			return
+	var/list/ear_overlays = list()
+	for(var/ear_slot in list(ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT))
+		var/obj/item/worn_item = ear_slot == ITEM_SLOT_EAR_RIGHT ? ear_right : ear_left
+		if(!worn_item || HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			continue
 
-		var/icon_file = 'icons/mob/clothing/ears.dmi'
-
-		// BANDASTATION EDIT START - Species clothing icons
-		var/species_icon = ears.get_species_worn_icon(my_head.limb_id)
-		// BANDASTATION EDIT END - Species clothing icons
-
-		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, override_file = species_icon, bodyshape = bodyshape) // BANDASTATION EDIT - Species clothing icons
-
+		var/mutable_appearance/ears_overlay = worn_item.build_worn_icon(
+			default_layer = EARS_LAYER,
+			override_file = worn_item.get_ear_worn_icon(ear_slot, my_head.limb_id),
+			bodyshape = bodyshape,
+		)
 		apply_height(ears_overlay, UPPER_BODY)
 		my_head.worn_ears_offset?.apply_offset(ears_overlay)
-		overlays_standing[EARS_LAYER] = ears_overlay
+		ear_overlays += ears_overlay
+	if(length(ear_overlays))
+		overlays_standing[EARS_LAYER] = ear_overlays
 	apply_overlay(EARS_LAYER)
+	// BANDASTATION EDIT END - Independent ears share the existing clothing layer.
 
 /mob/living/carbon/human/update_worn_neck()
 	remove_overlay(NECK_LAYER)

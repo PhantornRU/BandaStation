@@ -58,7 +58,7 @@
 		/obj/item/storage/box/beanbag = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/bar
-	ears = /obj/item/radio/headset/headset_srv
+	ear_right = /obj/item/radio/headset/headset_srv // BANDASTATION EDIT - Dual ear slots
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup
 

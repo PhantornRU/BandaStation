@@ -159,11 +159,21 @@ const SLOTS: Record<string, StripSlot> = {
     image: 'inventory-collar.png',
   },
 
-  ears: {
-    displayName: 'earwear',
+  // BANDASTATION EDIT START - Separate ear slots
+  ear_right: {
+    displayName: 'правое ухо',
     gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
+    additionalComponent: <CornerText align="left">R</CornerText>,
   },
+
+  ear_left: {
+    displayName: 'левое ухо',
+    gridSpot: getGridSpotKey([0, 4]),
+    image: 'inventory-ears.png',
+    additionalComponent: <CornerText align="right">L</CornerText>,
+  },
+  // BANDASTATION EDIT END
 
   parrot_headset: {
     displayName: 'headset',

@@ -21,7 +21,7 @@
 
 /obj/item/radio/headset/blueshield/alt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 
 // Nanotrasen Representative
 /obj/item/encryptionkey/heads/nanotrasen_representative
@@ -46,7 +46,7 @@
 
 /obj/item/radio/headset/heads/nanotrasen_representative/alt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 
 // Magistrate
 /obj/item/encryptionkey/heads/magistrate
@@ -68,7 +68,7 @@
 
 /obj/item/radio/headset/heads/magistrate/alt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection)
 
 // Lawyer
 /obj/item/encryptionkey/lawyer

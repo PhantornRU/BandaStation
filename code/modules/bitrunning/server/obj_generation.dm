@@ -45,7 +45,10 @@
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.belt = /obj/item/bitrunning_host_monitor
-	to_wear.ears = null
+	// BANDASTATION EDIT START - Dual ear slots
+	to_wear.ear_right = null
+	to_wear.ear_left = null
+	// BANDASTATION EDIT END
 	to_wear.glasses = null
 	to_wear.gloves = null
 	to_wear.l_pocket = null

@@ -5,7 +5,7 @@
 	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
 	suit = /obj/item/clothing/suit/costume/pirate/armored
-	ears = /obj/item/radio/headset/syndicate
+	ear_right = /obj/item/radio/headset/syndicate // BANDASTATION EDIT - Dual ear slots
 	glasses = /obj/item/clothing/glasses/eyepatch
 	head = /obj/item/clothing/head/costume/pirate/bandana/armored
 	shoes = /obj/item/clothing/shoes/pirate/armored
@@ -13,7 +13,7 @@
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
 	equipped.add_faction(FACTION_PIRATE)
 
-	var/obj/item/radio/outfit_radio = equipped.ears
+	var/obj/item/radio/outfit_radio = equipped.ear_right // BANDASTATION EDIT - Dual ear slots
 	if(outfit_radio)
 		outfit_radio.set_frequency(FREQ_SYNDICATE)
 		outfit_radio.freqlock = RADIO_FREQENCY_LOCKED
@@ -136,7 +136,7 @@
 	gloves = null
 	head = /obj/item/clothing/head/costume/irs
 	shoes = /obj/item/clothing/shoes/laceup
-	ears = /obj/item/radio/headset/syndicate/alt
+	ear_right = /obj/item/radio/headset/syndicate/alt // BANDASTATION EDIT - Dual ear slots
 
 /datum/outfit/pirate/irs/auditor
 	name = "IRS Head Auditor"
@@ -144,7 +144,7 @@
 	uniform = /obj/item/clothing/under/suit/charcoal
 	neck = /obj/item/clothing/neck/tie/red/tied
 	suit = null
-	ears = /obj/item/radio/headset/syndicate/alt/leader
+	ear_right = /obj/item/radio/headset/syndicate/alt/leader // BANDASTATION EDIT - Dual ear slots
 	head = null
 	accessory = /obj/item/clothing/accessory/holster/detective/veteran_advisor //BANDASTATION EDIT: Accessory holsters
 
@@ -213,7 +213,7 @@
 	suit = /obj/item/clothing/suit/jacket/leather/armored
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = null
-	ears = /obj/item/radio/headset/syndicate/alt
+	ear_right = /obj/item/radio/headset/syndicate/alt // BANDASTATION EDIT - Dual ear slots
 	id = null
 
 	skillchips = list(/obj/item/skillchip/musical)

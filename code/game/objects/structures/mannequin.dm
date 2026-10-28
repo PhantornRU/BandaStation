@@ -30,7 +30,7 @@
 	var/static/list/slot_flags = list(
 		ITEM_SLOT_HEAD,
 		ITEM_SLOT_EYES,
-		ITEM_SLOT_EARS,
+		ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT, // BANDASTATION EDIT - Separate ear slots
 		ITEM_SLOT_MASK,
 		ITEM_SLOT_NECK,
 		ITEM_SLOT_BACK,
@@ -113,11 +113,16 @@
 			continue
 		var/default_icon = get_default_icon_by_slot(text2num(slot_flag))
 		var/default_layer = get_default_layer_by_slot(text2num(slot_flag))
+		// BANDASTATION ADDITION START - Separate ear slots
+		var/ear_icon
+		if(text2num(slot_flag) & ITEM_SLOT_EARS)
+			ear_icon = worn_item.get_ear_worn_icon(text2num(slot_flag), SPECIES_HUMAN)
+		// BANDASTATION ADDITION END
 		var/female_icon = NO_FEMALE_UNIFORM
 		if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
 			var/obj/item/clothing/under/worn_jumpsuit = worn_item
 			female_icon = worn_jumpsuit.female_sprite_flags
-		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon)
+		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon, override_file = ear_icon) // BANDASTATION EDIT - Separate ear slots
 
 /obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -162,7 +167,10 @@
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
 	/datum/strippable_item/mannequin_slot/eyes,
-	/datum/strippable_item/mannequin_slot/ears,
+	// BANDASTATION EDIT START - Separate ear slots
+	/datum/strippable_item/mannequin_slot/ear_right,
+	/datum/strippable_item/mannequin_slot/ear_left,
+	// BANDASTATION EDIT END
 	/datum/strippable_item/mannequin_slot/mask,
 	/datum/strippable_item/mannequin_slot/neck,
 	/datum/strippable_item/mannequin_slot/back,
@@ -215,9 +223,15 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_EYES
 	item_slot = ITEM_SLOT_EYES
 
-/datum/strippable_item/mannequin_slot/ears
-	key = STRIPPABLE_ITEM_EARS
-	item_slot = ITEM_SLOT_EARS
+// BANDASTATION EDIT START - Separate ear slots
+/datum/strippable_item/mannequin_slot/ear_right
+	key = STRIPPABLE_ITEM_EAR_RIGHT
+	item_slot = ITEM_SLOT_EAR_RIGHT
+
+/datum/strippable_item/mannequin_slot/ear_left
+	key = STRIPPABLE_ITEM_EAR_LEFT
+	item_slot = ITEM_SLOT_EAR_LEFT
+// BANDASTATION EDIT END
 
 /datum/strippable_item/mannequin_slot/mask
 	key = STRIPPABLE_ITEM_MASK

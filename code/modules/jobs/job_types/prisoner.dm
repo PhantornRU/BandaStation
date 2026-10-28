@@ -57,7 +57,7 @@
 	id_trim = /datum/id_trim/job/prisoner
 	uniform = /obj/item/clothing/under/rank/prisoner
 	belt = null
-	ears = null
+	ear_right = null // BANDASTATION EDIT - Dual ear slots
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	box = /obj/item/storage/box/survival/prisoner
 	pda_slot = null

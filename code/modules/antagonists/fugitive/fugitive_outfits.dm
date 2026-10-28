@@ -27,7 +27,7 @@
 	suit = /obj/item/clothing/suit/costume/striped_sweater
 	head = /obj/item/clothing/head/waldo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	ears = /obj/item/radio/headset
+	ear_right = /obj/item/radio/headset // BANDASTATION EDIT - Dual ear slots
 	glasses = /obj/item/clothing/glasses/regular/circle
 
 /datum/outfit/waldo/post_equip(mob/living/carbon/human/equipped_on, visuals_only=FALSE)
@@ -60,7 +60,7 @@
 /datum/outfit/synthetic
 	name = "Factory Error Synth"
 	uniform = /obj/item/clothing/under/color/white
-	ears = /obj/item/radio/headset
+	ear_right = /obj/item/radio/headset // BANDASTATION EDIT - Dual ear slots
 
 /datum/outfit/synthetic/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(visuals_only)
@@ -75,7 +75,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/monocle
 	mask = /obj/item/cigarette/pipe
-	ears = /obj/item/radio/headset
+	ear_right = /obj/item/radio/headset // BANDASTATION EDIT - Dual ear slots
 
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/medipen/invisibility = 3,

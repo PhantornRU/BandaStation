@@ -49,7 +49,7 @@
 		/obj/item/storage/pill_bottle/psicodine,
 		)
 	belt = /obj/item/modular_computer/pda/crew/psychologist
-	ears = /obj/item/radio/headset/headset_srvmed
+	ear_right = /obj/item/radio/headset/headset_srvmed // BANDASTATION EDIT - Dual ear slots
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/clipboard
 	neck = /obj/item/clothing/neck/tie/black/tied

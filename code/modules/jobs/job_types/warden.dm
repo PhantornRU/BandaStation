@@ -59,7 +59,7 @@
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	suit_store = /obj/item/gun/energy/disabler
 	belt = /obj/item/modular_computer/pda/crew/warden
-	ears = /obj/item/radio/headset/headset_sec/alt
+	ear_right = /obj/item/radio/headset/headset_sec/alt // BANDASTATION EDIT - Dual ear slots
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/hats/warden/red

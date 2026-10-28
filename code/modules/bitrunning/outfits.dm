@@ -3,7 +3,7 @@
 /datum/outfit/echolocator
 	name = "Bitrunning Echolocator"
 	glasses = /obj/item/clothing/glasses/blindfold
-	ears = /obj/item/radio/headset/psyker //Navigating without these is horrible.
+	ear_right = /obj/item/radio/headset/psyker //Navigating without these is horrible. // BANDASTATION EDIT - Dual ear slots
 	uniform = /obj/item/clothing/under/abductor
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots

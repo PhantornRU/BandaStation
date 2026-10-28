@@ -20,7 +20,7 @@
 		/obj/item/storage/fancy/cigarettes/cigars
 	)
 	belt = /obj/item/gun/ballistic/revolver/mateba
-	ears = /obj/item/radio/headset/headset_cent/commander
+	ear_right = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/soo
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/beret/centcom/soo
@@ -74,7 +74,7 @@
 		/obj/item/door_remote/omni,
 	)
 	belt = /obj/item/gun/energy/pulse/pistol/m1911
-	ears = /obj/item/radio/headset/headset_cent/commander
+	ear_right = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/centcom_officer
 	gloves = /obj/item/clothing/gloves/combat/centcom
 	head = /obj/item/clothing/head/beret/centcom
@@ -96,7 +96,7 @@
 	suit = /obj/item/clothing/suit/armor/centcom_formal/field
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/storage/belt/sheath/centcom_rapier
-	ears = /obj/item/radio/headset/headset_cent/commander
+	ear_right = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/centcom_officer
 	gloves = /obj/item/clothing/gloves/combat/centcom
 	head = /obj/item/clothing/head/beret/centcom
@@ -126,7 +126,7 @@
 		/obj/item/folder/red,
 		/obj/item/storage/lockbox/medal
 	)
-	ears = /obj/item/radio/headset/headset_cent/commander
+	ear_right = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/combat/centcom/diplomat
 	head = /obj/item/clothing/head/beret/cent_diplomat
@@ -204,7 +204,7 @@
 		/obj/item/door_remote/omni,
 	)
 	belt = /obj/item/storage/belt/military/holster/specops/full
-	ears = /obj/item/radio/headset/headset_cent/alt/leader
+	ear_right = /obj/item/radio/headset/headset_cent/alt/leader
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/beret/ert/specops

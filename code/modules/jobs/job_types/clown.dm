@@ -62,7 +62,7 @@
 		/obj/item/storage/box/balloons = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/clown
-	ears = /obj/item/radio/headset/headset_srv
+	ear_right = /obj/item/radio/headset/headset_srv // BANDASTATION EDIT - Dual ear slots
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/bikehorn

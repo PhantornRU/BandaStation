@@ -149,7 +149,7 @@
 			options = typesof(/obj/item/clothing/head)
 		if("glasses")
 			options = typesof(/obj/item/clothing/glasses)
-		if("ears")
+		if("ear_right", "ear_left") // BANDASTATION EDIT - Dual ear slots
 			options = typesof(/obj/item/radio/headset)
 
 		if("neck")

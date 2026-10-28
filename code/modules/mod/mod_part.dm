@@ -43,7 +43,7 @@
 	var/species_id
 	if(istype(wearer))
 		switch(checked_slot)
-			if(ITEM_SLOT_HEAD, ITEM_SLOT_EYES, ITEM_SLOT_EARS, ITEM_SLOT_MASK)
+			if(ITEM_SLOT_HEAD, ITEM_SLOT_EYES, ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT, ITEM_SLOT_MASK) // BANDASTATION EDIT - Separate ear slots
 				species_id = wearer.get_bodypart(BODY_ZONE_HEAD)?.limb_id
 			if(ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_NECK)
 				species_id = wearer.get_bodypart(BODY_ZONE_CHEST)?.limb_id
