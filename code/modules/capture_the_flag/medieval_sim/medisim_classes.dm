@@ -9,7 +9,9 @@
 	head = /obj/item/clothing/head/helmet/knight/red
 	l_hand = /obj/item/claymore
 
+	// AI EDIT START - Support independent left and right ear slots
 	ear_right = null // BANDASTATION EDIT - Dual ear slots
+	// AI EDIT END
 	id = null
 	belt = null
 	l_pocket = null
@@ -18,7 +20,9 @@
 	has_radio = FALSE
 	has_card = FALSE
 
+	// AI EDIT START - Support independent left and right ear slots
 	nodrop_slots = list(ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT, ITEM_SLOT_BELT, ITEM_SLOT_HEAD) // BANDASTATION EDIT - Dual ear slots
+	// AI EDIT END
 
 	class_description = "Melee class. Armed with a claymore."
 

@@ -49,16 +49,23 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		return
 
 	var/obj/item/slot_item = get_slot_item(owner)
+	// AI EDIT START - Multi-slot clothing
 	update_slot_icon_contents(slot, slot_item, slot_item && owner.get_slot_by_item(slot_item) != slot_id) // BANDASTATION EDIT - Multi-slot clothing
+	// AI EDIT END
 
 /// Updates the slot icon and its contents
+// AI EDIT START - Multi-slot clothing
 /datum/inventory_slot/proc/update_slot_icon_contents(atom/movable/screen/inventory/slot, obj/item/slot_item, secondary = FALSE) // BANDASTATION EDIT - Multi-slot clothing
+// AI EDIT END
+	// AI EDIT START - Keep the reserved icon separate from hover overlays.
 	// BANDASTATION ADDITION START - Keep the reserved icon separate from hover overlays.
 	if(slot.occupied_slot_overlay)
 		slot.cut_overlay(slot.occupied_slot_overlay)
 		slot.occupied_slot_overlay = null
 	// BANDASTATION ADDITION END
+	// AI EDIT END
 	slot.update_appearance(UPDATE_ICON)
+	// AI EDIT START - Secondary slots copy the sprite without changing the actual item's alpha.
 	// BANDASTATION ADDITION START - Secondary slots copy the sprite without changing the actual item's alpha.
 	if(secondary && slot_item)
 		slot.vis_contents.Cut()
@@ -72,6 +79,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		slot.add_overlay(ghost)
 		return
 	// BANDASTATION ADDITION END
+	// AI EDIT END
 	if (!slot_item)
 		slot.vis_contents.Cut()
 		return

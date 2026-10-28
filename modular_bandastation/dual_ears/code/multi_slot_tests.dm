@@ -1,3 +1,4 @@
+// AI EDIT START - Implement and verify independent ear slots
 /datum/unit_test/multi_slot_inventory/Run()
 	for(var/primary_slot in list(ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT))
 		var/secondary_slot = primary_slot == ITEM_SLOT_EAR_RIGHT ? ITEM_SLOT_EAR_LEFT : ITEM_SLOT_EAR_RIGHT
@@ -46,11 +47,13 @@
 	var/obj/item/radio/headset/headset = allocate(/obj/item/radio/headset)
 	var/obj/item/radio/headset/blocker = allocate(/obj/item/radio/headset)
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(headset, ITEM_SLOT_EAR_RIGHT), "Could not equip the headset.")
+// AI EDIT END
 	// AI EDIT START - Attach inventory requirements explicitly alongside hearing protection
 	headset.AddComponent(/datum/component/wearertargeting/earprotection)
 	headset.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_EAR_LEFT), headset, "Adding explicit slot requirements did not reserve the other ear.")
 	// AI EDIT END
+	// AI EDIT START - Implement and verify independent ear slots
 	headset.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_EAR_LEFT), headset, "Duplicate attachment cleared the reservation.")
 	TEST_ASSERT(!wearer.equip_to_slot_if_possible(blocker, ITEM_SLOT_EAR_LEFT, disable_warning = TRUE), "The late reservation did not block the other ear.")
@@ -61,16 +64,19 @@
 	var/obj/item/radio/headset/left = allocate(/obj/item/radio/headset)
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(right, ITEM_SLOT_EAR_RIGHT), "Could not equip the right headset.")
 	TEST_ASSERT(wearer.equip_to_slot_if_possible(left, ITEM_SLOT_EAR_LEFT), "Could not equip the left headset.")
+	// AI EDIT END
 	// AI EDIT START - Attach inventory requirements explicitly alongside hearing protection
 	right.AddComponent(/datum/component/wearertargeting/earprotection)
 	right.AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	TEST_ASSERT_NULL(wearer.ear_right, "Adding slot requirements retained an item that cannot fit.")
 	TEST_ASSERT_EQUAL(wearer.ear_left, left, "Adding slot requirements displaced the other item.")
 	// AI EDIT END
+	// AI EDIT START - Implement and verify independent ear slots
 	TEST_ASSERT_EQUAL(right.loc, wearer.drop_location(), "The incompatible item was not dropped.")
 	wearer.equip_to_slot(right, ITEM_SLOT_EAR_RIGHT)
 	TEST_ASSERT_NULL(wearer.ear_right, "Unchecked equipment bypassed the occupied required slot.")
 	TEST_ASSERT_EQUAL(wearer.ear_left, left, "Unchecked equipment displaced the other item.")
+	// AI EDIT END
 
 // AI EDIT START - Exercise every independent protected-earpiece initialization at the equip boundary
 /// Each consumer must attach its own slot requirements alongside hearing protection.
@@ -101,6 +107,7 @@
 		TEST_ASSERT(wearer.dropItemToGround(earpiece), "Could not remove [earpiece_type] before testing the next consumer.")
 // AI EDIT END
 
+// AI EDIT START - Implement and verify independent ear slots
 /datum/unit_test/multi_slot_generic/Run()
 	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/head/helmet/helmet = allocate(/obj/item/clothing/head/helmet)
@@ -192,3 +199,4 @@
 	qdel(wearer)
 	TEST_ASSERT_NULL(slots.wearer_ref, "Deleting the wearer retained its component weakref.")
 	TEST_ASSERT_EQUAL(length(reservations), 0, "Deleting the wearer did not clear its reservations.")
+// AI EDIT END

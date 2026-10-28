@@ -1,3 +1,4 @@
+// AI EDIT START - Implement and verify independent ear slots
 /// Each message uses one headset, including channels available only in the left ear.
 /datum/unit_test/dual_ears_radio
 	var/list/transmitters = list()
@@ -94,3 +95,4 @@
 	TEST_ASSERT(HAS_TRAIT(human, TRAIT_SPEECH_BOOSTER), "Removing one mining headset cleared the other's speech boost.")
 	TEST_ASSERT(human.temporarilyRemoveItemFromInventory(left), "Could not remove the left mining headset.")
 	TEST_ASSERT(!HAS_TRAIT(human, TRAIT_SPEECH_BOOSTER), "Removing the last mining headset kept its speech boost.")
+// AI EDIT END

@@ -22,7 +22,9 @@
 	if(!damage_type)
 		return 0
 	var/unblocked_damage = 100
+	// AI EDIT START - Support independent left and right ear slots
 	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ear_right, ear_left, wear_id, wear_neck) // BANDASTATION EDIT - Separate ear slots; everything but pockets.
+	// AI EDIT END
 	for(var/obj/item/clothing/clothing_item in covering_clothing)
 		if(clothing_item.body_parts_covered & def_zone.body_part)
 			unblocked_damage *= (100 - min(clothing_item.get_armor_rating(damage_type), 100)) * 0.01
@@ -421,12 +423,14 @@
 			. = get_bodypart(BODY_ZONE_HEAD)
 			if(.)
 				damaged += .
+			// AI EDIT START - Separate ear slots
 			// BANDASTATION EDIT START - Separate ear slots
 			if(ear_right)
 				inventory_items_to_kill += ear_right
 			if(ear_left)
 				inventory_items_to_kill += ear_left
 			// BANDASTATION EDIT END
+			// AI EDIT END
 
 	//CHEST//
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_CHEST)
@@ -625,6 +629,7 @@
 			head_clothes = head
 		if(head_clothes)
 			torn_items += head_clothes
+		// AI EDIT START - Separate ear slots
 		// BANDASTATION EDIT START - Separate ear slots
 		else
 			if(ear_right)
@@ -632,6 +637,7 @@
 			if(ear_left)
 				torn_items += ear_left
 		// BANDASTATION EDIT END
+		// AI EDIT END
 
 	//CHEST//
 	if(!def_zone || def_zone == BODY_ZONE_CHEST)
@@ -690,6 +696,7 @@
 		burning_items += wear_mask
 	if(wear_neck && !(covered_slots & HIDENECK))
 		burning_items += wear_neck
+	// AI EDIT START - Separate ear slots
 	// BANDASTATION EDIT START - Separate ear slots
 	if(!(covered_slots & HIDEEARS))
 		if(ear_right)
@@ -697,6 +704,7 @@
 		if(ear_left)
 			burning_items += ear_left
 	// BANDASTATION EDIT END
+	// AI EDIT END
 	if(head)
 		burning_items += head
 

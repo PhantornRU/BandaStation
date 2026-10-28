@@ -1,3 +1,4 @@
+// AI EDIT START - Implement and verify independent ear slots
 /datum/unit_test/dual_ears_inventory/Run()
 	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/radio/headset/right = allocate(/obj/item/radio/headset)
@@ -78,3 +79,4 @@
 	TEST_ASSERT_NULL(outfit.ear_left, "A legacy outfit populated the left ear.")
 	TEST_ASSERT(outfit.load_from(list("ear_right" = null, "ears" = "/obj/item/radio/headset")), "Could not load an explicitly empty right ear.")
 	TEST_ASSERT_NULL(outfit.ear_right, "The legacy key overrode an explicitly empty right ear.")
+// AI EDIT END

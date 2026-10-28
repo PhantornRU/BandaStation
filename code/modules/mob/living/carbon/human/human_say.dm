@@ -55,13 +55,16 @@
 	var/obj/item/organ/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain))
 		return TRUE
+	// AI EDIT START - Dual ear slots
 	// BANDASTATION EDIT START - Dual ear slots
 	for(var/obj/item/radio/headset/dongle in list(ear_right, ear_left))
 		if(dongle.special_channels & RADIO_SPECIAL_BINARY)
 			return TRUE
 	return FALSE
 	// BANDASTATION EDIT END
+	// AI EDIT END
 
+// AI EDIT START - Dual ear slots
 // BANDASTATION ADDITION START - Dual ear slots
 /// Select one transmitter so wearing two headsets does not duplicate outgoing messages.
 /mob/living/carbon/human/proc/get_headset_for_channel(channel)
@@ -77,12 +80,14 @@
 		return headset
 	return null
 // BANDASTATION ADDITION END
+// AI EDIT END
 
 /mob/living/carbon/human/radio(message, list/message_mods = list(), list/spans, language) //Poly has a copy of this, lazy bastard
 	. = ..()
 	if(.)
 		return
 
+	// AI EDIT START - Dual ear slots
 	// BANDASTATION EDIT START - Dual ear slots
 	var/channel = message_mods[RADIO_EXTENSION]
 	if(message_mods[MODE_HEADSET])
@@ -96,3 +101,4 @@
 		return ITALICS | REDUCE_RANGE
 	return FALSE
 	// BANDASTATION EDIT END
+	// AI EDIT END

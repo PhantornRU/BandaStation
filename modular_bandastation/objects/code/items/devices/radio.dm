@@ -30,7 +30,9 @@
 
 /obj/item/radio/headset/blueshield/alt/Initialize(mapload)
 	. = ..()
+	// AI EDIT START - Support independent ear inventory slots
 	AddComponent(/datum/component/wearertargeting/earprotection)
+	// AI EDIT END
 	// AI EDIT START - Reserve both ear slots for protected earpieces
 	AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	// AI EDIT END
@@ -67,7 +69,9 @@
 
 /obj/item/radio/headset/heads/nanotrasen_representative/alt/Initialize(mapload)
 	. = ..()
+	// AI EDIT START - Support independent ear inventory slots
 	AddComponent(/datum/component/wearertargeting/earprotection)
+	// AI EDIT END
 	// AI EDIT START - Reserve both ear slots for protected earpieces
 	AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	// AI EDIT END
@@ -101,7 +105,9 @@
 
 /obj/item/radio/headset/heads/magistrate/alt/Initialize(mapload)
 	. = ..()
+	// AI EDIT START - Support independent ear inventory slots
 	AddComponent(/datum/component/wearertargeting/earprotection)
+	// AI EDIT END
 	// AI EDIT START - Reserve both ear slots for protected earpieces
 	AddComponent(/datum/component/occupies_slots, ITEM_SLOT_EARS)
 	// AI EDIT END

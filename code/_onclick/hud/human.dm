@@ -172,6 +172,7 @@ GAME_VERB_DESC(/mob/living/carbon/human, toggle_hotkey_verbs, "Toggle hotkey but
 	slot_id = ITEM_SLOT_EYES
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 
+// AI EDIT START - Separate ear slots
 // BANDASTATION EDIT START - Separate ear slots
 /datum/inventory_slot/human/ear_right
 	name = "ear_right"
@@ -189,6 +190,7 @@ GAME_VERB_DESC(/mob/living/carbon/human, toggle_hotkey_verbs, "Toggle hotkey but
 	slot_id = ITEM_SLOT_EAR_LEFT
 	screen_group = HUD_GROUP_TOGGLEABLE_INVENTORY
 // BANDASTATION EDIT END
+// AI EDIT END
 
 /datum/inventory_slot/human/head
 	name = "head"

@@ -92,10 +92,12 @@
 		"belt" = /obj/item/changeling,
 		"gloves" = /obj/item/clothing/gloves/changeling,
 		"glasses" = /obj/item/clothing/glasses/changeling,
+		// AI EDIT START - Dual ear slots
 		// BANDASTATION EDIT START - Dual ear slots
 		"ear_right" = /obj/item/changeling,
 		"ear_left" = /obj/item/changeling,
 		// BANDASTATION EDIT END
+		// AI EDIT END
 		"wear_id" = /obj/item/changeling/id,
 		"s_store" = /obj/item/changeling,
 	)
@@ -574,7 +576,9 @@
 	new_profile.id_icon = target.wear_id?.get_sechud_job_icon()
 	new_profile.id_icon_state = target.wear_id?.get_sechud_job_icon_state()
 
+	// AI EDIT START - Support independent left and right ear slots
 	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ear_right", "ear_left", "wear_id", "s_store") // BANDASTATION EDIT - Dual ear slots
+	// AI EDIT END
 	for(var/slot in slots)
 		if(!(slot in target.vars))
 			continue
@@ -771,10 +775,12 @@
 		"belt" = ITEM_SLOT_BELT,
 		"gloves" = ITEM_SLOT_GLOVES,
 		"glasses" = ITEM_SLOT_EYES,
+		// AI EDIT START - Dual ear slots
 		// BANDASTATION EDIT START - Dual ear slots
 		"ear_right" = ITEM_SLOT_EAR_RIGHT,
 		"ear_left" = ITEM_SLOT_EAR_LEFT,
 		// BANDASTATION EDIT END
+		// AI EDIT END
 		"wear_id" = ITEM_SLOT_ID,
 		"s_store" = ITEM_SLOT_SUITSTORE,
 	)

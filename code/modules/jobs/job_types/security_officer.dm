@@ -86,6 +86,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		department = get_my_department(spawning, department)
 		GLOB.security_officer_distribution[REF(spawning)] = department
 
+	// AI EDIT START - Name the selected headset type explicitly
 	// BANDASTATION EDIT START - Name the selected headset type explicitly
 	var/headset_type = null
 	var/accessory = null
@@ -114,17 +115,20 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			destination = /area/station/security/checkpoint/science
 			accessory = /obj/item/clothing/accessory/armband/science
 	// BANDASTATION EDIT END
+	// AI EDIT END
 
 	if(accessory)
 		var/obj/item/clothing/under/worn_under = spawning.w_uniform
 		worn_under.attach_accessory(new accessory)
 
+	// AI EDIT START - Dual ear slots
 	// BANDASTATION EDIT START - Dual ear slots
 	if(headset_type)
 		if(spawning.ear_right)
 			qdel(spawning.ear_right)
 		spawning.equip_to_slot_or_del(new headset_type(spawning), ITEM_SLOT_EAR_RIGHT)
 	// BANDASTATION EDIT END
+	// AI EDIT END
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
@@ -227,7 +231,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		/obj/item/evidencebag = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/security
+	// AI EDIT START - Support independent left and right ear slots
 	ear_right = /obj/item/radio/headset/headset_sec/alt // BANDASTATION EDIT - Dual ear slots
+	// AI EDIT END
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/sec
 	shoes = /obj/item/clothing/shoes/jackboots/sec

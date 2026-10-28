@@ -30,10 +30,12 @@
 	var/static/list/slot_flags = list(
 		ITEM_SLOT_HEAD,
 		ITEM_SLOT_EYES,
+		// AI EDIT START - Separate ear slots
 		// BANDASTATION EDIT START - Separate ear slots
 		ITEM_SLOT_EAR_RIGHT,
 		ITEM_SLOT_EAR_LEFT,
 		// BANDASTATION EDIT END
+		// AI EDIT END
 		ITEM_SLOT_MASK,
 		ITEM_SLOT_NECK,
 		ITEM_SLOT_BACK,
@@ -114,6 +116,7 @@
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
 			continue
+		// AI EDIT START - Share worn icon selection with living wearers
 		// BANDASTATION EDIT START - Share worn icon selection with living wearers
 		var/slot_id = text2num(slot_flag)
 		var/default_layer = get_default_layer_by_slot(slot_id)
@@ -126,11 +129,10 @@
 			default_layer = default_layer,
 			female_uniform = female_icon,
 			override_file = icon_file,
-			// AI EDIT START - Render the mannequin item's selected clothing slot
 			slot_id = slot_id,
-			// AI EDIT END
 		)
 		// BANDASTATION EDIT END
+		// AI EDIT END
 
 /obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -175,10 +177,12 @@
 GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	/datum/strippable_item/mannequin_slot/head,
 	/datum/strippable_item/mannequin_slot/eyes,
+	// AI EDIT START - Separate ear slots
 	// BANDASTATION EDIT START - Separate ear slots
 	/datum/strippable_item/mannequin_slot/ear_right,
 	/datum/strippable_item/mannequin_slot/ear_left,
 	// BANDASTATION EDIT END
+	// AI EDIT END
 	/datum/strippable_item/mannequin_slot/mask,
 	/datum/strippable_item/mannequin_slot/neck,
 	/datum/strippable_item/mannequin_slot/back,
@@ -231,6 +235,7 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_EYES
 	item_slot = ITEM_SLOT_EYES
 
+// AI EDIT START - Separate ear slots
 // BANDASTATION EDIT START - Separate ear slots
 /datum/strippable_item/mannequin_slot/ear_right
 	key = STRIPPABLE_ITEM_EAR_RIGHT
@@ -240,6 +245,7 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_EAR_LEFT
 	item_slot = ITEM_SLOT_EAR_LEFT
 // BANDASTATION EDIT END
+// AI EDIT END
 
 /datum/strippable_item/mannequin_slot/mask
 	key = STRIPPABLE_ITEM_MASK

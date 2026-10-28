@@ -1,3 +1,4 @@
+// AI EDIT START - Implement and verify independent ear slots
 /mob/living/carbon/human
 	/// Secondary inventory slots reserved by clothing, keyed by stringified slot bit.
 	var/list/occupied_clothing_slots
@@ -112,3 +113,4 @@
 		refresh_hud(old_wearer)
 	wearer_ref = null
 	primary_slot = NONE
+// AI EDIT END

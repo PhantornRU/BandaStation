@@ -260,6 +260,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_worn_ears()
 	remove_overlay(EARS_LAYER)
+	// AI EDIT START - Independent ears share the existing clothing layer
 	// BANDASTATION EDIT START - Independent ears share the existing clothing layer.
 	hud_used?.update_inventory_slot(ITEM_SLOT_EAR_RIGHT)
 	hud_used?.update_inventory_slot(ITEM_SLOT_EAR_LEFT)
@@ -278,9 +279,7 @@ There are several things that need to be remembered:
 			default_layer = EARS_LAYER,
 			override_file = worn_item.get_worn_icon_for_slot(ear_slot, my_head.limb_id),
 			bodyshape = bodyshape,
-			// AI EDIT START - Pass the selected ear to the generic worn-state resolver
 			slot_id = ear_slot,
-			// AI EDIT END
 		)
 		apply_height(ears_overlay, UPPER_BODY)
 		my_head.worn_ears_offset?.apply_offset(ears_overlay)
@@ -289,6 +288,7 @@ There are several things that need to be remembered:
 		overlays_standing[EARS_LAYER] = ear_overlays
 	apply_overlay(EARS_LAYER)
 	// BANDASTATION EDIT END - Independent ears share the existing clothing layer.
+	// AI EDIT END
 
 /mob/living/carbon/human/update_worn_neck()
 	remove_overlay(NECK_LAYER)

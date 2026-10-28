@@ -1,3 +1,4 @@
+// AI EDIT START - Implement and verify independent ear slots
 /// Only the primary slot displays the real item; reserved slots use independent translucent appearances.
 /datum/unit_test/multi_slot_hud/Run()
 	var/mob/living/carbon/human/wearer = allocate(/mob/living/carbon/human/consistent)
@@ -63,3 +64,4 @@
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), "Stripping the reserved slot did not release it.")
 	TEST_ASSERT_NULL(wearer.get_item_by_slot(ITEM_SLOT_EAR_LEFT), "Stripping the reserved slot left the primary item equipped.")
 	TEST_ASSERT_EQUAL(headset.loc, wearer.drop_location(), "Stripping the reserved slot did not drop the real item at its wearer.")
+// AI EDIT END

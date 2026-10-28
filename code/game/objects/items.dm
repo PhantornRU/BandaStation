@@ -1827,8 +1827,10 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 			return (zone == BODY_ZONE_PRECISE_GROIN)
 		if(ITEM_SLOT_GLOVES)
 			return (zone == BODY_ZONE_R_ARM || zone == BODY_ZONE_L_ARM)
+		// AI EDIT START - Match either ear slot to the head body zone
 		if(ITEM_SLOT_HEAD, ITEM_SLOT_EARS, ITEM_SLOT_EAR_RIGHT, ITEM_SLOT_EAR_LEFT, ITEM_SLOT_NECK) // BANDASTATION EDIT - Separate ear slots
 			return (zone == BODY_ZONE_HEAD)
+		// AI EDIT END
 		if(ITEM_SLOT_MASK)
 			return (zone == BODY_ZONE_PRECISE_MOUTH)
 		if(ITEM_SLOT_EYES)
