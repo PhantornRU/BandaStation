@@ -552,6 +552,14 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 ///Returns a list of strings for a given slot flag.
 /proc/parse_slot_flags(slot_flags)
 	var/list/slot_strings = list()
+	// BANDASTATION ADDITION START - Removable underclothing
+	if(slot_flags & ITEM_SLOT_UNDERWEAR)
+		slot_strings += "underwear"
+	if(slot_flags & ITEM_SLOT_UNDERSHIRT)
+		slot_strings += "undershirt"
+	if(slot_flags & ITEM_SLOT_SOCKS)
+		slot_strings += "socks"
+	// BANDASTATION ADDITION END
 	if(slot_flags & ITEM_SLOT_BACK)
 		slot_strings += "back"
 	if(slot_flags & ITEM_SLOT_MASK)
