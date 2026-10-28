@@ -29,16 +29,22 @@ Lazy about the solution, never about reading. The best code is the code never wr
 **Solution ladder.** The first rung that fully works wins:
 
 1. Does it need to exist? Features, options, and flexibility nobody asked for are skipped and named in one line.
-2. Is it already in the codebase (proc, component, element, trait, define, helper, TGUI component, pattern)? It is used the way the neighbors use it.
+2. <!-- AI EDIT START - Require checking existing methods before adding equivalents -->
+   Search the checked-out build, including relevant fork modules, for an existing proc, component, element, trait, define, helper, TGUI component or pattern before adding one. Read its implementation and callers; reuse it when its inputs, results, side effects, validation, ownership and async behavior fit the task. A similar name alone is not a reason to reuse it.
+   <!-- AI EDIT END -->
 3. Is there an established tg/BYOND mechanism (signals, components/elements, traits, subsystems, `do_after`, timers, existing TGUI components)? It is used.
 4. Can it be a small local change in the existing structure? It is done that way.
-5. Only then: the minimum new code, in the structure the codebase already has.
+5. <!-- AI EDIT START - Require a concrete justification for new code -->
+   Only then: the minimum new code, in the structure the codebase already has. Briefly justify the addition at the level of the chosen solution: the required behavior it provides, the gap in existing methods, and why reuse or a small local change is insufficient. Do not require a separate justification for each line.
+   <!-- AI EDIT END -->
 
 **Rules.**
 
 - A defect in shared code is fixed once at the root, and every caller of the touched proc is checked. A local workaround that leaves the cause in place is not a fix.
 - The shortest diff that reaches everything it must. A clever one-liner that needs decoding is not short.
-- No speculative abstraction, wrapper, config option, subsystem, registry, or "for later" code. Deletion beats addition.
+- <!-- AI EDIT START - Exclude unused additions and unjustified helpers -->
+  No speculative abstraction, wrapper, config option, subsystem, registry, or "for later" code. Leave no unused additions. A helper used once needs a concrete benefit, such as separating cohesive logic or providing a required override point; merely forwarding a call is insufficient. Deletion beats addition.
+  <!-- AI EDIT END -->
 - Moved or merged code keeps its validation and error handling.
 - Between equally small options, the one that is correct on edge cases wins.
 - Verification follows the changed behavior and its risks, not the number of new branches or functions. Choose existing checks, a focused regression test, or a precise manual scenario using [Testing and verification](#4-testing-and-verification).
