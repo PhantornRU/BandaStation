@@ -2,11 +2,11 @@
 	var/obj/item/inspector/scanner = allocate(/obj/item/inspector)
 	scanner.scans_correctly = TRUE
 	var/list/stock = list(
-		/datum/uplink_item/stealthy_weapons/garrote = 3,
+		/datum/uplink_item/stealthy_weapons/garrote = 4,
 		/datum/uplink_item/implants/binyat = 5,
 		/datum/uplink_item/implants/razorwire = 8,
 		/datum/uplink_item/implants/kaleido = 2,
-		/datum/uplink_item/implants/mantis = 10,
+		/datum/uplink_item/implants/mantis = 12,
 	)
 	for(var/entry_type in stock)
 		var/datum/uplink_item/entry = allocate(entry_type)

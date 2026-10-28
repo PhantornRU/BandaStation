@@ -14,7 +14,7 @@
 		toggle.screen_loc = view_size[1] >= 19 ? "WEST+2:10,SOUTH:5" : "WEST+3:12,SOUTH+4:13"
 		toggle.update_appearance()
 	var/row = 1
-	for(var/slot_id in list(ITEM_SLOT_UNDERSHIRT, ITEM_SLOT_UNDERWEAR, ITEM_SLOT_SOCKS))
+	for(var/slot_id in list(ITEM_SLOT_SOCKS, ITEM_SLOT_UNDERWEAR, ITEM_SLOT_UNDERSHIRT))
 		var/datum/inventory_slot/slot = inventory_slots[slot_id]
 		var/atom/movable/screen/inventory/slot_box = slot?.get_screen_slot(src)
 		if(slot_box)
