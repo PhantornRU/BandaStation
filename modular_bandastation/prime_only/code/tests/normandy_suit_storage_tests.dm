@@ -195,7 +195,7 @@
 		if(remaining_item?.loc != storage)
 			TEST_FAIL("Returning an incomplete kit did not store every surviving piece")
 			return
-	if(boots in holder.held_items)
+	if(holder.is_holding(boots))
 		TEST_FAIL("Returning the kit left its boots in the other holder's inventory")
 		return
 	if(wearer.pixel_y != original_pixel_y)
