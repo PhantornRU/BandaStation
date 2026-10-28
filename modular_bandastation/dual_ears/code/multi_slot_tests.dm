@@ -112,6 +112,7 @@
 /// Neither a candidate nor a current wearer may skip revalidation across an equip delay.
 /datum/unit_test/multi_slot_equip_delay
 	var/blocker_equipped = FALSE
+	var/obj/item/blocker_on_delay
 	var/list/candidate_checks = list()
 	var/list/wearer_checks = list()
 
@@ -123,9 +124,11 @@
 	var/obj/item/radio/headset/blocker = allocate(/obj/item/radio/headset)
 	RegisterSignal(wearer, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_wearer_check))
 	RegisterSignal(double, COMSIG_ITEM_EQUIP_CHECK, PROC_REF(on_candidate_check))
-	addtimer(CALLBACK(src, PROC_REF(equip_blocker), wearer, blocker, ITEM_SLOT_EAR_LEFT), 1)
-	TEST_ASSERT(!wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE), "A multi-slot candidate ignored a slot occupied during its equip delay.")
+	blocker_on_delay = blocker
+	RegisterSignal(wearer, COMSIG_DO_AFTER_BEGAN, PROC_REF(on_equip_delay))
+	var/candidate_equipped = wearer.equip_to_slot_if_possible(double, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE)
 	TEST_ASSERT(blocker_equipped, "The delayed candidate test never occupied the other ear.")
+	TEST_ASSERT(!candidate_equipped, "A multi-slot candidate ignored a slot occupied during its equip delay.")
 	TEST_ASSERT_EQUAL(candidate_checks[REF(double)], 2, "Candidate validation did not run both before and after the successful delay.")
 	TEST_ASSERT_EQUAL(wearer.ear_left, blocker, "Delayed equipment displaced the required-slot blocker.")
 	TEST_ASSERT_NULL(wearer.ear_right, "A rejected delayed candidate was still equipped.")
@@ -137,15 +140,21 @@
 	protected.equip_delay_self = 0
 	blocker_equipped = FALSE
 	RegisterSignal(single, COMSIG_ITEM_EQUIP_CHECK, PROC_REF(on_candidate_check))
-	addtimer(CALLBACK(src, PROC_REF(equip_blocker), wearer, protected, ITEM_SLOT_EAR_LEFT), 1)
-	TEST_ASSERT(!wearer.equip_to_slot_if_possible(single, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE), "An ordinary item stole a slot reserved during its equip delay.")
+	blocker_on_delay = protected
+	RegisterSignal(wearer, COMSIG_DO_AFTER_BEGAN, PROC_REF(on_equip_delay))
+	candidate_equipped = wearer.equip_to_slot_if_possible(single, ITEM_SLOT_EAR_RIGHT, disable_warning = TRUE)
 	TEST_ASSERT(blocker_equipped, "The delayed wearer test never installed the two-ear item.")
+	TEST_ASSERT(!candidate_equipped, "An ordinary item stole a slot reserved during its equip delay.")
 	TEST_ASSERT_EQUAL(wearer_checks[REF(single)], 2, "The wearer's reservation signal was not checked again after the delay.")
 	TEST_ASSERT_EQUAL(wearer.get_item_by_slot(ITEM_SLOT_EAR_RIGHT), protected, "A delayed ordinary candidate overwrote a new secondary reservation.")
 	TEST_ASSERT_NULL(wearer.ear_right, "The ordinary candidate was equipped behind a reserved slot.")
 
-/datum/unit_test/multi_slot_equip_delay/proc/equip_blocker(mob/living/carbon/human/wearer, obj/item/blocker, slot)
-	blocker_equipped = wearer.equip_to_slot_if_possible(blocker, slot, disable_warning = TRUE)
+/datum/unit_test/multi_slot_equip_delay/proc/on_equip_delay(mob/living/carbon/human/wearer)
+	SIGNAL_HANDLER
+	UnregisterSignal(wearer, COMSIG_DO_AFTER_BEGAN)
+	// Install the blocker after the first checks, without racing the timer subsystem.
+	blocker_equipped = wearer.equip_to_slot_if_possible(blocker_on_delay, ITEM_SLOT_EAR_LEFT, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+	blocker_on_delay = null
 
 /datum/unit_test/multi_slot_equip_delay/proc/on_candidate_check(datum/source, mob/living/carbon/human/target, slot)
 	SIGNAL_HANDLER

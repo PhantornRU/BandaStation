@@ -453,7 +453,7 @@
 	frame.stage = LIGHT_CONSTRUCT_WIRED
 	frame.icon_state = "[frame.fixture_type]-construct-stage2"
 	frame.setDir(dir)
-	frame.find_and_mount_on_atom()
+	frame.find_and_mount_on_atom(report_missing_support = FALSE) // BANDASTATION EDIT - Losing a support during deconstruction is not a mapping error
 	if(!disassembled)
 		frame.take_damage(frame.max_integrity * 0.5, sound_effect = FALSE)
 		if(status != LIGHT_BROKEN)

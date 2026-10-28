@@ -158,6 +158,7 @@
 
 	return attachables
 
+// BANDASTATION EDIT START - Distinguish expected support loss from mapping errors
 /**
  * Finds an support atom to hang this object on. If you need to mount the object on Late Initialize
  * then pass TRUE inside Initialize() but not in LateInitialize().
@@ -166,8 +167,9 @@
  * Arguments
  * * mark_for_late_init - if TRUE will apply the MOUNT_ON_LATE_INITIALIZE which gets cleared on every call
  * * late_init - should only be passed as TRUE from inside LateInitialize()
+ * * report_missing_support - if FALSE, still attempts to mount but does not report expected support loss as a mapping error
 */
-/obj/proc/find_and_mount_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/proc/find_and_mount_on_atom(mark_for_late_init = FALSE, late_init = FALSE, report_missing_support = TRUE)
 	if(obj_flags & MOUNT_ON_LATE_INITIALIZE)
 		obj_flags &= ~MOUNT_ON_LATE_INITIALIZE
 	else if(late_init)
@@ -178,7 +180,7 @@
 		return FALSE
 
 	var/msg
-	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !mark_for_late_init)
+	if(report_missing_support && PERFORM_ALL_TESTS(maptest_log_mapping) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
 	var/list/turf/attachable_turfs = get_turfs_to_mount_on()
@@ -205,6 +207,7 @@
 	if(mark_for_late_init)
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE
 	return FALSE
+// BANDASTATION EDIT END
 
 ///Used to remount an object in special cases
 /obj/proc/remount()
