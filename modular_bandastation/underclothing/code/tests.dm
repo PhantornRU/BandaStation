@@ -145,6 +145,7 @@
 	var/datum/hud/human/player_hud = allocate(/datum/hud/human, wearer)
 	var/atom/movable/screen/toggle = player_hud.screen_objects["human_underclothing_toggle"]
 	TEST_ASSERT_NOTNULL(toggle, "The separate underclothing toggle must exist.")
+	TEST_ASSERT(toggle in player_hud.screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY], "The backpack toggle must hide the underclothing button.")
 	TEST_ASSERT_EQUAL(toggle.screen_loc, "WEST+2:10,SOUTH:5", "The button must sit beside shoes at the requested location.")
 	TEST_ASSERT_EQUAL(toggle.icon_state, "template", "The button must use a plain frame instead of a backpack.")
 	TEST_ASSERT(length(toggle.overlays), "The button must show an underwear symbol.")
@@ -153,14 +154,15 @@
 		var/datum/inventory_slot/slot = player_hud.inventory_slots[slot_id]
 		var/atom/movable/screen/slot_box = slot.get_screen_slot(player_hud)
 		TEST_ASSERT_NULL(slot_box.screen_loc, "Folded underclothing must not occupy screen space.")
-		TEST_ASSERT(slot_box in player_hud.screen_groups[HUD_GROUP_STATIC], "F12 must hide underclothing with the rest of the standard HUD.")
-		TEST_ASSERT(!(slot_box in player_hud.screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY]), "The main inventory must not reveal underclothing.")
+		TEST_ASSERT(slot_box in player_hud.screen_groups[HUD_GROUP_TOGGLEABLE_INVENTORY], "The backpack toggle must hide all underclothing slots.")
+		TEST_ASSERT(!(slot_box in player_hud.screen_groups[HUD_GROUP_STATIC]), "Underclothing slots must not remain in the always-visible HUD group.")
 	wearer.underwear = /datum/sprite_accessory/clothing/underwear/male_briefs::name
 	wearer.update_body()
 	var/obj/item/clothing/underwear/garment = wearer.w_underwear
+	player_hud.inventory_shown = TRUE
 	player_hud.toggle_underclothing()
 	TEST_ASSERT(player_hud.underclothing_shown, "The separate toggle must open the panel.")
-	TEST_ASSERT(!player_hud.inventory_shown, "Opening underclothing must leave the main inventory folded.")
+	TEST_ASSERT(player_hud.inventory_shown, "Opening underclothing must preserve the main inventory state.")
 	var/list/positions = list(toggle.screen_loc)
 	for(var/slot_id in list(ITEM_SLOT_UNDERWEAR, ITEM_SLOT_UNDERSHIRT, ITEM_SLOT_SOCKS))
 		var/datum/inventory_slot/slot = player_hud.inventory_slots[slot_id]
