@@ -111,7 +111,10 @@
 /datum/unit_test/underclothing_socks_icon/Run()
 	var/obj/item/clothing/underwear/socks/socks = allocate(/obj/item/clothing/underwear/socks)
 	for(var/style_name in SSaccessories.socks_list)
+		if(style_name == /datum/sprite_accessory/clothing/socks/nude::name)
+			continue
 		var/datum/sprite_accessory/clothing/style = SSaccessories.socks_list[style_name]
+		TEST_ASSERT_NOTNULL(style, "Sock style [style_name] is missing its sprite accessory.")
 		if(!style.icon_state)
 			continue
 		socks.set_style(style, COLOR_WHITE)
