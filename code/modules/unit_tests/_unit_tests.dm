@@ -114,6 +114,7 @@
 #include "../../../modular_bandastation/species/code/tests/ipc_appearance_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_cleaning_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_culinary_drink_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_dna_vault_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_drink_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_emote_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_extinguisher_tests.dm"
