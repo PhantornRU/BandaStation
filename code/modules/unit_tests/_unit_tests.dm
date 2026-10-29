@@ -260,11 +260,7 @@
 #include "knockoff_component.dm"
 #include "language_key_conflicts.dm"
 #include "language_transfer.dm"
-// AI EDIT START - Include internal affairs role regression tests
-// BANDASTATION ADDITION START - Internal affairs role regression tests
 #include "lawyer_role.dm"
-// BANDASTATION ADDITION END
-// AI EDIT END
 #include "leash.dm"
 #include "lesserform.dm"
 #include "light_replacer.dm"
