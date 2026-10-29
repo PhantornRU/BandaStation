@@ -34,6 +34,16 @@
 	for(var/area/station/san_francisco/district in GLOB.areas)
 		if(district.has_contained_turfs())
 			CITY_ASSERT(!district.requires_power, "[district.type] lost the donor's requires_power = FALSE setting.")
+	// AI EDIT START - Catch imported off-grid collision that can suppress normal client gliding.
+	var/checked_cars = 0
+	for(var/obj/structure/san_francisco_parked_vehicle/city_car in world)
+		if(!is_station_level(city_car.z))
+			continue
+		checked_cars++
+		CITY_ASSERT(city_car.bound_width == ICON_SIZE_X && city_car.bound_height == ICON_SIZE_Y && city_car.bound_x == 0 && city_car.bound_y == 0, "[city_car.type] lost the donor's native tile collision at [AREACOORD(city_car)].")
+		CITY_ASSERT(city_car.step_x == 0 && city_car.step_y == 0 && city_car.step_size == ICON_SIZE_X, "[city_car.type] enables pixel movement at [AREACOORD(city_car)].")
+	CITY_ASSERT(checked_cars > 0, "No mapped parked cars were checked for native tile collision.")
+	// AI EDIT END
 
 /datum/unit_test/san_francisco/atmosphere/Run()
 	var/checked = 0
@@ -116,6 +126,52 @@
 	CITY_ASSERT(icon_exists(elevator.icon, elevator.icon_state), "The double elevator door has a missing open sprite.")
 	CITY_ASSERT(elevator.close(BYPASS_DOOR_CHECKS) && elevator.density && elevator.filler.density, "The double elevator door did not close both tiles.")
 	CITY_ASSERT(icon_exists(elevator.icon, elevator.icon_state), "The double elevator door has a missing closed sprite.")
+
+// AI EDIT START - Exercise every mapped passage with a human, including outdoor terrain and rejected landings.
+/datum/unit_test/san_francisco/passages/Run()
+	var/list/city_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	CITY_ASSERT(length(city_levels) == 5, "Passage tests require all five city levels.")
+	var/mob/living/carbon/human/consistent/person = allocate(/mob/living/carbon/human/consistent)
+	var/checked = 0
+	var/misc_landings = 0
+	for(var/obj/structure/san_francisco_passage/passage in world)
+		if(!is_station_level(passage.z))
+			continue
+		person.forceMove(run_loc_floor_bottom_left)
+		var/turf/start
+		for(var/direction in GLOB.cardinals)
+			var/turf/candidate = get_step(passage, direction)
+			if(isopenturf(candidate) && !isspaceturf(candidate) && !isopenspaceturf(candidate) && !candidate.is_blocked_turf())
+				start = candidate
+				break
+		CITY_ASSERT(start, "Cannot approach passage at [AREACOORD(passage)].")
+		CITY_ASSERT(isnum(passage.destination_level) && passage.destination_level >= 1 && passage.destination_level <= length(city_levels), "Passage at [AREACOORD(passage)] has no valid destination level.")
+		var/turf/destination = locate(passage.destination_x, passage.destination_y, city_levels[passage.destination_level])
+		var/obj/structure/san_francisco_passage/reverse = locate() in destination
+		CITY_ASSERT(reverse, "Passage at [AREACOORD(passage)] has no paired return passage.")
+		CITY_ASSERT(isnum(reverse.destination_level) && reverse.destination_level >= 1 && reverse.destination_level <= length(city_levels), "Return passage at [AREACOORD(reverse)] has no valid destination level.")
+		CITY_ASSERT(reverse.destination_x == passage.x && reverse.destination_y == passage.y && city_levels[reverse.destination_level] == passage.z, "Passage at [AREACOORD(passage)] has an incorrect return destination.")
+		person.forceMove(start)
+		CITY_ASSERT(passage.use_passage(person), "A person could not use passage at [AREACOORD(passage)].")
+		CITY_ASSERT(person.z == destination.z && get_dist(person, destination) == 1, "Passage at [AREACOORD(passage)] did not reach its paired exit.")
+		CITY_ASSERT(has_safe_air(get_turf(person)), "Passage at [AREACOORD(passage)] landed in unsafe air.")
+		if(istype(get_turf(person), /turf/open/misc))
+			misc_landings++
+		CITY_ASSERT(reverse.use_passage(person), "A person could not return from passage at [AREACOORD(reverse)].")
+		CITY_ASSERT(person.z == passage.z && get_dist(person, passage) == 1, "Return passage at [AREACOORD(reverse)] reached an incorrect location.")
+		CITY_ASSERT(has_safe_air(get_turf(person)), "Return passage at [AREACOORD(reverse)] landed in unsafe air.")
+		checked++
+	CITY_ASSERT(checked == 28, "Expected all 28 original passage endpoints; checked [checked].")
+	CITY_ASSERT(misc_landings > 0, "No actual outdoor misc-terrain landing was exercised.")
+	// The city's cordoned corner has no valid neighboring landing, and must leave the traveller in place.
+	var/obj/structure/san_francisco_passage/blocked = allocate(/obj/structure/san_francisco_passage, run_loc_floor_bottom_left)
+	blocked.destination_x = 1
+	blocked.destination_y = 1
+	blocked.destination_level = length(city_levels)
+	var/turf/approach = get_step(run_loc_floor_bottom_left, EAST)
+	person.forceMove(approach)
+	CITY_ASSERT(!blocked.use_passage(person) && get_turf(person) == approach, "An invalid landing moved the traveller.")
+// AI EDIT END
 
 /// Check initialized visible appearances, including overlays, so dynamic sprite errors are not hidden by a static DMM audit.
 /datum/unit_test/san_francisco/icons/Run()

@@ -31,8 +31,10 @@
 		return
 	for(var/direction in GLOB.cardinals)
 		var/turf/landing = get_step(destination, direction)
-		if(!istype(landing, /turf/open/floor) || landing.is_blocked_turf())
+		// AI EDIT START - Allow the donor's solid outdoor terrain without landing in space or a fall.
+		if(!isopenturf(landing) || isspaceturf(landing) || isopenspaceturf(landing) || landing.is_blocked_turf())
 			continue
+		// AI EDIT END
 		return traveller.zMove(target = landing, z_move_flags = ZMOVE_INCLUDE_PULLED|ZMOVE_CHECK_PULLS)
 	balloon_alert(traveller, "проход загромождён")
 	return FALSE

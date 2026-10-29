@@ -24,6 +24,15 @@ if (-not $tests.Count) { throw 'No city integration tests were found.' }
 $tests += '/datum/unit_test/maptest_job_roundstart_spawnpoints',
     '/datum/unit_test/maptest_mapload_space_verification',
     '/datum/unit_test/san_francisco_tgm_attribute_alignment'
+# AI EDIT START - Exercise inherited appearances and initialization beyond roundstart map objects
+$tests += '/datum/unit_test/create_and_destroy',
+    '/datum/unit_test/modify_fantasy_variable',
+    '/datum/unit_test/missing_icons/icon_state',
+    '/datum/unit_test/missing_icons/inhand_icon_state',
+    '/datum/unit_test/missing_icons/worn_icons',
+    '/datum/unit_test/fish_aquarium_icons',
+    '/datum/unit_test/focus_only/invalid_emissives'
+# AI EDIT END
 $tests = @($tests | Sort-Object -Unique)
 $requiredTests = @($tests | Where-Object { $_ -notlike '/datum/unit_test/focus_only/*' })
 $ignoredRequired = @($requiredTests | Where-Object { $_ -in @($cityConfig.ignored_unit_tests) })

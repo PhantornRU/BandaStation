@@ -87,18 +87,26 @@
 	break_if_moved = FALSE
 	nightshift_allowed = FALSE
 
+// AI EDIT START - Preserve native light updates without station fixture artwork
 /obj/machinery/light/floor/san_francisco_lamppost/update_icon_state()
+	. = ..()
 	icon_state = initial(icon_state)
 
 /obj/machinery/light/floor/san_francisco_lamppost/update_overlays()
+	SHOULD_CALL_PARENT(FALSE)
+	// The donor frame already contains the entire pole and lamp.
 	return list()
+// AI EDIT END
 
 /// Sewer access uses the existing ladder linking and travel checks.
 /obj/structure/ladder/san_francisco
 	parent_type = /obj/structure/ladder
 
+// AI EDIT START - Keep native ladder updates before restoring the donor frame
 /obj/structure/ladder/san_francisco/update_icon_state()
+	. = ..()
 	icon_state = initial(icon_state)
+// AI EDIT END
 
 /// Preserve the donor hole alignment instead of lifting its manhole cover twelve pixels.
 /obj/structure/ladder/san_francisco/make_base_transparent()
@@ -117,32 +125,21 @@
 	loc.update_appearance(UPDATE_OVERLAYS)
 
 /// The original manhole sheet intentionally has no separate rim; its cover contains it.
+// AI EDIT START - Inherit the native signal handler's no-sleep contract
 /obj/effect/abstract/ladder_hole/san_francisco/add_ladder_rim(turf/source, list/overlays)
-	SIGNAL_HANDLER
 	if(!icon_exists(ladder.icon, "[ladder.base_icon_state]_rim"))
 		return
 	return ..()
+// AI EDIT END
 
-/// The port preserves city traffic as parked vehicles; driving is a separate system.
+// AI EDIT START - Preserve donor tile collision; off-grid bounds can disable legacy gliding.
+/// Parked cars retain the donor's native 32 by 32 collision and original sprite offsets.
 /obj/structure/san_francisco_parked_vehicle
 	parent_type = /obj/structure
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 400
-	var/vehicle_length = 64
-
-/obj/structure/san_francisco_parked_vehicle/Initialize(mapload)
-	. = ..()
-	if(dir == EAST || dir == WEST)
-		bound_width = vehicle_length
-		bound_height = 32
-		bound_x = -(vehicle_length - 32) / 2
-		bound_y = 0
-	else
-		bound_width = 32
-		bound_height = vehicle_length
-		bound_x = 0
-		bound_y = -(vehicle_length - 32) / 2
+// AI EDIT END
 
 
 /obj/structure/san_francisco/decor/obj_darkpack_car_endroncar
@@ -176,7 +173,6 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = VEHICLE_LAYER
-	vehicle_length = 96
 
 /obj/structure/san_francisco/decor/obj_darkpack_car_limousine_camarilla
 	parent_type = /obj/structure/san_francisco_parked_vehicle
@@ -194,7 +190,6 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = VEHICLE_LAYER
-	vehicle_length = 96
 
 /obj/structure/san_francisco/decor/obj_darkpack_car_limousine_giovanni
 	parent_type = /obj/structure/san_francisco_parked_vehicle
@@ -212,7 +207,6 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = VEHICLE_LAYER
-	vehicle_length = 96
 
 /obj/structure/san_francisco/decor/obj_darkpack_car_police
 	parent_type = /obj/structure/san_francisco_parked_vehicle
@@ -417,7 +411,6 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = VEHICLE_LAYER
-	vehicle_length = 96
 
 /obj/structure/san_francisco/decor/obj_darkpack_car_track_ambulance
 	parent_type = /obj/structure/san_francisco_parked_vehicle
@@ -435,7 +428,6 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = VEHICLE_LAYER
-	vehicle_length = 96
 
 /obj/structure/san_francisco/decor/obj_darkpack_car_track_volkswagen
 	parent_type = /obj/structure/san_francisco_parked_vehicle
@@ -453,7 +445,6 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = VEHICLE_LAYER
-	vehicle_length = 96
 
 /obj/effect/decal/san_francisco/obj_effect_decal_carpet
 	parent_type = /obj/effect/decal

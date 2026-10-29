@@ -29,9 +29,13 @@ Runtime overlays, worn sprites and map initialization are covered by:
 
   powershell -NoProfile -File tools/san_francisco/test-city.ps1
 
-Eight focused test groups cover the prototype. It is excluded from the generic
+# AI EDIT START - Document the extended native compatibility checks
+Fifteen test groups cover city initialization, movement-grid compatibility,
+real passage travel, native creation/deletion and equipment icons. Native
+emissive validation is also enabled. The map is excluded from the generic
 station CI matrix until station shuttle routes are integrated. Test logs and
 isolated runtime files are written under tmp/ and must not be committed.
+# AI EDIT END
 
 Maintainer generation commands overwrite the named generated outputs. Run them
 on a branch and review the diff; no generation is needed to play the checked-in

@@ -137,9 +137,12 @@
 	if(animation == DOOR_DENY_ANIMATION)
 		icon_state = "closed"
 
+// AI EDIT START - Keep parent rendering updates while using complete donor frames
 /obj/machinery/door/airlock/san_francisco_elevator/update_overlays()
+	. = ..()
 	// The donor's complete frames must not receive standard station-airlock filler panels.
 	return list()
+// AI EDIT END
 
 /obj/machinery/door/poddoor/shutters/san_francisco
 	icon = 'modular_bandastation/san_francisco/icons/doors/shutters.dmi'

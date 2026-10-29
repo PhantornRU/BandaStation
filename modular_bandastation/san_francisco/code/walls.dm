@@ -206,6 +206,9 @@
 
 // Low city facades retain native platform climbing, damage and deconstruction.
 /obj/structure/platform/san_francisco
+	// AI EDIT START - This iconless template is not a concrete low wall
+	abstract_type = /obj/structure/platform/san_francisco
+	// AI EDIT END
 	name = "low wall"
 	desc = "It's a lot like a wall, but lower."
 	icon_state = "wall-0"
@@ -272,6 +275,11 @@
 	name = "low wall"
 	desc = "It's a lot like a wall, but lower."
 
+
+// AI EDIT START - Give the implicit junk-wall parent its donor atlas
+/obj/structure/platform/san_francisco/junk
+	icon = 'modular_bandastation/san_francisco/icons/architecture/walls/junk/low_wall.dmi'
+// AI EDIT END
 
 /obj/structure/platform/san_francisco/junk/alt
 	icon = 'modular_bandastation/san_francisco/icons/architecture/walls/junk_alt/low_wall.dmi'

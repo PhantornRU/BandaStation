@@ -209,10 +209,20 @@
 	desc = "Well fire weapon."
 	icon = 'modular_bandastation/san_francisco/icons/compat/b93cb3d7f1_weapons.dmi'
 	icon_state = "flamethrower4"
-	lefthand_file = 'modular_bandastation/san_francisco/icons/compat/0126c35bab_lefthand.dmi'
-	righthand_file = 'modular_bandastation/san_francisco/icons/compat/da20699a8d_righthand.dmi'
+	// AI EDIT START - Match the native flamethrower's lit and unlit inhand states
+	lefthand_file = /obj/item/flamethrower::lefthand_file
+	righthand_file = /obj/item/flamethrower::righthand_file
+	// AI EDIT END
 	density = FALSE
 	anchored = FALSE
+
+// AI EDIT START - Keep native flamethrower attachments on their own atlas
+/obj/item/san_francisco_compat/item_liquid_flamethrower/update_overlays()
+	. = ..()
+	for(var/index in 1 to length(.))
+		if(istext(.[index]))
+			.[index] = mutable_appearance(/obj/item/flamethrower::icon, .[index])
+// AI EDIT END
 
 /obj/item/san_francisco_compat/item_melee_sabre_rapier
 	parent_type = /obj/item/melee/sabre
@@ -462,6 +472,9 @@
 	icon = 'modular_bandastation/san_francisco/icons/compat/c1dab43ea6_clock.dmi'
 	icon_state = "watch"
 	worn_icon = 'modular_bandastation/san_francisco/icons/compat/cb9da1310f_worn.dmi'
+	// AI EDIT START - Use the original watch state in the imported worn atlas
+	worn_icon_state = "watch"
+	// AI EDIT END
 	density = FALSE
 	anchored = FALSE
 
@@ -614,6 +627,19 @@
 	density = TRUE
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
+
+// AI EDIT START - Preserve the donor shelf through native power and maintenance updates
+/obj/machinery/san_francisco_compat/machinery_vending_cigarette_shelf/update_icon_state()
+	. = ..()
+	// The donor atlas has no powered-off or broken frames.
+	icon_state = initial(icon_state)
+
+/obj/machinery/san_francisco_compat/machinery_vending_cigarette_shelf/update_overlays()
+	. = ..()
+	if(panel_open)
+		. -= panel_type
+		. += mutable_appearance(/obj/machinery/vending/cigarette::icon, panel_type)
+// AI EDIT END
 
 /obj/structure/san_francisco_compat/structure_cargo_put
 	parent_type = /obj/structure
@@ -906,6 +932,9 @@
 	desc = "Often found in groups foraging for clams, crabs, shrimp, and worms in intertidal mudflats found along the west coast, these sharks are rarely found bigger than 2 meters."
 	icon = 'modular_bandastation/san_francisco/icons/compat/c973a4a45b_fish48x32.dmi'
 	icon_state = "shark"
+	// AI EDIT START - Retain the donor's existing aquarium sprite selection
+	dedicated_in_aquarium_icon_state = "fish_greyscale"
+	// AI EDIT END
 	pixel_w = -16
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -1349,7 +1378,9 @@
 	name = "The Crown Diamond"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-diamond"
-	worn_icon_state = "purified_soulstone"
+	// AI EDIT START - Match the native crown parent's worn atlas
+	worn_icon_state = /obj/item/clothing/head/costume/crown/fancy::icon_state
+	// AI EDIT END
 	inhand_icon_state = "sheet-diamond"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
@@ -1365,14 +1396,19 @@
 /obj/item/san_francisco_compat/item_watch/attack_self(mob/user)
 	return
 
+// AI EDIT START - Preserve native computer appearance signals before restoring donor frames
 /obj/item/san_francisco_compat/vampire_computer/update_icon_state()
+	. = ..()
 	icon_state = initial(icon_state)
 
 /obj/item/san_francisco_compat/vampire_computer_box/update_icon_state()
+	. = ..()
 	icon_state = initial(icon_state)
 
 /obj/item/san_francisco_compat/vampire_computer_prince/update_icon_state()
+	. = ..()
 	icon_state = initial(icon_state)
+// AI EDIT END
 
 // The donor register takes its visible name from the existing mapped shop area.
 /obj/structure/san_francisco_retail_compat

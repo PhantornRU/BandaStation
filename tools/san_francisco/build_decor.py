@@ -387,8 +387,6 @@ for entry in sorted(current_missing, key=lambda item: item["path"]):
         lines.extend(("\tbase_state = " + properties["icon_state"], "\tallow_break_on_init = FALSE", "\tbreak_if_moved = FALSE"))
     if path.startswith("/obj/darkpack_car"):
         lines.extend(("\tdensity = TRUE", "\tanchored = TRUE", "\tlight_range = 0", "\tlight_power = 0", "\tpixel_x = -32", "\tpixel_y = -32", "\tlayer = VEHICLE_LAYER"))
-        if "/limousine" in path or "/track" in path or "/endrontruck" in path:
-            lines.append("\tvehicle_length = 96")
     # TG cleanable decals can preserve donor litter without donor trash spawners.
     # Keep one value per property when an adapted behaviour overrides the donor.
     final_lines = {line.split(" = ", 1)[0]: line for line in lines[1:]}
@@ -486,18 +484,26 @@ header = '''// City appearance adapters from Monkestation/crimson-grid, commit 4
 \tbreak_if_moved = FALSE
 \tnightshift_allowed = FALSE
 
+// AI EDIT START - Preserve native light updates without station fixture artwork
 /obj/machinery/light/floor/san_francisco_lamppost/update_icon_state()
+\t. = ..()
 \ticon_state = initial(icon_state)
 
 /obj/machinery/light/floor/san_francisco_lamppost/update_overlays()
+\tSHOULD_CALL_PARENT(FALSE)
+\t// The donor frame already contains the entire pole and lamp.
 \treturn list()
+// AI EDIT END
 
 /// Sewer access uses the existing ladder linking and travel checks.
 /obj/structure/ladder/san_francisco
 \tparent_type = /obj/structure/ladder
 
+// AI EDIT START - Keep native ladder updates before restoring the donor frame
 /obj/structure/ladder/san_francisco/update_icon_state()
+\t. = ..()
 \ticon_state = initial(icon_state)
+// AI EDIT END
 
 /// Preserve the donor hole alignment instead of lifting its manhole cover twelve pixels.
 /obj/structure/ladder/san_francisco/make_base_transparent()
@@ -516,32 +522,21 @@ header = '''// City appearance adapters from Monkestation/crimson-grid, commit 4
 \tloc.update_appearance(UPDATE_OVERLAYS)
 
 /// The original manhole sheet intentionally has no separate rim; its cover contains it.
+// AI EDIT START - Inherit the native signal handler's no-sleep contract
 /obj/effect/abstract/ladder_hole/san_francisco/add_ladder_rim(turf/source, list/overlays)
-\tSIGNAL_HANDLER
 \tif(!icon_exists(ladder.icon, "[ladder.base_icon_state]_rim"))
 \t\treturn
 \treturn ..()
+// AI EDIT END
 
-/// The port preserves city traffic as parked vehicles; driving is a separate system.
+// AI EDIT START - Preserve donor tile collision; off-grid bounds can disable legacy gliding.
+/// Parked cars retain the donor's native 32 by 32 collision and original sprite offsets.
 /obj/structure/san_francisco_parked_vehicle
 \tparent_type = /obj/structure
 \tdensity = TRUE
 \tanchored = TRUE
 \tmax_integrity = 400
-\tvar/vehicle_length = 64
-
-/obj/structure/san_francisco_parked_vehicle/Initialize(mapload)
-\t. = ..()
-\tif(dir == EAST || dir == WEST)
-\t\tbound_width = vehicle_length
-\t\tbound_height = 32
-\t\tbound_x = -(vehicle_length - 32) / 2
-\t\tbound_y = 0
-\telse
-\t\tbound_width = 32
-\t\tbound_height = vehicle_length
-\t\tbound_x = 0
-\t\tbound_y = -(vehicle_length - 32) / 2
+// AI EDIT END
 '''
 (MODULE / "code").mkdir(parents=True, exist_ok=True)
 (MODULE / "code/decor.dm").write_text(header + "\n\n" + "\n\n".join(definitions + manual_definitions) + "\n\n#undef SMOOTH_GROUP_SAN_FRANCISCO_VENTS\n", encoding="utf-8", newline="\n")

@@ -20,7 +20,9 @@ $runtime = Join-Path $repoRoot ('tmp\' + $runName)
 New-Item -ItemType Directory -Path $runtime | Out-Null
 Push-Location -LiteralPath $repoRoot
 try {
-    & $compiler -DCBT -DCITY_PORT_BUILD tgstation.dme 2>&1 | Tee-Object -FilePath (Join-Path $runtime 'compile.log')
+    # AI EDIT START - Finish assets before players connect to the isolated playtest
+    & $compiler -DCBT -DCITY_PORT_BUILD -DDO_NOT_DEFER_ASSETS tgstation.dme 2>&1 | Tee-Object -FilePath (Join-Path $runtime 'compile.log')
+    # AI EDIT END
     if ($LASTEXITCODE -ne 0) { throw "Compilation failed: $runtime\compile.log" }
     foreach ($extension in @('dmb', 'rsc')) {
         Copy-Item -LiteralPath ('tgstation.' + $extension) -Destination (Join-Path $runtime ('city.local.' + $extension))
@@ -50,8 +52,10 @@ try {
     }
     [IO.File]::WriteAllLines((Join-Path $config 'admins.txt'), [string[]]$admins, $utf8)
     [IO.File]::WriteAllLines((Join-Path $config 'admin_ranks.txt'), [string[]]$adminRanks, $utf8)
-    $raceOptions = @(Get-Content -LiteralPath 'config\game_options.txt' | Where-Object { $_ -match '^\s*ROUNDSTART_RACES\s+\S+' })
-    [IO.File]::WriteAllLines((Join-Path $config 'game_options.txt'), [string[]](@('FORBID_STATION_TRAITS') + $raceOptions), $utf8)
+    # AI EDIT START - Keep native movement delays and gameplay configuration in local sessions
+    $gameOptions = @(Get-Content -LiteralPath 'config\game_options.txt')
+    [IO.File]::WriteAllLines((Join-Path $config 'game_options.txt'), [string[]]($gameOptions + 'FORBID_STATION_TRAITS'), $utf8)
+    # AI EDIT END
     $inGreenshift = $false
     $dynamic = @(Get-Content -LiteralPath 'config\dynamic.toml' | ForEach-Object {
         if ($_ -match '^\["([^\"]+)"\]\s*$') { $inGreenshift = $Matches[1] -eq 'Greenshift' }
