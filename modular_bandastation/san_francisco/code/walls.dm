@@ -27,6 +27,9 @@
 	parent_type = /turf/closed/wall/concrete
 	name = "old brick wall"
 	desc = "A huge chunk of old bricks used to separate rooms."
+	// AI EDIT START - Keep the base wall's initial and smoothed states on a matching donor atlas
+	icon = 'modular_bandastation/san_francisco/icons/architecture/walls/brick_old/wall.dmi'
+	// AI EDIT END
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK

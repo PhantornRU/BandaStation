@@ -27,6 +27,7 @@ $tests += '/datum/unit_test/maptest_job_roundstart_spawnpoints',
 # AI EDIT START - Exercise inherited appearances and initialization beyond roundstart map objects
 $tests += '/datum/unit_test/create_and_destroy',
     '/datum/unit_test/modify_fantasy_variable',
+    '/datum/unit_test/maptest_turf_icons',
     '/datum/unit_test/missing_icons/icon_state',
     '/datum/unit_test/missing_icons/inhand_icon_state',
     '/datum/unit_test/missing_icons/worn_icons',
