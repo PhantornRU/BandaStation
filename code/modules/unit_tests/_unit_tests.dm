@@ -118,6 +118,7 @@
 #include "../../../modular_bandastation/species/code/tests/ipc_emote_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_extinguisher_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_fabrication_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_mood_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_power_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_preferences_hud_tests.dm"
 #include "../../../modular_bandastation/species/code/tests/ipc_radiation_tests.dm"
@@ -416,6 +417,8 @@
 // BANDASTATION ADDITION END - Vox port regression tests
 // BANDASTATION ADDITION - Shadow Demon port regression tests
 #include "../../../modular_bandastation/shadow_demon/code/shadow_demon_tests.dm"
+#include "../../../modular_bandastation/shadow_demon/code/shadow_demon_dynamic_regression_tests.dm"
+#include "../../../modular_bandastation/shadow_demon/code/shadow_demon_light_regression_tests.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif
@@ -428,6 +431,8 @@
 #include "../../../modular_bandastation/sierra_background/tests/names.dm"
 #include "../../../modular_bandastation/sierra_background/tests/gutter.dm"
 #include "../../../modular_bandastation/sierra_background/tests/dependencies.dm"
+#include "../../../modular_bandastation/sierra_background/tests/social.dm"
+#include "../../../modular_bandastation/sierra_background/tests/corrections.dm"
 #include "../../../modular_bandastation/sierra_background/tests/antagonist.dm"
 
 // BANDASTATION ADDITION START - Paradise spacepod port regression tests
@@ -455,8 +460,29 @@
 
 #include "../../../modular_bandastation/quirks/code/tests/porphyria.dm" // BANDASTATION ADDITION - Porphyria
 
+#include "../../../modular_bandastation/bug_reports/tests/bug_reports_test.dm" // BANDASTATION ADDITION - In-game bug reports
+
+// AI EDIT START - Separate ear slots
+// BANDASTATION ADDITION START - Separate ear slots
+#include "../../../modular_bandastation/dual_ears/code/inventory_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/radio_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/appearance_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/mannequin_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/multi_slot_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/multi_slot_hud_tests.dm"
+// BANDASTATION ADDITION END
+// AI EDIT END
+
+#include "../../../modular_bandastation/weapon/code/ranged/weapon_choice_tests.dm" // BANDASTATION ADDITION - HoS and Blueshield sidearms
+
+#include "../../../modular_bandastation/underclothing/code/tests.dm" // BANDASTATION ADDITION - Removable underclothing
+
+#include "../../../modular_bandastation/uplink_items/code/tests/syndicate_items.dm"
+
+// AI EDIT START - Retain San Francisco TGM regression alongside current master tests
 // BANDASTATION ADDITION - TGM attribute alignment regression for the imported map.
 #include "../../../modular_bandastation/san_francisco/code/mapping_tests.dm"
+// AI EDIT END
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL
