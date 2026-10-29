@@ -74,7 +74,7 @@
 
 	if(!isnull(ghost_hairstyle) && ghost_hairstyle != "Bald") //Bald hairstyle and the Shaved facial hairstyle lack an associated sprite and will not properly generate hair, and just cause runtimes.
 		var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
-		ghost_hair = mutable_appearance(hair_style.icon, "[hair_style.icon_state]", -HAIR_LAYER) // BANDASTATION EDIT - Respect the selected hair accessory's icon file.
+		ghost_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		ghost_hair.pixel_z = hair_style.y_offset
@@ -82,7 +82,7 @@
 
 	if(!isnull(ghost_facial_hairstyle) && ghost_facial_hairstyle != "Shaved")
 		var/datum/sprite_accessory/facial_hair_style = SSaccessories.facial_hairstyles_list[ghost_facial_hairstyle]
-		ghost_facial_hair = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]", -HAIR_LAYER) // BANDASTATION EDIT - Respect the selected facial hair accessory's icon file.
+		ghost_facial_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[facial_hair_style.icon_state]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)

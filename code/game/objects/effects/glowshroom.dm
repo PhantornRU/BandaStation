@@ -196,7 +196,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 			shroom_count++
 		for(var/wall_dir in GLOB.cardinals)
 			var/turf/potential_wall = get_step(new_loc,wall_dir)
-			if(potential_wall?.density) // BANDASTATION EDIT: map edges have no neighboring turf
+			if(potential_wall.density)
 				place_count++
 		if(shroom_count >= place_count)
 			continue
@@ -209,7 +209,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	for(var/wall_dir in GLOB.cardinals)
 		var/turf/new_turf = get_step(location,wall_dir)
-		if(new_turf?.density) // BANDASTATION EDIT: map edges have no neighboring turf
+		if(new_turf.density)
 			direction |= wall_dir
 
 	for(var/obj/structure/glowshroom/shroom in location)
