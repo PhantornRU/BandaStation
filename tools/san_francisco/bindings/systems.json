@@ -1,0 +1,1453 @@
+{
+  "version": 1,
+  "mode": "faithful direct donor map port",
+  "source_revision": "483ef4772fe4957027c8e2f290cd1503b2b237f5",
+  "bindings": {
+    "/area/vtm": "/area/station/san_francisco",
+    "/area/vtm/graveyard": "/area/station/san_francisco/graveyard",
+    "/area/vtm/interior": "/area/station/san_francisco/interior",
+    "/area/vtm/interior/anarch": "/area/station/san_francisco/interior/anarch",
+    "/area/vtm/interior/baali": "/area/station/san_francisco/interior/baali",
+    "/area/vtm/interior/banu": "/area/station/san_francisco/interior/banu",
+    "/area/vtm/interior/bianchiBank": "/area/station/san_francisco/interior/bianchiBank",
+    "/area/vtm/interior/chantry": "/area/station/san_francisco/interior/chantry",
+    "/area/vtm/interior/church": "/area/station/san_francisco/interior/church",
+    "/area/vtm/interior/clinic": "/area/station/san_francisco/interior/clinic",
+    "/area/vtm/interior/endron_facility": "/area/station/san_francisco/interior/endron_facility",
+    "/area/vtm/interior/ghetto": "/area/station/san_francisco/interior/ghetto",
+    "/area/vtm/interior/giovanni": "/area/station/san_francisco/interior/giovanni",
+    "/area/vtm/interior/glasswalker": "/area/station/san_francisco/interior/glasswalker",
+    "/area/vtm/interior/graveyard": "/area/station/san_francisco/interior/graveyard",
+    "/area/vtm/interior/hotel": "/area/station/san_francisco/interior/hotel",
+    "/area/vtm/interior/jazzclub": "/area/station/san_francisco/interior/jazzclub",
+    "/area/vtm/interior/laundromat": "/area/station/san_francisco/interior/laundromat",
+    "/area/vtm/interior/library": "/area/station/san_francisco/interior/library",
+    "/area/vtm/interior/mansion": "/area/station/san_francisco/interior/mansion",
+    "/area/vtm/interior/millennium_tower": "/area/station/san_francisco/interior/millennium_tower",
+    "/area/vtm/interior/museum": "/area/station/san_francisco/interior/museum",
+    "/area/vtm/interior/oldchurch": "/area/station/san_francisco/interior/oldchurch",
+    "/area/vtm/interior/police": "/area/station/san_francisco/interior/police",
+    "/area/vtm/interior/prince_elevator": "/area/station/san_francisco/interior/prince_elevator",
+    "/area/vtm/interior/sabbat_lair": "/area/station/san_francisco/interior/sabbat_lair",
+    "/area/vtm/interior/salubri": "/area/station/san_francisco/interior/salubri",
+    "/area/vtm/interior/setite": "/area/station/san_francisco/interior/setite",
+    "/area/vtm/interior/sewer": "/area/station/san_francisco/interior/sewer",
+    "/area/vtm/interior/shop": "/area/station/san_francisco/interior/shop",
+    "/area/vtm/interior/strip": "/area/station/san_francisco/interior/strip",
+    "/area/vtm/interior/supply": "/area/station/san_francisco/interior/supply",
+    "/area/vtm/interior/techshop": "/area/station/san_francisco/interior/techshop",
+    "/area/vtm/interior/theatre": "/area/station/san_francisco/interior/theatre",
+    "/area/vtm/interior/tzimisce_manor": "/area/station/san_francisco/interior/tzimisce_manor",
+    "/area/vtm/interior/tzimisce_sanctum": "/area/station/san_francisco/interior/tzimisce_sanctum",
+    "/area/vtm/interior/vjanitor": "/area/station/san_francisco/interior/vjanitor",
+    "/area/vtm/interior/wyrm_corrupted": "/area/station/san_francisco/interior/wyrm_corrupted",
+    "/area/vtm/outside/chinatown": "/area/station/san_francisco/outside/chinatown",
+    "/area/vtm/outside/financialdistrict": "/area/station/san_francisco/outside/financialdistrict",
+    "/area/vtm/outside/fishermanswharf": "/area/station/san_francisco/outside/fishermanswharf",
+    "/area/vtm/outside/forest": "/area/station/san_francisco/outside/forest",
+    "/area/vtm/outside/ghetto": "/area/station/san_francisco/outside/ghetto",
+    "/area/vtm/outside/northbeach": "/area/station/san_francisco/outside/northbeach",
+    "/area/vtm/outside/pacificheights": "/area/station/san_francisco/outside/pacificheights",
+    "/area/vtm/outside/park": "/area/station/san_francisco/outside/park",
+    "/area/vtm/outside/unionsquare": "/area/station/san_francisco/outside/unionsquare",
+    "/area/vtm/interior/anarch/basement": "/area/station/san_francisco/interior/anarch/basement",
+    "/area/vtm/interior/banu/haven": "/area/station/san_francisco/interior/banu/haven",
+    "/area/vtm/interior/chantry/basement": "/area/station/san_francisco/interior/chantry/basement",
+    "/area/vtm/interior/church/haven": "/area/station/san_francisco/interior/church/haven",
+    "/area/vtm/interior/church/staff": "/area/station/san_francisco/interior/church/staff",
+    "/area/vtm/interior/clinic/haven": "/area/station/san_francisco/interior/clinic/haven",
+    "/area/vtm/interior/cog/caern": "/area/station/san_francisco/interior/cog/caern",
+    "/area/vtm/interior/cog/pantry": "/area/station/san_francisco/interior/cog/pantry",
+    "/area/vtm/interior/endron_facility/helipad": "/area/station/san_francisco/interior/endron_facility/helipad",
+    "/area/vtm/interior/endron_facility/plant": "/area/station/san_francisco/interior/endron_facility/plant",
+    "/area/vtm/interior/endron_facility/restricted": "/area/station/san_francisco/interior/endron_facility/restricted",
+    "/area/vtm/interior/giovanni/basement": "/area/station/san_francisco/interior/giovanni/basement",
+    "/area/vtm/interior/millennium_tower/f2": "/area/station/san_francisco/interior/millennium_tower/f2",
+    "/area/vtm/interior/millennium_tower/f3": "/area/station/san_francisco/interior/millennium_tower/f3",
+    "/area/vtm/interior/millennium_tower/f4": "/area/station/san_francisco/interior/millennium_tower/f4",
+    "/area/vtm/interior/police/fed": "/area/station/san_francisco/interior/police/fed",
+    "/area/vtm/interior/police/morgue": "/area/station/san_francisco/interior/police/morgue",
+    "/area/vtm/interior/police/upstairs": "/area/station/san_francisco/interior/police/upstairs",
+    "/area/vtm/interior/setite/basement": "/area/station/san_francisco/interior/setite/basement",
+    "/area/vtm/interior/sewer/nosferatu_town": "/area/station/san_francisco/interior/sewer/nosferatu_town",
+    "/area/vtm/interior/shop/antiques": "/area/station/san_francisco/interior/shop/antiques",
+    "/area/vtm/interior/shop/arts": "/area/station/san_francisco/interior/shop/arts",
+    "/area/vtm/interior/shop/bacotell": "/area/station/san_francisco/interior/shop/bacotell",
+    "/area/vtm/interior/shop/bubway": "/area/station/san_francisco/interior/shop/bubway",
+    "/area/vtm/interior/shop/camping_store": "/area/station/san_francisco/interior/shop/camping_store",
+    "/area/vtm/interior/shop/clothing_store": "/area/station/san_francisco/interior/shop/clothing_store",
+    "/area/vtm/interior/shop/flower_shop": "/area/station/san_francisco/interior/shop/flower_shop",
+    "/area/vtm/interior/shop/gasstation": "/area/station/san_francisco/interior/shop/gasstation",
+    "/area/vtm/interior/shop/grocery": "/area/station/san_francisco/interior/shop/grocery",
+    "/area/vtm/interior/shop/gummaguts": "/area/station/san_francisco/interior/shop/gummaguts",
+    "/area/vtm/interior/shop/gunshop": "/area/station/san_francisco/interior/shop/gunshop",
+    "/area/vtm/interior/shop/hardware_store": "/area/station/san_francisco/interior/shop/hardware_store",
+    "/area/vtm/interior/shop/music_store": "/area/station/san_francisco/interior/shop/music_store",
+    "/area/vtm/interior/shop/otolleys": "/area/station/san_francisco/interior/shop/otolleys",
+    "/area/vtm/interior/shop/pawnshop": "/area/station/san_francisco/interior/shop/pawnshop",
+    "/area/vtm/interior/shop/pharmacy": "/area/station/san_francisco/interior/shop/pharmacy",
+    "/area/vtm/interior/shop/skate_shop": "/area/station/san_francisco/interior/shop/skate_shop",
+    "/area/vtm/interior/shop/smoke_shop": "/area/station/san_francisco/interior/shop/smoke_shop",
+    "/area/vtm/outside/fishermanswharf/ghetto": "/area/station/san_francisco/outside/fishermanswharf/ghetto",
+    "/area/vtm/outside/fishermanswharf/lower": "/area/station/san_francisco/outside/fishermanswharf/lower",
+    "/area/vtm/outside/giovanni/courtyard": "/area/station/san_francisco/outside/giovanni/courtyard",
+    "/area/vtm/outside/pacificheights/community": "/area/station/san_francisco/outside/pacificheights/community",
+    "/area/vtm/outside/pacificheights/forest": "/area/station/san_francisco/outside/pacificheights/forest",
+    "/area/vtm/outside/pacificheights/old": "/area/station/san_francisco/outside/pacificheights/old",
+    "/obj/structure/vampdoor": "/obj/machinery/door/san_francisco",
+    "/obj/structure/vampdoor/glass": "/obj/machinery/door/san_francisco/glass",
+    "/obj/structure/vampdoor/old": "/obj/machinery/door/san_francisco/old",
+    "/obj/structure/vampdoor/oldwood": "/obj/machinery/door/san_francisco/oldwood",
+    "/obj/structure/vampdoor/prison": "/obj/machinery/door/san_francisco/prison",
+    "/obj/structure/vampdoor/reinf": "/obj/machinery/door/san_francisco/reinf",
+    "/obj/structure/vampdoor/simple": "/obj/machinery/door/san_francisco/simple",
+    "/obj/structure/vampdoor/wood": "/obj/machinery/door/san_francisco/wood",
+    "/obj/structure/vampdoor/woodglass": "/obj/machinery/door/san_francisco/woodglass",
+    "/obj/structure/vampgate": "/obj/machinery/door/san_francisco/gate",
+    "/obj/structure/vaultdoor/pincode/bank": "/obj/machinery/door/san_francisco/vault",
+    "/obj/machinery/door/airlock/elevator/multi_tile": "/obj/machinery/door/airlock/san_francisco_elevator",
+    "/obj/machinery/door/poddoor/shutters": "/obj/machinery/door/poddoor/shutters/san_francisco",
+    "/obj/machinery/door/poddoor/shutters/preopen": "/obj/machinery/door/poddoor/shutters/san_francisco/preopen",
+    "/obj/machinery/door/poddoor/shutters/armory": "/obj/machinery/door/poddoor/shutters/san_francisco/armory",
+    "/obj/machinery/door/poddoor": "/obj/machinery/door/poddoor"
+  },
+  "areas": {
+    "/area/vtm": {
+      "target": "/area/station/san_francisco",
+      "name": "\"San Francisco\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/__vtm.dm:1"
+      ],
+      "placements": 213385
+    },
+    "/area/vtm/graveyard": {
+      "target": "/area/station/san_francisco/graveyard",
+      "name": "\"Graveyard\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/graveyard_exterior.dm:1"
+      ],
+      "placements": 4193
+    },
+    "/area/vtm/interior": {
+      "target": "/area/station/san_francisco/interior",
+      "name": "\"Interior\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/__interior.dm:2"
+      ],
+      "placements": 7835
+    },
+    "/area/vtm/interior/anarch": {
+      "target": "/area/station/san_francisco/interior/anarch",
+      "name": "\"Bar\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/anarch.dm:1"
+      ],
+      "placements": 966
+    },
+    "/area/vtm/interior/baali": {
+      "target": "/area/station/san_francisco/interior/baali",
+      "name": "\"Alcoholics Anonymous\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:214"
+      ],
+      "placements": 493
+    },
+    "/area/vtm/interior/banu": {
+      "target": "/area/station/san_francisco/interior/banu",
+      "name": "\"Coffee House\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:229"
+      ],
+      "placements": 191
+    },
+    "/area/vtm/interior/bianchiBank": {
+      "target": "/area/station/san_francisco/interior/bianchiBank",
+      "name": "\"Bianchi Bank\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:25"
+      ],
+      "placements": 1380
+    },
+    "/area/vtm/interior/chantry": {
+      "target": "/area/station/san_francisco/interior/chantry",
+      "name": "\"Chantry\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/library.dm:6"
+      ],
+      "placements": 1305
+    },
+    "/area/vtm/interior/church": {
+      "target": "/area/station/san_francisco/interior/church",
+      "name": "\"Church\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:162"
+      ],
+      "placements": 1379
+    },
+    "/area/vtm/interior/clinic": {
+      "target": "/area/station/san_francisco/interior/clinic",
+      "name": "\"Clinic\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:130"
+      ],
+      "placements": 1561
+    },
+    "/area/vtm/interior/endron_facility": {
+      "target": "/area/station/san_francisco/interior/endron_facility",
+      "name": "\"Endron International\" + \" Facility\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/endron_facility.dm:1"
+      ],
+      "placements": 398
+    },
+    "/area/vtm/interior/ghetto": {
+      "target": "/area/station/san_francisco/interior/ghetto",
+      "name": "\"Ghetto Apartments\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:263"
+      ],
+      "placements": 2315
+    },
+    "/area/vtm/interior/giovanni": {
+      "target": "/area/station/san_francisco/interior/giovanni",
+      "name": "\"Giovanni Mansion\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:6"
+      ],
+      "placements": 788
+    },
+    "/area/vtm/interior/glasswalker": {
+      "target": "/area/station/san_francisco/interior/glasswalker",
+      "name": "\"Glasswalker's Lab\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:88"
+      ],
+      "placements": 287
+    },
+    "/area/vtm/interior/graveyard": {
+      "target": "/area/station/san_francisco/interior/graveyard",
+      "name": "\"Graveyard Interior\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/graveyard_interior.dm:1"
+      ],
+      "placements": 328
+    },
+    "/area/vtm/interior/hotel": {
+      "target": "/area/station/san_francisco/interior/hotel",
+      "name": "\"Hotel\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:148"
+      ],
+      "placements": 1492
+    },
+    "/area/vtm/interior/jazzclub": {
+      "target": "/area/station/san_francisco/interior/jazzclub",
+      "name": "\"Jazz Club\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:115"
+      ],
+      "placements": 1573
+    },
+    "/area/vtm/interior/laundromat": {
+      "target": "/area/station/san_francisco/interior/laundromat",
+      "name": "\"Laundromat\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:1"
+      ],
+      "placements": 866
+    },
+    "/area/vtm/interior/library": {
+      "target": "/area/station/san_francisco/interior/library",
+      "name": "\"Haight Arts Center\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/library.dm:1"
+      ],
+      "placements": 79
+    },
+    "/area/vtm/interior/mansion": {
+      "target": "/area/station/san_francisco/interior/mansion",
+      "name": "\"Abandoned Mansion\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:75"
+      ],
+      "placements": 650
+    },
+    "/area/vtm/interior/millennium_tower": {
+      "target": "/area/station/san_francisco/interior/millennium_tower",
+      "name": "\"Millennium Tower F1\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/millennium_tower.dm:1"
+      ],
+      "placements": 1259
+    },
+    "/area/vtm/interior/museum": {
+      "target": "/area/station/san_francisco/interior/museum",
+      "name": "\"Historical Museum\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:201"
+      ],
+      "placements": 880
+    },
+    "/area/vtm/interior/oldchurch": {
+      "target": "/area/station/san_francisco/interior/oldchurch",
+      "name": "\"Old Seaside Church\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:196"
+      ],
+      "placements": 627
+    },
+    "/area/vtm/interior/police": {
+      "target": "/area/station/san_francisco/interior/police",
+      "name": "\"\\improper Police Station\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:32"
+      ],
+      "placements": 622
+    },
+    "/area/vtm/interior/prince_elevator": {
+      "target": "/area/station/san_francisco/interior/prince_elevator",
+      "name": "\"Millenium Elevator\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/millennium_tower.dm:31"
+      ],
+      "placements": 4
+    },
+    "/area/vtm/interior/sabbat_lair": {
+      "target": "/area/station/san_francisco/interior/sabbat_lair",
+      "name": "\"Interior\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:285"
+      ],
+      "placements": 421
+    },
+    "/area/vtm/interior/salubri": {
+      "target": "/area/station/san_francisco/interior/salubri",
+      "name": "\"Vet Clinic\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:221"
+      ],
+      "placements": 419
+    },
+    "/area/vtm/interior/setite": {
+      "target": "/area/station/san_francisco/interior/setite",
+      "name": "\"Community Center\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:253"
+      ],
+      "placements": 419
+    },
+    "/area/vtm/interior/sewer": {
+      "target": "/area/station/san_francisco/interior/sewer",
+      "name": "\"Sewer\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/sewers.dm:1"
+      ],
+      "placements": 14253
+    },
+    "/area/vtm/interior/shop": {
+      "target": "/area/station/san_francisco/interior/shop",
+      "name": "\"\\improper Shop\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:1"
+      ],
+      "placements": 413
+    },
+    "/area/vtm/interior/strip": {
+      "target": "/area/station/san_francisco/interior/strip",
+      "name": "\"Strip Club\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:68"
+      ],
+      "placements": 815
+    },
+    "/area/vtm/interior/supply": {
+      "target": "/area/station/san_francisco/interior/supply",
+      "name": "\"Supply Offices\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:142"
+      ],
+      "placements": 3055
+    },
+    "/area/vtm/interior/techshop": {
+      "target": "/area/station/san_francisco/interior/techshop",
+      "name": "\"Nightwolf Techshop\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:20"
+      ],
+      "placements": 539
+    },
+    "/area/vtm/interior/theatre": {
+      "target": "/area/station/san_francisco/interior/theatre",
+      "name": "\"Theatre\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:187"
+      ],
+      "placements": 261
+    },
+    "/area/vtm/interior/tzimisce_manor": {
+      "target": "/area/station/san_francisco/interior/tzimisce_manor",
+      "name": "\"Clan Tzimisce Manor\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:241"
+      ],
+      "placements": 1895
+    },
+    "/area/vtm/interior/tzimisce_sanctum": {
+      "target": "/area/station/san_francisco/interior/tzimisce_sanctum",
+      "name": "\"Tzimisce Sanctum\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:248",
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:279"
+      ],
+      "placements": 621
+    },
+    "/area/vtm/interior/vjanitor": {
+      "target": "/area/station/san_francisco/interior/vjanitor",
+      "name": "\"Cleaners\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:63"
+      ],
+      "placements": 183
+    },
+    "/area/vtm/interior/wyrm_corrupted": {
+      "target": "/area/station/san_francisco/interior/wyrm_corrupted",
+      "name": "\"Wyrm Corruption\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:102"
+      ],
+      "placements": 153
+    },
+    "/area/vtm/outside/chinatown": {
+      "target": "/area/station/san_francisco/outside/chinatown",
+      "name": "\"Chinatown\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:37"
+      ],
+      "placements": 2306
+    },
+    "/area/vtm/outside/financialdistrict": {
+      "target": "/area/station/san_francisco/outside/financialdistrict",
+      "name": "\"Financial District\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:1"
+      ],
+      "placements": 4294
+    },
+    "/area/vtm/outside/fishermanswharf": {
+      "target": "/area/station/san_francisco/outside/fishermanswharf",
+      "name": "\"Fisherman's Wharf\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:45"
+      ],
+      "placements": 915
+    },
+    "/area/vtm/outside/forest": {
+      "target": "/area/station/san_francisco/outside/forest",
+      "name": "\"Forest\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/forest.dm:1"
+      ],
+      "placements": 6680
+    },
+    "/area/vtm/outside/ghetto": {
+      "target": "/area/station/san_francisco/outside/ghetto",
+      "name": "\"Ghetto\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:9"
+      ],
+      "placements": 4488
+    },
+    "/area/vtm/outside/northbeach": {
+      "target": "/area/station/san_francisco/outside/northbeach",
+      "name": "\"North Beach\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:62"
+      ],
+      "placements": 1647
+    },
+    "/area/vtm/outside/pacificheights": {
+      "target": "/area/station/san_francisco/outside/pacificheights",
+      "name": "\"Pacific Heights\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:17"
+      ],
+      "placements": 1276
+    },
+    "/area/vtm/outside/park": {
+      "target": "/area/station/san_francisco/outside/park",
+      "name": "\"Park\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:86"
+      ],
+      "placements": 1570
+    },
+    "/area/vtm/outside/unionsquare": {
+      "target": "/area/station/san_francisco/outside/unionsquare",
+      "name": "\"Union Square\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:78"
+      ],
+      "placements": 2245
+    },
+    "/area/vtm/interior/anarch/basement": {
+      "target": "/area/station/san_francisco/interior/anarch/basement",
+      "name": "\"Bar - Basement\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/anarch.dm:10"
+      ],
+      "placements": 426
+    },
+    "/area/vtm/interior/banu/haven": {
+      "target": "/area/station/san_francisco/interior/banu/haven",
+      "name": "\"Coffee House - Employee Only\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:235"
+      ],
+      "placements": 480
+    },
+    "/area/vtm/interior/chantry/basement": {
+      "target": "/area/station/san_francisco/interior/chantry/basement",
+      "name": "\"Chantry Basement\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/library.dm:14"
+      ],
+      "placements": 716
+    },
+    "/area/vtm/interior/church/haven": {
+      "target": "/area/station/san_francisco/interior/church/haven",
+      "name": "\"Church - Restricted Floor\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:175"
+      ],
+      "placements": 570
+    },
+    "/area/vtm/interior/church/staff": {
+      "target": "/area/station/san_francisco/interior/church/staff",
+      "name": "\"Church - Backrooms\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:170"
+      ],
+      "placements": 789
+    },
+    "/area/vtm/interior/clinic/haven": {
+      "target": "/area/station/san_francisco/interior/clinic/haven",
+      "name": "\"Clinic - Psych Ward\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:138"
+      ],
+      "placements": 698
+    },
+    "/area/vtm/interior/cog/caern": {
+      "target": "/area/station/san_francisco/interior/cog/caern",
+      "name": "\"Children of Gaia Caern\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/garou.dm:3"
+      ],
+      "placements": 520
+    },
+    "/area/vtm/interior/cog/pantry": {
+      "target": "/area/station/san_francisco/interior/cog/pantry",
+      "name": "\"Earth's Bounty Food Pantry\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/garou.dm:17"
+      ],
+      "placements": 332
+    },
+    "/area/vtm/interior/endron_facility/helipad": {
+      "target": "/area/station/san_francisco/interior/endron_facility/helipad",
+      "name": "\"Endron Helipad\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/endron_facility.dm:16"
+      ],
+      "placements": 286
+    },
+    "/area/vtm/interior/endron_facility/plant": {
+      "target": "/area/station/san_francisco/interior/endron_facility/plant",
+      "name": "\"Endron Processing Plant\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/endron_facility.dm:30"
+      ],
+      "placements": 999
+    },
+    "/area/vtm/interior/endron_facility/restricted": {
+      "target": "/area/station/san_francisco/interior/endron_facility/restricted",
+      "name": "\"Endron Facility Restricted\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/endron_facility.dm:10",
+        "modular_darkpack/modules/areas/code/interiors/endron_facility.dm:37"
+      ],
+      "placements": 3751
+    },
+    "/area/vtm/interior/giovanni/basement": {
+      "target": "/area/station/san_francisco/interior/giovanni/basement",
+      "name": "\"Giovanni Mansion - Basement\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:14"
+      ],
+      "placements": 496
+    },
+    "/area/vtm/interior/millennium_tower/f2": {
+      "target": "/area/station/san_francisco/interior/millennium_tower/f2",
+      "name": "\"Millennium Tower F2\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/millennium_tower.dm:11"
+      ],
+      "placements": 979
+    },
+    "/area/vtm/interior/millennium_tower/f3": {
+      "target": "/area/station/san_francisco/interior/millennium_tower/f3",
+      "name": "\"Millennium Tower F3\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/millennium_tower.dm:15"
+      ],
+      "placements": 519
+    },
+    "/area/vtm/interior/millennium_tower/f4": {
+      "target": "/area/station/san_francisco/interior/millennium_tower/f4",
+      "name": "\"Millennium Tower F4\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/millennium_tower.dm:19"
+      ],
+      "placements": 871
+    },
+    "/area/vtm/interior/police/fed": {
+      "target": "/area/station/san_francisco/interior/police/fed",
+      "name": "\"Reserved Room\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:48"
+      ],
+      "placements": 367
+    },
+    "/area/vtm/interior/police/morgue": {
+      "target": "/area/station/san_francisco/interior/police/morgue",
+      "name": "\"Police Station - Morgue\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:38"
+      ],
+      "placements": 78
+    },
+    "/area/vtm/interior/police/upstairs": {
+      "target": "/area/station/san_francisco/interior/police/upstairs",
+      "name": "\"Police Station - Upstairs\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:43"
+      ],
+      "placements": 373
+    },
+    "/area/vtm/interior/setite/basement": {
+      "target": "/area/station/san_francisco/interior/setite/basement",
+      "name": "\"Community Center Basement\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/city_interiors.dm:259"
+      ],
+      "placements": 255
+    },
+    "/area/vtm/interior/sewer/nosferatu_town": {
+      "target": "/area/station/san_francisco/interior/sewer/nosferatu_town",
+      "name": "\"Underground Town\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/sewers.dm:13",
+        "modular_darkpack/modules/areas/code/interiors/sewers.dm:24"
+      ],
+      "placements": 2739
+    },
+    "/area/vtm/interior/shop/antiques": {
+      "target": "/area/station/san_francisco/interior/shop/antiques",
+      "name": "\"Antique Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_vcg/modules/areas/code/interiors/city_interiors.dm:10"
+      ],
+      "placements": 114
+    },
+    "/area/vtm/interior/shop/arts": {
+      "target": "/area/station/san_francisco/interior/shop/arts",
+      "name": "\"Art Supplies Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_vcg/modules/areas/code/interiors/city_interiors.dm:2"
+      ],
+      "placements": 104
+    },
+    "/area/vtm/interior/shop/bacotell": {
+      "target": "/area/station/san_francisco/interior/shop/bacotell",
+      "name": "\"Baco Tell\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:17"
+      ],
+      "placements": 273
+    },
+    "/area/vtm/interior/shop/bubway": {
+      "target": "/area/station/san_francisco/interior/shop/bubway",
+      "name": "\"Bubway\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:13"
+      ],
+      "placements": 127
+    },
+    "/area/vtm/interior/shop/camping_store": {
+      "target": "/area/station/san_francisco/interior/shop/camping_store",
+      "name": "\"\\improper Camping Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:51",
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:63"
+      ],
+      "placements": 122
+    },
+    "/area/vtm/interior/shop/clothing_store": {
+      "target": "/area/station/san_francisco/interior/shop/clothing_store",
+      "name": "\"\\improper Clothing Shop\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:32"
+      ],
+      "placements": 648
+    },
+    "/area/vtm/interior/shop/flower_shop": {
+      "target": "/area/station/san_francisco/interior/shop/flower_shop",
+      "name": "\"Community Garden\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:82"
+      ],
+      "placements": 133
+    },
+    "/area/vtm/interior/shop/gasstation": {
+      "target": "/area/station/san_francisco/interior/shop/gasstation",
+      "name": "\"\\improper Gas Station\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:47"
+      ],
+      "placements": 120
+    },
+    "/area/vtm/interior/shop/grocery": {
+      "target": "/area/station/san_francisco/interior/shop/grocery",
+      "name": "\"\\improper Grocery Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:43"
+      ],
+      "placements": 168
+    },
+    "/area/vtm/interior/shop/gummaguts": {
+      "target": "/area/station/san_francisco/interior/shop/gummaguts",
+      "name": "\"Gummaguts\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:9"
+      ],
+      "placements": 60
+    },
+    "/area/vtm/interior/shop/gunshop": {
+      "target": "/area/station/san_francisco/interior/shop/gunshop",
+      "name": "\"\\improper Gun Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:71"
+      ],
+      "placements": 166
+    },
+    "/area/vtm/interior/shop/hardware_store": {
+      "target": "/area/station/san_francisco/interior/shop/hardware_store",
+      "name": "\"\\improper Hardware Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:59"
+      ],
+      "placements": 168
+    },
+    "/area/vtm/interior/shop/music_store": {
+      "target": "/area/station/san_francisco/interior/shop/music_store",
+      "name": "\"\\improper Music Store\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:55"
+      ],
+      "placements": 56
+    },
+    "/area/vtm/interior/shop/otolleys": {
+      "target": "/area/station/san_francisco/interior/shop/otolleys",
+      "name": "\"O'Tolleys\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:21"
+      ],
+      "placements": 154
+    },
+    "/area/vtm/interior/shop/pawnshop": {
+      "target": "/area/station/san_francisco/interior/shop/pawnshop",
+      "name": "\"\\improper Pawn Shop\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:67"
+      ],
+      "placements": 172
+    },
+    "/area/vtm/interior/shop/pharmacy": {
+      "target": "/area/station/san_francisco/interior/shop/pharmacy",
+      "name": "\"\\improper Pharmacy\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:86"
+      ],
+      "placements": 63
+    },
+    "/area/vtm/interior/shop/skate_shop": {
+      "target": "/area/station/san_francisco/interior/shop/skate_shop",
+      "name": "\"\\improper Skate Shop\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:79"
+      ],
+      "placements": 15
+    },
+    "/area/vtm/interior/shop/smoke_shop": {
+      "target": "/area/station/san_francisco/interior/shop/smoke_shop",
+      "name": "\"\\improper Smoke Shop\"",
+      "desc": "null",
+      "outdoors": "FALSE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/interiors/shops.dm:75"
+      ],
+      "placements": 160
+    },
+    "/area/vtm/outside/fishermanswharf/ghetto": {
+      "target": "/area/station/san_francisco/outside/fishermanswharf/ghetto",
+      "name": "\"Fisherman's Wharf - Ghetto\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:53"
+      ],
+      "placements": 463
+    },
+    "/area/vtm/outside/fishermanswharf/lower": {
+      "target": "/area/station/san_francisco/outside/fishermanswharf/lower",
+      "name": "\"Fisherman's Wharf - Lower Beachside\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:56"
+      ],
+      "placements": 1909
+    },
+    "/area/vtm/outside/giovanni/courtyard": {
+      "target": "/area/station/san_francisco/outside/giovanni/courtyard",
+      "name": "\"Giovanni Mansion - Courtyard\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:110"
+      ],
+      "placements": 707
+    },
+    "/area/vtm/outside/pacificheights/community": {
+      "target": "/area/station/san_francisco/outside/pacificheights/community",
+      "name": "\"Pacific Heights - Community Road\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:31"
+      ],
+      "placements": 1579
+    },
+    "/area/vtm/outside/pacificheights/forest": {
+      "target": "/area/station/san_francisco/outside/pacificheights/forest",
+      "name": "\"Pacific Heights Forest Outskirts\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:25"
+      ],
+      "placements": 6235
+    },
+    "/area/vtm/outside/pacificheights/old": {
+      "target": "/area/station/san_francisco/outside/pacificheights/old",
+      "name": "\"Pacific Heights - Old District\"",
+      "desc": "null",
+      "outdoors": "TRUE",
+      "requires_power": "FALSE",
+      "default_gravity": "STANDARD_GRAVITY",
+      "source": [
+        "modular_darkpack/modules/areas/code/outsides/city_outsides.dm:28"
+      ],
+      "placements": 1441
+    }
+  },
+  "doors": {
+    "/obj/structure/vampdoor": {
+      "target": "/obj/machinery/door/san_francisco",
+      "name": "\"\\improper door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"door\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor.dm:2"
+      ],
+      "placements": 47
+    },
+    "/obj/structure/vampdoor/glass": {
+      "target": "/obj/machinery/door/san_francisco/glass",
+      "name": "\"glass door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"glass_blue\"",
+      "opacity": "FALSE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_glass.dm:1"
+      ],
+      "placements": 101
+    },
+    "/obj/structure/vampdoor/old": {
+      "target": "/obj/machinery/door/san_francisco/old",
+      "name": "\"old door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"old\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_old.dm:1"
+      ],
+      "placements": 166
+    },
+    "/obj/structure/vampdoor/oldwood": {
+      "target": "/obj/machinery/door/san_francisco/oldwood",
+      "name": "\"old wooden door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"oldwood\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_oldwood.dm:1"
+      ],
+      "placements": 3
+    },
+    "/obj/structure/vampdoor/prison": {
+      "target": "/obj/machinery/door/san_francisco/prison",
+      "name": "\"security door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"prison\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_prison.dm:1"
+      ],
+      "placements": 35
+    },
+    "/obj/structure/vampdoor/reinf": {
+      "target": "/obj/machinery/door/san_francisco/reinf",
+      "name": "\"reinforced door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"reinf\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_reinf.dm:1"
+      ],
+      "placements": 83
+    },
+    "/obj/structure/vampdoor/simple": {
+      "target": "/obj/machinery/door/san_francisco/simple",
+      "name": "\"simple door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"cam\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_simple.dm:1"
+      ],
+      "placements": 320
+    },
+    "/obj/structure/vampdoor/wood": {
+      "target": "/obj/machinery/door/san_francisco/wood",
+      "name": "\"wooden door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"wood\"",
+      "opacity": "TRUE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_wood.dm:1"
+      ],
+      "placements": 284
+    },
+    "/obj/structure/vampdoor/woodglass": {
+      "target": "/obj/machinery/door/san_francisco/woodglass",
+      "name": "\"wooden glass door\"",
+      "desc": "\"It opens and closes.\"",
+      "base_icon_state": "\"glass\"",
+      "opacity": "FALSE",
+      "max_integrity": "350",
+      "source": [
+        "modular_darkpack/modules/doors/code/vampdoor_woodglass.dm:1"
+      ],
+      "placements": 25
+    },
+    "/obj/structure/vampgate": {
+      "target": "/obj/machinery/door/san_francisco/gate",
+      "icon": "modular_bandastation/san_francisco/icons/doors/gate.dmi",
+      "icon_size": [
+        96,
+        64
+      ],
+      "icon_states": [
+        "gate",
+        "gate-open"
+      ],
+      "name": "graveyard gate",
+      "collision": "Centre tile follows native open/closed door density; donor east/west adjacent turf density is retained.",
+      "source": "modular_darkpack/modules/graveyard/code/vampgate.dm:1"
+    },
+    "/obj/structure/vaultdoor/pincode/bank": {
+      "target": "/obj/machinery/door/san_francisco/vault",
+      "icon": "modular_bandastation/san_francisco/icons/doors/vault.dmi",
+      "icon_size": [
+        64,
+        64
+      ],
+      "icon_states": [
+        "vault-1",
+        "vault-0",
+        "vault_broken-1",
+        "vault_broken-0"
+      ],
+      "name": "bank vault door",
+      "source": "modular_darkpack/modules/vaults/code/vaultdoors.dm:34"
+    },
+    "/obj/machinery/door/airlock/elevator/multi_tile": {
+      "target": "/obj/machinery/door/airlock/san_francisco_elevator",
+      "icon": "modular_bandastation/san_francisco/icons/doors/elevator_double.dmi",
+      "icon_size": [
+        64,
+        64
+      ],
+      "icon_states": [
+        "closed",
+        "open",
+        "opening",
+        "closing",
+        "construction"
+      ],
+      "name": "elevator door",
+      "collision": "Original native multi_tile bounds and paired filler; transport_linked_id is preserved.",
+      "source": "modular_darkpack/modules/elevators/code/elevator.dm:25"
+    },
+    "/obj/machinery/door/poddoor/shutters": {
+      "target": "/obj/machinery/door/poddoor/shutters/san_francisco",
+      "icon": "modular_bandastation/san_francisco/icons/doors/shutters.dmi",
+      "icon_size": [
+        32,
+        48
+      ],
+      "icon_states": [
+        "closed",
+        "open",
+        "opening",
+        "closing"
+      ]
+    },
+    "/obj/machinery/door/poddoor/shutters/preopen": {
+      "target": "/obj/machinery/door/poddoor/shutters/san_francisco/preopen",
+      "icon": "modular_bandastation/san_francisco/icons/doors/shutters.dmi",
+      "icon_size": [
+        32,
+        48
+      ],
+      "icon_states": [
+        "closed",
+        "open",
+        "opening",
+        "closing"
+      ]
+    },
+    "/obj/machinery/door/poddoor/shutters/armory": {
+      "target": "/obj/machinery/door/poddoor/shutters/san_francisco/armory",
+      "icon": "modular_bandastation/san_francisco/icons/doors/shutters.dmi",
+      "icon_size": [
+        32,
+        48
+      ],
+      "icon_states": [
+        "closed",
+        "open",
+        "opening",
+        "closing"
+      ]
+    },
+    "/obj/machinery/door/poddoor": {
+      "target": "/obj/machinery/door/poddoor"
+    }
+  },
+  "strip_variables": {
+    "areas": [
+      "zone_type",
+      "gauntlet_rating",
+      "domain",
+      "fire_controled",
+      "musictracks",
+      "music_index"
+    ],
+    "doors": [
+      "closed",
+      "locked",
+      "door_broken",
+      "lock_id",
+      "lockpick_difficulty",
+      "bash_difficulty",
+      "bash_successes_needed",
+      "burnable",
+      "door_layer",
+      "open_sound",
+      "close_sound",
+      "lock_sound"
+    ]
+  },
+  "notes": [
+    "All original used donor area names, hierarchy, outdoors, gravity and requires_power settings are retained. No civic renaming, date edits, grids, NPCs or artificial base lighting are added.",
+    "The donor uses requires_power=FALSE for these areas. This is intentionally preserved rather than replaced by added power infrastructure.",
+    "Area editor icons inherit the target native station-area icon; this does not affect normal in-game rendering.",
+    "The donor custom ambience and World of Darkness zone/gameplay frameworks are not imported by this area/door adapter. No replacement ambience is invented.",
+    "Door appearance sheet is copied byte-for-byte from the donor. Original names, descriptions, opacity and 350 HP baseline are retained; doors do not auto-close, matching the donor.",
+    "Door physical keys and storyteller rolls require target access translation. Translate source lock_id/locked before removing unsupported donor variables; preserve mapped name/desc and direction. Native door sounds are used by the technical adapter.",
+    "Additional gate, bank vault, double elevator and shutters sheets are exact donor binaries with original dimensions; no substitute small-door sprites.",
+    "Bank vault keypad and graveyard-specific keys/repair system are replaced by existing target ID access/native door operations; those source gameplay frameworks are not imported.",
+    "Gate side turfs retain the original permanent donor density; only the centre gate opens. Native target damage behavior remains in use for the adapted machinery.",
+    "Elevator full-frame images deliberately skip station-specific airlock filler/light overlays; existing target multi-tile collision, transport ID, opening/closing animation states remain.",
+    "Shutters preserve donor ABOVE_ALL_MOB_LAYER, original ID linkage and map overrides; source /poddoor uses the same standard target door mechanism and sprite path."
+  ]
+}

@@ -60,6 +60,13 @@ map wawastation
 	votable
 endmap
 
+# Primary city map prototype.
+map sanfrancisco
+	minplayers 0
+	default
+	votable
+endmap
+
 # Debug-only maps.
 
 map gateway_test

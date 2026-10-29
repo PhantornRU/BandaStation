@@ -83,6 +83,7 @@
 #include "quirks/_quirks.dme"
 #include "revolution_overhaul/_revolution_overhaul.dme"
 #include "ru_jobs/_ru_jobs.dme"
+#include "san_francisco/_san_francisco.dme"
 #include "security_levels/_security_levels.dme"
 #include "shadow_demon/_shadow_demon.dme"
 #include "shuttles/_shuttles.dme"

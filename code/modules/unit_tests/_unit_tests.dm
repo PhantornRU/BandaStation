@@ -479,6 +479,10 @@
 
 #include "../../../modular_bandastation/uplink_items/code/tests/syndicate_items.dm"
 
+// AI EDIT START - Retain San Francisco TGM regression alongside current master tests
+// BANDASTATION ADDITION - TGM attribute alignment regression for the imported map.
+#include "../../../modular_bandastation/san_francisco/code/mapping_tests.dm"
+// AI EDIT END
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
 #undef TEST_ASSERT_NOTEQUAL

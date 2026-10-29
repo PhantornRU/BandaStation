@@ -1,0 +1,1779 @@
+{
+  "version": 1,
+  "source_repository": "https://github.com/Monkestation/crimson-grid",
+  "source_commit": "483ef4772fe4957027c8e2f290cd1503b2b237f5",
+  "source_license_declaration": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/README.md#license",
+  "license_default": "CC-BY-SA-3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "license_notice": "All assets including icons and sound are under a Creative Commons 3.0 BY-SA license unless otherwise indicated.",
+  "additional_upstream_notice": "Darkpack13 is not official World of Darkness material. Portions of the materials are the copyrights and trademarks of Paradox Interactive AB, and are used with permission. All rights reserved. For more information please visit worldofdarkness.com.",
+  "notice_scope": "The additional notice is reproduced from the pinned upstream README, not a new assertion of permission. Preserve any upstream asset-specific credits and exceptions.",
+  "changes": "DMI files copied without binary modification. Local filenames and DM behavior adapters may differ from upstream.",
+  "file_count": 196,
+  "files": [
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/blackgoldcarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/blackgoldcarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/blackgoldcarpet.dmi",
+      "sha256": "1230e48a8f19714366b7bf6f389a804957f43903f163efd5cfb46966dac78b33",
+      "bytes": 6944,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/blacksilvercarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/blacksilvercarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/blacksilvercarpet.dmi",
+      "sha256": "728735b514f0fa248338e786fc0ea056188f22f580a2aaec56de28a03affc475",
+      "bytes": 5525,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/bluegoldcarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/bluegoldcarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/bluegoldcarpet.dmi",
+      "sha256": "66870397c634fa78ab4a6287d2d4d16e95f1ce2a3cb266b3a4a3e0ac794e4b11",
+      "bytes": 6172,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/bluesilvercarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/bluesilvercarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/bluesilvercarpet.dmi",
+      "sha256": "d5de2c5d30cd0f3efa87bba2d8b46d592ef1517c597abde2e92079c428356f35",
+      "bytes": 5076,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/cyancarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/cyancarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/cyancarpet.dmi",
+      "sha256": "07644c44df518a880c25efaa322b0d0c9044f33db62ec22ebcfc0f44adf37eb0",
+      "bytes": 5625,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/greengoldcarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/greengoldcarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/greengoldcarpet.dmi",
+      "sha256": "b1e3274f22fd11b23b3df99aeffe652daf370dee84e3a0e275a2ddd359200259",
+      "bytes": 7230,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/orangehotelcarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/orangehotelcarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/orangehotelcarpet.dmi",
+      "sha256": "46de4d200b69eaf1f7528e11cbbd1febec306386862ec96a7f971dcb9145cbc8",
+      "bytes": 5763,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/purplegoldcarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/purplegoldcarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/purplegoldcarpet.dmi",
+      "sha256": "a00c71bb24b84ccec9a939130a2377a11069e9870b22e7a102db792d624603d6",
+      "bytes": 5904,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/redgoldcarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/redgoldcarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/redgoldcarpet.dmi",
+      "sha256": "caa8356292464eb7c9b2d69c5cdb327c26b2ea0d67831f9e0dcccd01cc65c50c",
+      "bytes": 6487,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/carpets/redsilvercarpet.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/floor/carpet/redsilvercarpet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/floor/carpet/redsilvercarpet.dmi",
+      "sha256": "0b63c43a6e0cf466478fb64bf4ac44dc8a8c0ea6c1731d35b17c05c2073142b9",
+      "bytes": 4911,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/chinese_roofs.dmi",
+      "source": "modular_vcg/modules/roofs/icons/roofs.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_vcg/modules/roofs/icons/roofs.dmi",
+      "sha256": "7c00eacfe87642e557f541cacdd23827079608779fdad8af2a9ef212770bfb21",
+      "bytes": 8081,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/floors.dmi",
+      "source": "modular_darkpack/modules/walls/icons/floors.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/walls/icons/floors.dmi",
+      "sha256": "06c3509841068f7bbfeb1ccebc8ee1ef11483caf152b4c9b68e5b5ffb309b769",
+      "bytes": 122100,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/matrix.dmi",
+      "source": "modular_darkpack/modules/matrix/icons/matrix.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/matrix/icons/matrix.dmi",
+      "sha256": "fdc78e4fa4c55db2376577884c3db56cfddbbe39594f69fa3ad25d94ad6bc193",
+      "bytes": 18753,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/rock_wall.dmi",
+      "source": "modular_darkpack/modules/walls/icons/rock_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/walls/icons/rock_wall.dmi",
+      "sha256": "5365f698a2804507715db8edc37b20da63accbd6b34789c94ff57938899aa608",
+      "bytes": 3632,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/bar/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/bar/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/bar/frill.dmi",
+      "sha256": "8a9021ba7389c797e3822355acf680a8c149d66db772c32d5d096da85ca8a783",
+      "bytes": 3134,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/bar/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/bar/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/bar/low_wall.dmi",
+      "sha256": "1bd4dd49a710bd4695c1a73157d096d6f703d58e7b4c3002f0ced42333aa8c5c",
+      "bytes": 7880,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/bar/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/bar/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/bar/wall.dmi",
+      "sha256": "6af6a3dcb1134f839a3a76de46b71e91b5231970517b68521b19e4e320488f3e",
+      "bytes": 6653,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/brick/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/brick/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/brick/frill.dmi",
+      "sha256": "094a2359cf09566addd7ed1cb28dfe4b6936f9f28fa050abd78403a558d5d26d",
+      "bytes": 3141,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/brick/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/brick/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/brick/low_wall.dmi",
+      "sha256": "96ab2d65b439d391eb787a917e8620039134a81082bd630df291b829878a99be",
+      "bytes": 8176,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/brick/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/brick/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/brick/wall.dmi",
+      "sha256": "fe32ee4dce288f74efcb45348a0fc20c6ad8b5f0e0596123298d9261a5643c87",
+      "bytes": 6852,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/brick_old/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/brick_old/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/brick_old/frill.dmi",
+      "sha256": "f21a6f9f08130ac3d313ab1c20bd129aba15ceb3aa794056ef0be6bf67edd09b",
+      "bytes": 3745,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/brick_old/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/brick_old/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/brick_old/low_wall.dmi",
+      "sha256": "262dfc09d836b909e68a555a9fc5bb8f4fa629740206f1c2e94c65ade61cc519",
+      "bytes": 8114,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/brick_old/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/brick_old/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/brick_old/wall.dmi",
+      "sha256": "7e7272466c614b924147d95a4a2e10d9468e45baac999adbf1a846a6382b0292",
+      "bytes": 6949,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/city/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/city/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/city/frill.dmi",
+      "sha256": "8e5c0a9afe7e6687e732517e2b545574ee274d3f425c06e97c7dc02a1ada67b7",
+      "bytes": 3322,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/city/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/city/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/city/low_wall.dmi",
+      "sha256": "dd47c3c71f973606ad4a54c0ef519985fbd389e6884f5b6b4d8b06e9b3c12bd0",
+      "bytes": 7671,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/city/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/city/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/city/wall.dmi",
+      "sha256": "6a3ac40e60f20853e8341af72e13ab4b0fb9b4cbacac92090acc0155e110c69c",
+      "bytes": 6422,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/green/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/green/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/green/frill.dmi",
+      "sha256": "388c01ade2c389f2e7b14cdae8cc605539e890969ad767808b70661135cf1f01",
+      "bytes": 1435,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/green/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/green/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/green/wall.dmi",
+      "sha256": "8edb88813bbaf3684e9f1f9ca674b0bd7dcf9ae8ff9d9708af951284c35786d9",
+      "bytes": 2214,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/junk/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/junk/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/junk/frill.dmi",
+      "sha256": "6ea7479482c9d2f4528cb197de4c98430e7a5a509fdffa8e350139a0a6dbf393",
+      "bytes": 2884,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/junk/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/junk/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/junk/low_wall.dmi",
+      "sha256": "39c9c1e6bcbedc7b56f1b7b990f0b861fc1ac99131a6dfae308ac56e16d91036",
+      "bytes": 7077,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/junk/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/junk/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/junk/wall.dmi",
+      "sha256": "8d56037881565c32d55071a4df46f125b423f872e2cb181d4b02174bf9981c2c",
+      "bytes": 5260,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/junk_alt/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/junk_alt/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/junk_alt/frill.dmi",
+      "sha256": "9d9159e7bba6f5bcb53a594463fe8b636e3f75fc4d701676a8a298734930b366",
+      "bytes": 2887,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/junk_alt/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/junk_alt/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/junk_alt/low_wall.dmi",
+      "sha256": "89310205a38dfc2d20ca5597fa32066c253419205809375f1a6d8681841e88bc",
+      "bytes": 7010,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/junk_alt/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/junk_alt/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/junk_alt/wall.dmi",
+      "sha256": "335f3b921f68637131676180cbb5af8bfffc0825c2185eb91856dcb7394320f1",
+      "bytes": 5290,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/market/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/market/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/market/frill.dmi",
+      "sha256": "2607794c55fb522b88880d83bf6cc98c5ceeefb59d5af68c9663bd06d621fd11",
+      "bytes": 3564,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/market/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/market/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/market/low_wall.dmi",
+      "sha256": "4984eff8bc60b42dafeb6c96f0f2582d65aaffb72902c57b2f5ee67c0e75d214",
+      "bytes": 7249,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/market/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/market/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/market/wall.dmi",
+      "sha256": "1c37719ef53748786764f86c6d655c8becb54188ad53973203f5eb60d43321f2",
+      "bytes": 5995,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal/frill.dmi",
+      "sha256": "6f6d15296a747132baf70c570aa4eaaa542c16029b742248811dae9d2cd56952",
+      "bytes": 1732,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal/wall.dmi",
+      "sha256": "b3677e3f2be8e872365e07f5f258c046961751bea94a94eaffa43cf79e4f65fa",
+      "bytes": 2276,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal_alt/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal_alt/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal_alt/frill.dmi",
+      "sha256": "6f6d15296a747132baf70c570aa4eaaa542c16029b742248811dae9d2cd56952",
+      "bytes": 1732,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal_alt/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal_alt/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal_alt/wall.dmi",
+      "sha256": "319a2395f555eb9b81a80b73f2d68e212abc70b7b3749875268f1d630f81398d",
+      "bytes": 1970,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal_glass/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal_glass/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal_glass/frill.dmi",
+      "sha256": "f923edd42a167f8b0a962a044f9f0780c99ed5b1134bedbd5f10f37cd9475b0c",
+      "bytes": 2347,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal_glass/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal_glass/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal_glass/wall.dmi",
+      "sha256": "0e6f862739e0ac1dd6e1a622f32b801506dd497151940f8fb65df8e1ea949420",
+      "bytes": 2813,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal_reinforced/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal_reinforced/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal_reinforced/frill.dmi",
+      "sha256": "6f6d15296a747132baf70c570aa4eaaa542c16029b742248811dae9d2cd56952",
+      "bytes": 1732,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/metal_reinforced/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/metal_reinforced/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/metal_reinforced/wall.dmi",
+      "sha256": "9c5ea0d1e2581e75a4305db04cd4b88eef2b52c1e5bdcf372a5117fa4da480a4",
+      "bytes": 2623,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/old/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/old/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/old/frill.dmi",
+      "sha256": "132c0a22ac91d369def3a5c31b28b89f4262292f17cf8a2844640d012895d583",
+      "bytes": 4006,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/old/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/old/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/old/low_wall.dmi",
+      "sha256": "1469cd2b16d52fa81dc282c53c12176c2d41c61a66e7871770dc1350b87ebe08",
+      "bytes": 8190,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/old/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/old/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/old/wall.dmi",
+      "sha256": "09ba5b256b48f3805410e147797f870fb626e3f672e40a45152c04f42ac47d6d",
+      "bytes": 7098,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/painted/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/painted/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/painted/frill.dmi",
+      "sha256": "ecd65ec3af89e4edc01f8ee74e1f4f1cb4c8340e592384511063e4c5ab90d448",
+      "bytes": 2910,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/painted/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/painted/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/painted/low_wall.dmi",
+      "sha256": "4835320bff1b0c588a3fdb0639bfc1a5449dbb1eafcc053dea0c316d268c7bdf",
+      "bytes": 6945,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/painted/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/painted/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/painted/wall.dmi",
+      "sha256": "9a963f05666f3e67858e8ac2d973f14f60c4ee8b259f4cde3e1756db677ee94b",
+      "bytes": 5333,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/red_brick/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/red_brick/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/red_brick/frill.dmi",
+      "sha256": "135cad17e0089b50b16f5c3932adafe69c9388d41bf4ec025fd01cd39ab704fb",
+      "bytes": 1379,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/red_brick/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/red_brick/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/red_brick/wall.dmi",
+      "sha256": "e74988b7aae37c07c3d7a34c1cb2fb73e9b2922baba15c3a1c40363b12cbb194",
+      "bytes": 3902,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rich/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rich/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rich/frill.dmi",
+      "sha256": "dddc29e68e520e12fe31e9a25f5a08a678d16664ee52faf28410b4d0d7d378a8",
+      "bytes": 3620,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rich/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rich/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rich/low_wall.dmi",
+      "sha256": "b33df82571719a7dbfdb0daf2d22fd4f84e4ee6208ec596c284d111147131c8e",
+      "bytes": 7230,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rich/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rich/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rich/wall.dmi",
+      "sha256": "a0fd937f2685cca4335d31cecc0b5360eabe798e14fca0306a6a5a6e5f9d99e7",
+      "bytes": 6611,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rich_old/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rich_old/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rich_old/frill.dmi",
+      "sha256": "58c904c2832547d93749e836a8348365e5bf6515a8ef9daf7bd7989f8e537275",
+      "bytes": 3634,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rich_old/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rich_old/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rich_old/low_wall.dmi",
+      "sha256": "0f5c0293fa98472ffbfebd8ab8b0eba961fc7bfbaa7bd5903b883939ea7550a8",
+      "bytes": 7723,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rich_old/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rich_old/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rich_old/wall.dmi",
+      "sha256": "854f3097a599ed83e69700e240a947bbc51d190221cf65f3b3963863979303b8",
+      "bytes": 6614,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rock/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rock/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rock/frill.dmi",
+      "sha256": "d62918af70055579bd3542c158ddb567e2c1ab65d455b7f5683a151746593afc",
+      "bytes": 4023,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rust/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rust/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rust/frill.dmi",
+      "sha256": "2be16bb49724ff4fce25b597d58f6fde2f970a680cdd88c6d6d38b9b80ec68ad",
+      "bytes": 1711,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rust/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rust/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rust/wall.dmi",
+      "sha256": "780c7466e555a5937a8bbf19d45e8409b9d654e3a3adecf496fa0e0997b22dfe",
+      "bytes": 3374,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rustbad/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rustbad/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rustbad/frill.dmi",
+      "sha256": "44e77759edf5e6e871f960573d1990af69fa60d816608ae9bb070db975c8771f",
+      "bytes": 2529,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/rustbad/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/rustbad/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/rustbad/wall.dmi",
+      "sha256": "b48acaa2e94c2e5edff51dce68ef3f09f59cc9cefe9076b808cb774cf5efe84b",
+      "bytes": 3785,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/wood/frill.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/wood/frill.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/wood/frill.dmi",
+      "sha256": "d6c38a23718650c6565e7cfd2be81e244b24769bd431721e144922bbc44b4ec8",
+      "bytes": 2625,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/wood/low_wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/wood/low_wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/wood/low_wall.dmi",
+      "sha256": "c6f3fefaae743e3e066658184e3cc60c63c4914b7e09fd00ce210fd5671c034e",
+      "bytes": 5049,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/architecture/walls/wood/wall.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/wall/wood/wall.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/wall/wood/wall.dmi",
+      "sha256": "49377f0ee47ac616846bf620d7c6b1848890f1d95de7e2616cbb6e22052a30ed",
+      "bytes": 5354,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/01107ebfdb_showcase.dmi",
+      "source": "modular_darkpack/modules/decor/icons/showcase.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/showcase.dmi",
+      "sha256": "818b340f51cdf6fb59569c7261c200a0497e22a8e4bd269be04fc0aac9747b0e",
+      "bytes": 1009,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/0126c35bab_lefthand.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/lefthand.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/lefthand.dmi",
+      "sha256": "796ebb6f73eab4de4103d35aee1b8927f2e3181b3cadedc0b036bf4773d09484",
+      "bytes": 39213,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/07c968eebb_tray.dmi",
+      "source": "modular_darkpack/modules/drugs/icons/tray.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/drugs/icons/tray.dmi",
+      "sha256": "a594c70df251bea09d22bac034b13bb890be8286a0ab39b6456580458416e24b",
+      "bytes": 1454,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/0c8d21e1a6_vaulderie_goblet.dmi",
+      "source": "modular_darkpack/modules/sabbat/icons/vaulderie_goblet.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/sabbat/icons/vaulderie_goblet.dmi",
+      "sha256": "fe689d057aebdf2d0c0da61d4172c291d1a47663b17c51c8a9dd9e64cb534c09",
+      "bytes": 705,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/0f39fc590b_toys.dmi",
+      "source": "modular_darkpack/modules/toys/icons/toys.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/toys/icons/toys.dmi",
+      "sha256": "915fd40246d2a38c9c9370f2e76b1e5bd6aded8457ffad37100b4596ed5c0e09",
+      "bytes": 4999,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/119b4f73b4_artifacts.dmi",
+      "source": "modular_darkpack/modules/occult_artifacts/icons/artifacts.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/occult_artifacts/icons/artifacts.dmi",
+      "sha256": "ca0bf631b067f462478b51437274bd4292d6324207c3ee3f0a9a9f2f11b6200a",
+      "bytes": 3914,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/190e081921_melee_righthand.dmi",
+      "source": "modular_darkpack/modules/weapons/icons/melee_righthand.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/weapons/icons/melee_righthand.dmi",
+      "sha256": "e347b0707006be1a7450eb188159a5148e8078ab9ec810630a70d52306522fd8",
+      "bytes": 549,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/1fd1d605fc_32x48.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/32x48.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/32x48.dmi",
+      "sha256": "f880952cb50fa9302b9e997564a5ca3064db879d3c04a123746f6d348513fe5d",
+      "bytes": 35532,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/31b722c357_electricity.dmi",
+      "source": "modular_darkpack/modules/electricity/icons/electricity.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/electricity/icons/electricity.dmi",
+      "sha256": "1bdeecb7e36a769316a83b7eb74f8900410817ab80ebcc06cf433bc72ac30614",
+      "bytes": 3583,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/41259403a3_pliers.dmi",
+      "source": "modular_darkpack/modules/weapons/icons/pliers.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/weapons/icons/pliers.dmi",
+      "sha256": "edc031db0cd12446946a6e58920b5241c3f4e9b7367f5650e81e759b9bbc51fa",
+      "bytes": 605,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/4f8004414f_64x64.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/64x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/64x64.dmi",
+      "sha256": "295dc1e8de65d8077210b848248ea0dee9f92a088fa88ed10b30b5c8d4401a15",
+      "bytes": 49748,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/54dd1d54ef_icons.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/icons.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/icons.dmi",
+      "sha256": "d8e946f63b716f98a4b381e5e6ed7993a312afdbaf24add3219d5ecc9f53f603",
+      "bytes": 84328,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/6653ba25c4_chairs.dmi",
+      "source": "modular_darkpack/modules/chairs/icons/chairs.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/chairs/icons/chairs.dmi",
+      "sha256": "a651c68aa94f4060c8217eee0b7ccd67519523565a369cf2118bbfadbfa0cd15",
+      "bytes": 11613,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/7348e7d4f2_props.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/props.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/props.dmi",
+      "sha256": "16fb6459767f24fc704d2c737f41e6a1b7be0b62b6b22183b9fd8e32f6c77a43",
+      "bytes": 10987,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/73a7b3dbbd_worn_melee.dmi",
+      "source": "modular_darkpack/modules/weapons/icons/worn_melee.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/weapons/icons/worn_melee.dmi",
+      "sha256": "16998762871390891d1faba28f33d9cf8758b2733b8c1bda3607e3ea1adfd349",
+      "bytes": 9960,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/798645789f_containers.dmi",
+      "source": "modular_darkpack/modules/decor/icons/containers.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/containers.dmi",
+      "sha256": "964faf88103e4f45d51ca170abdb3df886b738f363697432c20f7f3903ec8557",
+      "bytes": 2996,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/798fb2b9a5_flesh_items.dmi",
+      "source": "modular_darkpack/modules/powers/icons/flesh_items.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/powers/icons/flesh_items.dmi",
+      "sha256": "e3dd11bffdf7248033be4520f452e439c38f4809bc75c53f4899a46c8d86c4e7",
+      "bytes": 2563,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/99674c0cc6_items.dmi",
+      "source": "modular_darkpack/modules/drugs/icons/items.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/drugs/icons/items.dmi",
+      "sha256": "f10f0db7c9dde15e368039d639e1aa44fb7d816d214e31afe108cdf0728e1a32",
+      "bytes": 3287,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/a151baa545_letters.dmi",
+      "source": "modular_darkpack/modules/postal/icons/letters.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/postal/icons/letters.dmi",
+      "sha256": "8bff8c2f9cac7e5cffa09addcd47bd4cdbad10cdc1e97d3c5bb68cc68a10d14a",
+      "bytes": 1238,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/a192ed3875_bitcoinminer.dmi",
+      "source": "modular_darkpack/modules/bitcoinminer/icons/bitcoinminer.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/bitcoinminer/icons/bitcoinminer.dmi",
+      "sha256": "b7770ed9216855eccd64e5e8784ed01f291c0b1d3bf06ff55c3875483173c7f2",
+      "bytes": 783,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/aae2e68d49_items.dmi",
+      "source": "modular_darkpack/modules/food/icons/items.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/food/icons/items.dmi",
+      "sha256": "5981a237bd07e0f78d7fd94fbd339b9ab1552ff9ee4dfb8c96499f76cf0c3f57",
+      "bytes": 9490,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/adece606d7_ashtray.dmi",
+      "source": "modular_darkpack/modules/ashtray/icons/ashtray.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/ashtray/icons/ashtray.dmi",
+      "sha256": "85ceac80fade0fd2f254799f8a7858ac9a7be11cbd14dc5c679a6e2d1bef6246",
+      "bytes": 351,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/b05f968256_box.dmi",
+      "source": "modular_darkpack/modules/cargo/icons/box.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/cargo/icons/box.dmi",
+      "sha256": "c48812fd001c72919cd154bf729c14c5d40537b6ff16bba87f1862af193d80a8",
+      "bytes": 835,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/b7bdd3ddf9_keypad.dmi",
+      "source": "modular_darkpack/modules/vaults/icons/keypad.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/vaults/icons/keypad.dmi",
+      "sha256": "90337cf1c2004063ca48631da3628511c209b6d7a7931f53d3b20e358eab7afd",
+      "bytes": 291,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/b93cb3d7f1_weapons.dmi",
+      "source": "modular_darkpack/modules/weapons/icons/weapons.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/weapons/icons/weapons.dmi",
+      "sha256": "31252748797341d21d3c545d1395c6edb47ba09470acf63b9105e692bc8d22f3",
+      "bytes": 40330,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/c1dab43ea6_clock.dmi",
+      "source": "modular_darkpack/modules/city_time/icons/clock.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/city_time/icons/clock.dmi",
+      "sha256": "e8aebf72e099842f0fa4aaaf455316001fa92f50b38f98207ce066f4fa8bc48e",
+      "bytes": 996,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/c33943f26e_vendors_shops.dmi",
+      "source": "modular_darkpack/modules/retail/icons/vendors_shops.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/retail/icons/vendors_shops.dmi",
+      "sha256": "51a0eb2d399c50acb665fbfdf19bfa5c8a5cc5e761252fa21886be11cc37e275",
+      "bytes": 16524,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/c973a4a45b_fish48x32.dmi",
+      "source": "modular_darkpack/modules/fishing/icons/fish48x32.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/fishing/icons/fish48x32.dmi",
+      "sha256": "facc928bde2b8f76bd8afddb57ca1a6f88e5ed545da4d2722b57e414acb01b17",
+      "bytes": 993,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/caf396def7_cigarette_shelf.dmi",
+      "source": "modular_darkpack/modules/decor/icons/cigarette_shelf.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/cigarette_shelf.dmi",
+      "sha256": "df11905a716c8d00124deb4dfa9c723eaf65214d0877a248cbe13ca9c5d54270",
+      "bytes": 4292,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/cb9da1310f_worn.dmi",
+      "source": "modular_darkpack/modules/clothes/icons/worn.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/clothes/icons/worn.dmi",
+      "sha256": "3b13be3975384f8be875426002af80ee3b45efab1a66eca9b75cd3c03031855e",
+      "bytes": 226858,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/ce4dbbe3c4_sprinkler.dmi",
+      "source": "modular_darkpack/modules/fire/icons/sprinkler.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/fire/icons/sprinkler.dmi",
+      "sha256": "c54800f24f0a9b758d152e2799c28204f38b4956e6791cb997e083ea95c7c227",
+      "bytes": 745,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/da20699a8d_righthand.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/righthand.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/righthand.dmi",
+      "sha256": "284cf62404daa1889f06c322885c3d957d326284cd49baf41c6d386a28ee2c97",
+      "bytes": 38745,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/da52fd6995_melee_lefthand.dmi",
+      "source": "modular_darkpack/modules/weapons/icons/melee_lefthand.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/weapons/icons/melee_lefthand.dmi",
+      "sha256": "844303bce7ff33bd8886790347f8cf6a09070772f443d742c9bc7c7547e5bd4d",
+      "bytes": 558,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/dfe516e04e_items.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/items.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/items.dmi",
+      "sha256": "d1f7761cac2c313bf570347bb30ce25fb876cbb080516dfa829df5f2292dfb35",
+      "bytes": 6953,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/e7e71d1d3b_atm.dmi",
+      "source": "modular_darkpack/modules/economy/icons/atm.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/economy/icons/atm.dmi",
+      "sha256": "3508ff03e5a3e1c560e2c68c6fc90a99f60a45fc71c3c7b40f5a95a137f8330d",
+      "bytes": 1646,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/ed22a5b0db_storage.dmi",
+      "source": "modular_darkpack/modules/weapons/icons/storage.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/weapons/icons/storage.dmi",
+      "sha256": "0e7a372f6d9abd7fc9bec920abfefc80300452d0fd316e3cc7d2249b048b0094",
+      "bytes": 810,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/compat/fd1d2a4a61_radio.dmi",
+      "source": "modular_darkpack/modules/radios/icons/radio.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/radios/icons/radio.dmi",
+      "sha256": "1ab0fb76166bebcffa8e6b71c51f70b78f141ca5b3b19456482a663ed7fa8840",
+      "bytes": 2207,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/0018560535_hydrant.dmi",
+      "source": "modular_darkpack/modules/decor/icons/hydrant.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/hydrant.dmi",
+      "sha256": "001856053577a91afe198dc2af4f31ccc06b23b77e74e65507ed3845a05660a8",
+      "bytes": 1238,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/01435f31b2_billboards.dmi",
+      "source": "modular_darkpack/modules/billboard/icons/billboards.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/billboard/icons/billboards.dmi",
+      "sha256": "01435f31b23cbb29498e4de428f30a823b85ff01eac963648160350fd08809f2",
+      "bytes": 23028,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/0496583a93_fires.dmi",
+      "source": "modular_darkpack/modules/decor/icons/fires.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/fires.dmi",
+      "sha256": "0496583a93b526b1649f7ac797341aa056ef2b3c84cbad3361c65fa9926956d6",
+      "bytes": 4339,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/06c3509841_floors.dmi",
+      "source": "modular_darkpack/modules/walls/icons/floors.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/walls/icons/floors.dmi",
+      "sha256": "06c3509841068f7bbfeb1ccebc8ee1ef11483caf152b4c9b68e5b5ffb309b769",
+      "bytes": 122100,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/0cbb2fa240_catwalk_pentex_opaque.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/catwalk_pentex_opaque.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/catwalk_pentex_opaque.dmi",
+      "sha256": "0cbb2fa24093d747f5d272632520e300e0d90819c80a385e7dac46a368e858a6",
+      "bytes": 3098,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/0cfa58127e_cars.dmi",
+      "source": "modular_darkpack/modules/cars/icons/cars.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/cars/icons/cars.dmi",
+      "sha256": "0cfa58127e067a6cc77aa83a45a94a7edbd5caa96f8ef3b628ef6a222e6c7b4f",
+      "bytes": 152827,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/11663e3043_food_cart.dmi",
+      "source": "modular_darkpack/modules/food/icons/food_cart.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/food/icons/food_cart.dmi",
+      "sha256": "11663e3043f2c26eedd2b019192a89690cc297f731c6ec0f7a5e42f106460359",
+      "bytes": 1240,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/122168447a_barrels.dmi",
+      "source": "modular_darkpack/modules/decor/icons/barrels.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/barrels.dmi",
+      "sha256": "122168447a474f6ba24f2f6499996ccc1e205297dbd42a1a9af6ff32d1cd2434",
+      "bytes": 6171,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/16fb645976_props.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/props.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/props.dmi",
+      "sha256": "16fb6459767f24fc704d2c737f41e6a1b7be0b62b6b22183b9fd8e32f6c77a43",
+      "bytes": 10987,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/207bb51ef0_blacktop_table.dmi",
+      "source": "icons/obj/smooth_structures/blacktop_table.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/blacktop_table.dmi",
+      "sha256": "207bb51ef082893940e4a6de64370f0ab986169d0ccdb9f876d5887de37380da",
+      "bytes": 2222,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/2540438a16_flora.dmi",
+      "source": "modular_darkpack/modules/decor/icons/flora.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/flora.dmi",
+      "sha256": "2540438a169cfe6bec530c19e45ab2516d00f2e8d80ad9d336d7246c567733cb",
+      "bytes": 6187,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/29590da889_glyphs.dmi",
+      "source": "modular_darkpack/modules/werewolf_the_apocalypse/icons/glyphs.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/werewolf_the_apocalypse/icons/glyphs.dmi",
+      "sha256": "29590da889912d648f2d6339e487e9f42ed557179ca440cc399335a08f7fcc73",
+      "bytes": 51637,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/295dc1e8de_64x64.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/64x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/64x64.dmi",
+      "sha256": "295dc1e8de65d8077210b848248ea0dee9f92a088fa88ed10b30b5c8d4401a15",
+      "bytes": 49748,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/2ee9655359_chinatown.dmi",
+      "source": "modular_darkpack/modules/decor/icons/chinatown.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/chinatown.dmi",
+      "sha256": "2ee9655359c56b4dc5de7535e9fd04b0c63a9716e432900d43b24072eaecb83a",
+      "bytes": 9601,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/338fbf8612_alleyway.dmi",
+      "source": "modular_darkpack/modules/decor/icons/alleyway.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/alleyway.dmi",
+      "sha256": "338fbf86128048d53283c68e52f9c0093ec0344a0b9d7fb7aae97ef674ca629e",
+      "bytes": 1858,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/34740d4d3c_purpletop_table.dmi",
+      "source": "icons/obj/smooth_structures/purpletop_table.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/purpletop_table.dmi",
+      "sha256": "34740d4d3c1b350089712655e897a9c79a66ddf51e1eab71fda5cc0a062ebf1a",
+      "bytes": 2235,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/3870b5edec_brazier.dmi",
+      "source": "modular_darkpack/modules/brazier/icons/brazier.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/brazier/icons/brazier.dmi",
+      "sha256": "3870b5edeccc56e74d0b603345e451c411608228ccbcd288504d72b529342243",
+      "bytes": 3124,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/39151df6f7_pipes.dmi",
+      "source": "modular_darkpack/modules/decor/icons/pipes.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/pipes.dmi",
+      "sha256": "39151df6f785d67edd7a5a6ac614750660d9f9923373d8ff05743fa64b0a4529",
+      "bytes": 4040,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/3eb90e4270_spiral_totem.dmi",
+      "source": "modular_darkpack/modules/werewolf_the_apocalypse/icons/spiral_totem.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/werewolf_the_apocalypse/icons/spiral_totem.dmi",
+      "sha256": "3eb90e42708093f4c140a89f6e571395388d4a2a6f6fe7c01ffb7b6e7ee00046",
+      "bytes": 1018,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/3f21e5ff00_graves.dmi",
+      "source": "modular_darkpack/modules/graveyard/icons/graves.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/graveyard/icons/graves.dmi",
+      "sha256": "3f21e5ff00c755303b49bb7b43c0780c0022ffff93a4ce3d3d4b83c034f77e87",
+      "bytes": 7437,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/427a107cc6_flags.dmi",
+      "source": "modular_darkpack/modules/flags/icons/flags.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/flags/icons/flags.dmi",
+      "sha256": "427a107cc604ad04d000841a88f7ccedd8a8549bb0f5847f91f3b57cb4aa3929",
+      "bytes": 7679,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/434a4fa9f6_fence.dmi",
+      "source": "modular_darkpack/modules/decor/icons/fence.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/fence.dmi",
+      "sha256": "434a4fa9f6cafacdd5f342ac4ae0b174fd6af612e5c42bc5491f70c8bceed162",
+      "bytes": 1841,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/4b88daa3d6_modular_tables.dmi",
+      "source": "modular_darkpack/modules/decor/icons/modular_tables.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/modular_tables.dmi",
+      "sha256": "4b88daa3d644aadb010ad5f1b06b39deb2dec497bfcb370f99ce51db36c1f055",
+      "bytes": 5196,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/4c407bbd27_water.dmi",
+      "source": "modular_darkpack/modules/cars/icons/water.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/cars/icons/water.dmi",
+      "sha256": "4c407bbd27b7daf82dc5ec3a0a8223676bc91b03b9b5d986d70762f7f3119e6a",
+      "bytes": 6768,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/53d9b88180_flesh_objects.dmi",
+      "source": "modular_darkpack/modules/powers/icons/flesh_objects.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/powers/icons/flesh_objects.dmi",
+      "sha256": "53d9b881807cc73e3cbb27b34a3e735819a76fd0c28ea0e725b5bcf961c254e8",
+      "bytes": 6177,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/58f14c97ee_ladders.dmi",
+      "source": "modular_darkpack/modules/z_travel/icons/ladders.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/z_travel/icons/ladders.dmi",
+      "sha256": "58f14c97eed1120bab6351b72f05a762c517f8f3f6ff7ac78efd47687febe10b",
+      "bytes": 6871,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/593cbc2fb8_smallcontainers.dmi",
+      "source": "modular_darkpack/modules/decor/icons/smallcontainers.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/smallcontainers.dmi",
+      "sha256": "593cbc2fb88236f7ba631ae7dedce35b3b60edd34f3e216419fa36255b9b62cb",
+      "bytes": 12050,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/66e2be6daa_barriers.dmi",
+      "source": "modular_darkpack/modules/decor/icons/barriers.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/barriers.dmi",
+      "sha256": "66e2be6daa7a96a7ff4a7ce5008d5fe79b675d749c06701e32f8184fc95ce5b1",
+      "bytes": 1734,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/6a823ce518_32x48.dmi",
+      "source": "modular_darkpack/modules/billiards/icons/32x48.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/billiards/icons/32x48.dmi",
+      "sha256": "6a823ce51844027514b36bf8d7f30907ee8d1213737a8dd7866113e0a480af31",
+      "bytes": 1369,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/6accfbe687_trees.dmi",
+      "source": "modular_darkpack/modules/decor/icons/trees.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/trees.dmi",
+      "sha256": "6accfbe6873b6c8d97a0438d4f831463c5e9ee43b2bb3aeeef1822a2411e27b5",
+      "bytes": 62692,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/71b23ba7a8_vents.dmi",
+      "source": "modular_darkpack/modules/decor/icons/vents.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/vents.dmi",
+      "sha256": "71b23ba7a890664ebd5001a03ed7543a9a2e4b9ce154d5cc043cd8ec1dc2940a",
+      "bytes": 3211,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/7280898d6a_bacotell_table.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/bacotell_table.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/bacotell_table.dmi",
+      "sha256": "7280898d6a4fedd3f02c1710a8cfe37836bbebf38e099ec3a9daa2ab0edd1c33",
+      "bytes": 2705,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/738f310d49_flora32x48.dmi",
+      "source": "modular_darkpack/modules/decor/icons/flora32x48.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/flora32x48.dmi",
+      "sha256": "738f310d4960a551d3741bc96607594c8d080ed8c43974a997562ad09849d830",
+      "bytes": 4960,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/77877f06da_poster.dmi",
+      "source": "modular_darkpack/modules/decor/icons/poster.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/poster.dmi",
+      "sha256": "77877f06da4c737e13477051adb6867399cd2d9ebca51817aaf67c325a9e9e0a",
+      "bytes": 7085,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/792ae3c39e_railings.dmi",
+      "source": "modular_darkpack/modules/decor/icons/railings.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/railings.dmi",
+      "sha256": "792ae3c39e134de9b0c88f02dfa1e5246186f990bb80f57da6043a12af770947",
+      "bytes": 26256,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/7bff5f79df_rack32x64.dmi",
+      "source": "modular_darkpack/modules/decor/icons/rack32x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/rack32x64.dmi",
+      "sha256": "7bff5f79dfea526a187dffe620ed9a6a1da1c101764e54c62bfd4e3bf7a85eff",
+      "bytes": 5095,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/7ed1d1d646_trash.dmi",
+      "source": "modular_darkpack/modules/decor/icons/trash.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/trash.dmi",
+      "sha256": "7ed1d1d646ae6374fa9d652abc9a134b843299112618b38e6734dbaba767b96f",
+      "bytes": 11739,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/918969f8b4_greentop_table.dmi",
+      "source": "icons/obj/smooth_structures/greentop_table.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/greentop_table.dmi",
+      "sha256": "918969f8b4c45db15ff0e55e04e55d1361abec74309fa0342060f7ec8ac01bca",
+      "bytes": 2248,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/93927286ff_tealtop_table.dmi",
+      "source": "icons/obj/smooth_structures/tealtop_table.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/tealtop_table.dmi",
+      "sha256": "93927286ff31205fe87385e36ad9cf2afaa36b1711ceb65155762d4868d21a8a",
+      "bytes": 2233,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/9532d16ea9_flowers.dmi",
+      "source": "modular_darkpack/modules/decor/icons/flowers.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/flowers.dmi",
+      "sha256": "9532d16ea9d079c89bc658b3e5c1c778912b8ed5b8e2aac2dfd84c37b2bebf33",
+      "bytes": 1451,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/97583414f2_sarcophagus.dmi",
+      "source": "modular_darkpack/modules/antediluvian_sarcophagus/icons/sarcophagus.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/antediluvian_sarcophagus/icons/sarcophagus.dmi",
+      "sha256": "97583414f200628bc1b4bd7bba1ad95e06155805210e9dbad7e001d41a426e5a",
+      "bytes": 4874,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/9eda0fc3a4_cabaret.dmi",
+      "source": "modular_darkpack/modules/decor/icons/cabaret.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/cabaret.dmi",
+      "sha256": "9eda0fc3a4e9dea8e53d691d6f6c68be22034c43aafbfa84c1a433cb1d12db84",
+      "bytes": 4808,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/9f88d16986_wallpaper.dmi",
+      "source": "modular_darkpack/modules/walls/icons/wallpaper.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/walls/icons/wallpaper.dmi",
+      "sha256": "9f88d1698676d3508af6d2f240ad0d183396885fe26e9e7cee302167770a888b",
+      "bytes": 20967,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/a038c798cd_restaurant.dmi",
+      "source": "modular_darkpack/modules/decor/icons/restaurant.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/restaurant.dmi",
+      "sha256": "a038c798cd554fae24e2bbf44ccca98346f2af24558f70c1cca20d4cdd22d43d",
+      "bytes": 1983,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/a04c3f0a2b_pines.dmi",
+      "source": "modular_darkpack/modules/decor/icons/pines.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/pines.dmi",
+      "sha256": "a04c3f0a2b0c5b46c52de7df839ee59d1a8615fb0c2bb09bfee4c17d95a2e191",
+      "bytes": 33679,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/a5ee446e29_grate.dmi",
+      "source": "modular_darkpack/modules/decor/icons/grate.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/grate.dmi",
+      "sha256": "a5ee446e299c3a1c388b2799cfad41c4854e86addfbbe4bda94f0ef16b0a7608",
+      "bytes": 537,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/a651c68aa9_chairs.dmi",
+      "source": "modular_darkpack/modules/chairs/icons/chairs.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/chairs/icons/chairs.dmi",
+      "sha256": "a651c68aa94f4060c8217eee0b7ccd67519523565a369cf2118bbfadbfa0cd15",
+      "bytes": 11613,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/a7c5c33c12_bury_pit.dmi",
+      "source": "modular_darkpack/modules/decor/icons/bury_pit.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/bury_pit.dmi",
+      "sha256": "a7c5c33c12d051323c14d3d6c7e1e0b1158307e325e8eddf20046de81a657b00",
+      "bytes": 1267,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/aa76796675_stonks.dmi",
+      "source": "modular_darkpack/modules/decor/icons/stonks.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/stonks.dmi",
+      "sha256": "aa767966759cffbb83599410ede0444251c35f3c412823c91c4e64a85f376d95",
+      "bytes": 2166,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/ace0ea2fb6_64x64_large_tables.dmi",
+      "source": "modular_darkpack/modules/decor/icons/64x64_large_tables.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/64x64_large_tables.dmi",
+      "sha256": "ace0ea2fb6bf568754182d6d442f8346f85349e192caac672b354185ffb0caa8",
+      "bytes": 20107,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/b048096403_city_sign.dmi",
+      "source": "modular_darkpack/modules/decor/icons/city_sign.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/city_sign.dmi",
+      "sha256": "b0480964033512ae0703f761442c9fd4c1437364f4a08a9cfdf699ab58ef985f",
+      "bytes": 7534,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/b20224199f_grandpa_cock.dmi",
+      "source": "modular_darkpack/modules/city_time/icons/grandpa_cock.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/city_time/icons/grandpa_cock.dmi",
+      "sha256": "b20224199f33dce9eade4d3d84d2140846d1ce53212a5a3f0afb83bf03689dd2",
+      "bytes": 689,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/b46315bd85_48x48.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/48x48.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/48x48.dmi",
+      "sha256": "b46315bd85e1f78cd4ff157a05a981d090cb176f93c9bd42f7bff9575eb7e105",
+      "bytes": 8601,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/b4d124ec11_store_sign.dmi",
+      "source": "modular_darkpack/modules/decor/icons/store_sign.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/store_sign.dmi",
+      "sha256": "b4d124ec1184e8e0f89436783ce485ef5c7c6fc0c073b8b9ed1420e0f553ea70",
+      "bytes": 2690,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/b52c0d86e4_crates32x32.dmi",
+      "source": "modular_darkpack/master_files/icons/obj/storage/crates32x32.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/master_files/icons/obj/storage/crates32x32.dmi",
+      "sha256": "b52c0d86e4763bf8c138a5beeb22bec848ed5f43998cedc744b8ebbaefb7904f",
+      "bytes": 2364,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/b674b102b4_totems.dmi",
+      "source": "modular_darkpack/modules/werewolf_the_apocalypse/icons/totems.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/werewolf_the_apocalypse/icons/totems.dmi",
+      "sha256": "b674b102b4acacea7d0ce5049cbbe8d4ba6a371a98d9e026d42bd9823658b753",
+      "bytes": 2010,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/c00f9ee0d7_bench.dmi",
+      "source": "modular_darkpack/modules/decor/icons/bench.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/bench.dmi",
+      "sha256": "c00f9ee0d7a535fb8ffa4bafb50ef3baed21b377cdde6663445b78cdbec3feb5",
+      "bytes": 4458,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/c1130a05ee_32x64.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/32x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/32x64.dmi",
+      "sha256": "c1130a05eef664f367e38fb88b59d868be0305beec16bb0e4a26ecbe4f613b2d",
+      "bytes": 53809,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/c254c01a44_watercloset.dmi",
+      "source": "modular_darkpack/master_files/icons/obj/watercloset.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/master_files/icons/obj/watercloset.dmi",
+      "sha256": "c254c01a44c1788eee8a6905d5e0752cef5e3c3e3cc1ee9a2169c3c1d6a99d3d",
+      "bytes": 35900,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/c5c062de5c_rack64x64.dmi",
+      "source": "modular_darkpack/modules/decor/icons/rack64x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/rack64x64.dmi",
+      "sha256": "c5c062de5cc612de94f10c40a73310253f07ea6cb2c82bb4febd032d8538a841",
+      "bytes": 12741,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/cadaa6b836_lamppost.dmi",
+      "source": "modular_darkpack/modules/decor/icons/lamppost.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/lamppost.dmi",
+      "sha256": "cadaa6b83658bc6646ec466863d8ab9e035ec2f00b5f5367e95d3fa670f9de47",
+      "bytes": 13384,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d215750a50_table_wood_bar.dmi",
+      "source": "modular_darkpack/modules/decor/icons/table_wood_bar.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/table_wood_bar.dmi",
+      "sha256": "d215750a501e0036231f07d5a2bf1795d5bb593b60c3f9ea4739c8717990cf48",
+      "bytes": 3582,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d2ad403207_flora64x64.dmi",
+      "source": "modular_darkpack/modules/decor/icons/flora64x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/flora64x64.dmi",
+      "sha256": "d2ad4032070eb2a0e460260ffee89ff7ca4f2c7f478bb2e36c90031ce8148cca",
+      "bytes": 9706,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d4a1277a04_natural_turf_borders.dmi",
+      "source": "modular_darkpack/modules/decor/icons/natural_turf_borders.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/natural_turf_borders.dmi",
+      "sha256": "d4a1277a045b07dfc15d2ccb4388b20fd6a50be67298bf3c160557a2ff907106",
+      "bytes": 3605,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d4fa934fce_city_map.dmi",
+      "source": "modular_darkpack/modules/decor/icons/city_map.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/city_map.dmi",
+      "sha256": "d4fa934fce90235863f4041d4b31c78922fd53c2bba08d417dbeef42e67407d5",
+      "bytes": 1236,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d580e33a5c_closet32x32.dmi",
+      "source": "modular_darkpack/master_files/icons/obj/storage/closet32x32.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/master_files/icons/obj/storage/closet32x32.dmi",
+      "sha256": "d580e33a5c928a2575e0ec6503ea9c0699ba2970e22993e07af1944970dacfb7",
+      "bytes": 1864,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d88e4ce2cc_lighting.dmi",
+      "source": "modular_darkpack/master_files/icons/obj/lighting.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/master_files/icons/obj/lighting.dmi",
+      "sha256": "d88e4ce2cc691b4b43a0ffc105b7af4f2773e045fe14af20dd8efcb3e8d209df",
+      "bytes": 77292,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/d8e946f63b_icons.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/icons.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/icons.dmi",
+      "sha256": "d8e946f63b716f98a4b381e5e6ed7993a312afdbaf24add3219d5ecc9f53f603",
+      "bytes": 84328,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/ddde79bc8f_bubway_table.dmi",
+      "source": "icons/obj/smooth_structures/darkpack/bubway_table.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/icons/obj/smooth_structures/darkpack/bubway_table.dmi",
+      "sha256": "ddde79bc8fe6f9990970a518bf895497d958fff0caa30bdbe8dd6d8a57bc35af",
+      "bytes": 3095,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/de0be6f13e_decals.dmi",
+      "source": "modular_darkpack/modules/decor/icons/decals.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/decals.dmi",
+      "sha256": "de0be6f13ef9e63ca70d838facf3d2fa6c3433cd11696c93933c33212844835f",
+      "bytes": 62500,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/de97b3dd3e_television.dmi",
+      "source": "modular_darkpack/modules/decor/icons/television.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/television.dmi",
+      "sha256": "de97b3dd3e7301813e4e1ffaaed06f30dc241945fd956c71056ac32c89e36eed",
+      "bytes": 22973,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/e3fce4655a_rack.dmi",
+      "source": "modular_darkpack/modules/decor/icons/rack.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/rack.dmi",
+      "sha256": "e3fce4655a3fc77062a6284cf34f8e6db8ac1433dd837e46d450ed6622761ad0",
+      "bytes": 6585,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/e52f7d19c7_decals.dmi",
+      "source": "modular_vcg/modules/decor/icons/decals.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_vcg/modules/decor/icons/decals.dmi",
+      "sha256": "e52f7d19c74c8014bd3a3125318dce081db1404caf5cf1d41360216636bf86b7",
+      "bytes": 11489,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/e57cc56f05_standalone_tables.dmi",
+      "source": "modular_darkpack/modules/decor/icons/standalone_tables.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/standalone_tables.dmi",
+      "sha256": "e57cc56f05e4a8b5e02a4b6b9ce8f67a66d9c1b82a3b7e8e133aa64bad6f1c43",
+      "bytes": 6256,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/e65c1a28da_paintings.dmi",
+      "source": "modular_vcg/modules/decor/icons/paintings.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_vcg/modules/decor/icons/paintings.dmi",
+      "sha256": "e65c1a28dac05e1939dc696571667f59a96a71b4c2cf974ff8cbec880e01cbef",
+      "bytes": 2268,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/e8aebf72e0_clock.dmi",
+      "source": "modular_darkpack/modules/city_time/icons/clock.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/city_time/icons/clock.dmi",
+      "sha256": "e8aebf72e099842f0fa4aaaf455316001fa92f50b38f98207ce066f4fa8bc48e",
+      "bytes": 996,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/ecd2716653_road_signs.dmi",
+      "source": "modular_darkpack/modules/decor/icons/road_signs.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/road_signs.dmi",
+      "sha256": "ecd2716653709cc58376c438c492db18773362bab593e51f991200d1dca37e58",
+      "bytes": 3232,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/f351fb97ef_rugs64x64.dmi",
+      "source": "modular_darkpack/modules/decor/icons/rugs64x64.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/rugs64x64.dmi",
+      "sha256": "f351fb97efc382929ae9d37d4d418c13ed60c70ac718881b861280e2c1fa7b94",
+      "bytes": 9318,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/f880952cb5_32x48.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/32x48.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/32x48.dmi",
+      "sha256": "f880952cb50fa9302b9e997564a5ca3064db879d3c04a123746f6d348513fe5d",
+      "bytes": 35532,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/fe47213249_bathroom.dmi",
+      "source": "modular_darkpack/modules/decor/icons/bathroom.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/bathroom.dmi",
+      "sha256": "fe47213249f53d54037ca2f424e198a8ef73fb98e16b1a1cd98d836cbe6ca9c6",
+      "bytes": 1053,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/decor/fe6d2520b6_paintings.dmi",
+      "source": "modular_darkpack/modules/decor/icons/paintings.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/decor/icons/paintings.dmi",
+      "sha256": "fe6d2520b66ffce1fc76fd28ee72993446edebd468b0aff0745e06f5b24232aa",
+      "bytes": 2185,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/doors/city_doors.dmi",
+      "source": "modular_darkpack/modules/deprecated/icons/doors.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/deprecated/icons/doors.dmi",
+      "sha256": "bf825859c330a4695895bdd4063af5943bc84f9c62f1d6966dd211524ac0f419",
+      "bytes": 11596,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/doors/elevator_double.dmi",
+      "source": "modular_darkpack/modules/elevators/icons/doordouble.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/elevators/icons/doordouble.dmi",
+      "sha256": "35e54b0bf0c3f492af8d8dc57b1cffee74183ca411f59ce17ed51bb0c3a00fe0",
+      "bytes": 2061,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/doors/gate.dmi",
+      "source": "modular_darkpack/modules/graveyard/icons/gate.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/graveyard/icons/gate.dmi",
+      "sha256": "d53a6d1736424af09026cc51bb4fa63b040fb322f8cde0027f83851fd835a5d4",
+      "bytes": 1514,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/doors/shutters.dmi",
+      "source": "modular_darkpack/master_files/icons/obj/doors/shutters.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/master_files/icons/obj/doors/shutters.dmi",
+      "sha256": "0b5ed14b75cba49e8c69c92f73e5546e39dd3495dc7bc305ee4f8aab44049620",
+      "bytes": 21463,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/doors/vault.dmi",
+      "source": "modular_darkpack/modules/vaults/icons/vault.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/vaults/icons/vault.dmi",
+      "sha256": "d55f7e4b82b6509a11f0adb83e3a4cafd19a10b55b9003a390a1dec7d10ae4e3",
+      "bytes": 2189,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/equipment/701801f944_worn.dmi",
+      "source": "modular_darkpack/modules/ert/icons/worn.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/ert/icons/worn.dmi",
+      "sha256": "9e9dc75abdb0f43d6f75c8c9d4174ca659153e0aee25055c2d2c506a900bbb60",
+      "bytes": 7190,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/equipment/8e81e9f5b6_clothing.dmi",
+      "source": "modular_darkpack/modules/ert/icons/clothing.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/ert/icons/clothing.dmi",
+      "sha256": "4f1316fcdb2e90c066b9e3082d54815edef3fff7a4ee3839ed01697dbfa9db78",
+      "bytes": 5012,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/equipment/cb9da1310f_worn.dmi",
+      "source": "modular_darkpack/modules/clothes/icons/worn.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/clothes/icons/worn.dmi",
+      "sha256": "3b13be3975384f8be875426002af80ee3b45efab1a66eca9b75cd3c03031855e",
+      "bytes": 226858,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/equipment/e47159f991_clothing.dmi",
+      "source": "modular_darkpack/modules/clothes/icons/clothing.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/clothes/icons/clothing.dmi",
+      "sha256": "b9fbc481ed29a509e14b568e38044b2dedf6e3cffccf3662f22e081434c55cc3",
+      "bytes": 125892,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/passages/stairs.dmi",
+      "source": "modular_darkpack/master_files/icons/obj/stairs.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/master_files/icons/obj/stairs.dmi",
+      "sha256": "0f7febe58a33c9997dfc720c9534bc1d1aab8158cc62ddf3c9d495c134d6e7e5",
+      "bytes": 2822,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    },
+    {
+      "destination": "modular_bandastation/san_francisco/icons/passages/transfer_point.dmi",
+      "source": "modular_darkpack/modules/z_travel/icons/z_travel.dmi",
+      "source_url": "https://github.com/Monkestation/crimson-grid/blob/483ef4772fe4957027c8e2f290cd1503b2b237f5/modular_darkpack/modules/z_travel/icons/z_travel.dmi",
+      "sha256": "de40430ff0b2ac5c794adb9e94c732ba740bfe3f803342990c5e7420e6d7391d",
+      "bytes": 20373,
+      "modified": false,
+      "license_notice": "Upstream default: CC BY-SA 3.0 unless otherwise indicated; asset-specific notices take precedence."
+    }
+  ]
+}
