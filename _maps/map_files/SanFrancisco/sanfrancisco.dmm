@@ -2725,7 +2725,7 @@
 /area/station/san_francisco/interior/jazzclub)
 "aAF" = (
 /obj/machinery/door/san_francisco/reinf{
-	name = "primogen hideout"
+	name = "Primogen Hideout"
 	},
 /turf/open/floor/san_francisco/wood/smooth/old{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -3403,7 +3403,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/machinery/door/san_francisco/wood{
 	dir = 1;
-	name = "board room";
+	name = "Board Room";
 	req_access = list("bar")
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -6995,7 +6995,7 @@
 "blx" = (
 /obj/machinery/door/san_francisco/wood{
 	dir = 1;
-	name = "board room"
+	name = "Board Room"
 	},
 /turf/open/floor/san_francisco/wood/smooth/old{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -9788,7 +9788,7 @@
 "bLV" = (
 /obj/machinery/door/san_francisco/simple{
 	dir = 4;
-	name = "Meeting Room door"
+	name = "Meeting Room Door"
 	},
 /turf/open/floor/san_francisco/city/saint{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -12246,7 +12246,7 @@
 	icon_state = "piping35"
 	},
 /obj/machinery/door/san_francisco/prison{
-	name = "Sewer gate"
+	name = "Sewer Gate"
 	},
 /turf/open/floor/san_francisco/plating/canal{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -18948,7 +18948,7 @@
 "dsI" = (
 /obj/effect/turf_decal/siding/white,
 /obj/machinery/door/san_francisco/reinf{
-	name = "Tech supply door";
+	name = "Tech Supply Door";
 	req_access = list("engineering")
 	},
 /turf/open/floor/san_francisco/carpet/ornate/old{
@@ -23892,7 +23892,7 @@
 /area/station/san_francisco/interior/setite/basement)
 "eoF" = (
 /obj/machinery/door/san_francisco/wood{
-	name = "bank management door"
+	name = "Bank Management Door"
 	},
 /turf/open/floor/san_francisco/carpet/ornate{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -30941,7 +30941,7 @@
 /area/station/san_francisco/outside/pacificheights/community)
 "fAa" = (
 /obj/machinery/door/san_francisco/reinf{
-	name = "primogen hideout"
+	name = "Primogen Hideout"
 	},
 /obj/effect/turf_decal/san_francisco/obj_effect_turf_decal_bordur,
 /turf/open/floor/san_francisco/wood/smooth/old{
@@ -34604,7 +34604,7 @@
 /obj/structure/cable/layer1,
 /obj/machinery/door/san_francisco/reinf{
 	dir = 4;
-	name = "Tech supply door";
+	name = "Tech Supply Door";
 	req_access = list("engineering")
 	},
 /turf/open/floor/san_francisco/plating/rough{
@@ -35320,7 +35320,7 @@
 "gpb" = (
 /obj/machinery/door/san_francisco/reinf{
 	dir = 4;
-	name = "Tech supply door";
+	name = "Tech Supply Door";
 	req_access = list("engineering")
 	},
 /turf/open/floor/san_francisco/city/gummaguts{
@@ -36727,7 +36727,7 @@
 "gCy" = (
 /obj/machinery/door/san_francisco/old{
 	dir = 1;
-	name = "old strange door"
+	name = "Old Strange Door"
 	},
 /turf/open/water/san_francisco/sewage{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -37985,7 +37985,7 @@
 	},
 /obj/machinery/door/san_francisco/wood{
 	dir = 4;
-	name = "Employee Equipment Closet door"
+	name = "Employee Equipment Closet Door"
 	},
 /turf/open/floor/san_francisco/city/plating_mono{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -48686,7 +48686,7 @@
 "iMu" = (
 /obj/machinery/door/san_francisco/old{
 	dir = 1;
-	name = "old strange door"
+	name = "Old Strange Door"
 	},
 /turf/open/floor/san_francisco/plating/rough/cave{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -49421,7 +49421,7 @@
 "iTe" = (
 /obj/machinery/door/san_francisco/old{
 	dir = 4;
-	name = "old abandoned door";
+	name = "Old Abandoned Door";
 	desc = "A long abandoned door from before the hospital was renovated. The old asylum was condemmed by the city a while ago, nobody goes in here anymore.";
 	req_access = list("medical")
 	},
@@ -50707,7 +50707,7 @@
 	icon_state = "piping32"
 	},
 /obj/machinery/door/san_francisco/prison{
-	name = "Sewer gate"
+	name = "Sewer Gate"
 	},
 /turf/open/floor/san_francisco/plating/canalplating{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -70769,7 +70769,7 @@
 	},
 /obj/machinery/door/san_francisco/wood{
 	dir = 4;
-	name = "Employee Break Room door"
+	name = "Employee Break Room Door"
 	},
 /turf/open/floor/san_francisco/city/plating_mono{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -71450,7 +71450,7 @@
 	dir = 1
 	},
 /obj/machinery/door/san_francisco/wood{
-	name = "bank management door"
+	name = "Bank Management Door"
 	},
 /turf/open/floor/san_francisco/plating/sidewalk{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -73490,7 +73490,7 @@
 "nec" = (
 /obj/machinery/door/san_francisco/reinf{
 	dir = 4;
-	name = "Tech supply door";
+	name = "Tech Supply Door";
 	req_access = list("engineering")
 	},
 /turf/open/floor/san_francisco/wood/smooth/old{
@@ -79336,7 +79336,7 @@
 "off" = (
 /obj/machinery/door/san_francisco/reinf{
 	dir = 1;
-	name = "Head Office door"
+	name = "Head Office Door"
 	},
 /turf/open/floor/san_francisco/city/church{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -95522,7 +95522,7 @@
 /area/station/san_francisco/interior/clinic)
 "qZO" = (
 /obj/machinery/door/san_francisco/prison{
-	name = "Sewer gate"
+	name = "Sewer Gate"
 	},
 /turf/open/floor/san_francisco/plating/canalplating{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -95574,7 +95574,7 @@
 /area/station/san_francisco/outside/fishermanswharf/lower)
 "raW" = (
 /obj/machinery/door/san_francisco/wood{
-	name = "bank management door"
+	name = "Bank Management Door"
 	},
 /turf/open/floor/san_francisco/city/plating_stone{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -95634,7 +95634,7 @@
 	},
 /obj/machinery/door/san_francisco/wood{
 	dir = 8;
-	name = "Watchtower door"
+	name = "Watchtower Door"
 	},
 /obj/effect/decal/san_francisco/obj_effect_decal_rugs,
 /turf/open/floor/san_francisco/wood/old{
@@ -101824,7 +101824,7 @@
 /obj/effect/decal/san_francisco/obj_effect_decal_cleanable_cardboard,
 /obj/machinery/door/san_francisco/old{
 	dir = 8;
-	name = "old strange door"
+	name = "Old Strange Door"
 	},
 /turf/open/floor/san_francisco/plating/rough/cave{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -102560,7 +102560,7 @@
 	icon_state = "piping35"
 	},
 /obj/machinery/door/san_francisco/prison{
-	name = "Sewer gate"
+	name = "Sewer Gate"
 	},
 /turf/open/floor/san_francisco/plating/canalplating{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -103569,7 +103569,7 @@
 /area/station/san_francisco/outside/pacificheights/community)
 "ssB" = (
 /obj/machinery/door/san_francisco/wood{
-	name = "bank management door"
+	name = "Bank Management Door"
 	},
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/san_francisco/wood/smooth{
@@ -110033,7 +110033,7 @@
 "txX" = (
 /obj/machinery/door/san_francisco/wood{
 	dir = 4;
-	name = "bank management door"
+	name = "Bank Management Door"
 	},
 /turf/open/floor/san_francisco/city/plating_stone{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -111669,7 +111669,7 @@
 	},
 /obj/machinery/door/san_francisco/reinf{
 	dir = 4;
-	name = "Tech supply door";
+	name = "Tech Supply Door";
 	req_access = list("engineering")
 	},
 /turf/open/floor/san_francisco/plating/sidewalk/poor{
@@ -112160,7 +112160,7 @@
 "tPI" = (
 /obj/machinery/door/san_francisco/old{
 	dir = 4;
-	name = "old abandoned door";
+	name = "Old Abandoned Door";
 	desc = "A long abandoned door from before the hospital was renovated. The old asylum was condemmed by the city a while ago, nobody goes in here anymore."
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -129264,8 +129264,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/san_francisco/plating/grate{
-	icon_state = "lattice_new_dirt";
+/turf/open/floor/san_francisco/plating/grate/dirty{
 	dir = 1;
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
 	planetary_atmos = 0
@@ -129909,7 +129908,7 @@
 	icon_state = "piping32"
 	},
 /obj/machinery/door/san_francisco/prison{
-	name = "Sewer gate"
+	name = "Sewer Gate"
 	},
 /turf/open/floor/san_francisco/plating/canal{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
@@ -132817,7 +132816,7 @@
 /area/station/san_francisco/outside/unionsquare)
 "xCU" = (
 /obj/machinery/door/san_francisco/wood{
-	name = "meeting hall";
+	name = "Meeting Hall";
 	req_access = list("hop")
 	},
 /obj/effect/turf_decal/san_francisco/obj_effect_turf_decal_siding_wood_light,
@@ -135891,8 +135890,7 @@
 /area/station/san_francisco/interior/jazzclub)
 "yds" = (
 /obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/san_francisco/plating/grate{
-	icon_state = "lattice_new_dirt";
+/turf/open/floor/san_francisco/plating/grate/dirty{
 	initial_gas_mix = "o2=21;n2=79;TEMP=293.15";
 	planetary_atmos = 0
 	},

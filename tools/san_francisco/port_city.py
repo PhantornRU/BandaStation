@@ -417,6 +417,13 @@ def sanitize(atom, binding, source_path, target_index):
         for key in binding.get("strip_vars", []):
             props.pop(key, None)
         props.update(binding.get("set_vars", binding.get("vars", {})))
+    # AI EDIT START - Preserve donor words and floor artwork in forms accepted by maplint
+    if path.startswith("/obj/machinery/door/") and re.search(r".*\s(?!of|and|to)[a-z].*", props.get("name", "")):
+        props["name"] = re.sub(r'(?<=[ "\t])[a-z]', lambda match: match[0].upper(), props["name"])
+    if path == "/turf/open/floor/san_francisco/plating/grate" and props.get("icon_state") == '"lattice_new_dirt"':
+        path += "/dirty"
+        del props["icon_state"]
+    # AI EDIT END
     return path + (props_to_string(props) if props else "")
 
 
@@ -586,7 +593,9 @@ def converted_map():
     map_folder = ROOT / "_maps/map_files/SanFrancisco"
     map_folder.mkdir(parents=True, exist_ok=True)
     converted.to_file(str(map_folder / "sanfrancisco.dmm"))
-    (ROOT / "tools/UpdatePaths/Scripts/PrimeDream_sanfrancisco.txt").write_text("\n".join(sorted(used_updates)) + "\n", encoding="utf-8")
+    # AI EDIT START - Prefix city update rules with their owning PR number
+    (ROOT / "tools/UpdatePaths/Scripts/10_PrimeDream_sanfrancisco.txt").write_text("\n".join(sorted(used_updates)) + "\n", encoding="utf-8")
+    # AI EDIT END
     print(json.dumps({"size": list(converted.size), "dictionary": len(converted.dictionary), "updates": len(used_updates), "passage_pairs": len(links)}, indent=2))
 
 
