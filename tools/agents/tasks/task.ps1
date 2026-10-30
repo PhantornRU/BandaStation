@@ -23,7 +23,7 @@ if ($Action -eq 'list') {
         }
     }
     $directories = @($byId.Values | Sort-Object Name)
-    if (-not $directories.Count) { Write-Output 'No local tasks. Use tools/agents/new-task.ps1.' }
+    if (-not $directories.Count) { Write-Output 'No local tasks. Use tools/agents/tasks/new-task.ps1.' }
     foreach ($directory in $directories) {
         $todo = Read-TaskTodo $directory.FullName
         # Status values are stable across the original and compact TODO templates.
@@ -81,6 +81,6 @@ if ($null -eq $todo) { throw ('TODO.md not found for '+$TaskId+'; inspect its PL
 Write-Output ('Task: '+$TaskId+' (read-only; no status or files changed)')
 Write-Output ('State: '+$directory)
 if ($directory -eq (Join-Path $taskLegacyRoot $TaskId)) {
-    Write-Output ('Before editing: tools/agents/task.ps1 -Action migrate -TaskId '+$TaskId)
+    Write-Output ('Before editing: tools/agents/tasks/task.ps1 -Action migrate -TaskId '+$TaskId)
 }
 Write-Output $todo

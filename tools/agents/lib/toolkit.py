@@ -9,7 +9,7 @@ import shutil
 import stat
 import subprocess
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 SOURCE_PATHS = [
     'AGENTS.md', '.AGENTS/README.md', '.AGENTS/PROJECT_CONTEXT.md', '.AGENTS/WORKFLOW_RULES.md',
     '.AGENTS/TASK_STATE.md', '.AGENTS/TOOLS.md', '.AGENTS/PORTING.md', '.AGENTS/KNOWN_ISSUES.md',
@@ -86,8 +86,8 @@ def copy(source: Path, destination: Path) -> None:
 
 def export(destination: Path) -> None:
     ordinary(destination)
-    for name in ('setup-tools.ps1', 'setup-tools.py', 'local-only.ps1', 'task.ps1', 'toolkit.py',
-                 'playwright-mcp.cjs', 'ripgrep-mcp.cjs'):
+    for name in ('setup-tools.ps1', 'setup/setup-tools.py', 'repo/local-only.ps1', 'tasks/task.ps1', 'lib/toolkit.py',
+                 'mcp/playwright-mcp.cjs', 'mcp/ripgrep-mcp.cjs'):
         if not (ROOT/'tools/agents'/name).is_file():
             raise ValueError('Missing required agent tool: '+name)
     if destination.exists():
@@ -100,7 +100,7 @@ def export(destination: Path) -> None:
             copy(item, destination/'payload'/item.relative_to(ROOT))
     installer = """param([Parameter(Mandatory=$true)][string]$Repository,[switch]$InstallDependencies)
 $ErrorActionPreference='Stop'
-$arguments=@('-3','-B',(Join-Path $PSScriptRoot 'payload/tools/agents/toolkit.py'),'install','--bundle',$PSScriptRoot,'--destination',$Repository)
+$arguments=@('-3','-B',(Join-Path $PSScriptRoot 'payload/tools/agents/lib/toolkit.py'),'install','--bundle',$PSScriptRoot,'--destination',$Repository)
 if($InstallDependencies){$arguments+='--install-dependencies'}
 & py @arguments
 if($LASTEXITCODE -ne 0){throw 'Toolkit installation failed.'}
@@ -108,7 +108,7 @@ if($LASTEXITCODE -ne 0){throw 'Toolkit installation failed.'}
     (destination/'Install.ps1').write_text(installer, encoding='utf-8')
     (destination/'README.md').write_text("""# Агентский набор BandaStation
 
-Проверка: `py -3 -B payload/tools/agents/toolkit.py verify --bundle .`
+Проверка: `py -3 -B payload/tools/agents/lib/toolkit.py verify --bundle .`
 Установка: `./Install.ps1 -Repository '<BandaStation checkout>'`.
 `-InstallDependencies` устанавливает закреплённые MCP зависимости, иначе запускается ConfigOnly.
 

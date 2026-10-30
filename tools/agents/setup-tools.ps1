@@ -1,6 +1,6 @@
 param([switch]$Repair, [switch]$ConfigOnly, [string]$BrowserSeed, [string]$RipgrepSeed)
 $ErrorActionPreference = 'Stop'
-$setupArguments = @('-3','-B',(Join-Path $PSScriptRoot 'setup-tools.py'))
+$setupArguments = @('-3','-B',(Join-Path $PSScriptRoot 'setup/setup-tools.py'))
 if ($Repair) { $setupArguments += '--repair' }
 if ($ConfigOnly) { $setupArguments += '--config-only' }
 if ($BrowserSeed) { $setupArguments += @('--browser-seed',$BrowserSeed) }

@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$WorkspaceRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
+$WorkspaceRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
 $agentUtf8 = New-Object Text.UTF8Encoding($false, $true)
 
 function Assert-AgentPath([string]$Path, [switch]$AllowMissing) {

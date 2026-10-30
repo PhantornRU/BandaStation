@@ -11,6 +11,7 @@ import sys
 import tempfile
 import tomllib
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'lib'))
 from toolkit import ROOT, digest, ordinary, RUNTIME_PATHS
 
 
@@ -47,9 +48,9 @@ def main() -> None:
     temporary_root = Path(tempfile.gettempdir()).resolve()
     global_config = Path.home()/'.codex/config.toml'
     global_hash = digest(global_config) if global_config.exists() else None
-    toolkit = ROOT/'tools/agents/toolkit.py'
+    toolkit = ROOT/'tools/agents/lib/toolkit.py'
     try:
-        specification = importlib.util.spec_from_file_location('setup_tools', ROOT/'tools/agents/setup-tools.py')
+        specification = importlib.util.spec_from_file_location('setup_tools', ROOT/'tools/agents/setup/setup-tools.py')
         setup = importlib.util.module_from_spec(specification)
         specification.loader.exec_module(setup)
         runtime = stage/'runtime-fixture'
@@ -73,7 +74,7 @@ def main() -> None:
         try:
             os.environ['LOCALAPPDATA'] = str(stage/'fake-local')
             try:
-                setup.install_runtime('browser', ROOT/'tools/agents', None, False)
+                setup.install_runtime('browser', ROOT/'tools/agents/mcp', None, False)
             except ValueError as error:
                 if 'unowned dependency directory' not in str(error):
                     raise
@@ -117,7 +118,9 @@ def main() -> None:
             raise ValueError('Runtime files leaked into Git status')
         config = tomllib.loads((root/'.codex/config.toml').read_text(encoding='utf-8'))
         for server in config['mcp_servers'].values():
-            if Path(server['cwd']).resolve() != root.resolve() or not Path(server['args'][0]).is_relative_to(root):
+            if (Path(server['cwd']).resolve() != root.resolve()
+                    or not Path(server['args'][0]).is_relative_to(root)
+                    or not Path(server['args'][0]).is_file()):
                 raise ValueError('Machine paths were not regenerated for the checkout')
         if (root/'task_state').exists():
             raise ValueError('Installer imported task history')
@@ -148,7 +151,7 @@ def main() -> None:
         if not all(name in output for name in ('.codex/config.toml', 'task_state/probe/TODO.md', '.AGENTS/local/probe/TODO.md')):
             raise ValueError('Hook missed a staged runtime path')
         run('powershell.exe', '-NoLogo', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
-            str(root/'tools/agents/local-only.ps1'), '-Action', 'check', reject='Local runtime files are tracked/staged')
+            str(root/'tools/agents/repo/local-only.ps1'), '-Action', 'check', reject='Local runtime files are tracked/staged')
         install(bundle, root, reject='runtime paths overlap tracked/staged files')
         if digest(root/'.git/index') != refusal_index:
             raise ValueError('Runtime refusal changed the index')
@@ -202,7 +205,7 @@ def main() -> None:
         run('powershell.exe', '-NoLogo', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
             str(root/'tools/agents/setup-tools.ps1'), '-ConfigOnly')
         run('powershell.exe', '-NoLogo', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
-            str(root/'tools/agents/local-only.ps1'), '-Action', 'check')
+            str(root/'tools/agents/repo/local-only.ps1'), '-Action', 'check')
         print('PASS: Git checkout with core.autocrlf=true; LF hook template; setup and guard remain valid')
     finally:
         if stage.resolve().parent != temporary_root or not stage.name.startswith('bandastation-agent-test-'):

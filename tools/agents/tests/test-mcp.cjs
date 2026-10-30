@@ -10,7 +10,7 @@ const { once } = require('node:events');
 const { pathToFileURL } = require('node:url');
 
 async function main() {
-  const root = path.resolve(__dirname, '../..');
+  const root = path.resolve(__dirname, '../../..');
   const page = '<!doctype html><meta charset="utf-8"><title>BandaStation MCP smoke</title>' +
     '<button id="event" onclick="document.getElementById(\'result\').textContent=\'event received\'">Test event</button>' +
     '<output id="result">ready</output>';
@@ -45,7 +45,7 @@ async function main() {
     return result;
   }
   try {
-    child = spawn(process.execPath, [path.join(__dirname, 'playwright-mcp.cjs')],
+    child = spawn(process.execPath, [path.join(__dirname, '../mcp/playwright-mcp.cjs')],
       { cwd: root, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true });
     exited = once(child, 'exit');
     child.stderr.on('data', chunk => {

@@ -6,7 +6,7 @@ const { pathToFileURL } = require('node:url');
 const { spawnSync } = require('node:child_process');
 async function main() {
   if (!process.env.LOCALAPPDATA) throw new Error('LOCALAPPDATA is required.');
-  const root = path.resolve(__dirname, '../..');
+  const root = path.resolve(__dirname, '../../..');
   const installed = path.join(process.env.LOCALAPPDATA, 'BandaStation/agent-tools/ripgrep');
   const sourceLock = fs.readFileSync(path.join(__dirname, 'ripgrep/package-lock.json'));
   if (!fs.existsSync(path.join(installed, 'package-lock.json')) || !fs.readFileSync(path.join(installed, 'package-lock.json')).equals(sourceLock))

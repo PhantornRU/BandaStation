@@ -3,9 +3,9 @@
 Рабочие записи — в локальном `task_state/<task-id>/`. Шаблоны версионируются в `.AGENTS/templates/`. Task state хранит контекст, не запускает работу и не выдаёт разрешений.
 
 ```powershell
-tools/agents/task.ps1 -Action list
-tools/agents/new-task.ps1 -TaskId 20261024-example -Title 'Проверяемый результат'
-tools/agents/task.ps1 -Action resume -TaskId 20261024-example
+tools/agents/tasks/task.ps1 -Action list
+tools/agents/tasks/new-task.ps1 -TaskId 20261024-example -Title 'Проверяемый результат'
+tools/agents/tasks/task.ps1 -Action resume -TaskId 20261024-example
 ```
 
 | Файл | Содержание |

@@ -9,13 +9,13 @@ const installed = path.join(process.env.LOCALAPPDATA, 'BandaStation/agent-tools/
 const { Client } = require(path.join(installed, 'client/index.js'));
 const { StdioClientTransport } = require(path.join(installed, 'client/stdio.js'));
 async function main() {
-  const root = path.resolve(__dirname, '../..');
+  const root = path.resolve(__dirname, '../../..');
   const fixture = path.join(root, 'task_state', 'mcp-smoke-'+randomUUID());
   const childDir = path.join(fixture, "owner's code with spaces");
   fs.mkdirSync(childDir, { recursive: true });
   fs.writeFileSync(path.join(childDir, 'sample.dm'), '/datum/sample\nНайти: literal[1] $()\n--pre=never-run\nneedle\nneedle\nneedle\n');
   const client = new Client({ name: 'bandastation-ripgrep-smoke', version: '1.0.0' });
-  const transport = new StdioClientTransport({ command: process.execPath, args: [path.join(__dirname, 'ripgrep-mcp.cjs')], cwd: root, stderr: 'pipe' });
+  const transport = new StdioClientTransport({ command: process.execPath, args: [path.join(__dirname, '../mcp/ripgrep-mcp.cjs')], cwd: root, stderr: 'pipe' });
   async function call(name, args) {
     const result = await client.callTool({ name, arguments: args });
     assert.ok(!result.isError, JSON.stringify(result));

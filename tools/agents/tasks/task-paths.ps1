@@ -1,5 +1,5 @@
 # Mutable task data must not live under Codex's protected .agents directory.
-$taskWorkspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
+$taskWorkspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
 $taskRoot = Join-Path $taskWorkspace 'task_state'
 $taskLegacyRoot = Join-Path $taskWorkspace '.AGENTS/local'
 $taskTemplates = Join-Path $taskWorkspace '.AGENTS/templates'

@@ -1,5 +1,5 @@
 param([ValidateSet('install','check')][string]$Action = 'check')
-. (Join-Path $PSScriptRoot 'common.ps1')
+. (Join-Path $PSScriptRoot '../lib/common.ps1')
 $paths = @(':(icase).codex', ':(icase)task_state', ':(icase).AGENTS/local')
 $tracked = @(& git -C $WorkspaceRoot ls-files -- $paths)
 if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect Git index.' }

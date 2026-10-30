@@ -11,7 +11,7 @@ async function main() {
   if (Number(process.versions.node.split('.')[0]) < 20) throw new Error('Node.js 20 or newer is required by the pinned Playwright runtime.');
   if (process.platform !== 'win32' || !process.env.LOCALAPPDATA)
     throw new Error('This launcher uses the installed Windows Microsoft Edge.');
-  const root = path.resolve(__dirname, '../..');
+  const root = path.resolve(__dirname, '../../..');
   const installed = path.join(process.env.LOCALAPPDATA, 'BandaStation/agent-tools/browser');
   const expected = require('./package.json').dependencies['@playwright/mcp'];
   const manifest = path.join(installed, 'node_modules/@playwright/mcp/package.json');

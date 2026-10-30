@@ -2,7 +2,7 @@
 # Project MCP only. Models, credentials, approvals and sandbox belong to the host.
 [mcp_servers.bandastation-ripgrep]
 command = "{{NODE}}"
-args = ["{{WORKSPACE}}/tools/agents/ripgrep-mcp.cjs"]
+args = ["{{WORKSPACE}}/tools/agents/mcp/ripgrep-mcp.cjs"]
 cwd = "{{WORKSPACE}}"
 enabled = true
 startup_timeout_sec = 20
@@ -11,7 +11,7 @@ enabled_tools = ["search", "list-files", "count-matches", "list-file-types"]
 
 [mcp_servers.bandastation-browser]
 command = "{{NODE}}"
-args = ["{{WORKSPACE}}/tools/agents/playwright-mcp.cjs"]
+args = ["{{WORKSPACE}}/tools/agents/mcp/playwright-mcp.cjs"]
 cwd = "{{WORKSPACE}}"
 enabled = true
 startup_timeout_sec = 20

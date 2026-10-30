@@ -1,9 +1,9 @@
 # Offline verification in dedicated TEMP fixtures; no product build or package download.
 $ErrorActionPreference = 'Stop'
-. (Join-Path $PSScriptRoot 'common.ps1')
-& py -3 -B (Join-Path $PSScriptRoot 'check-content.py')
+. (Join-Path $PSScriptRoot 'lib/common.ps1')
+& py -3 -B (Join-Path $PSScriptRoot 'tests/check-content.py')
 if ($LASTEXITCODE -ne 0) { throw 'Agent content/inspector checks failed.' }
-foreach ($script in Get-ChildItem -LiteralPath $PSScriptRoot -File -Filter '*.ps1') {
+foreach ($script in Get-ChildItem -LiteralPath $PSScriptRoot -Recurse -File -Filter '*.ps1') {
     $tokens = $null; $errors = $null
     [Management.Automation.Language.Parser]::ParseFile($script.FullName, [ref]$tokens, [ref]$errors) | Out-Null
     if ($errors.Count) { throw ('PowerShell syntax: '+$script.Name+' '+$errors[0].Message) }
@@ -18,14 +18,14 @@ Write-Output 'PASS: agent PowerShell and JavaScript syntax'
 $stage = New-AgentTemporaryDirectory
 try {
     $fixtureRoot = Join-Path $stage 'workspace'
-    $fixtureTools = Join-Path $fixtureRoot 'tools/agents'
+    $fixtureTools = Join-Path $fixtureRoot 'tools/agents/tasks'
     $fixtureState = Join-Path $fixtureRoot 'task_state'
     $fixtureLegacy = Join-Path $fixtureRoot '.AGENTS/local'
     [IO.Directory]::CreateDirectory($fixtureTools) | Out-Null
     [IO.Directory]::CreateDirectory((Join-Path $fixtureRoot '.AGENTS')) | Out-Null
     Copy-Item -LiteralPath (Local-Path '.AGENTS/templates') -Destination (Join-Path $fixtureRoot '.AGENTS/templates') -Recurse
     foreach ($script in @('new-task.ps1','task.ps1','task-paths.ps1')) {
-        Copy-Item -LiteralPath (Join-Path $PSScriptRoot $script) -Destination (Join-Path $fixtureTools $script)
+        Copy-Item -LiteralPath (Join-Path $PSScriptRoot ('tasks/'+$script)) -Destination (Join-Path $fixtureTools $script)
     }
     $create = Join-Path $fixtureTools 'new-task.ps1'
     $read = Join-Path $fixtureTools 'task.ps1'
@@ -115,6 +115,6 @@ try {
 } finally { Remove-AgentTemporaryDirectory $stage }
 Write-Output 'PASS: temporary task fixture cleanup'
 
-& py -3 -B (Join-Path $PSScriptRoot 'test-toolkit.py')
+& py -3 -B (Join-Path $PSScriptRoot 'tests/test-toolkit.py')
 if ($LASTEXITCODE -ne 0) { throw 'Portable installer checks failed.' }
-& (Join-Path $PSScriptRoot 'local-only.ps1') -Action check
+& (Join-Path $PSScriptRoot 'repo/local-only.ps1') -Action check

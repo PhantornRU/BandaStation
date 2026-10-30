@@ -6,7 +6,9 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'lib'))
 from toolkit import ROOT, digest, ordinary, run
 
 
@@ -127,14 +129,14 @@ def main() -> None:
     if config.exists() and not config.read_text(encoding='utf-8-sig').startswith(header):
         raise ValueError('Existing custom .codex/config.toml is preserved; merge it explicitly')
     print(run(['powershell.exe', '-NoLogo', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
-               str(ROOT/'tools/agents/local-only.ps1'), '-Action', 'install'], cwd=ROOT).strip())
+               str(ROOT/'tools/agents/repo/local-only.ps1'), '-Action', 'install'], cwd=ROOT).strip())
     if not args.config_only:
-        install_runtime('browser', ROOT/'tools/agents', args.browser_seed, args.repair)
-        install_runtime('ripgrep', ROOT/'tools/agents/ripgrep', args.ripgrep_seed, args.repair)
+        install_runtime('browser', ROOT/'tools/agents/mcp', args.browser_seed, args.repair)
+        install_runtime('ripgrep', ROOT/'tools/agents/mcp/ripgrep', args.ripgrep_seed, args.repair)
         for launcher in ('playwright-mcp.cjs', 'ripgrep-mcp.cjs'):
-            print(run([node, str(ROOT/'tools/agents'/launcher), '--check'], cwd=ROOT).strip())
-        record_runtime('browser', ROOT/'tools/agents')
-        record_runtime('ripgrep', ROOT/'tools/agents/ripgrep')
+            print(run([node, str(ROOT/'tools/agents/mcp'/launcher), '--check'], cwd=ROOT).strip())
+        record_runtime('browser', ROOT/'tools/agents/mcp')
+        record_runtime('ripgrep', ROOT/'tools/agents/mcp/ripgrep')
     template = (ROOT/'.AGENTS/templates/codex.toml').read_text(encoding='utf-8-sig')
     path_token = lambda path: str(path).replace('\\', '/').replace('"', '\\"')
     rendered = template.replace('{{WORKSPACE}}', path_token(ROOT)).replace('{{NODE}}', path_token(node))

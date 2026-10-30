@@ -34,7 +34,7 @@
 | TGUI | DM-контракт, lint/types/tests по области, реальная страница и кадр |
 | Карты/ресурсы | Include/binding, maplint или DMI-проверка; runtime/кадр для поведения и внешнего вида |
 | Переводы | Исходные TOML fragments, merge/schema и потребитель; generated файл вручную не править |
-| Агентский набор | Для инструкций — `py -3 -B tools/agents/check-content.py` и Git-границы; для логики утилит — относящиеся сценарии `tools/agents/check.ps1` |
+| Агентский набор | Для инструкций — `py -3 -B tools/agents/tests/check-content.py` и Git-границы; для логики утилит — относящиеся сценарии `tools/agents/check.ps1` |
 | MCP/установщик | Чистая установка/повтор, initialize → tools/list → tools/call → shutdown |
 
 Build targets сверяй с `tools/build/build.ts` и [build README](../tools/build/README.md). DreamMaker-only не проверяет весь pipeline. Браузерный MCP проверяет веб-страницу, а не полноценный BYOND runtime.

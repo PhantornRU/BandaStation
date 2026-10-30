@@ -2,11 +2,13 @@
 
 Команды выполняются из корня checkout. Требуются Windows, PowerShell 5.1 или 7, Python 3.11+, Node.js 20+ с npm, Git, `rg` и установленный Microsoft Edge. Игровые версии и сборка определяются отдельно через `dependencies.sh` и штатный bootstrap.
 
+Карта каталогов — [tools/agents/README](../tools/agents/README.md). В корне набора оставлены команды установки, общей проверки и экспорта; реализации, задачи, Git-инструменты, MCP и проверки сгруппированы по назначению.
+
 | Задача | Команда |
 | --- | --- |
-| Git-аудит | `py -3 -B tools/agents/inspect-repo.py status` |
-| Includes | `py -3 -B tools/agents/inspect-repo.py includes --path modular_bandastation/modular_bandastation.dme --depth 1 --limit 30` |
-| Чтение UTF-8 | `py -3 -B tools/agents/inspect-repo.py read --path tgstation.dme --start 1 --count 40` |
+| Git-аудит | `py -3 -B tools/agents/repo/inspect-repo.py status` |
+| Includes | `py -3 -B tools/agents/repo/inspect-repo.py includes --path modular_bandastation/modular_bandastation.dme --depth 1 --limit 30` |
+| Чтение UTF-8 | `py -3 -B tools/agents/repo/inspect-repo.py read --path tgstation.dme --start 1 --count 40` |
 | Поиск | Узкий `rg` или MCP `bandastation-ripgrep` |
 | Веб-страница | MCP `bandastation-browser` |
 | Задачи | [TASK_STATE](TASK_STATE.md) |
@@ -15,11 +17,11 @@
 
 ```powershell
 powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File tools/agents/setup-tools.ps1
-# После перемещения checkout: только локальная защита и новый конфиг.
+# После перемещения checkout или обновления путей инструментов: локальная защита и новый конфиг.
 tools/agents/setup-tools.ps1 -ConfigOnly
 ```
 
-Установка использует закреплённые package locks, стандартный npm ci с integrity и отключёнными lifecycle scripts. Playwright MCP — `0.0.80`; адаптация mcp-ripgrep — `0.4.0`, SDK — `1.29.0`; [MIT LICENSE](../tools/agents/ripgrep/LICENSE) сохранена. Зависимости находятся в `%LOCALAPPDATA%/BandaStation/agent-tools/`, вне Git.
+Установка использует закреплённые package locks, стандартный npm ci с integrity и отключёнными lifecycle scripts. Playwright MCP — `0.0.80`; адаптация mcp-ripgrep — `0.4.0`, SDK — `1.29.0`; [MIT LICENSE](../tools/agents/mcp/ripgrep/LICENSE) сохранена. Зависимости находятся в `%LOCALAPPDATA%/BandaStation/agent-tools/`, вне Git.
 
 Setup генерирует локальный `.codex/config.toml` из [шаблона](templates/codex.toml), подставляя пути текущего checkout и Node. Глобальный config, модели, approvals, sandbox и авторизация не меняются. Custom config/hook/cache не перезаписываются. Runtime проверяется по SHA256; `-Repair` переустанавливает только принадлежащий набору cache. `-BrowserSeed` и `-RipgrepSeed` позволяют использовать уже установленный runtime с совпадающими версиями lock.
 
@@ -35,10 +37,10 @@ Setup генерирует локальный `.codex/config.toml` из [шаб�
 
 ```powershell
 tools/agents/check.ps1
-node tools/agents/ripgrep-mcp.cjs --check
-node tools/agents/playwright-mcp.cjs --check
-node tools/agents/test-ripgrep-mcp.cjs
-node tools/agents/test-mcp.cjs
+node tools/agents/mcp/ripgrep-mcp.cjs --check
+node tools/agents/mcp/playwright-mcp.cjs --check
+node tools/agents/tests/test-ripgrep-mcp.cjs
+node tools/agents/tests/test-mcp.cjs
 ```
 
 `--check` проверяет наличие runtime, но ещё не MCP-вызов. Два smoke-скрипта выполняют initialize → tools/list → tools/call → shutdown: поиск с пограничными входами и браузер с локальной страницей, событием и PNG. `check.ps1` проверяет документацию, синтаксис, task state, перенос и Git-защиту в одноразовых fixtures.

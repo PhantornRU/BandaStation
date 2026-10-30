@@ -8,11 +8,12 @@ import subprocess
 import sys
 import tomllib
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'lib'))
 from toolkit import ROOT, SOURCE_PATHS, files
 
 
 def inspect(*arguments: str, reject: bool = False) -> str:
-    result = subprocess.run([sys.executable, '-B', str(ROOT/'tools/agents/inspect-repo.py'), *arguments],
+    result = subprocess.run([sys.executable, '-B', str(ROOT/'tools/agents/repo/inspect-repo.py'), *arguments],
                             capture_output=True, encoding='utf-8', errors='replace', timeout=60)
     if (result.returncode != 0) != reject:
         raise ValueError(result.stderr.strip() or 'Unexpected inspector result')
@@ -21,8 +22,8 @@ def inspect(*arguments: str, reject: bool = False) -> str:
 
 def main() -> None:
     links = 0
-    for name in ('setup-tools.ps1', 'setup-tools.py', 'local-only.ps1', 'task.ps1', 'toolkit.py',
-                 'playwright-mcp.cjs', 'ripgrep-mcp.cjs'):
+    for name in ('setup-tools.ps1', 'setup/setup-tools.py', 'repo/local-only.ps1', 'tasks/task.ps1', 'lib/toolkit.py',
+                 'mcp/playwright-mcp.cjs', 'mcp/ripgrep-mcp.cjs'):
         if not (ROOT/'tools/agents'/name).is_file():
             raise ValueError('Missing required agent tool: '+name)
     paths = [p for base in SOURCE_PATHS for p in files(ROOT/base)]
@@ -48,7 +49,7 @@ def main() -> None:
             if not target.is_relative_to(ROOT) or not target.exists():
                 raise ValueError(f'Broken instruction link: {path.relative_to(ROOT)} -> {url}')
             links += 1
-    for directory in (ROOT/'tools/agents', ROOT/'tools/agents/ripgrep'):
+    for directory in (ROOT/'tools/agents/mcp', ROOT/'tools/agents/mcp/ripgrep'):
         package = json.loads((directory/'package.json').read_text())
         lock = json.loads((directory/'package-lock.json').read_text())
         if package['name'] != lock['name'] or package['dependencies'] != lock['packages']['']['dependencies']:

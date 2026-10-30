@@ -3,8 +3,8 @@
 `AGENTS.md`, `.AGENTS/` и `tools/agents/` — общие исходники. Машинный `.codex/`, рабочий `task_state/` и старый `.AGENTS/local/` исключены из Git. Установка добавляет runtime-исключения в `.git/info/exclude` и локальный hook; проверка не откатывает индекс сама.
 
 ```powershell
-tools/agents/local-only.ps1 -Action install
-tools/agents/local-only.ps1 -Action check
+tools/agents/repo/local-only.ps1 -Action install
+tools/agents/repo/local-only.ps1 -Action check
 ```
 
 Guard разрешает общие исходники и отвергает staged локальные данные. Не обходи его через force-add или no-verify. Custom hook, `core.hooksPath`, конфиг и чужой cache сохраняются; для их совмещения нужна явная интеграция. Hook — локальная защита, не серверная политика.
@@ -16,7 +16,7 @@ Guard разрешает общие исходники и отвергает sta
 ```powershell
 tools/agents/export-toolkit.ps1 -Destination (Join-Path $env:TEMP 'BandaStation-agent-toolkit')
 # В созданном каталоге:
-py -3 -B payload/tools/agents/toolkit.py verify --bundle .
+py -3 -B payload/tools/agents/lib/toolkit.py verify --bundle .
 ./Install.ps1 -Repository '<путь к BandaStation checkout>'
 ```
 

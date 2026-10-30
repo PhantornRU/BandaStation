@@ -15,4 +15,4 @@ description: Work on BandaStation DM, tgui, maps and ports with task state and t
 
 Сборка идёт через `tools/build/build.bat`. Для переводов редактируй TOML fragments, не generated `ru_names.toml`. Различай compile, targeted tests, DM runtime и веб-кадр. Весь diff к базе проверяй по контракту задачи.
 
-Общие инструкции и утилиты версионируются; task state и машинный MCP config локальны. Установка и реальные MCP-проверки — [TOOLS](../../TOOLS.md). Перед коммитом: `tools/agents/local-only.ps1 -Action check`, выбранные пути и `git diff --check`.
+Общие инструкции и утилиты версионируются; task state и машинный MCP config локальны. Установка и реальные MCP-проверки — [TOOLS](../../TOOLS.md). Перед коммитом: `tools/agents/repo/local-only.ps1 -Action check`, выбранные пути и `git diff --check`.

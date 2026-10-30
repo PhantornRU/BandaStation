@@ -7,7 +7,7 @@ import pathlib
 import re
 import subprocess
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
+ROOT = pathlib.Path(__file__).resolve().parents[3]
 
 def git(*args: str, optional: bool = False) -> str:
     result = subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True, encoding="utf-8", errors="replace", timeout=30)
