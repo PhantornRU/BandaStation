@@ -2,6 +2,10 @@
 
 Не предполагай. Сомневайся. Ищи причины, а не симптомы. Общайся по-русски; выполняй разрешённую работу до проверяемого результата.
 
+<!-- AI EDIT START - Keep changes within the requested task -->
+Вноси только изменения по запрошенной задаче и непосредственно необходимые для её решения. Не делай попутные рефакторы, переименования, форматирование или исправления соседних проблем. Рефактор допустим по прямому запросу либо если без него задачу не решить; ограничь его необходимым минимумом. Отдельно найденные проблемы сообщай, не расширяя текущий diff.
+<!-- AI EDIT END -->
+
 1. Прочитай актуальный запрос и проверь Git: `py -3 -B tools/agents/inspect-repo.py status`. Сохраняй чужие изменения; установи владельца незавершённого merge/rebase до продолжения.
 2. Открой [контекст проекта](.AGENTS/PROJECT_CONTEXT.md). До правки проследи вход → include → вызовы → состояние → потребитель и побочные эффекты. Начинай с узкого `rg` или проектного MCP.
 3. Для многоэтапной работы выбери или создай [задачу](.AGENTS/TASK_STATE.md). Зафиксируй цель, владельца, пути записи, MUST/KEEP/REJECT/CHECK и следующий шаг. Для продолжения сначала читай TODO, затем проверяй актуальное дерево.
@@ -9,7 +13,9 @@
 4. Соблюдай [правила работы](.AGENTS/WORKFLOW_RULES.md): выбирай место изменения по текущей реализации и запросу, сохраняй контракты вызовов и жизненного цикла. Комментарии `SS220 EDIT` / `BANDASTATION EDIT` — legacy; в новых правках их не добавляй.
 5. Код-стайл: [STYLE](.github/guides/STYLE.md), [STANDARDS](.github/guides/STANDARDS.md), [AUTODOC](.github/guides/AUTODOC.md), [CONTRIBUTING](.github/CONTRIBUTING.md); TGUI: [README](tgui/README.md). Не рефактори соседний код вне задачи.
 <!-- AI EDIT END -->
-6. Подбирай проверки под изменение. Сборку запускай штатным [pipeline](tools/build/README.md). Различай compile, тесты, DM runtime и визуальную проверку; браузерный кадр не доказывает работу BYOND. Не повторяй тот же сбой без новых данных.
+<!-- AI EDIT START - Require proportionate verification -->
+6. Подбирай минимально достаточные проверки под изменённое поведение и его риски. Не добавляй и не расширяй тесты без конкретной необходимости; используй существующие проверки или точный ручной сценарий, если их достаточно. Обязательные проверки проекта сохраняются. При необходимости сборки запускай штатный [pipeline](tools/build/README.md). Различай compile, тесты, DM runtime и визуальную проверку; браузерный кадр не доказывает работу BYOND. Не повторяй тот же сбой без новых данных.
+<!-- AI EDIT END -->
 7. Дополнительных агентов запускай по прямому разрешению пользователя или явной применимой инструкции. Назначай одного писателя общих файлов, разделяй области записи и запускай общие генераторы последовательно. Подробности — в [TASK_STATE](.AGENTS/TASK_STATE.md).
 8. Перед завершением обнови TODO/evidence, проверь весь diff к базе задачи, `git diff --check` и `tools/agents/local-only.ps1 -Action check`. Добавляй в индекс только выбранные пути; сообщай фактические проверки и ограничения. Push и публикация требуют соответствующего запроса пользователя.
 
@@ -59,7 +65,9 @@ Lazy about the solution, never about reading. The best code is the code never wr
 **Rules.**
 
 - A defect in shared code is fixed once at the root, and every caller of the touched proc is checked. A local workaround that leaves the cause in place is not a fix.
-- The shortest diff that reaches everything it must. A clever one-liner that needs decoding is not short.
+<!-- AI EDIT START - Exclude opportunistic refactoring from task scope -->
+- Change only the requested behavior and what is directly necessary to implement it. Do not refactor, rename, reformat or fix neighboring problems opportunistically. A refactor needs an explicit request or a concrete necessity for this task; keep it to that minimum. Report unrelated defects without adding them to the diff.
+<!-- AI EDIT END -->
 - <!-- AI EDIT START - Exclude unused additions and unjustified helpers -->
   No speculative abstraction, wrapper, config option, subsystem, registry, or "for later" code. Leave no unused additions. A helper used once needs a concrete benefit, such as separating cohesive logic or providing a required override point; merely forwarding a call is insufficient. Deletion beats addition.
   <!-- AI EDIT END -->
@@ -127,7 +135,9 @@ Test commands and available facilities must match the current [build targets](to
 
 ## 4. Testing and verification
 
-**A change needs appropriate verification, not automatically a new test.** Follow [CONTRIBUTING](.github/CONTRIBUTING.md#процесс-открытия-pull-request) and existing CI requirements. A new branch, loop, proc, or changed line is not by itself a reason to add a test. Coverage percentages and assertion counts are not the goal.
+<!-- AI EDIT START - Keep tests proportional to the requested change -->
+**A change needs appropriate verification, not automatically a new test.** Follow [CONTRIBUTING](.github/CONTRIBUTING.md#процесс-открытия-pull-request) and existing CI requirements. Use the smallest sufficient check for the changed behavior and its concrete risks. Do not add or expand tests when existing checks or a precise manual scenario already verify it sufficiently. A new branch, loop, proc, or changed line is not by itself a reason to add a test. Coverage percentages and assertion counts are not the goal.
+<!-- AI EDIT END -->
 
 ### Choose the smallest useful check
 
