@@ -71,6 +71,10 @@ def install_runtime(name: str, source: Path, seed: Path | None, repair: bool) ->
              and matches_runtime(cache, lock) and intact_runtime(cache, lock_hash))
     if not ready and seed:
         ordinary(seed)
+        # AI EDIT START - Repair cannot consume the dependency tree it replaces
+        if seed.resolve().is_relative_to(cache.resolve()):
+            raise ValueError('Seed must be outside the managed dependency directory')
+        # AI EDIT END
         seed_lock = json.loads((seed/'package-lock.json').read_text(encoding='utf-8'))
         for package_name, package in runtime_packages(lock):
             if seed_lock['packages'].get(package_name, {}).get('version') != package['version']:
@@ -89,6 +93,13 @@ def install_runtime(name: str, source: Path, seed: Path | None, repair: bool) ->
         receipt.unlink(missing_ok=True)
         (cache/'.installed-files.sha256.json').unlink(missing_ok=True)
         if seed:
+            # AI EDIT START - Replace the owned tree so repair cannot bless stale files
+            modules = cache/'node_modules'
+            ordinary(modules)
+            if modules.exists():
+                runtime_inventory(cache)
+                shutil.rmtree(modules)
+            # AI EDIT END
             for package_name, _ in runtime_packages(lock):
                 target = cache/package_name
                 ordinary(target)

@@ -7,7 +7,11 @@ tools/agents/local-only.ps1 -Action install
 tools/agents/local-only.ps1 -Action check
 ```
 
-Guard разрешает общие исходники и отвергает staged локальные данные. Не обходи его через force-add или no-verify. Custom hook, `core.hooksPath`, конфиг и чужой cache сохраняются; для их совмещения нужна явная интеграция. Hook — локальная защита, не серверная политика.
+<!-- AI EDIT START - Explain opt-in guard installation and shared worktree hooks -->
+Git guard опционален. Он разрешает общие исходники, отвергает добавление или изменение staged локальных данных и допускает удаление ранее закоммиченных runtime-файлов. Custom hook, `core.hooksPath`, конфиг и чужой cache сохраняются; для их совмещения нужна явная интеграция. Hook — локальная защита, не серверная политика.
+
+В связанных worktrees каталог hooks и `info/exclude` общий для репозитория. Установка guard затрагивает все эти worktrees. Offline-команда `tools/agents/check.ps1` проверяет guard в одноразовых fixtures и не требует установки в рабочем checkout.
+<!-- AI EDIT END -->
 
 ## Другой checkout
 
@@ -24,6 +28,8 @@ py -3 -B payload/tools/agents/toolkit.py verify --bundle .
 
 Install проверяет BandaStation entrypoints и Git root до записи. Существующие совпадающие файлы допускают повторный запуск, различающиеся не перезаписываются. Новые общие файлы видны в Git как untracked; установщик не индексирует и не коммитит их. Runtime-исключения ставятся до генерации конфига. MCP-пути создаются заново для целевого checkout.
 
-По умолчанию перенос запускает setup с `-ConfigOnly`; `-InstallDependencies` устанавливает закреплённые зависимости. После переноса выполни check и два MCP smoke из [TOOLS](TOOLS.md).
+<!-- AI EDIT START - Distinguish offline checks from dependency-requiring smoke tests -->
+По умолчанию перенос запускает setup с `-ConfigOnly`; `-InstallDependencies` устанавливает закреплённые зависимости. После переноса выполни offline `check.ps1`. Если MCP нужен и его зависимости установлены, запусти соответствующий smoke из [TOOLS](TOOLS.md). Установка набора и его перенос не требуются для обычной работы с репозиторием.
+<!-- AI EDIT END -->
 
 Для другого проекта сначала адаптируй контекст, инструкции, include/build и skill по реальным исходникам. Установщик намеренно требует `tgstation.dme` и `modular_bandastation/modular_bandastation.dme`.

@@ -17,6 +17,10 @@
 
 Не редактируй generated `ru_names.toml` вручную. Include-инспектор читает текстовые ссылки, а не выполняет препроцессор DM. Проверь условия подключения и реального потребителя нового файла.
 
-Код-стайл и правила — [STYLE](../.github/guides/STYLE.md), [STANDARDS](../.github/guides/STANDARDS.md), [AUTODOC](../.github/guides/AUTODOC.md), [CONTRIBUTING](../.github/CONTRIBUTING.md). Для собственной логики сначала прочитай [правила расширения](WORKFLOW_RULES.md).
+Код-стайл и правила — [STYLE](../.github/guides/STYLE.md), [STANDARDS](../.github/guides/STANDARDS.md), [AUTODOC](../.github/guides/AUTODOC.md), [CONTRIBUTING](../.github/CONTRIBUTING.md).
+
+<!-- AI EDIT START - Link supplemental placement guidance -->
+[Памятка по расширению](WORKFLOW_RULES.md) помогает выбрать место изменения и проверить контракт существующей точки расширения.
+<!-- AI EDIT END -->
 
 Имена Git remotes не гарантируют их назначение: перед синхронизацией проверь адреса, точные refs и локальные коммиты. Не переноси структуру каталогов, API и соглашения другого SS13-билда без проверки по этой базе.

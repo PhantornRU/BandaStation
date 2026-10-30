@@ -117,4 +117,6 @@ Write-Output 'PASS: temporary task fixture cleanup'
 
 & py -3 -B (Join-Path $PSScriptRoot 'test-toolkit.py')
 if ($LASTEXITCODE -ne 0) { throw 'Portable installer checks failed.' }
-& (Join-Path $PSScriptRoot 'local-only.ps1') -Action check
+# AI EDIT START - Offline checks must not require installing hooks in the caller's checkout
+Write-Output 'PASS: offline toolkit checks; checkout hook/config installation is optional and checked separately.'
+# AI EDIT END

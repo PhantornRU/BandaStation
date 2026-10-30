@@ -260,8 +260,9 @@ rust_g64.dll
 # BANDASTATION MOD: ru_names.toml generated at compile time
 /modular_bandastation/translations/public/ru_names.toml
 
-# Agent runtime; shared instructions and tools are versioned.
+# AI EDIT START - Keep optional agent runtime local
 /.codex/
 /task_state/
 /.AGENTS/local/
 /.agents/local/
+# AI EDIT END

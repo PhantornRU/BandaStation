@@ -39,6 +39,29 @@ async function main() {
     assert.equal((await call('search', { path: relative, pattern: 'needle', maxResults: 1 })).matches.length, 1);
     assert.equal((await call('list-files', { path: relative, filePattern: '*.dm' })).matches.length, 1);
     assert.ok((await call('count-matches', { path: relative, pattern: 'needle' })).matches[0].endsWith(':3'));
+    // AI EDIT START - regress exact counts, truncation and protected globs.
+    fs.mkdirSync(path.join(childDir, '.git'));
+    fs.writeFileSync(path.join(childDir, '.git/config'), 'private-git-sentinel\n');
+    fs.mkdirSync(path.join(childDir, 'nested/.GIT'), { recursive: true });
+    fs.writeFileSync(path.join(childDir, 'nested/.GIT/config'), 'private-case-git-sentinel\n');
+    const limitedCount = await call('count-matches', { path: relative, pattern: 'needle', maxResults: 1 });
+    const limitedSearch = await call('search', { path: relative, pattern: 'needle', maxResults: 1 });
+    const exactSearch = await call('search', { path: relative, pattern: 'needle', maxResults: 3 });
+    const protectedSearch = await call('search', { path: relative, pattern: 'private-git-sentinel', filePattern: '**/*' });
+    const protectedCaseSearch = await call('search', { path: relative, pattern: 'private-case-git-sentinel', filePattern: '**/*' });
+    const protectedFiles = await call('list-files', { path: relative, filePattern: '**/*' });
+    assert.deepEqual({
+      count: limitedCount.matches[0]?.split(':').at(-1),
+      countTruncated: limitedCount.truncated,
+      searchSize: limitedSearch.matches.length,
+      searchTruncated: limitedSearch.truncated,
+      exactSearchTruncated: exactSearch.truncated,
+      protectedMatches: protectedSearch.matches.length,
+      protectedCaseMatches: protectedCaseSearch.matches.length,
+      protectedFiles: protectedFiles.matches.some(file => /(?:^|[\\/])\.git(?:[\\/]|$)/i.test(file))
+    }, { count: '3', countTruncated: false, searchSize: 1, searchTruncated: true, exactSearchTruncated: false, protectedMatches: 0, protectedCaseMatches: 0, protectedFiles: false });
+    // AI EDIT END
+
     assert.ok((await call('list-file-types', {})).matches.length);
     for (const args of [{ path: '..', pattern: 'anything' }, { path: '.git/config', pattern: 'anything' }, { path: relative, pattern: 'anything', maxResults: 999 }, { path: relative, pattern: 'anything', command: 'unsafe' }]) {
       assert.ok((await client.callTool({ name: 'search', arguments: args })).isError, 'Invalid search was accepted');

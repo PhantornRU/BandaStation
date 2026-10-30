@@ -1,16 +1,18 @@
 ---
 name: bandastation-workflow
-description: Work on BandaStation DM, tgui, maps and ports through real module extension points, task state and the build pipeline.
+# AI EDIT START - Describe the trigger without prescribing module placement
+description: Use when implementing or reviewing BandaStation DM, TGUI, map or port changes.
+# AI EDIT END
 ---
 
 # Работа с BandaStation
 
-Начни с [AGENTS.md](../../../AGENTS.md), [контекста](../../PROJECT_CONTEXT.md) и [правил модуляризации](../../WORKFLOW_RULES.md). Для нескольких этапов выбери явный TaskId по [TASK_STATE](../../TASK_STATE.md).
+<!-- AI EDIT START - Route to maintained rules and keep optional tooling optional -->
+Основные правила находятся в [AGENTS.md](../../../AGENTS.md); [PROJECT_CONTEXT](../../PROJECT_CONTEXT.md) помогает найти исходники и сборку. Это памятка по проекту, а не отдельная политика разработки.
 
-Проследи entrypoint → include → вызовы → состояние → потребитель. Новая логика — в `modular_bandastation/`; сначала используй существующий сигнал, override или собственное состояние. Проверки до `..()` и дополнение результата после `. = ..()` должны учитывать контракт результата и побочные эффекты. Не копируй штатный алгоритм и не оставляй upstream неисполняемым. Внутренняя инъекция минимальна, с `BANDASTATION EDIT`; для блока — START/END, без повторных inline-меток. Модульные файлы такими метками не обрамляй.
+Выбирай место изменения по соседнему коду, владельцу состояния и цене upstream merge. Новая логика может находиться в существующем upstream-файле или `modular_bandastation/`; каталог сам по себе не определяет правильность решения. [Памятка по расширению](../../WORKFLOW_RULES.md) поясняет контракты `..()`, возвращаемых данных и точек расширения.
 
-Код-стайл: [STYLE](../../../.github/guides/STYLE.md), [STANDARDS](../../../.github/guides/STANDARDS.md), [AUTODOC](../../../.github/guides/AUTODOC.md); [модуль-пример](../../../modular_bandastation/example/_example.dme). Проверяй реальные includes и потребителя, а не только наличие файла.
+Проверь реальный include graph и потребителя изменения. Для переводов имён редактируются TOML fragments, а не generated `ru_names.toml`. Команды сборки и проверок сверяются с текущими исходниками и разделом Testing and verification в AGENTS.md.
 
-Сборка идёт через `tools/build/build.bat`. Для переводов редактируй TOML fragments, не generated `ru_names.toml`. Различай compile, targeted tests, DM runtime и веб-кадр. Весь diff к базе обязан сохранять рабочий штатный путь.
-
-Общие инструкции и утилиты версионируются; task state и машинный MCP config локальны. Установка и реальные MCP-проверки — [TOOLS](../../TOOLS.md). Перед коммитом: `tools/agents/local-only.ps1 -Action check`, выбранные пути и `git diff --check`.
+[Локальные записи задач](../../TASK_STATE.md) и [MCP](../../TOOLS.md) опциональны. Используй их по потребности; обычная правка может выполняться без установки набора и без создания task state.
+<!-- AI EDIT END -->

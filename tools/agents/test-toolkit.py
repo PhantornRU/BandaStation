@@ -84,8 +84,44 @@ def main() -> None:
         finally:
             os.environ['LOCALAPPDATA'] = saved_local_data
         print('PASS: SHA256 runtime inventory rejects modified/deleted files; foreign dependency cache preserved')
+        # AI EDIT START - Seed repair must remove stale files from the owned runtime
+        source = stage/'seed-source'
+        seed = stage/'seed-runtime'
+        (seed/'node_modules/example').mkdir(parents=True)
+        source.mkdir()
+        lock = {'lockfileVersion': 3, 'packages': {'node_modules/example': {'version': '1.0.0'}}}
+        (source/'package.json').write_text('{}', encoding='utf-8')
+        for location in (source, seed):
+            (location/'package-lock.json').write_text(json.dumps(lock), encoding='utf-8')
+        (seed/'node_modules/example/package.json').write_text('{"version":"1.0.0"}', encoding='utf-8')
+        (seed/'node_modules/example/index.js').write_text('// pinned seed', encoding='utf-8')
+        try:
+            os.environ['LOCALAPPDATA'] = str(stage/'repair-local')
+            setup.install_runtime('browser', source, seed, False)
+            cache = stage/'repair-local/BandaStation/agent-tools/browser'
+            try:
+                setup.install_runtime('browser', source, cache, True)
+            except ValueError as error:
+                if 'Seed must be outside' not in str(error):
+                    raise
+            else:
+                raise ValueError('Repair accepted the cache as its own seed')
+            if (cache/'node_modules/example/index.js').read_text(encoding='utf-8') != '// pinned seed':
+                raise ValueError('Rejected seed repair changed the dependency tree')
+            (cache/'node_modules/example/stale.js').write_text('// stale cache file', encoding='utf-8')
+            (cache/'node_modules/obsolete').mkdir()
+            setup.install_runtime('browser', source, seed, True)
+            if (cache/'node_modules/example/stale.js').exists() or (cache/'node_modules/obsolete').exists():
+                raise ValueError('Seed repair preserved stale runtime files')
+        finally:
+            os.environ['LOCALAPPDATA'] = saved_local_data
+        print('PASS: seed repair replaces the owned dependency tree without stale files')
+        # AI EDIT END
         bundle = stage/'bundle'
-        run(sys.executable, '-B', str(toolkit), 'export', '--destination', str(bundle))
+        # AI EDIT START - Public export works without installing hooks in the source checkout
+        run('powershell.exe', '-NoLogo', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File',
+            str(ROOT/'tools/agents/export-toolkit.ps1'), '-Destination', str(bundle))
+        # AI EDIT END
         run(sys.executable, '-B', str(toolkit), 'verify', '--bundle', str(bundle))
         original = (bundle/'payload/AGENTS.md').read_bytes()
         (bundle/'payload/AGENTS.md').write_bytes(original+b'\nchanged\n')
@@ -138,6 +174,13 @@ def main() -> None:
         if run('git', '-C', str(root), 'status', '--porcelain').strip():
             raise ValueError('Reinstall changed tracked toolkit sources')
         # Deliberately stage ignored fixtures only in this disposable repository to exercise the guard.
+        # AI EDIT START - Quoted Cyrillic filenames must not bypass runtime protection
+        unicode_runtime = root/'.codex/заметки.md'
+        unicode_runtime.write_text('local Cyrillic fixture', encoding='utf-8')
+        run('git', '-C', str(root), 'add', '-f', '--', '.codex/заметки.md')
+        run('git', '-C', str(root), 'hook', 'run', 'pre-commit', reject='Commit blocked: local runtime file')
+        run('git', '-C', str(root), 'reset', '-q', 'HEAD', '--', '.codex/заметки.md')
+        # AI EDIT END
         for relative in ('task_state/probe/TODO.md', '.AGENTS/local/probe/TODO.md'):
             target = root/relative
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -153,6 +196,19 @@ def main() -> None:
         if digest(root/'.git/index') != refusal_index:
             raise ValueError('Runtime refusal changed the index')
         run('git', '-C', str(root), 'reset', '-q', 'HEAD', '--', *RUNTIME_PATHS)
+        # AI EDIT START - The guard must permit removing previously tracked runtime data
+        removal = repository(stage, 'runtime-removal')
+        tracked_runtime = removal/'task_state/old/TODO.md'
+        tracked_runtime.parent.mkdir(parents=True)
+        tracked_runtime.write_text('legacy runtime fixture', encoding='utf-8')
+        run('git', '-C', str(removal), 'add', '--', 'task_state')
+        run('git', '-C', str(removal), '-c', 'user.name=Toolkit verification', '-c', 'user.email=toolkit-fixture@localhost',
+            '-c', 'commit.gpgSign=false', 'commit', '-q', '-m', 'Disposable legacy runtime')
+        shutil.copyfile(ROOT/'.AGENTS/templates/pre-commit', removal/'.git/hooks/pre-commit')
+        run('git', '-C', str(removal), 'rm', '-q', '--', 'task_state/old/TODO.md')
+        run('git', '-C', str(removal), 'hook', 'run', 'pre-commit')
+        print('PASS: runtime guard permits deleting previously tracked local files')
+        # AI EDIT END
         print('PASS: install/reinstall; regenerated paths with Cyrillic/spaces; no task/machine export')
         print('PASS: shared sources stage/commit normally; guard rejects runtime fixtures; index/history preserved')
 
