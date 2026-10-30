@@ -1,16 +1,26 @@
 ---
 name: bandastation-workflow
-description: Work on BandaStation DM, tgui, maps and ports through real module extension points, task state and the build pipeline.
+# AI EDIT START - Remove legacy modularization from skill metadata
+description: Work on BandaStation DM, tgui, maps and ports with task state and the build pipeline.
+# AI EDIT END
 ---
 
 # Работа с BandaStation
 
-Начни с [AGENTS.md](../../../AGENTS.md), [контекста](../../PROJECT_CONTEXT.md) и [правил модуляризации](../../WORKFLOW_RULES.md). Для нескольких этапов выбери явный TaskId по [TASK_STATE](../../TASK_STATE.md).
+<!-- AI EDIT START - Remove legacy modularization from skill entry -->
+Начни с [AGENTS.md](../../../AGENTS.md), [контекста](../../PROJECT_CONTEXT.md) и [правил работы](../../WORKFLOW_RULES.md). Для нескольких этапов выбери явный TaskId по [TASK_STATE](../../TASK_STATE.md).
+<!-- AI EDIT END -->
 
-Проследи entrypoint → include → вызовы → состояние → потребитель. Новая логика — в `modular_bandastation/`; сначала используй существующий сигнал, override или собственное состояние. Проверки до `..()` и дополнение результата после `. = ..()` должны учитывать контракт результата и побочные эффекты. Не копируй штатный алгоритм и не оставляй upstream неисполняемым. Внутренняя инъекция минимальна, с `BANDASTATION EDIT`; для блока — START/END, без повторных inline-меток. Модульные файлы такими метками не обрамляй.
+<!-- AI EDIT START - Replace legacy modularization and edit markers -->
+Проследи entrypoint → include → вызовы → состояние → потребитель. Выбирай место правки по текущей реализации и задаче; сохраняй контракты вызовов, результата и побочных эффектов. Legacy-комментарии `SS220 EDIT` / `BANDASTATION EDIT` в новых правках не добавляй.
+<!-- AI EDIT END -->
 
-Код-стайл: [STYLE](../../../.github/guides/STYLE.md), [STANDARDS](../../../.github/guides/STANDARDS.md), [AUTODOC](../../../.github/guides/AUTODOC.md); [модуль-пример](../../../modular_bandastation/example/_example.dme). Проверяй реальные includes и потребителя, а не только наличие файла.
+<!-- AI EDIT START - Remove mandatory module example -->
+Код-стайл: [STYLE](../../../.github/guides/STYLE.md), [STANDARDS](../../../.github/guides/STANDARDS.md), [AUTODOC](../../../.github/guides/AUTODOC.md). Проверяй реальные includes и потребителя, а не только наличие файла.
+<!-- AI EDIT END -->
 
-Сборка идёт через `tools/build/build.bat`. Для переводов редактируй TOML fragments, не generated `ru_names.toml`. Различай compile, targeted tests, DM runtime и веб-кадр. Весь diff к базе обязан сохранять рабочий штатный путь.
+<!-- AI EDIT START - Verify task contracts instead of legacy extension paths -->
+Сборка идёт через `tools/build/build.bat`. Для переводов редактируй TOML fragments, не generated `ru_names.toml`. Различай compile, targeted tests, DM runtime и веб-кадр. Весь diff к базе проверяй по контракту задачи.
+<!-- AI EDIT END -->
 
 Общие инструкции и утилиты версионируются; task state и машинный MCP config локальны. Установка и реальные MCP-проверки — [TOOLS](../../TOOLS.md). Перед коммитом: `tools/agents/local-only.ps1 -Action check`, выбранные пути и `git diff --check`.

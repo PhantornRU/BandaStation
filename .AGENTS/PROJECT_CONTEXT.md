@@ -6,7 +6,7 @@
 | --- | --- |
 | DM include graph | `tgstation.dme` → `code/` и `modular_bandastation/modular_bandastation.dme` |
 | Модули | `modular_bandastation/<module>/_*.dme`, `_*.dm`, `code/`; [пример](../modular_bandastation/example/_example.dme) |
-| Штатный код | `code/`; добавочные изменения отмечаются `BANDASTATION EDIT` |
+| Штатный код | <!-- AI EDIT START - Remove legacy edit marker requirement -->Игровая логика в `code/`<!-- AI EDIT END --> |
 | Карты | `_maps/`, их конфиги/includes, [maplint](../tools/maplint/README.md), `tools/mapmerge2/` |
 | Ресурсы | `icons/`, `sound/`, модульные каталоги; проверяй DM binding и runtime |
 | TGUI | `tgui/packages/`, `tgui/package.json`, lock/config; [руководство](../tgui/README.md) |
