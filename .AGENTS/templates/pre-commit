@@ -1,11 +1,10 @@
 #!/bin/sh
 # Managed BandaStation agent runtime guard v2.
 # Shared instructions/tools are versioned; generated config and task state stay local.
-# AI EDIT START - Filter raw paths in Git and permit removal of tracked runtime data
+# Filter raw paths in Git and permit removal of tracked runtime data
 runtime_files=$(git diff --cached --name-only --diff-filter=ACMR -- \
     ':(icase).codex' ':(icase)task_state' ':(icase).AGENTS/local') || exit $?
 if [ -n "$runtime_files" ]; then
     printf 'Commit blocked: local runtime file\n%s\n' "$runtime_files" >&2
     exit 1
 fi
-# AI EDIT END

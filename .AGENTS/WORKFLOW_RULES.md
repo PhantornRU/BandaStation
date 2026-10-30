@@ -1,4 +1,3 @@
-<!-- AI EDIT START - Follow repository placement and verification rules -->
 # Расширение существующего кода
 Эта памятка дополняет [AGENTS.md](../AGENTS.md); правила разработки, ревью и проверки результата находятся там и в указанных им guides.
 
@@ -41,4 +40,3 @@
 Выбирай проверки по разделу Testing and verification в [AGENTS.md](../AGENTS.md). Build targets сверяй с `tools/build/build.ts` и [build README](../tools/build/README.md). Include-инспектор показывает текстовые ссылки; браузерный кадр подтверждает веб-сценарий. Ни один из них не заменяет compile или BYOND runtime.
 
 [Task state](TASK_STATE.md) и [MCP](TOOLS.md) — дополнительные средства. Для изменения без них достаточно подходящих доступных инструментов и фактического отчёта по правилам AGENTS.md.
-<!-- AI EDIT END -->

@@ -77,9 +77,8 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
         if (typeof args.filePattern !== 'string') throw new Error('filePattern must be a string.');
         command.push('--glob', args.filePattern);
       }
-      // AI EDIT START - Protected paths take precedence over caller-supplied globs.
+      // Protected paths take precedence over caller-supplied globs.
       command.push('--iglob', '!**/.git', '--iglob', '!**/.git/**', '--glob', '!**/node_modules/**');
-      // AI EDIT END
       if (name === 'list-files') {
         if (!fs.statSync(target).isDirectory()) throw new Error('list-files expects a directory.');
         command.push('--files', '--', target);
@@ -90,10 +89,9 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
         command.push(name === 'count-matches' ? '--count' : '--line-number');
         if (!args.regex) command.push('--fixed-strings');
         if (args.caseSensitive === false) command.push('--ignore-case');
-        // AI EDIT START - Counts stay exact; search needs one extra match to detect truncation.
+        // Counts stay exact; search needs one extra match to detect truncation.
         if (name === 'search') command.push('--max-count', String(limit+1));
         command.push('--', args.pattern, target);
-        // AI EDIT END
       }
     }
     const result = await execute(command);

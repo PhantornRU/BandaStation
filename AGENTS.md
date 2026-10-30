@@ -226,7 +226,6 @@ These rules hold for code being written and for code being reviewed. Each one st
 - Changes under `/config` preserve the previous behavior for deployments that have not updated their config.
 
 
-<!-- AI EDIT START - Link optional toolkit without replacing repository policy -->
 ## 7. Optional agent tools
 
 Дополнительные инструкции и утилиты описаны в [.AGENTS/README.md](.AGENTS/README.md): карта проекта, примеры расширения кода, шаблоны состояния задач и проверки инструментов. Они дополняют этот файл; при расхождении действуют источники истины из §3.
@@ -234,4 +233,3 @@ These rules hold for code being written and for code being reviewed. Each one st
 Шаблоны задач, установщик, Git hook и MCP используются по необходимости. Обычная работа с репозиторием не требует их установки: сначала используй доступные инструменты среды, `git`, `rg` и штатную сборку. Новая логика не обязана размещаться в `modular_bandastation/`; место выбирается по существующему коду, владению логикой и стоимости upstream-слияний. Не добавляй override или инъекцию, если небольшая правка в существующем месте полностью решает задачу.
 
 Установка меняет локальную конфигурацию checkout и Git hook; перед запуском прочитай [.AGENTS/TOOLS.md](.AGENTS/TOOLS.md). Проверка исходников без установки: `powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File tools/agents/check.ps1`. Модели, reasoning, разрешения, sandbox и подключённые инструменты определяет среда, а не этот набор.
-<!-- AI EDIT END -->

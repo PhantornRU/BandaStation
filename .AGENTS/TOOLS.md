@@ -4,16 +4,14 @@
 
 | Задача | Команда |
 | --- | --- |
-| <!-- AI EDIT START - точный scope инспектора --> Краткий Git status <!-- AI EDIT END --> | `py -3 -B tools/agents/inspect-repo.py status` |
+| Краткий Git status | `py -3 -B tools/agents/inspect-repo.py status` |
 | Includes | `py -3 -B tools/agents/inspect-repo.py includes --path modular_bandastation/modular_bandastation.dme --depth 1 --limit 30` |
 | Чтение UTF-8 | `py -3 -B tools/agents/inspect-repo.py read --path tgstation.dme --start 1 --count 40` |
 | Поиск | Узкий `rg` или MCP `bandastation-ripgrep` |
 | Веб-страница | MCP `bandastation-browser` |
 | Задачи | [TASK_STATE](TASK_STATE.md) |
 
-<!-- AI EDIT START - Clarify optional tools and the inspector status scope -->
 MCP и локальные записи задач опциональны; для обычной правки достаточно доступных инструментов. `inspect-repo.py status` даёт краткую сводку. Для проверки незавершённых rebase, cherry-pick, revert и других Git-операций используй штатный `git status`.
-<!-- AI EDIT END -->
 
 ## Установка
 
