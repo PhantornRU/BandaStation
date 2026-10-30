@@ -5,7 +5,7 @@
 | Документ | Назначение |
 | --- | --- |
 | [PROJECT_CONTEXT](PROJECT_CONTEXT.md) | Карта исходников, include graph и сборка |
-| [WORKFLOW_RULES](WORKFLOW_RULES.md) | <!-- AI EDIT START - Remove legacy workflow description -->Изменения, код-стайл и приёмка<!-- AI EDIT END --> |
+| [WORKFLOW_RULES](WORKFLOW_RULES.md) | Изменения, код-стайл и приёмка |
 | [TASK_STATE](TASK_STATE.md) | Продолжение задач и работа нескольких исполнителей |
 | [TOOLS](TOOLS.md) | Установка, использование и проверка двух MCP |
 | [PORTING](PORTING.md) | Git-защита и перенос общих исходников |
