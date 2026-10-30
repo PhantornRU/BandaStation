@@ -131,11 +131,17 @@
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!QDELETED(src) || !QDELETED(owner)) && !(movement_flags & NO_ID_TRANSFER))
-		transfer_identity(organ_owner)
+	// BANDASTATION EDIT - Identity transfer belongs to physical extraction, not interface disconnection.
 	if(!special)
 		organ_owner.clear_mood_event("brain_damage")
 		organ_owner.med_hud_set_status()
+
+// BANDASTATION ADDITION START - Disabling cybernetics must not extract a still implanted mind
+/obj/item/organ/brain/on_physical_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	if((!QDELETED(src) || !QDELETED(owner)) && !(movement_flags & NO_ID_TRANSFER))
+		transfer_identity(organ_owner)
+// BANDASTATION ADDITION END - Disabling cybernetics must not extract a still implanted mind
 
 /obj/item/organ/brain/update_icon_state()
 	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth" : ""]"
@@ -143,6 +149,12 @@
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"
+	// BANDASTATION ADDITION START - Keep cybernetic incompatibility on extracted brains, including mindless ones
+	if(HAS_TRAIT(L, TRAIT_CYBERNETIC_REJECTION))
+		ADD_TRAIT(src, TRAIT_CYBERNETIC_REJECTION, QUIRK_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_CYBERNETIC_REJECTION, QUIRK_TRAIT)
+	// BANDASTATION ADDITION END - Keep cybernetic incompatibility on extracted brains, including mindless ones
 	if(brainmob)
 		if(!decoy_override)
 			return
@@ -302,32 +314,38 @@
 
 	add_fingerprint(user)
 
-	if(user.zone_selected != BODY_ZONE_HEAD)
+	if(user.zone_selected != deprecise_zone(zone)) // BANDASTATION EDIT - Positronic cores belong in the chest
 		return ..()
 
 	var/target_has_brain = C.get_organ_by_type(/obj/item/organ/brain)
 
-	if(!target_has_brain && C.is_eyes_covered())
+	if(!target_has_brain && zone == BODY_ZONE_HEAD && C.is_eyes_covered()) // BANDASTATION EDIT - Chest cores do not need access to the eyes
 		to_chat(user, span_warning("You're going to need to remove [C.p_their()] head cover first!"))
 		return
 
 	//since these people will be dead M != usr
 
 	if(!target_has_brain)
-		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
+		// BANDASTATION EDIT START - Reject incompatible cores before dropping them or reporting success
+		if(!can_insert_into(C))
+			balloon_alert(user, "несовместимый корпус!")
 			return
-		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
+		if(!C.get_bodypart(deprecise_zone(zone)) || !user.temporarilyRemoveItemFromInventory(src))
+			return
+		// BANDASTATION EDIT END - Reject incompatible cores before dropping them or reporting success
+		var/brain_zone = parse_zone(deprecise_zone(zone)) // BANDASTATION ADDITION - Describe the core's actual location
+		var/msg = "[C] has [src] inserted into [C.p_their()] [brain_zone] by [user]." // BANDASTATION EDIT
 		if(C == user)
-			msg = "[user] inserts [src] into [user.p_their()] head!"
+			msg = "[user] inserts [src] into [user.p_their()] [brain_zone]!" // BANDASTATION EDIT
 
 		C.visible_message(span_danger("[msg]"),
 						span_userdanger("[msg]"))
 
 		if(C != user)
-			to_chat(C, span_notice("[user] inserts [src] into your head."))
-			to_chat(user, span_notice("You insert [src] into [C]'s head."))
+			to_chat(C, span_notice("[user] inserts [src] into your [brain_zone].")) // BANDASTATION EDIT
+			to_chat(user, span_notice("You insert [src] into [C]'s [brain_zone].")) // BANDASTATION EDIT
 		else
-			to_chat(user, span_notice("You insert [src] into your head.") )
+			to_chat(user, span_notice("You insert [src] into your [brain_zone].") ) // BANDASTATION EDIT
 
 		Insert(C)
 	else

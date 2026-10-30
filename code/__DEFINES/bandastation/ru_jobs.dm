@@ -16,7 +16,7 @@
 #define JOB_BLUESHIELD_RU "Офицер «Синий щит»"
 //Justice
 #define JOB_MAGISTRATE_RU "Магистрат"
-#define JOB_LAWYER_RU "Юрист"
+#define JOB_LAWYER_RU "Агент внутренних дел"
 //Silicon
 #define JOB_AI_RU "ИИ"
 #define JOB_CYBORG_RU "Киборг"
@@ -33,6 +33,7 @@
 //Engineering
 #define JOB_STATION_ENGINEER_RU "Станционный инженер"
 #define JOB_ATMOSPHERIC_TECHNICIAN_RU "Атмосферный техник"
+#define JOB_SPACEPOD_TECHNICIAN_RU "Челнок-инженер"
 //Medical
 #define JOB_CORONER_RU "Коронер"
 #define JOB_MEDICAL_DOCTOR_RU "Врач"
@@ -96,6 +97,7 @@ GLOBAL_LIST_INIT(job_titles_ru, list(
 	//Engineering
 	JOB_STATION_ENGINEER = JOB_STATION_ENGINEER_RU,
 	JOB_ATMOSPHERIC_TECHNICIAN = JOB_ATMOSPHERIC_TECHNICIAN_RU,
+	JOB_SPACEPOD_TECHNICIAN = JOB_SPACEPOD_TECHNICIAN_RU,
 	//Medical
 	JOB_CORONER = JOB_CORONER_RU,
 	JOB_MEDICAL_DOCTOR = JOB_MEDICAL_DOCTOR_RU,

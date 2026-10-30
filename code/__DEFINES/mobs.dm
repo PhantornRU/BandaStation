@@ -171,6 +171,7 @@
 	!(bodypart.bodytype & (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)) \
 	&& !(bodypart.flags_1 & HOLOGRAM_1) \
 	&& !(bodypart.bodypart_flags & BODYPART_STUMP) \
+	&& !(bodypart.bodypart_flags & BODYPART_ABSTRACT) \
 )
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
@@ -206,9 +207,11 @@
 #define SPECIES_ZOMBIE "zombie"
 #define SPECIES_VOIDWALKER "voidwalker"
 /// BANDASTATION ADDITION START - Species
+#define SPECIES_IPC "ipc"
 #define SPECIES_VULPKANIN "vulpkanin"
 #define SPECIES_TAJARAN "tajaran"
 #define SPECIES_SKRELL "skrell"
+#define SPECIES_VOX "vox"
 /// BANDASTATION ADDITION END - Species
 
 // Like species IDs, but not specifically attached a species.
@@ -1112,6 +1115,7 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define BUTT_SPRITE_VULPKANIN "vulpkanin"
 #define BUTT_SPRITE_SKRELL "skrell"
 #define BUTT_SPRITE_TAJARAN "tajaran"
+#define BUTT_SPRITE_VOX "vox"
 /// BANDASTATION ADDITION END - Species
 
 /// Distance which you can see someone's ID card

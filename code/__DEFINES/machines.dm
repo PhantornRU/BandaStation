@@ -73,6 +73,8 @@
 #define AWAY_IMPRINTER (1<<9)
 /// For wiremod/integrated circuits. Uses various minerals.
 #define COMPONENT_PRINTER (1<<10)
+// BANDASTATION ADDITION - Dedicated engineering spacepod fabrication.
+#define PODFAB (1<<11)
 
 GLOBAL_LIST_INIT(build_types_to_string, list(
 	"[IMPRINTER]" = "Circuit Imprinter",
@@ -85,6 +87,7 @@ GLOBAL_LIST_INIT(build_types_to_string, list(
 	"[AWAY_LATHE]" = "Off-Grid Protolathe",
 	"[AWAY_IMPRINTER]" = "Off-Grid Circuit Imprinter",
 	"[COMPONENT_PRINTER]" = "Component Printer",
+	"[PODFAB]" = "Spacepod Fabricator", // BANDASTATION ADDITION - Spacepod build-type filter.
 ))
 
 #define HYPERTORUS_INACTIVE 0 // No or minimal energy

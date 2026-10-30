@@ -114,24 +114,37 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
   },
 };
 
-const SLOTS: Record<
-  string,
-  {
-    displayName: string;
-    gridSpot: GridSpotKey;
-    image?: string;
-    additionalComponent?: React.JSX.Element;
-  }
-> = {
+type StripSlot = {
+  displayName: string;
+  gridSpot: GridSpotKey;
+  image?: string;
+  additionalComponent?: React.JSX.Element;
+};
+
+const SLOTS: Record<string, StripSlot> = {
+  // BANDASTATION ADDITION START - Removable underclothing
+  underwear: {
+    displayName: 'нижнее бельё',
+    gridSpot: getGridSpotKey([2, 3]),
+  },
+  undershirt: {
+    displayName: 'майка',
+    gridSpot: getGridSpotKey([1, 3]),
+  },
+  socks: {
+    displayName: 'носки',
+    gridSpot: getGridSpotKey([4, 3]),
+  },
+  // BANDASTATION ADDITION END
   eyes: {
     displayName: 'eyewear',
-    gridSpot: getGridSpotKey([0, 1]),
+    gridSpot: getGridSpotKey([0, 0]),
     image: 'inventory-glasses.png',
   },
 
   head: {
     displayName: 'headwear',
-    gridSpot: getGridSpotKey([0, 2]),
+    gridSpot: getGridSpotKey([0, 1]),
     image: 'inventory-head.png',
   },
 // BANDASTATION ADD BEGIN: Skrell Headpocket
@@ -144,42 +157,54 @@ const SLOTS: Record<
 
   neck: {
     displayName: 'neckwear',
-    gridSpot: getGridSpotKey([1, 1]),
+    gridSpot: getGridSpotKey([1, 0]),
     image: 'inventory-neck.png',
   },
 
   mask: {
     displayName: 'mask',
-    gridSpot: getGridSpotKey([1, 2]),
+    gridSpot: getGridSpotKey([1, 1]),
     image: 'inventory-mask.png',
   },
 
   pet_collar: {
     displayName: 'collar',
-    gridSpot: getGridSpotKey([1, 2]),
+    gridSpot: getGridSpotKey([1, 0]),
     image: 'inventory-collar.png',
   },
 
-  ears: {
-    displayName: 'earwear',
-    gridSpot: getGridSpotKey([1, 3]),
+  // AI EDIT START - Show the right and left ear inventory slots
+  // BANDASTATION EDIT START - Separate ear slots
+  ear_right: {
+    displayName: 'правое ухо',
+    gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
+    additionalComponent: <CornerText align="left">R</CornerText>,
   },
+
+  ear_left: {
+    displayName: 'левое ухо',
+    gridSpot: getGridSpotKey([0, 4]),
+    image: 'inventory-ears.png',
+    additionalComponent: <CornerText align="right">L</CornerText>,
+  },
+  // BANDASTATION EDIT END
+  // AI EDIT END
 
   parrot_headset: {
     displayName: 'headset',
-    gridSpot: getGridSpotKey([1, 3]),
+    gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
   },
 
   handcuffs: {
     displayName: 'handcuffs',
-    gridSpot: getGridSpotKey([1, 4]),
+    gridSpot: getGridSpotKey([3, 5]),
   },
 
   legcuffs: {
     displayName: 'legcuffs',
-    gridSpot: getGridSpotKey([1, 5]),
+    gridSpot: getGridSpotKey([4, 2]),
   },
 
   jumpsuit: {
@@ -196,7 +221,7 @@ const SLOTS: Record<
 
   gloves: {
     displayName: 'gloves',
-    gridSpot: getGridSpotKey([2, 3]),
+    gridSpot: getGridSpotKey([3, 4]),
     image: 'inventory-gloves.png',
   },
 
@@ -214,45 +239,59 @@ const SLOTS: Record<
     additionalComponent: <CornerText align="right">L</CornerText>,
   },
 
+  upper_right_hand: {
+    displayName: 'upper right hand',
+    gridSpot: getGridSpotKey([1, 4]),
+    image: 'inventory-hand_r.png',
+    additionalComponent: <CornerText align="left">(U) R</CornerText>,
+  },
+
+  upper_left_hand: {
+    displayName: 'upper left hand',
+    gridSpot: getGridSpotKey([1, 5]),
+    image: 'inventory-hand_l.png',
+    additionalComponent: <CornerText align="right">L (U)</CornerText>,
+  },
+
   shoes: {
     displayName: 'shoes',
-    gridSpot: getGridSpotKey([3, 2]),
+    gridSpot: getGridSpotKey([4, 1]),
     image: 'inventory-shoes.png',
   },
 
   suit_storage: {
     displayName: 'suit storage item',
-    gridSpot: getGridSpotKey([4, 0]),
+    gridSpot: getGridSpotKey([2, 0]),
     image: 'inventory-suit_storage.png',
   },
 
   id: {
     displayName: 'ID',
-    gridSpot: getGridSpotKey([4, 1]),
+    gridSpot: getGridSpotKey([4, 0]),
     image: 'inventory-id.png',
   },
 
   belt: {
     displayName: 'belt',
-    gridSpot: getGridSpotKey([4, 2]),
+    gridSpot: getGridSpotKey([3, 1]),
     image: 'inventory-belt.png',
   },
 
   back: {
     displayName: 'backpack',
-    gridSpot: getGridSpotKey([4, 3]),
+    gridSpot: getGridSpotKey([1, 2]),
     image: 'inventory-back.png',
   },
 
   left_pocket: {
     displayName: 'left pocket',
-    gridSpot: getGridSpotKey([4, 4]),
+    gridSpot: getGridSpotKey([3, 0]),
     image: 'inventory-pocket.png',
   },
 
   right_pocket: {
     displayName: 'right pocket',
-    gridSpot: getGridSpotKey([4, 5]),
+    gridSpot: getGridSpotKey([3, 2]),
     image: 'inventory-pocket.png',
   },
 };
@@ -290,6 +329,9 @@ type StripMenuItem =
           icon: string;
           name: string;
           obscured: ObscuringLevel;
+          // AI EDIT START - Mark secondary occupied inventory slots
+          secondary_slot?: BooleanLike; // BANDASTATION ADDITION - Multi-slot clothing
+          // AI EDIT END
         } & AlternateActions)
       | ({
           obscured: ObscuringLevel;
@@ -352,6 +394,9 @@ export const StripMenu = (props) => {
                         height="64px"
                         style={{
                           verticalAlign: 'middle',
+                          // AI EDIT START - Fade secondary occupied inventory slots
+                          opacity: item.secondary_slot ? 0.5 : 1, // BANDASTATION ADDITION - Multi-slot clothing
+                          // AI EDIT END
                         }}
                       />
                     );

@@ -100,7 +100,36 @@
 /// Helper to allocate a new object with the implied type (the type of the variable it's assigned to) in the corner of the test room
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
+// BANDASTATION ADDITION START - Complete cybernetic rejection regression tests
+#include "../../../modular_bandastation/quirks/code/tests/cybernetic_rejection.dm"
+#include "../../../modular_bandastation/quirks/code/tests/cybernetic_rejection_implants.dm"
+#include "../../../modular_bandastation/quirks/code/tests/cybernetic_rejection_limbs.dm"
+#include "../../../modular_bandastation/quirks/code/tests/cybernetic_rejection_mmi.dm"
+// BANDASTATION ADDITION END - Complete cybernetic rejection regression tests
+
+// BANDASTATION ADDITION - Fork regression tests in the sorted include block.
+// BANDASTATION ADDITION - Lighting regression tests in the sorted include block
 // BEGIN_INCLUDE
+#include "../../../modular_bandastation/augmentation_preferences/code/tests/robotic_eyes_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_appearance_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_cleaning_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_culinary_drink_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_dna_vault_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_drink_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_emote_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_extinguisher_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_fabrication_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_mood_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_power_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_preferences_hud_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_radiation_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_reagent_effect_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_reagent_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_remains_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_surgery_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_ui_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/ipc_upgrade_tests.dm"
 #include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
@@ -173,6 +202,7 @@
 #include "dismemberment.dm"
 #include "dna_infusion.dm"
 #include "door_access.dm"
+#include "door_control_assembly.dm"
 #include "dragon_expiration.dm"
 #include "drink_icons.dm"
 #include "dropper.dm"
@@ -230,9 +260,11 @@
 #include "knockoff_component.dm"
 #include "language_key_conflicts.dm"
 #include "language_transfer.dm"
+#include "lawyer_role.dm"
 #include "leash.dm"
 #include "lesserform.dm"
 #include "light_replacer.dm"
+#include "lighting_lumcount.dm"
 #include "limbsanity.dm"
 #include "ling_decap.dm"
 #include "liver.dm"
@@ -378,9 +410,76 @@
 #include "weird_food.dm"
 #include "wizard_loadout.dm"
 // END_INCLUDE
+// BANDASTATION ADDITION START - Vox port regression tests
+#include "../../../modular_bandastation/species/code/tests/vox_mechanics_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/vox_appearance_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/vox_emote_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/vox_paradise_toggle_tests.dm"
+#include "../../../modular_bandastation/species/code/tests/vox_quill_mask_tests.dm"
+// BANDASTATION ADDITION END - Vox port regression tests
+// BANDASTATION ADDITION - Shadow Demon port regression tests
+#include "../../../modular_bandastation/shadow_demon/code/shadow_demon_tests.dm"
+#include "../../../modular_bandastation/shadow_demon/code/shadow_demon_dynamic_regression_tests.dm"
+#include "../../../modular_bandastation/shadow_demon/code/shadow_demon_light_regression_tests.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif
+
+// BANDASTATION ADDITION - Background tests need the native assertion macros.
+#include "../../../modular_bandastation/sierra_background/tests/background.dm"
+#include "../../../modular_bandastation/sierra_background/tests/skrell_caste.dm"
+#include "../../../modular_bandastation/sierra_background/tests/culture_profiles.dm"
+#include "../../../modular_bandastation/sierra_background/tests/languages.dm"
+#include "../../../modular_bandastation/sierra_background/tests/names.dm"
+#include "../../../modular_bandastation/sierra_background/tests/gutter.dm"
+#include "../../../modular_bandastation/sierra_background/tests/dependencies.dm"
+#include "../../../modular_bandastation/sierra_background/tests/social.dm"
+#include "../../../modular_bandastation/sierra_background/tests/corrections.dm"
+#include "../../../modular_bandastation/sierra_background/tests/antagonist.dm"
+
+// BANDASTATION ADDITION START - Paradise spacepod port regression tests
+#include "../../../modular_bandastation/spacepods/_defines.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_construction_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_job_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_equipment_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_cargo_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_fabricator_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_vehicle_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_actions_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_status_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_speech_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_npc_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_tank_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_life_support_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_hud_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_vacuum_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_wreckage_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_shuttle_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_movement_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_transition_tests.dm"
+#include "../../../modular_bandastation/spacepods/code/spacepod_failure_tests.dm"
+// BANDASTATION ADDITION END - Paradise spacepod port regression tests
+
+#include "../../../modular_bandastation/quirks/code/tests/porphyria.dm" // BANDASTATION ADDITION - Porphyria
+
+#include "../../../modular_bandastation/bug_reports/tests/bug_reports_test.dm" // BANDASTATION ADDITION - In-game bug reports
+
+// AI EDIT START - Separate ear slots
+// BANDASTATION ADDITION START - Separate ear slots
+#include "../../../modular_bandastation/dual_ears/code/inventory_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/radio_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/appearance_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/mannequin_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/multi_slot_tests.dm"
+#include "../../../modular_bandastation/dual_ears/code/multi_slot_hud_tests.dm"
+// BANDASTATION ADDITION END
+// AI EDIT END
+
+#include "../../../modular_bandastation/weapon/code/ranged/weapon_choice_tests.dm" // BANDASTATION ADDITION - HoS and Blueshield sidearms
+
+#include "../../../modular_bandastation/underclothing/code/tests.dm" // BANDASTATION ADDITION - Removable underclothing
+
+#include "../../../modular_bandastation/uplink_items/code/tests/syndicate_items.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

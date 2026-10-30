@@ -4,7 +4,12 @@
 #define STRIPPABLE_ITEM_MASK "mask"
 #define STRIPPABLE_ITEM_NECK "neck"
 #define STRIPPABLE_ITEM_EYES "eyes"
-#define STRIPPABLE_ITEM_EARS "ears"
+// AI EDIT START - Separate ear slots
+// BANDASTATION EDIT START - Separate ear slots
+#define STRIPPABLE_ITEM_EAR_RIGHT "ear_right"
+#define STRIPPABLE_ITEM_EAR_LEFT "ear_left"
+// BANDASTATION EDIT END
+// AI EDIT END
 #define STRIPPABLE_ITEM_JUMPSUIT "jumpsuit"
 #define STRIPPABLE_ITEM_SUIT "suit"
 #define STRIPPABLE_ITEM_GLOVES "gloves"
@@ -16,6 +21,8 @@
 #define STRIPPABLE_ITEM_RPOCKET "right_pocket"
 #define STRIPPABLE_ITEM_LHAND "left_hand"
 #define STRIPPABLE_ITEM_RHAND "right_hand"
+#define STRIPPABLE_ITEM_UPPER_LHAND "upper_left_hand"
+#define STRIPPABLE_ITEM_UPPER_RHAND "upper_right_hand"
 #define STRIPPABLE_ITEM_HANDCUFFS "handcuffs"
 #define STRIPPABLE_ITEM_LEGCUFFS "legcuffs"
 #define STRIPPABLE_ITEM_PET_COLLAR "pet_collar"

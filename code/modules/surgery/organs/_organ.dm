@@ -19,6 +19,13 @@
 	var/slot
 	/// Random flags that describe this organ
 	var/organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
+	// BANDASTATION ADDITION START - Cybernetic rejection disconnects effects without damaging the organ
+	/// Whether the current body cannot interface with this robotic organ.
+	var/cybernetic_rejection = FALSE
+	/// Tracks callbacks separately from physical ownership so disconnected organs can be removed safely.
+	var/mob_effects_active = FALSE
+	var/bodypart_effects_active = FALSE
+	// BANDASTATION ADDITION END - Cybernetic rejection disconnects effects without damaging the organ
 	/// Maximum damage the organ can take, ever.
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	/**
@@ -65,8 +72,8 @@
 	var/list/organ_traits
 	/// Status Effects that are given to the holder of the organ.
 	var/list/organ_effects
-	/// String displayed when the organ has decayed.
-	var/failing_desc = "пребывает под влиянием разложения слишком долго, что уже принимает болезненный цвет. Орган уже не заработает, если его не лечить."
+	/// String displayed when the organ has failed.
+	var/failing_desc = "— орган не функционирует. Требуется медицинская помощь." // BANDASTATION EDIT - Organ failure does not establish decomposition as its cause
 	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
 	var/list/valid_zones = null
 	/// The cell line we can spawn on us
@@ -160,6 +167,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_death(seconds_per_tick) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
+	// BANDASTATION ADDITION START - Protection belongs to the corpse, not a permanently frozen organ
+	if(HAS_TRAIT(owner, TRAIT_NODECAY))
+		return
+	// BANDASTATION ADDITION END - Protection belongs to the corpse, not a permanently frozen organ
 
 	if(owner)
 		if(owner.bodytemperature > T0C)
@@ -229,7 +240,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 ///Used as callbacks by object pooling
 /obj/item/organ/proc/exit_wardrobe()
 	START_PROCESSING(SSobj, src)
-	bodypart_overlay?.imprint_on_next_insertion = TRUE
+	if(!sprite_accessory_override)
+		bodypart_overlay?.imprint_on_next_insertion = TRUE
 
 //See above
 /obj/item/organ/proc/enter_wardrobe()
@@ -275,6 +287,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/check_damage_thresholds()
 	SHOULD_CALL_PARENT(TRUE)
+	// BANDASTATION ADDITION START - Repair cannot reconnect an incompatible cybernetic organ
+	if(cybernetic_rejection)
+		organ_flags |= ORGAN_FAILING
+		return
+	// BANDASTATION ADDITION END - Repair cannot reconnect an incompatible cybernetic organ
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage

@@ -4,6 +4,14 @@
 	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
 	prerequisite_nodes = list(/datum/techweb_node/robotics)
 	unlocked_designs = list(
+		// BANDASTATION ADDITION START - IPC components and maintenance
+		/datum/design/ipc_head,
+		/datum/design/ipc_chassis,
+		/datum/design/ipc_microbattery,
+		/datum/design/ipc_power_cord,
+		/datum/design/ipc_voicebox,
+		/datum/design/ipc_nanopaste,
+		// BANDASTATION ADDITION END - IPC components and maintenance
 		/datum/design/borg_chest,
 		/datum/design/borg_head,
 		/datum/design/borg_l_arm,
@@ -163,8 +171,10 @@
 
 /datum/techweb_node/cyber/New()
 	. = ..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+	// BANDASTATION EDIT START - The abstract cyber node has no research costs.
+	if(research_costs?[TECHWEB_POINT_TYPE_GENERIC] && HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] /= 2
+	// BANDASTATION EDIT END - Only discount nodes with a generic research cost.
 
 /datum/techweb_node/cyber/combat_implants
 	display_name = "Боевые импланты"

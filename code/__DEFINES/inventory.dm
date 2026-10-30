@@ -32,8 +32,16 @@
 #define ITEM_SLOT_GLOVES (1<<2)
 /// Glasses slot
 #define ITEM_SLOT_EYES (1<<3)
-/// Ear slot (radios, earmuffs)
-#define ITEM_SLOT_EARS (1<<4)
+// AI EDIT START - Separate ear slots
+// BANDASTATION EDIT START - Separate ear slots
+/// Right ear slot (radios, earmuffs); retains the original ear slot bit.
+#define ITEM_SLOT_EAR_RIGHT (1<<4)
+/// Left ear slot.
+#define ITEM_SLOT_EAR_LEFT (1<<21)
+/// Items wearable on either ear.
+#define ITEM_SLOT_EARS (ITEM_SLOT_EAR_RIGHT|ITEM_SLOT_EAR_LEFT)
+// BANDASTATION EDIT END
+// AI EDIT END
 /// Mask slot
 #define ITEM_SLOT_MASK (1<<5)
 /// Head slot (helmets, hats, etc.)
@@ -46,25 +54,32 @@
 #define ITEM_SLOT_BELT (1<<9)
 /// Back slot
 #define ITEM_SLOT_BACK (1<<10)
-/// Dextrous simplemob "hands" (used for Drones and Dextrous Guardians)
-#define ITEM_SLOT_DEX_STORAGE (1<<11)
 /// Neck slot (ties, bedsheets, scarves)
-#define ITEM_SLOT_NECK (1<<12)
+#define ITEM_SLOT_NECK (1<<11)
 /// A character's hand slots
-#define ITEM_SLOT_HANDS (1<<13)
+#define ITEM_SLOT_HANDS (1<<12)
 /// Suit Storage slot
-#define ITEM_SLOT_SUITSTORE (1<<14)
+#define ITEM_SLOT_SUITSTORE (1<<13)
 /// Left Pocket slot
-#define ITEM_SLOT_LPOCKET (1<<15)
+#define ITEM_SLOT_LPOCKET (1<<14)
 /// Right Pocket slot
-#define ITEM_SLOT_RPOCKET (1<<16)
+#define ITEM_SLOT_RPOCKET (1<<15)
 /// Handcuff slot
-#define ITEM_SLOT_HANDCUFFED (1<<17)
+#define ITEM_SLOT_HANDCUFFED (1<<16)
 /// Legcuff slot (bolas, beartraps)
-#define ITEM_SLOT_LEGCUFFED (1<<18)
+#define ITEM_SLOT_LEGCUFFED (1<<17)
+
+// BANDASTATION ADDITION START - Removable underclothing
+#define ITEM_SLOT_UNDERWEAR (1<<18)
+#define ITEM_SLOT_UNDERSHIRT (1<<19)
+#define ITEM_SLOT_SOCKS (1<<20)
+#define ITEM_SLOT_UNDERCLOTHING (ITEM_SLOT_UNDERWEAR|ITEM_SLOT_UNDERSHIRT|ITEM_SLOT_SOCKS)
+// BANDASTATION ADDITION END
 
 /// Total amount of slots
-#define SLOTS_AMT 19 // Keep this up to date!
+// AI EDIT START - Removable underclothing and separate ear slots
+#define SLOTS_AMT 23 // Keep this up to date! // BANDASTATION EDIT - Removable underclothing and separate ear slots
+// AI EDIT END
 
 ///Inventory slots that can be blacklisted by a species from being equipped into
 DEFINE_BITFIELD(no_equip_flags, list(
@@ -78,13 +93,20 @@ DEFINE_BITFIELD(no_equip_flags, list(
 	"SHOES" = ITEM_SLOT_FEET,
 	"BACKPACKS" = ITEM_SLOT_BACK,
 	"TIES" = ITEM_SLOT_NECK,
+	// BANDASTATION ADDITION START - Removable underclothing
+	"UNDERWEAR" = ITEM_SLOT_UNDERWEAR,
+	"UNDERSHIRT" = ITEM_SLOT_UNDERSHIRT,
+	"SOCKS" = ITEM_SLOT_SOCKS,
+	// BANDASTATION ADDITION END
 ))
 
 //SLOT GROUP HELPERS
 #define ITEM_SLOT_POCKETS (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
 /// Slots that are physically on you
 #define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
-	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
+	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK | ITEM_SLOT_UNDERCLOTHING ) // BANDASTATION EDIT - Removable underclothing
+/// Slots that are used for storage
+#define ITEM_SLOT_STORAGE (ITEM_SLOT_POCKETS | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE)
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update obscured_slots if you add more.

@@ -161,7 +161,7 @@
 
 /obj/item/clothing/gloves/atmos
 	name = "atmospheric extrication gloves"
-	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable and let you carry people faster."
+	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable, and let you carry people faster."
 	icon_state = "atmos"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -219,7 +219,7 @@
 	var/stamina_exhaustion = 2 + challenge.difficulty * 0.02
 	var/is_heavy_gravity = wearer.has_gravity() > STANDARD_GRAVITY
 	var/obj/item/organ/cyberimp/chest/spine/potential_spine = wearer.get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
+	if(istype(potential_spine) && !potential_spine.cybernetic_rejection) // BANDASTATION EDIT - Disconnected cybernetics provide no bonus.
 		stamina_exhaustion *= potential_spine.athletics_boost_multiplier
 	if(HAS_TRAIT(wearer, TRAIT_STRENGTH))
 		stamina_exhaustion *= 0.5

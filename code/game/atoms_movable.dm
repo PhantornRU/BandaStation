@@ -363,6 +363,14 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
 	return TRUE
 
+// BANDASTATION ADDITION START - Keep multi-tile steps on the checked movement path.
+/// BYOND's builtin step rejects multi-tile movers even when their destination footprint is clear.
+/atom/movable/proc/step_with_bounds(direction)
+	if(is_multi_tile_object(src))
+		return Move(get_step(src, direction), direction)
+	return step(src, direction)
+// BANDASTATION ADDITION END - Keep multi-tile steps on the checked movement path.
+
 /*
  * Attempts to move using zMove if direction is UP or DOWN, step if not
  *
@@ -373,7 +381,7 @@
 /atom/movable/proc/try_step_multiz(direction, z_move_flags = ZMOVE_FLIGHT_FLAGS)
 	if(direction == UP || direction == DOWN)
 		return zMove(direction, null, z_move_flags)
-	return step(src, direction)
+	return step_with_bounds(direction) // BANDASTATION EDIT - Support native multi-tile planar steps.
 
 /*
  * The core multi-z movement proc. Used to move a movable through z levels.
@@ -715,10 +723,12 @@
 		var/dx = newloc.x
 		var/dy = newloc.y
 		var/dz = newloc.z
+		// BANDASTATION EDIT START - Match the inclusive block to the actual multi-tile bounds.
 		new_locs = block(
-			dx, dy, dz,
-			dx + ceil(bound_width / 32), dy + ceil(bound_height / 32), dz
+			dx + round(bound_x / ICON_SIZE_X), dy + round(bound_y / ICON_SIZE_Y), dz,
+			dx + round((bound_x + bound_width - 1) / ICON_SIZE_X), dy + round((bound_y + bound_height - 1) / ICON_SIZE_Y), dz
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
+		// BANDASTATION EDIT END - Match the inclusive block to the actual multi-tile bounds.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
 				return
@@ -782,44 +792,46 @@
 			// place due to a Crossed, Bumped, etc. call will interrupt
 			// the second half of the diagonal movement, or the second attempt
 			// at a first half if step() fails because we hit something.
+			// BANDASTATION EDIT START - Resolve multi-tile diagonals through checked cardinal moves.
 			if (direct & NORTH)
 				if (direct & EAST)
-					if (step(src, NORTH) && moving_diagonally)
+					if (step_with_bounds(NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
+						. = step_with_bounds(EAST)
+					else if (moving_diagonally && step_with_bounds(EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
+						. = step_with_bounds(NORTH)
 				else if (direct & WEST)
-					if (step(src, NORTH) && moving_diagonally)
+					if (step_with_bounds(NORTH) && moving_diagonally)
 						first_step_dir = NORTH
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
+						. = step_with_bounds(WEST)
+					else if (moving_diagonally && step_with_bounds(WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
+						. = step_with_bounds(NORTH)
 			else if (direct & SOUTH)
 				if (direct & EAST)
-					if (step(src, SOUTH) && moving_diagonally)
+					if (step_with_bounds(SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
+						. = step_with_bounds(EAST)
+					else if (moving_diagonally && step_with_bounds(EAST))
 						first_step_dir = EAST
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
+						. = step_with_bounds(SOUTH)
 				else if (direct & WEST)
-					if (step(src, SOUTH) && moving_diagonally)
+					if (step_with_bounds(SOUTH) && moving_diagonally)
 						first_step_dir = SOUTH
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
+						. = step_with_bounds(WEST)
+					else if (moving_diagonally && step_with_bounds(WEST))
 						first_step_dir = WEST
 						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
+						. = step_with_bounds(SOUTH)
+			// BANDASTATION EDIT END - Resolve multi-tile diagonals through checked cardinal moves.
 			if(moving_diagonally == SECOND_DIAG_STEP)
 				if(!. && set_dir_on_move && update_dir)
 					setDir(first_step_dir)
@@ -926,6 +938,15 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
+
+	// BANDASTATION ADDITION START - Transition a complete footprint only after every turf has received Entered().
+	if(is_multi_tile_object(src) && isturf(loc) && !currently_z_moving)
+		for(var/turf/open/transition_turf in locs)
+			if(!transition_turf.destination_z)
+				continue
+			transition_turf.transfer_occupant(src)
+			break
+	// BANDASTATION ADDITION END - Transition a complete footprint only after every turf has received Entered().
 
 	return TRUE
 
@@ -1173,7 +1194,12 @@
 	var/atom/oldloc = loc
 	var/is_multi_tile = bound_width > ICON_SIZE_X || bound_height > ICON_SIZE_Y
 
-	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, null)
+	// BANDASTATION EDIT START - Preserve the footprint before changing loc during forced movement.
+	var/list/old_locs
+	if(is_multi_tile)
+		old_locs = isturf(oldloc) ? locs : (oldloc ? list(oldloc) : list())
+	SET_ACTIVE_MOVEMENT(oldloc, NONE, TRUE, old_locs)
+	// BANDASTATION EDIT END - Preserve the footprint before changing loc during forced movement.
 
 	if(destination)
 		///zMove already handles whether a pull from another movable should be broken.
@@ -1200,17 +1226,21 @@
 				var/dx = destination.x
 				var/dy = destination.y
 				var/dz = destination.z
+				// BANDASTATION EDIT START - Match the inclusive block to the actual multi-tile bounds.
 				var/list/new_locs = block(
-					dx, dy, dz,
-					dx + ROUND_UP(bound_width / ICON_SIZE_X), dy + ROUND_UP(bound_height / ICON_SIZE_Y), dz
+					dx + round(bound_x / ICON_SIZE_X), dy + round(bound_y / ICON_SIZE_Y), dz,
+					dx + round((bound_x + bound_width - 1) / ICON_SIZE_X), dy + round((bound_y + bound_height - 1) / ICON_SIZE_Y), dz
 				)
+				// BANDASTATION EDIT END - Match the inclusive block to the actual multi-tile bounds.
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, movement_dir)
-				for(var/atom/left_loc as anything in locs - new_locs)
+				// BANDASTATION EDIT START - Compare with the saved footprint and preserve Entered arguments.
+				for(var/atom/left_loc as anything in old_locs - new_locs)
 					left_loc.Exited(src, movement_dir)
 
-				for(var/atom/entering_loc as anything in new_locs - locs)
-					entering_loc.Entered(src, movement_dir)
+				for(var/atom/entering_loc as anything in new_locs - old_locs)
+					entering_loc.Entered(src, oldloc, old_locs)
+				// BANDASTATION EDIT END - Compare with the saved footprint and preserve Entered arguments.
 
 				if(old_area && old_area != destarea)
 					destarea.Entered(src, movement_dir)
@@ -1233,7 +1263,7 @@
 			loc = null
 			var/area/old_area = get_area(oldloc)
 			if(is_multi_tile && isturf(oldloc))
-				for(var/atom/old_loc as anything in locs)
+				for(var/atom/old_loc as anything in old_locs) // BANDASTATION EDIT - locs is empty after entering nullspace.
 					old_loc.Exited(src, NONE)
 			else
 				oldloc.Exited(src, NONE)

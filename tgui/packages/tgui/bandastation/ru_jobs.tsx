@@ -20,6 +20,7 @@ export const JOBS_RU = {
   'Security Officer (Science)': 'Офицер (Исследование)',
   'Station Engineer': 'Станционный инженер',
   'Atmospheric Technician': 'Атмосферный техник',
+  'Spacepod Technician': 'Челнок-инженер',
   Coroner: 'Коронер',
   'Medical Doctor': 'Врач',
   Paramedic: 'Парамедик',
@@ -40,7 +41,7 @@ export const JOBS_RU = {
   Clown: 'Клоун',
   Mime: 'Мим',
   Curator: 'Куратор',
-  Lawyer: 'Юрист',
+  Lawyer: 'Агент внутренних дел',
   Chaplain: 'Священник',
   Psychologist: 'Психолог',
   // BANDASTATION jobs

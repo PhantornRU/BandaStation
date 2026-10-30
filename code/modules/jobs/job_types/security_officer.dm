@@ -84,45 +84,51 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	var/department = player_client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 	if (!isnull(department))
 		department = get_my_department(spawning, department)
-
-		// This should theoretically still run if a player isn't in the distributions, but isn't a late join.
 		GLOB.security_officer_distribution[REF(spawning)] = department
 
-	var/ears = null
+	// AI EDIT START - Name the selected headset type explicitly
+	// BANDASTATION EDIT START - Name the selected headset type explicitly
+	var/headset_type = null
 	var/accessory = null
 	var/datum/id_trim/dep_trim = null
 	var/destination = null
 
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
+			headset_type = /obj/item/radio/headset/headset_sec/alt/department/supply
 			dep_trim = /datum/id_trim/job/security_officer/supply
 			destination = /area/station/security/checkpoint/supply
 			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
+			headset_type = /obj/item/radio/headset/headset_sec/alt/department/engi
 			dep_trim = /datum/id_trim/job/security_officer/engineering
 			destination = /area/station/security/checkpoint/engineering
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/med
+			headset_type = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
 			destination = /area/station/security/checkpoint/medical
 			accessory = /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
+			headset_type = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
 			destination = /area/station/security/checkpoint/science
 			accessory = /obj/item/clothing/accessory/armband/science
+	// BANDASTATION EDIT END
+	// AI EDIT END
 
 	if(accessory)
 		var/obj/item/clothing/under/worn_under = spawning.w_uniform
 		worn_under.attach_accessory(new accessory)
 
-	if(ears)
-		if(spawning.ears)
-			qdel(spawning.ears)
-		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
+	// AI EDIT START - Dual ear slots
+	// BANDASTATION EDIT START - Dual ear slots
+	if(headset_type)
+		if(spawning.ear_right)
+			qdel(spawning.ear_right)
+		spawning.equip_to_slot_or_del(new headset_type(spawning), ITEM_SLOT_EAR_RIGHT)
+	// BANDASTATION EDIT END
+	// AI EDIT END
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
@@ -207,13 +213,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	signal.send_to_receivers()
 
 /datum/job/security_officer/proc/get_my_department(mob/character, preferred_department)
-	var/department = GLOB.security_officer_distribution[REF(character)]
-
-	// This passes when they are a round start security officer.
-	if (department)
-		return department
-
-	return get_new_officer_distribution_from_late_join(
+	return GLOB.security_officer_distribution[REF(character)] || get_officer_department(
 		preferred_department,
 		shuffle(GLOB.available_depts),
 		GLOB.security_officer_distribution,
@@ -231,7 +231,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		/obj/item/evidencebag = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/security
-	ears = /obj/item/radio/headset/headset_sec/alt
+	// AI EDIT START - Support independent left and right ear slots
+	ear_right = /obj/item/radio/headset/headset_sec/alt // BANDASTATION EDIT - Dual ear slots
+	// AI EDIT END
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/sec
 	shoes = /obj/item/clothing/shoes/jackboots/sec
@@ -283,198 +285,12 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	keyslot = /obj/item/encryptionkey/headset_sec
 	keyslot2 = /obj/item/encryptionkey/headset_sci
 
-/// Returns the distribution of splitting the given security officers into departments.
-/// Return value is an assoc list of candidate => SEC_DEPT_*.
-/proc/get_officer_departments(list/preferences, list/departments)
-	if (!preferences.len)
-		return list()
-
-	/**
-	 * This is a pretty complicated algorithm, but it's one I'm rather proud of.
-	 *
-	 * This is the function that is responsible for taking the list of preferences,
-	 * and spitting out what to put them in.
-	 *
-	 * However, it should, wherever possible, prevent solo departments.
-	 * That means that if there's one medical officer, and one engineering officer,
-	 * that they should be put onto the same department (either medical or engineering).
-	 *
-	 * The first step is to get the "distribution". This describes how many officers
-	 * should be in each department, no matter what they are.
-	 * This is handled in `get_distribution`. Examples of inputs/outputs are:
-	 * get_distribution(1, 4) => [1]
-	 * get_distribution(2, 4) => [2]
-	 * get_distribution(3, 4) => [3] # If this returned [2, 1], then we'd get a loner.
-	 * get_distribution(4, 4) => [2, 2] # We have enough to put into a separate group
-	 *
-	 * Once this distribution is received, the next step is to figure out where to put everyone.
-	 *
-	 * If all members have no preference, just make one an unused department (from the departments argument).
-	 * Then, call ourselves again.
-	 *
-	 * Order the groups from most populated to least.
-	 *
-	 * If the top group has enough officers who actually *want* that department, then we give it to them.
-	 * If there are any leftovers (for example, if 3 officers want medical, but we only want 2), then we
-	 * update those to have no preference instead.
-	 *
-	 * If the top group does NOT have enough officers, then we kill the least popular group by setting
-	 * them all to have no preference.
-	 *
-	 * Anyone in the most popular group will be removed from the list, and the final tally will be updated.
-	 * In the case of not having enough officers, this is a no-op, as there won't be any in the most popular group yet.
-	 *
-	 * If there are any candidates left, then we call the algorithm again, but for everyone who hasn't been selected yet.
-	 * We take the results from that run, and put them in the correct order.
-	 *
-	 * As an example, let's assume we have the following preferences:
-	 * [engineer, medical, medical, medical, medical, cargo]
-	 *
-	 * The distribution of this is [2, 2, 2], meaning there will be 3 departments chosen and they will have 2 each.
-	 * We order from most popular to least popular and get:
-	 * - medical: 4
-	 * - engineer: 1
-	 * - cargo: 1
-	 *
-	 * We need 2 to fill the first group. There are enough medical staff to do it. Thus, we take the first 2 medical staff
-	 * and update the output, making it now: [engineer, medical, medical, ?, ?, cargo].
-	 *
-	 * The remaining two want-to-be-medical officers are now updated to act as no preference. We run the algorithm again.
-	 * This time, are candidates are [engineer, none, none, cargo].
-	 * The distribution of this is [2, 2]. The frequency is:
-	 * - engineer: 1
-	 * - cargo: 1
-	 * - no preference: 2
-	 *
-	 * We need 2 to fill the engineering group, but only have one who wants to do it.
-	 * We have enough no preferences for it, making our result: [engineer, engineer, none, cargo].
-	 * We run the algorithm again, but this time with: [none, cargo].
-	 * Frequency is:
-	 * - cargo: 1
-	 * - no preference: 1
-	 * Enough to fill cargo, etc, and we get [cargo, cargo].
-	 *
-	 * These are all then compounded into one list.
-	 *
-	 * In the case that all are no preference, it will pop the last department, and use that.
-	 * For example, if `departments` is [engi, medical, cargo], and we have the preferences:
-	 * [none, none, none]...
-	 * Then we will just give them all cargo.
-	 *
-	 * One of the most important parts of this algorithm is IT IS DETERMINISTIC.
-	 * That means that this proc is 100% testable.
-	 * Instead, to get random results, the preferences and departments are shuffled
-	 * before the proc is ever called.
-	*/
-
-	preferences = preferences.Copy()
-	departments = departments.Copy()
-
-	var/distribution = get_distribution(preferences.len, departments.len)
-	var/selection[preferences.len]
-
-	var/list/grouped = list()
-	var/list/biggest_group
-	var/biggest_preference
-	var/list/indices = list()
-
-	for (var/index in 1 to preferences.len)
-		indices += index
-
-		var/preference = preferences[index]
-		if (!(preference in grouped))
-			grouped[preference] = list()
-		grouped[preference] += index
-
-		var/list/preferred_group = grouped[preference]
-
-		if (preference != SEC_DEPT_NONE && (isnull(biggest_group) || biggest_group.len < preferred_group.len))
-			biggest_group = grouped[preference]
-			biggest_preference = preference
-
-	if (isnull(biggest_group))
-		preferences[1] = pop(departments)
-		return get_officer_departments(preferences, departments)
-
-	if (biggest_group.len >= distribution[1])
-		for (var/index in 1 to distribution[1])
-			selection[biggest_group[index]] = biggest_preference
-
-		if (biggest_group.len > distribution[1])
-			for (var/leftover in (distribution[1] + 1) to biggest_group.len)
-				preferences[leftover] = SEC_DEPT_NONE
-	else
-		var/needed = distribution[1] - biggest_group.len
-		if (LAZYLEN(LAZYACCESS(grouped, SEC_DEPT_NONE)) >= needed)
-			for (var/candidate_index in biggest_group)
-				selection[candidate_index] = biggest_preference
-
-			for (var/index in 1 to needed)
-				selection[grouped[SEC_DEPT_NONE][index]] = biggest_preference
-		else
-			var/least_popular_index = grouped[grouped.len]
-			if (least_popular_index == SEC_DEPT_NONE)
-				least_popular_index = grouped[grouped.len - 1]
-			var/least_popular = grouped[least_popular_index]
-			for (var/candidate_index in least_popular)
-				preferences[candidate_index] = SEC_DEPT_NONE
-
-	// Remove all members of the most popular candidate from the list
-	for (var/chosen in 1 to selection.len)
-		if (selection[chosen] == biggest_preference)
-			indices -= chosen
-			preferences[chosen] = null
-
-	list_clear_nulls(preferences)
-
-	departments -= biggest_preference
-
-	if (grouped.len != 1)
-		var/list/next_step = get_officer_departments(preferences, departments)
-		for (var/index in 1 to indices.len)
-			var/place = indices[index]
-			selection[place] = next_step[index]
-
-	return selection
-
-/proc/get_distribution(candidates, departments)
-	var/number_of_twos = min(departments, round(candidates / 2))
-	var/redistribute = candidates - (2 * number_of_twos)
-
-	var/distribution[max(1, number_of_twos)]
-
-	for (var/index in 1 to number_of_twos)
-		distribution[index] = 2
-
-	for (var/index in 0 to redistribute - 1)
-		distribution[(index % departments) + 1] += 1
-
-	return distribution
-
-/proc/get_new_officer_distribution_from_late_join(
+/// Returns the department a new officer should go to: the least populated one, favoring their preference on ties.
+/proc/get_officer_department(
 	preference,
 	list/departments,
 	list/distribution,
 )
-	/**
-	 * For late joiners, we're forced to put them in an alone department at some point.
-	 *
-	 * This is because reusing the round-start algorithm would force existing officers into
-	 * a different department in order to preserve having partners at all times.
-	 *
-	 * This would mean retroactively updating their access as well, which is too much
-	 * of a headache for me to want to bother.
-	 *
-	 * So, here's the method. If any department currently has 1 officer, they are forced into
-	 * that.
-	 *
-	 * Otherwise, the department with the least officers in it is chosen.
-	 * Preference takes priority, meaning that if both medical and engineering have zero officers,
-	 * and the preference is medical, then medical is what will be chosen.
-	 *
-	 * Just like `get_officer_departments`, this function is deterministic.
-	 * Randomness should instead be handled in the shuffling of the `departments` argument.
-	 */
 	var/list/amount_in_departments = list()
 
 	for (var/department in departments)
@@ -491,9 +307,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	for (var/department in amount_in_departments)
 		var/amount = amount_in_departments[department]
 
-		if (amount == 1)
-			return department
-		else if (lowest_amount > amount)
+		if (lowest_amount > amount)
 			lowest_departments = list(department)
 			lowest_amount = amount
 		else if (lowest_amount == amount)

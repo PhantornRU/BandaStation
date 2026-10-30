@@ -351,6 +351,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/load_character(slot = default_slot)
 	SHOULD_NOT_SLEEP(TRUE)
+	// BANDASTATION ADDITION - Dependency corrections belong only to the loaded slot.
+	sierra_background_load_corrections = list()
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	var/original_default_slot = default_slot
 	if(slot != default_slot)
@@ -372,14 +374,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
 
-	// Read everything into cache
-	// Uses priority order as some values may rely on others for creating default values
+	// BANDASTATION EDIT START - Defaults must never read dependent values from the previous character slot
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
-
 		value_cache -= preference.type
+	// Read in priority order after invalidating all character values, including later dependencies.
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
+			continue
 		read_preference(preference.type)
+	// BANDASTATION EDIT END
+	// BANDASTATION ADDITION - Reconcile known background conflicts after every slot load.
+	reconcile_sierra_background_on_load()
 
 	//Character
 	randomise = save_data?["randomise"]
@@ -419,6 +426,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/save_character()
 	SHOULD_NOT_SLEEP(TRUE)
+	// BANDASTATION ADDITION - Validate dependencies without erasing historical biography values.
+	validate_sierra_background_for_save()
 	if(!path)
 		return FALSE
 	var/tree_key = "character[default_slot]"

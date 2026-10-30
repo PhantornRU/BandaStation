@@ -44718,6 +44718,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"poP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/turf/open/floor/iron,
+/area/station/engineering/storage_shared)
 "poS" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -52806,7 +52810,7 @@
 	dir = 4;
 	id = "abandoned_kitchen"
 	},
-/obj/structure/displaycase/forsale/kitchen{
+/obj/structure/tipjar{
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
@@ -61545,9 +61549,7 @@
 /area/station/engineering/storage/tech)
 "uWU" = (
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -68821,9 +68823,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -113640,7 +113640,7 @@ mdk
 kYG
 nJM
 lOg
-pom
+poP
 pom
 uUL
 qsv

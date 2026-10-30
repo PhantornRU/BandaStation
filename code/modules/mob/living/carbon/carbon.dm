@@ -813,7 +813,7 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
-	if(!IS_STUMP(new_bodypart))
+	if(!IS_STUMP(new_bodypart) && !isnull(new_bodypart.body_zone))
 		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 
@@ -823,7 +823,10 @@
 
 	// Tell the organs in the bodyparts that we are in a mob again
 	for(var/obj/item/organ/organ in new_bodypart)
-		organ.mob_insert(src)
+		// BANDASTATION EDIT START - Detached limbs must not bypass transplant compatibility
+		if(!organ.mob_insert(src))
+			organ.bodypart_remove(new_bodypart, drop_location = drop_location())
+		// BANDASTATION EDIT END - Detached limbs must not bypass transplant compatibility
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1167,6 +1170,10 @@
 /mob/living/carbon/proc/attach_rot()
 	if(flags_1 & HOLOGRAM_1)
 		return
+	// BANDASTATION ADDITION START - Vox corpses do not decay
+	if(HAS_TRAIT(src, TRAIT_NODECAY))
+		return
+	// BANDASTATION ADDITION END - Vox corpses do not decay
 	if(!(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)

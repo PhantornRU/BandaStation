@@ -179,6 +179,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STABLEHEART "stable_heart"
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"
+// BANDASTATION ADDITION - Preserve corpses and their installed organs without disease immunity
+#define TRAIT_NODECAY "nodecay"
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
@@ -233,6 +235,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_UNDERWEAR "no_underwear"
 /// Humans with this trait cannot get augmentation surgery
 #define TRAIT_NO_AUGMENTS "no_augments"
+// BANDASTATION ADDITION START - Complete cybernetic rejection
+/// Installed cybernetics cannot function; the brain is incompatible with MMIs.
+#define TRAIT_CYBERNETIC_REJECTION "cybernetic_rejection"
+// BANDASTATION ADDITION END - Complete cybernetic rejection
 /// This carbon doesn't get hungry
 #define TRAIT_NOHUNGER "no_hunger"
 /// This carbon doesn't have blood
@@ -249,6 +255,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRINKS_BLOOD "drinks_blood"
 /// Mob is immune to toxin damage
 #define TRAIT_TOXIMMUNE "toxin_immune"
+// BANDASTATION ADDITION START - IPC chemical immunity
+/// Rejects reagents and chemical exposure, including holders belonging to installed organs.
+#define TRAIT_REAGENT_IMMUNE "reagent_immune"
+// BANDASTATION ADDITION END - IPC chemical immunity
 /// Mob is immune to oxygen damage, does not need to breathe
 #define TRAIT_NOBREATH "no_breath"
 /// Mob doesn't take oxygen damage in deep water
@@ -1770,6 +1780,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // BANDASTATION EDIT START: Vampire identity traits
 /// Given to vampires.
 #define TRAIT_VAMPIRE "vampire"
+
+/// Nutrition gains require a blood-feeding source, as for vampires.
+#define TRAIT_BLOOD_DIET "blood_diet" // BANDASTATION ADDITION - Porphyria
 
 /// Given to vampires and thralls
 #define TRAIT_VAMPIRE_LIKE "vampire_like"

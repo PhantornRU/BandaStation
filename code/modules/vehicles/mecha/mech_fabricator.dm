@@ -31,7 +31,7 @@
 	var/top_job_id = 0
 
 	/// Part currently stored in the Exofab.
-	var/obj/item/stored_part
+	var/atom/movable/stored_part // BANDASTATION EDIT - IPC chassis designs produce an empty mob.
 
 	/// Coefficient for the speed of item building. Based on the installed parts.
 	var/time_coeff = 1
@@ -50,6 +50,8 @@
 
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/cached_designs
+	/// Design build mask, specialized by dedicated fabrication machines.
+	var/allowed_buildtypes = MECHFAB // BANDASTATION ADDITION - Dedicated spacepod fabricator.
 
 	/// Looping sound for printing items
 	var/datum/looping_sound/lathe_print/print_sound
@@ -151,6 +153,11 @@
 	drop_direction = direction
 	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
+// BANDASTATION ADDITION START - Apply the same research and build mask at every entry point.
+/obj/machinery/mecha_part_fabricator/proc/can_build_design(datum/design/design)
+	return istype(design) && !LAZYLEN(design.reagents_list) && (design.build_type & allowed_buildtypes) && stored_research?.researched_designs[design.type]
+// BANDASTATION ADDITION END - Apply the same research and build mask at every entry point.
+
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
  */
@@ -158,9 +165,9 @@
 	var/previous_design_count = length(cached_designs)
 
 	cached_designs.Cut()
-	for(var/design_path in stored_research.researched_designs)
+	for(var/design_path in stored_research?.researched_designs) // BANDASTATION EDIT - A disconnected fabricator has no available designs.
 		var/datum/design/design = SSresearch.techweb_designs[design_path]
-		if(design.build_type & MECHFAB)
+		if(can_build_design(design)) // BANDASTATION EDIT - Dedicated fabricator build mask.
 			cached_designs |= design_path
 
 	var/design_delta = length(cached_designs) - previous_design_count
@@ -223,7 +230,7 @@
  * * user_data - ID_DATA(user), see the proc on SSid_access
  */
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, alist/user_data)
-	if(!D || LAZYLEN(D.reagents_list))
+	if(!can_build_design(D)) // BANDASTATION EDIT - Revalidate queued research and the machine build mask before charging materials.
 		return FALSE
 
 	var/datum/material_container/materials = rmat.mat_container
@@ -282,7 +289,7 @@
  * * dispensed_design - Design datum to attempt to dispense.
  */
 /obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/dispensed_design)
-	var/obj/item/built_part = dispensed_design.create_result(src)
+	var/atom/movable/built_part = dispensed_design.create_result(src) // BANDASTATION EDIT - IPC chassis designs produce an empty mob.
 	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[built_part.type]"))
 
 	being_built = null
@@ -309,6 +316,10 @@
  * user_data - user data in the form rendered by ID_DATA(user), see the proc on SSidaccess
  */
 /obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, alist/user_data)
+	// BANDASTATION ADDITION START - Direct callers must respect the same manufacturing boundary as the UI.
+	if(!can_build_design(D))
+		return FALSE
+	// BANDASTATION ADDITION END - Direct callers must respect the same manufacturing boundary as the UI.
 	if(!istype(queue))
 		queue = list()
 
@@ -354,6 +365,7 @@
 
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
 	var/list/data = rmat.mat_container.ui_static_data()
+	data["machine_name"] = capitalize(declent_ru(NOMINATIVE)) // BANDASTATION ADDITION - Dedicated fabricator window title.
 
 	var/list/designs = list()
 
@@ -362,6 +374,10 @@
 
 	for(var/design_path in cached_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_path]
+		// BANDASTATION ADDITION START - Cached menus must not expose designs after research is revoked.
+		if(!can_build_design(design))
+			continue
+		// BANDASTATION ADDITION END - Cached menus must not expose designs after research is revoked.
 		var/cost = list()
 		var/list/materials = design.materials
 		for(var/datum/material/mat in materials)
@@ -429,14 +445,8 @@
 
 			for(var/design_path in designs)
 				design_path = text2path(design_path)
-				if(!stored_research.researched_designs[design_path])
-					continue
-
 				var/datum/design/design = SSresearch.techweb_designs[design_path]
-				if(!istype(design))
-					continue
-
-				if(!(design.build_type & MECHFAB))
+				if(!can_build_design(design)) // BANDASTATION EDIT - Server-side specialized build mask and current research.
 					continue
 
 				add_to_queue(design, ID_DATA(usr))

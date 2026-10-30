@@ -1,3 +1,8 @@
+// BANDASTATION ADDITION START - Porphyria digestion
+/// Sent to the owner before /obj/item/organ/stomach/on_life transfers reagents into the bloodstream. (obj/item/organ/stomach/stomach, seconds_per_tick)
+#define COMSIG_CARBON_STOMACH_DIGEST "carbon_stomach_digest"
+// BANDASTATION ADDITION END
+
 ///Called from /datum/species/proc/help : (mob/living/carbon/human/helper, datum/martial_art/helper_style)
 #define COMSIG_CARBON_PRE_HELP "carbon_pre_help"
 	/// Stops the rest of the help
@@ -59,6 +64,8 @@
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
+/// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
+#define COMSIG_BODYPART_POST_REMOVED "bodypart_post_removed"
 
 /// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"

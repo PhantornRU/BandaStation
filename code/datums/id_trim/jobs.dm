@@ -117,6 +117,7 @@
 	sechud_icon_state = SECHUD_ATMOSPHERIC_TECHNICIAN
 	minimal_access = list(
 		ACCESS_ATMOSPHERICS,
+		ACCESS_ATMOS_EQUIP,
 		ACCESS_AUX_BASE,
 		ACCESS_CONSTRUCTION,
 		ACCESS_ENGINEERING,
@@ -376,6 +377,7 @@
 	extra_wildcard_access = list()
 	minimal_access = list(
 		ACCESS_ATMOSPHERICS,
+		ACCESS_ATMOS_EQUIP,
 		ACCESS_AUX_BASE,
 		ACCESS_BRIG_ENTRANCE,
 		ACCESS_BUDGET,
@@ -787,7 +789,7 @@
 		ACCESS_HOP,
 		)
 	job = /datum/job/lawyer
-	honorifics = list(", Юрист")
+	honorifics = list(", АВД")
 	honorific_positions = HONORIFIC_POSITION_LAST_FULL | HONORIFIC_POSITION_NONE
 
 /datum/id_trim/job/medical_doctor
@@ -1199,6 +1201,7 @@
 		ACCESS_ENGINEERING,
 	)
 	elevated_access = list(
+		ACCESS_ATMOS_EQUIP,
 		ACCESS_AUX_BASE,
 		ACCESS_CONSTRUCTION,
 		ACCESS_ENGINE_EQUIP,
@@ -1285,6 +1288,7 @@
 	sechud_icon_state = SECHUD_STATION_ENGINEER
 	minimal_access = list(
 		ACCESS_AUX_BASE,
+		ACCESS_ATMOS_EQUIP,
 		ACCESS_CONSTRUCTION,
 		ACCESS_ENGINEERING,
 		ACCESS_ENGINE_EQUIP,

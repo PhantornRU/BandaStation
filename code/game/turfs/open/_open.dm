@@ -231,16 +231,24 @@
 	if(old_loc && leave_footprints && !broken && !burnt && ishuman(arrived))
 		add_footprint(arrived, get_dir(old_loc, src))
 
-	transfer_occupant(arrived)
+	// BANDASTATION EDIT - Only linked turfs transfer; multi-tile movers transition once from Moved().
+	if(destination_z && !is_multi_tile_object(arrived))
+		transfer_occupant(arrived)
 
 /turf/open/initialize_occupant(atom/movable/occupant)
 	. = ..()
-	transfer_occupant(occupant)
+	if(destination_z) // BANDASTATION EDIT - Ordinary turf initialization has no sector transfer to perform.
+		transfer_occupant(occupant)
 
 /// Moves an occupant through a configured connection to another z-level.
 /turf/open/proc/transfer_occupant(atom/movable/occupant)
-	if(!occupant || occupant.loc != src)
+	// BANDASTATION EDIT START - A large mover can touch the border before its anchor enters it.
+	if(QDELETED(occupant) || !isturf(occupant.loc))
+		return FALSE
+	var/multi_tile = is_multi_tile_object(occupant)
+	if(occupant.loc != src && (!multi_tile || !(src in occupant.locs)))
 		return
+	// BANDASTATION EDIT END - A large mover can touch the border before its anchor enters it.
 	if(!destination_z || !destination_x || !destination_y || occupant.pulledby || occupant.currently_z_moving)
 		return
 
@@ -249,12 +257,32 @@
 
 	var/tx = destination_x
 	var/ty = destination_y
+	// BANDASTATION ADDITION START - Land the entire footprint inside the receiving sector.
+	var/turf/original_location = occupant.loc
+	if(multi_tile)
+		tx -= x - occupant.x
+		ty -= y - occupant.y
+		if(destination_x != x)
+			if(x <= TRANSITIONEDGE + 1)
+				tx = destination_x - round((occupant.bound_x + occupant.bound_width - 1) / ICON_SIZE_X)
+			else if(x >= world.maxx - TRANSITIONEDGE)
+				tx = destination_x - round(occupant.bound_x / ICON_SIZE_X)
+		if(destination_y != y)
+			if(y <= TRANSITIONEDGE + 1)
+				ty = destination_y - round((occupant.bound_y + occupant.bound_height - 1) / ICON_SIZE_Y)
+			else if(y >= world.maxy - TRANSITIONEDGE)
+				ty = destination_y - round(occupant.bound_y / ICON_SIZE_Y)
+	// BANDASTATION ADDITION END - Land the entire footprint inside the receiving sector.
 	var/turf/DT = locate(tx, ty, destination_z)
+	if(!DT) // BANDASTATION ADDITION - Invalid configured coordinates must not dereference null or move the occupant.
+		return FALSE
 	var/itercount = 0
-	while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
+	while(!is_safe_transition_target(occupant, DT, multi_tile)) // BANDASTATION EDIT - Check every occupied tile while retaining the native inward search.
+		if(QDELETED(occupant) || occupant.loc != original_location) // BANDASTATION ADDITION - Enter callbacks may invalidate the pending transfer.
+			return FALSE
 		if (itercount++ >= 100)
 			log_game("SPACE Z-TRANSIT ERROR: Could not find a safe place to land [occupant] within 100 iterations.")
-			break
+			return FALSE // BANDASTATION EDIT - Exhausting the search must not force an unsafe arrival.
 		if (tx < 128)
 			tx++
 		else
@@ -265,13 +293,34 @@
 			ty--
 		DT = locate(tx, ty, destination_z)
 
-	occupant.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
+	// BANDASTATION EDIT START - Preserve ownership and movement state if validation or the transfer fails.
+	if(QDELETED(occupant) || occupant.loc != original_location || !occupant.zMove(null, DT, ZMOVE_ALLOW_BUCKLED))
+		return FALSE
+	// BANDASTATION EDIT END - Preserve ownership and movement state if validation or the transfer fails.
 
 	var/atom/movable/current_pull = occupant.pulling
 	while (current_pull)
 		var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
 		current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
 		current_pull = current_pull.pulling
+	return TRUE // BANDASTATION ADDITION - The Moved caller must attempt at most one transition per move.
+
+// BANDASTATION ADDITION START - Sector arrivals must fit the complete physical bounds.
+/turf/open/proc/is_safe_transition_target(atom/movable/occupant, turf/destination, multi_tile)
+	if(!destination || destination.density || istype(destination.loc, /area/shuttle))
+		return FALSE
+	if(!multi_tile)
+		return TRUE
+	var/turf/original_location = occupant.loc
+	for(var/dx in round(occupant.bound_x / ICON_SIZE_X) to round((occupant.bound_x + occupant.bound_width - 1) / ICON_SIZE_X))
+		for(var/dy in round(occupant.bound_y / ICON_SIZE_Y) to round((occupant.bound_y + occupant.bound_height - 1) / ICON_SIZE_Y))
+			var/turf/part = locate(destination.x + dx, destination.y + dy, destination.z)
+			if(!part || part.density || istype(part.loc, /area/shuttle) || part.is_transition_turf() || !part.Enter(occupant))
+				return FALSE
+			if(QDELETED(occupant) || occupant.loc != original_location)
+				return FALSE
+	return TRUE
+// BANDASTATION ADDITION END - Sector arrivals must fit the complete physical bounds.
 
 /turf/open/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -302,6 +351,19 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_turf = TRUE
 
+/turf/open/indestructible/cult
+	icon_state = "cult"
+
+// A plating pattern without /plating's underfloor access.
+/turf/open/indestructible/plating_pattern
+	icon_state = "plating"
+
+/turf/open/indestructible/recharge_floor
+	icon_state = "recharge_floor"
+
+/turf/open/indestructible/whitehall
+	icon_state = "whitehall"
+
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
 	return src
@@ -318,6 +380,9 @@
 
 /turf/open/indestructible/white
 	icon_state = "white"
+
+/turf/open/indestructible/white/showroom
+	icon_state = "showroomfloor"
 
 /turf/open/indestructible/white/smooth_large
 	icon_state = "white_large"
@@ -455,6 +520,10 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
+
+/turf/open/indestructible/binary/water
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "water"
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"

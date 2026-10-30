@@ -31,6 +31,7 @@ export enum Food {
   Toxic = 'TOXIC',
   Vegetables = 'VEGETABLES',
   Egg = 'EGG',
+  Tech = 'TECH', // BANDASTATION ADDITION - Vox food
 }
 
 export enum JobPriority {
@@ -174,6 +175,8 @@ export type CharacterPreferencesData = {
 };
 
 export type PreferencesMenuData = {
+  sierra_antagonist?: AntagonistBackground; // BANDASTATION ADDITION - Private background
+  sierra_background: BackgroundPreference[]; // BANDASTATION ADDITION - Sierra background
   character_preview_view: string;
   character_profiles: (string | null)[];
 
@@ -221,6 +224,62 @@ export type PreferencesMenuData = {
 };
 
 // BANDASTATION ADDITION START
+export type BackgroundCategory =
+  | 'culture'
+  | 'homeworld'
+  | 'faction'
+  | 'subfaction'
+  | 'social'
+  | 'religion';
+
+export type BackgroundEntry = {
+  name: string;
+  description: string;
+  extra?: string;
+  faction?: string;
+};
+
+export type BackgroundPreference = {
+  category: BackgroundCategory;
+  preference: string;
+  label: string;
+  value: string;
+  choices: string[];
+  context_choices?: string[];
+  choice_children?: Record<string, string[]>;
+  choice_effects?: Record<string, string[]>;
+  notes?: string;
+  notes_preference?: string;
+  notes_max_length?: number;
+  notes_prompt?: string;
+  invalid_reason?: string;
+  reset_reason?: string;
+  selected_name?: string;
+  empty_reason?: string;
+  language_names?: string[];
+  name_generation?: string;
+};
+
+export type AntagonistBackgroundChoice = {
+  preference: string;
+  value: string;
+  choices: { id: string; name: string; description: string }[];
+  invalid_reason?: string;
+  selected_name?: string;
+  empty_reason?: string;
+};
+
+export type AntagonistBackground = {
+  organization: AntagonistBackgroundChoice;
+  subgroup?: AntagonistBackgroundChoice;
+  notes: {
+    preference: string;
+    value: string;
+    max_length: number;
+    prompt: string;
+  };
+};
+
 export type Seed = {
   name: string;
   value: string;
@@ -254,6 +313,10 @@ export type BodyModification = {
 
 export type ServerData = {
   // BANDASTATION ADDITION START
+  sierra_background?: Record<
+    BackgroundCategory,
+    Record<string, BackgroundEntry>
+  >;
   text_to_speech: TtsData;
   body_modifications: BodyModification[];
   // BANDASTATION ADDITION END

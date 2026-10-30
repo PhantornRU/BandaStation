@@ -166,6 +166,9 @@
 
 	for(var/obj/item/radio/called_radio as anything in radios)
 		called_radio.on_receive_message(data)
+		if(called_radio.runechat_on_receive) // show runechat above this radio
+			for(var/mob/radio_hearer as anything in mob_only_listeners(get_hearers_in_LOS(called_radio.canhear_range, called_radio)))
+				LAZYSET(virt.runechat_anchors, radio_hearer, called_radio)
 	var/list/message_mods = data["mods"]
 	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
 	var/should_do_modular_radio_tts = should_queue_radio()
@@ -176,13 +179,19 @@
 	if(should_do_radio_tts)
 		receive = list()
 		receive_radios = list()
+		// AI EDIT START - One playback per listener with two headsets
+		var/list/tts_listeners = list() // BANDASTATION ADDITION - One playback per listener with two headsets
+		// AI EDIT END
 		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
 			receive |= radio_hearers
 			// BANDASTATION EDIT START: Spatial TTS
 			var/datum/weakref/radio_ref = WEAKREF(radio)
 			for(var/mob/possible_hearer in radio_hearers)
-				if(can_hear_radio_tts(possible_hearer, frequency))
+				// AI EDIT START - Play radio TTS once per listener wearing two headsets
+				if(!tts_listeners[possible_hearer] && can_hear_radio_tts(possible_hearer, frequency)) // BANDASTATION EDIT - Dual ear slots
+					tts_listeners[possible_hearer] = TRUE // BANDASTATION ADDITION - Dual ear slots
 					LAZYADD(receive_radios[radio_ref], WEAKREF(possible_hearer))
+				// AI EDIT END
 			// BANDASTATION EDIT START: Spatial TTS
 
 	else
@@ -246,6 +255,7 @@
 			continue
 		spans -= blacklisted_spans
 		hearer.Hear(virt, language, message, frequency, data["frequency_name"], data["frequency_color"], spans, message_mods, message_range = INFINITY)
+	virt.runechat_anchors = null // runechat is already made
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))

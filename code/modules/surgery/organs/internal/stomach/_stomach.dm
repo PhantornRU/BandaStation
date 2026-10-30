@@ -68,6 +68,9 @@
 			handle_hunger(humi, seconds_per_tick)
 
 	var/mob/living/carbon/body = owner
+	// BANDASTATION ADDITION START - Porphyria digestion
+	SEND_SIGNAL(body, COMSIG_CARBON_STOMACH_DIGEST, src, seconds_per_tick)
+	// BANDASTATION ADDITION END
 
 	// digest food, sent all reagents that can metabolize to the body
 	for(var/datum/reagent/bit as anything in reagents?.reagent_list)
@@ -150,7 +153,7 @@
 			human.add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
 	// nutrition decrease and satiety
-	if (human.nutrition > 0 && human.stat != DEAD)
+	if (human.nutrition > 0 && human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_BLOOD_DIET) && !HAS_TRAIT(human, TRAIT_VAMPIRE))) // BANDASTATION EDIT - Porphyria supplies the forty-minute nutrition drain.
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		if(human.mob_mood && human.mob_mood.sanity > SANITY_DISTURBED)
@@ -198,7 +201,7 @@
 	return owner_species.mutantstomach
 
 ///This gets called after the owner takes a bite of food
-/obj/item/organ/stomach/proc/after_eat(atom/edible)
+/obj/item/organ/stomach/proc/after_eat(atom/edible, mob/living/feeder) // BANDASTATION EDIT - Preserve the actor for synthetic food disposal.
 	return
 
 /obj/item/organ/stomach/proc/consume_thing(atom/movable/thing)

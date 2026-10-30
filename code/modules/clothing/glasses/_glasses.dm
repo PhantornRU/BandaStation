@@ -509,6 +509,7 @@
 	inhand_icon_state = "welding-g"
 	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = FLASH_PROTECTION_WELDER
+	flags_cover = GLASSESCOVERSEYES // BANDASTATION ADDITION - Lowered goggles cover eyes; raising the visor clears this flag.
 	visor_flags_cover = GLASSESCOVERSEYES
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	tint = 2

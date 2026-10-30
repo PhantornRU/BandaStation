@@ -328,12 +328,12 @@
 			overlays += eyelids
 
 	if (scarring & RIGHT_EYE_SCAR)
-		var/mutable_appearance/right_scar = mutable_appearance(eye_icon, "eye_scar_right", -EYES_LAYER) // BANDASTATION EDIT - Feat: Augmentation
+		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_right", -EYES_LAYER) // BANDASTATION EDIT - Keep scars independent of custom eye sprites
 		right_scar.color = my_head.draw_color
 		overlays += right_scar
 
 	if (scarring & LEFT_EYE_SCAR)
-		var/mutable_appearance/left_scar = mutable_appearance(eye_icon, "eye_scar_left", -EYES_LAYER) // BANDASTATION EDIT - Feat: Augmentation
+		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_left", -EYES_LAYER) // BANDASTATION EDIT - Keep scars independent of custom eye sprites
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
 
@@ -444,6 +444,14 @@
 
 /obj/item/organ/eyes/on_failure_recovery()
 	owner?.cure_blind(EYE_DAMAGE)
+
+// BANDASTATION ADDITION START - Removing disconnected eyes must leave the old body eyeless
+/obj/item/organ/eyes/on_rejected_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.cure_blind(EYE_DAMAGE)
+	if(!special)
+		organ_owner.become_blind(NO_EYES)
+// BANDASTATION ADDITION END - Removing disconnected eyes must leave the old body eyeless
 
 /obj/item/organ/eyes/on_high_damage_healed()
 	if(damage <= low_threshold)

@@ -4397,10 +4397,8 @@
 "bAJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/stairs{
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood"
-	},
+/obj/structure/fake_stairs/wood,
+/turf/open/floor/wood/tile,
 /area/station/service/chapel)
 "bAP" = (
 /obj/effect/turf_decal/siding/wood/end{
@@ -31982,9 +31980,7 @@
 /area/station/command/bridge)
 "kYW" = (
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -44120,6 +44116,14 @@
 "pnS" = (
 /turf/closed/mineral/random/stationside/asteroid,
 /area/station/asteroid)
+"poP" = (
+/obj/machinery/mecha_part_fabricator/spacepod,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "poe" = (
 /obj/structure/railing{
 	dir = 4
@@ -56058,11 +56062,8 @@
 "tjc" = (
 /obj/structure/cable,
 /obj/item/radio/intercom/directional/south,
-/turf/open/floor/iron/stairs{
-	dir = 4;
-	icon = 'icons/obj/stairs.dmi';
-	icon_state = "stairs_wood"
-	},
+/obj/structure/fake_stairs/wood/directional/east,
+/turf/open/floor/wood/tile,
 /area/station/service/chapel)
 "tjd" = (
 /obj/machinery/chem_heater/withbuffer,
@@ -57179,9 +57180,7 @@
 	name = "Kitchen Counter Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
@@ -110026,7 +110025,7 @@ gKu
 pUt
 dHL
 dpU
-bnK
+poP
 wqU
 ocB
 mIC

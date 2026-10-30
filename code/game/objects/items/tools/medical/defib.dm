@@ -123,6 +123,17 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
+	// AI EDIT START - Allow floor use within paddle cable range
+	// BANDASTATION ADDITION START - Floor defibrillator use
+	if(isturf(loc))
+		if(!in_range(src, user))
+			balloon_alert(user, "too far away!")
+			return
+		add_fingerprint(user)
+		ui_action_click(user, modifiers)
+		return
+	// BANDASTATION ADDITION END
+	// AI EDIT END
 	if(loc == user)
 		if(user.get_slot_by_item(src) & slot_flags)
 			ui_action_click(user, modifiers)
@@ -280,7 +291,7 @@
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
 	inhand_icon_state = null
-	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE|ITEM_SLOT_DEX_STORAGE
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE
 	worn_icon = 'icons/mob/clothing/belt.dmi'
 	worn_icon_state = "defibcompact"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/silver = SHEET_MATERIAL_AMOUNT*3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)

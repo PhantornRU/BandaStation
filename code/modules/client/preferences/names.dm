@@ -50,14 +50,10 @@
 	target.log_mob_tag("TAG: [target.tag] RENAMED: [key_name(target)]")
 
 /datum/preference/name/real_name/create_informed_default_value(datum/preferences/preferences)
-	return generate_random_name_species_based(
-		preferences.read_preference(/datum/preference/choiced/gender),
-		TRUE,
-		preferences.read_preference(/datum/preference/choiced/species),
-	)
+	return generate_sierra_background_name(preferences) // BANDASTATION EDIT - Names follow character upbringing
 
 /datum/preference/name/real_name/deserialize(input, datum/preferences/preferences)
-	input = ..(input)
+	input = reject_bad_name("[input]", allow_numbers_for_species(preferences)) // BANDASTATION EDIT - IPC model names may contain numbers.
 	if (!input)
 		return input
 
@@ -68,7 +64,7 @@
 		else if(first_space == length(input))
 			input += "[pick(GLOB.last_names)]"
 
-	return reject_bad_name(input, allow_numbers)
+	return reject_bad_name(input, allow_numbers_for_species(preferences)) // BANDASTATION EDIT - Preserve IPC model numbers during final sanitization.
 
 /// The name for a backup human, when nonhumans are made into head of staff
 /datum/preference/name/backup_human

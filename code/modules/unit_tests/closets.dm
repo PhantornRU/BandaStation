@@ -71,3 +71,48 @@
 
 	click_wrapper(placer, corpse_bag)
 	TEST_ASSERT(placing_tester in corpse_bag, "Closing a bodybag on an item did not move it within the bodybag")
+
+// BANDASTATION ADDITION START - Multi-tile objects must not fit inside ordinary crates.
+/// Closing a crate collects single-tile cargo without swallowing larger objects; special delivery stays unrestricted.
+/datum/unit_test/closet_multitile_contents/Run()
+	var/turf/origin = locate(run_loc_floor_bottom_left.x + 3, run_loc_floor_bottom_left.y + 3, run_loc_floor_bottom_left.z)
+	var/obj/structure/closet/crate/crate = allocate(__IMPLIED_TYPE__, origin)
+	TEST_ASSERT(crate.open(), "The test crate could not be opened before loading.")
+	var/list/single_tile_objects = list()
+	for(var/dense in list(FALSE, TRUE))
+		var/obj/ordinary = allocate(/obj, origin)
+		ordinary.density = dense
+		ordinary.anchored = FALSE
+		single_tile_objects += ordinary
+	var/obj/item/flashlight/item = allocate(__IMPLIED_TYPE__, origin)
+	var/list/oversized_objects = list()
+	for(var/list/bounds as anything in list(list(64, 64), list(96, 32), list(32, 96)))
+		for(var/dense in list(FALSE, TRUE))
+			var/obj/oversized = allocate(/obj, origin)
+			oversized.name = "[bounds[1]]x[bounds[2]] object with density [dense]"
+			oversized.bound_width = bounds[1]
+			oversized.bound_height = bounds[2]
+			oversized.density = dense
+			oversized.anchored = FALSE
+			oversized_objects += oversized
+	TEST_ASSERT(crate.close(), "A crate could not close while oversized objects remained outside it.")
+	for(var/obj/ordinary as anything in single_tile_objects)
+		TEST_ASSERT_EQUAL(ordinary.loc, crate, "Closing a crate failed to collect a single-tile object with density [ordinary.density].")
+	TEST_ASSERT_EQUAL(item.loc, crate, "Closing a crate failed to collect an ordinary item.")
+	for(var/obj/oversized as anything in oversized_objects)
+		TEST_ASSERT_EQUAL(oversized.loc, origin, "Closing an ordinary crate swallowed [oversized.name].")
+		TEST_ASSERT(!crate.insert(oversized), "Explicit crate insertion accepted [oversized.name].")
+		TEST_ASSERT_EQUAL(oversized.loc, origin, "Rejected insertion moved [oversized.name] away from its original turf.")
+	TEST_ASSERT(crate.open(), "The crate could not reopen after rejecting oversized cargo.")
+	for(var/obj/ordinary as anything in single_tile_objects)
+		TEST_ASSERT_EQUAL(ordinary.loc, origin, "Reopening the crate failed to release an ordinary object.")
+	TEST_ASSERT_EQUAL(item.loc, origin, "Reopening the crate failed to release the original item.")
+
+	var/obj/structure/closet/supplypod/supply = allocate(__IMPLIED_TYPE__, get_step(origin, WEST))
+	supply.reverse_option_list = supply.reverse_option_list.Copy()
+	supply.reverse_option_list["Unanchored"] = TRUE
+	var/obj/special_cargo = oversized_objects[1]
+	TEST_ASSERT(supply.insertion_allowed(special_cargo), "Special supplypod extraction rejected permitted multi-tile cargo.")
+	supply.insert(special_cargo, supply)
+	TEST_ASSERT_EQUAL(special_cargo.loc, supply, "The native supplypod insertion path did not move the permitted cargo into its holder.")
+// BANDASTATION ADDITION END

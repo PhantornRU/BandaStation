@@ -50,6 +50,10 @@
 	var/datum/material/material
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
+	// BANDASTATION ADDITION START - Physical fire suppression remains useful on chemically immune chassis.
+	/// Exposure methods which extinguish flames without requiring any chemical effect on the mob.
+	var/extinguishing_methods = NONE
+	// BANDASTATION ADDITION END
 	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH, REAGENT_IMPURE
 	var/chemical_flags = NONE
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
@@ -141,7 +145,10 @@
 	if(penetrates_skin & methods) // models things like vapors which penetrate the skin
 		var/amount = round(reac_volume * clamp((1 - touch_protection), 0, 1), 0.1)
 		if(amount >= 0.5)
-			exposed_mob.reagents.add_reagent(type, amount, data, holder.chem_temp, purity)
+			// BANDASTATION EDIT START - Direct blob payloads have no reagent holder.
+			var/exposure_temperature = holder ? holder.chem_temp : DEFAULT_REAGENT_TEMPERATURE
+			exposed_mob.reagents.add_reagent(type, amount, data, exposure_temperature, purity)
+			// BANDASTATION EDIT END - Direct blob payloads have no reagent holder.
 
 /// Applies this reagent to an [/obj]
 /datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
