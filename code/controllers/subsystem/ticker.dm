@@ -292,6 +292,8 @@ SUBSYSTEM_DEF(ticker)
 		ruleset.execute()
 		SSdynamic.unqueue_ruleset(ruleset)
 		SSdynamic.executed_rulesets += ruleset
+	// BANDASTATION EDIT: consider shared operations once, after all roundstart assignments.
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUNDSTART_ROLES_ASSIGNED, GLOB.antagonists.Copy())
 	// Queue roundstart intercept report
 	if(!CONFIG_GET(flag/no_intercept_report))
 		GLOB.communications_controller.queue_roundstart_report()
@@ -465,11 +467,14 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		SStitle.show_title_screen_to(player.client) // BANDASTATION ADDITION - HTML Title Screen
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
+			var/datum/roundstart_character_attempt/attempt = capture_roundstart_character(player) // SS220 EDIT: Own only this construction.
 			GLOB.joined_player_list += player.ckey
 			var/atom/destination = player.mind.assigned_role.get_roundstart_spawn_point()
 			if(!destination) // Failed to fetch a proper roundstart location, won't be going anywhere.
+				validate_roundstart_character(player, null, attempt) // SS220 EDIT: Cancel this assignment when no spawn point exists.
 				continue
 			player.create_character(destination)
+			validate_roundstart_character(player, player?.new_character, attempt) // SS220 EDIT: Reject before equipment; compensate this append only.
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
@@ -481,11 +486,6 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
-	GLOB.security_officer_distribution = decide_security_officer_departments(
-		shuffle(GLOB.new_player_list),
-		shuffle(GLOB.available_depts),
-	)
-
 	var/captainless = TRUE
 
 	var/highest_rank = length(SSjob.chain_of_command) + 1
@@ -554,32 +554,6 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Капитанство никому не назначено."))
 			CHECK_TICK
-
-
-/datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
-	list/new_players,
-	list/departments,
-)
-	var/list/officer_mobs = list()
-	var/list/officer_preferences = list()
-
-	for (var/mob/dead/new_player/new_player_mob as anything in new_players)
-		var/mob/living/carbon/human/character = new_player_mob.new_character
-		if (istype(character) && is_security_officer_job(character.mind?.assigned_role))
-			officer_mobs += character
-
-			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
-			var/preference = client?.prefs?.read_preference(/datum/preference/choiced/security_department)
-			officer_preferences += preference
-
-	var/distribution = get_officer_departments(officer_preferences, departments)
-
-	var/list/output = list()
-
-	for (var/index in 1 to officer_mobs.len)
-		output[REF(officer_mobs[index])] = distribution[index]
-
-	return output
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()

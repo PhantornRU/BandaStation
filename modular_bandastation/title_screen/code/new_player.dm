@@ -41,6 +41,13 @@
 			open_interview()
 		return
 
+	if(href_list["toggle_antag_roll"])
+		var/datum/preference/toggle/antag_roll/antag_roll_preference = GLOB.preference_entries[/datum/preference/toggle/antag_roll]
+		var/new_value = !client.prefs.read_preference(/datum/preference/toggle/antag_roll)
+		client.prefs.write_preference(antag_roll_preference, new_value)
+		SStitle.title_output(client, new_value, "toggleAntagRoll")
+		return
+
 	if(href_list["toggle_ready"])
 		if(SSticker.current_state >= GAME_STATE_SETTING_UP)
 			to_chat(usr, span_warning("Игра уже начинается!"))
@@ -61,7 +68,8 @@
 		if(!ignore_restrictions)
 			var/list/allowed_species = CONFIG_GET(str_list/allowed_species)
 			var/list/job_restrictions = CONFIG_GET(str_list/job_restrictions)
-			if(length(allowed_species) && !("[prefs_specie]" in allowed_species))
+			prefs_jobs = client.prefs.get_species_restricted_job_preferences()
+			if(length(allowed_species) && (!("[prefs_specie]" in allowed_species) || length(prefs_jobs)))
 				for(var/job_id in prefs_jobs)
 					if(job_id in job_restrictions)
 						to_chat(usr, span_alertwarning("Выбранная раса несовместима с одной или более выбранных профессий."))

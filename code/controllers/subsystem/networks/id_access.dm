@@ -295,6 +295,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access[ACCESS_CHAPEL_OFFICE] = "Chapel Office"
 	desc_by_access[ACCESS_TECH_STORAGE] = "Technical Storage"
 	desc_by_access[ACCESS_ATMOSPHERICS] = "Atmospherics"
+	desc_by_access[ACCESS_ATMOS_EQUIP] = "Atmospherics Equipment"
 	desc_by_access[ACCESS_CREMATORIUM] = "Crematorium"
 	desc_by_access[ACCESS_ARMORY] = "Armory"
 	desc_by_access[ACCESS_CONSTRUCTION] = "Construction"
@@ -521,6 +522,10 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+	// SS220 EDIT - START
+	if(finish_unbanked_trim_access(id_card))
+		return
+	// SS220 EDIT - END
 	if(istype(trim, /datum/id_trim/job))
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
 		id_card.registered_account.account_job = job_trim.job
